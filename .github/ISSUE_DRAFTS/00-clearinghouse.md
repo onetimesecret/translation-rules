@@ -24,12 +24,20 @@ The root cause is not a content bug — it is a pipeline that lets descriptive p
 
 App repo maintainer still needs to sign off on P1-4b (the cross-repo PR) but that's coordination, not design.
 
+## Foundational vs knowledge-base content split
+
+**Hard line.** All work tracked by this clearinghouse is *foundational/structural* — SPEC, schemas, resolver, CI gates, retrospective lifecycle, directory layout, `bin/` tooling. Authoring forbidden token lists for locales beyond de_AT, glossary content, worked examples, and baseline pins is *knowledge-base population* and is deliberately deferred until the structural work stabilizes.
+
+de_AT is the single exception: its forbidden token list ships in Phase 0 because it's grounded in `SPEC.md` §1 verbatim and is the structural proof-of-concept.
+
+Quality/content items surfaced during foundational work are logged in `BACKLOG.md` (AOF-style — append-only) and picked up during the knowledge-base population phase. Do not modify `SPEC.md` ad-hoc for these items; that's what `BACKLOG.md` is for.
+
 ## Phase 0 — Minimum viable prevention
 
-Shippable immediately. These four tickets alone would have blocked the original regression at `b08e59838`. Approximately 70 lines of YAML + shell.
+Shippable immediately. These four tickets alone would have blocked the original regression at `b08e59838` for de_AT.
 
-- [ ] P0-1 — `register.yaml` for de_AT, pt_PT, uk, hu
-- [ ] P0-2 — `bin/lint-register` shell grep tool
+- [ ] P0-1 — `register.yaml` for **de_AT only** (structural proof; other locales deferred to knowledge-base phase — see `BACKLOG.md`)
+- [ ] P0-2 — `bin/lint-register` using `yq` for YAML parsing
 - [ ] P0-3 — Port 2026-04-12 retrospective into new `retrospectives/` format
 - [ ] P0-4 — Anti-pattern line in UX guide ("harmonize = keys only")
 

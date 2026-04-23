@@ -14,7 +14,7 @@ P1-1 — JSON Schema files for all six YAML types
 
 - [ ] `schema/base.schema.json` — universal rules structure
 - [ ] `schema/rules.schema.json` — locale rules with `inherits:` and `merge_strategy:`
-- [ ] `schema/register.schema.json` — register lock with `form`, `pronoun`, `forbidden_tokens`, `exceptions` (list, possibly empty but never null)
+- [ ] `schema/register.schema.json` — register lock with `form`, `pronoun`, `forbidden_tokens`, `exceptions` (list, possibly empty but never null), and a `source:` field (string or null, required) documenting where the token set was derived — e.g., `SPEC.md#1`, a `reviews/<date>/` path, or `native-speaker:<initials>`. Per-entry `source:` on individual `forbidden_tokens` items is optional and overrides file-level when present.
 - [ ] `schema/glossary.schema.json` — terms and worked examples with sense split and `rule_refs`
 - [ ] `schema/baselines.schema.json` — commit pins requiring `retro_id` OR `justification_doc` (one of two)
 - [ ] `schema/retrospective.schema.json` — frontmatter with status lifecycle enum (`pending | applied | declined | superseded`)

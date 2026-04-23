@@ -25,8 +25,7 @@ The existing `reviews/` directory remains as-is (raw input, preserved for refere
   - `examples_added: []` (Phase 0 doesn't add glossary examples; add in P1-5)
   - `baseline_pins: [baselines.de_AT]` (Phase 0 forward-reference; populated in P1-5)
   - `resolved_in_commit: <PR merge SHA>` (populated on merge)
-- [ ] Prose body summarizes the incident, the root cause (change-log promoted to guidance), and the four-locale contamination; full detail remains in `reviews/2026-04-12/` and is linked, not duplicated
-- [ ] Sibling retros for pt_PT, uk, hu are stubs referencing the parent (same incident, distinct locale records)
+- [ ] Prose body summarizes the incident, the root cause (change-log promoted to guidance), and the four-locale contamination; full detail remains in `reviews/2026-04-12/` and is linked, not duplicated. Sibling retros for pt_PT/uk/hu are **not** in Phase 0 scope — they require per-locale content work (deferred to knowledge-base phase; see `BACKLOG.md`). The de_AT retro's prose body may mention the other three as "also contaminated, per `reviews/2026-04-12/cross-locale-audit.md`" but does not create file-level records for them.
 
 ## ID format
 

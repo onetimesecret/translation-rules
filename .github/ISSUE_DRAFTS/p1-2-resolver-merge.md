@@ -19,6 +19,8 @@ P1-2 — Resolver skeleton + merge algorithm
 - [ ] Step 3 (merge): deep-merge for maps; replace for scalars; `merge_strategy` for lists (`append | replace | prepend | dedup`, default `replace`); records per-key provenance in a `_provenance` sidecar
 - [ ] Step 4 (resolve IDs): builds UUID/path index; every `rule_refs`, `affected_rules`, `retro_refs` resolves to a concrete node; dangling refs are hard errors
 - [ ] `resolver/index.json` (inside the `resolver/` directory, per `SPEC.md` §4) is emitted, regenerated on every run, committed (so grep-by-key and grep-by-id both work without running the resolver)
+- [ ] `resolver/ids.py` owns the UUID minting logic (8-char hex, deterministic from a `<kind>.<key>` seed or random with collision check against `index.json`)
+- [ ] `bin/mint-id <kind> <key>` is a thin CLI wrapper over `resolver/ids.py` for human authors minting ids during P1-5 and beyond. Prints `<kind>.<key>#<8char>` to stdout.
 - [ ] Test fixtures in `tests/inheritance/` cover: de_AT → de → base chain; cycle detection; merge strategies; dangling ref detection
 
 ## Dependencies
