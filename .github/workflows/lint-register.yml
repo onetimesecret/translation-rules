@@ -62,3 +62,10 @@ jobs:
               echo "::endgroup::"
             fi
           done
+
+      - name: Fixture-driven test harness
+        # Reproduces the 2026-04-12 de_AT regression strings and asserts
+        # exit codes for clean / violation / binary-skip / empty-glob /
+        # missing-register paths. Failure here means the linter's contract
+        # has drifted; investigate before merging.
+        run: bash tests/lint-register.sh

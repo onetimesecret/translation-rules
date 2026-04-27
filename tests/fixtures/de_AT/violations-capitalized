@@ -1,0 +1,6 @@
+# Sentence-initial capitalized informal pronouns. Phase 0 follow-up
+# (commit 108a95b) widened the linter to grep -i. If this fixture
+# stops failing, the case-insensitive policy has regressed.
+Du musst dich anmelden
+Dein Geheimnis ist bereit
+Dich erwartet eine Nachricht
