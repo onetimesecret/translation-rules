@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onetimesecret.github.io/translation-rules/schema/retrospective.schema.json",
+  "title": "Retrospective Frontmatter",
+  "description": "Validates the YAML frontmatter of retrospectives/<date>-<slug>.md. Body prose is not schema-validated. Per SPEC.md §3 lifecycle.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "date",
+    "status",
+    "triggered_by",
+    "affected_locales",
+    "affected_rules",
+    "examples_added",
+    "baseline_pins",
+    "resolved_in_commit",
+    "supersedes",
+    "declined_reason",
+    "would_change_decision_if"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "base.schema.json#/$defs/retroId",
+      "description": "YYYY-MM-DD-<slug>; matches the filename without .md."
+    },
+    "date": { "$ref": "base.schema.json#/$defs/isoDate" },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "applied", "declined", "superseded"]
+    },
+    "triggered_by": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["incident"],
+      "properties": {
+        "commits": {
+          "type": "array",
+          "items": { "$ref": "base.schema.json#/$defs/commitSha" }
+        },
+        "incident": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "affected_locales": {
+      "type": "array",
+      "items": { "$ref": "base.schema.json#/$defs/localeCode" }
+    },
+    "affected_rules": {
+      "type": "array",
+      "items": { "$ref": "base.schema.json#/$defs/dottedId" }
+    },
+    "examples_added": {
+      "type": "array",
+      "items": { "$ref": "base.schema.json#/$defs/uuidId" }
+    },
+    "baseline_pins": {
+      "type": "array",
+      "items": { "$ref": "base.schema.json#/$defs/dottedId" }
+    },
+    "resolved_in_commit": {
+      "oneOf": [
+        { "$ref": "base.schema.json#/$defs/commitSha" },
+        { "type": "null" }
+      ]
+    },
+    "supersedes": {
+      "type": "array",
+      "items": { "$ref": "base.schema.json#/$defs/retroId" }
+    },
+    "declined_reason": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "would_change_decision_if": {
+      "type": ["string", "null"],
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "description": "status: applied requires resolved_in_commit to be a real SHA (non-null). SPEC §3.",
+      "if": {
+        "properties": { "status": { "const": "applied" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "resolved_in_commit": { "$ref": "base.schema.json#/$defs/commitSha" }
+        }
+      }
+    },
+    {
+      "description": "status: declined requires declined_reason and would_change_decision_if to be populated. SPEC §3.",
+      "if": {
+        "properties": { "status": { "const": "declined" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "declined_reason": { "type": "string", "minLength": 1 },
+          "would_change_decision_if": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    {
+      "description": "status: superseded requires at least one entry in supersedes. The newer retro identifies which retro it replaces; the older one's superseded list is not enforced here. The pairing is enforced cross-file by the resolver.",
+      "if": {
+        "properties": { "status": { "const": "superseded" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "supersedes": { "type": "array" }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+id: register.de_AT
+source: SPEC.md#1
+form: formal
+pronoun: Sie
+possessive: [Ihr, Ihre, Ihren, Ihrem, Ihrer, Ihres]
+forbidden_tokens:
+  - { token: du,     context: standalone_word, severity: error }
+  - { token: dein,   context: standalone_word, severity: error }
+  - { token: deine,  context: standalone_word, severity: error }
+  - { token: deinen, context: standalone_word, severity: error }
+  - { token: deinem, context: standalone_word, severity: error }
+  - { token: deiner, context: standalone_word, severity: error }
+  - { token: dich,   context: standalone_word, severity: error }
+  - { token: dir,    context: standalone_word, severity: error }
+  - { token: euch,   context: standalone_word, severity: error }
+  - { token: euer,   context: standalone_word, severity: error }
+exceptions: []
+rule_ref: register.de_AT.formality
+baseline_ref: baselines.de_AT
+retro_refs: [2026-04-12-de_AT-register-flip]

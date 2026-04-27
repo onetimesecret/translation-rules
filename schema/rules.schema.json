@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onetimesecret.github.io/translation-rules/schema/rules.schema.json",
+  "title": "Locale Rules",
+  "description": "Per-locale rules.yaml. Inherits from a parent locale or 'base'. Per SPEC.md §2.2, §2.3.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "source"],
+  "properties": {
+    "id": {
+      "$ref": "base.schema.json#/$defs/dottedId",
+      "description": "Dotted ID for the locale rules, e.g. rules.de_AT."
+    },
+    "source": { "$ref": "base.schema.json#/$defs/source" },
+    "inherits": {
+      "description": "Parent rule file(s) — single string or list. Resolver builds the chain (e.g. de_AT -> de -> base) and detects cycles. SPEC §2.3.",
+      "oneOf": [
+        { "$ref": "base.schema.json#/$defs/dottedId" },
+        {
+          "type": "array",
+          "items": { "$ref": "base.schema.json#/$defs/dottedId" },
+          "minItems": 1
+        }
+      ]
+    },
+    "merge_strategy": {
+      "description": "Default merge strategy for list fields when merging with parent rules. Per-field overrides are not yet specified — see SPEC §2.3 step 3.",
+      "$ref": "base.schema.json#/$defs/mergeStrategy"
+    },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "base.schema.json#/$defs/ruleItem" }
+    },
+    "anti_patterns": {
+      "type": "array",
+      "items": { "$ref": "base.schema.json#/$defs/antiPatternItem" }
+    },
+    "context": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "register_ref": {
+      "$ref": "base.schema.json#/$defs/dottedId"
+    },
+    "glossary_ref": {
+      "$ref": "base.schema.json#/$defs/dottedId"
+    },
+    "baseline_ref": {
+      "$ref": "base.schema.json#/$defs/dottedId"
+    }
+  }
+}

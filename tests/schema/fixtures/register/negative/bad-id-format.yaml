@@ -1,0 +1,9 @@
+__meta__:
+  reason: "register IDs must be dotted-path lowercase. 'Register.DE_AT' violates the regex (uppercase)."
+  expected_error_path: /id
+id: Register.DE_AT
+source: SPEC.md#1
+form: formal
+pronoun: Sie
+forbidden_tokens: []
+exceptions: []

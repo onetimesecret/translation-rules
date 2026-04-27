@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onetimesecret.github.io/translation-rules/schema/baselines.schema.json",
+  "title": "Baselines (commit pins)",
+  "description": "Per-locale baseline pins. Each entry records the SHA at which a locale's content was deemed correct, plus invariants and either a retro_id or a justification_doc. Per SPEC.md §1, §2.2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "source", "baselines"],
+  "properties": {
+    "id": {
+      "$ref": "base.schema.json#/$defs/dottedId",
+      "description": "Top-level dotted ID, e.g. baselines."
+    },
+    "source": { "$ref": "base.schema.json#/$defs/source" },
+    "baselines": {
+      "type": "object",
+      "description": "Map of locale code (e.g. de_AT) to baseline entry.",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]{2,3}(_[A-Z]{2})?$": { "$ref": "#/$defs/baselineEntry" }
+      },
+      "minProperties": 1
+    }
+  },
+  "$defs": {
+    "baselineEntry": {
+      "description": "A single baseline pin. Requires retro_id OR justification_doc (anyOf — both may be present, e.g. when a justification existed before the retro was filed).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit"],
+      "properties": {
+        "commit": { "$ref": "base.schema.json#/$defs/commitSha" },
+        "pinned_on": { "$ref": "base.schema.json#/$defs/isoDate" },
+        "invariants": {
+          "description": "Properties that must hold at this baseline (e.g. register.formality=Sie, glossary.secret_object=Geheimnis).",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "retro_id": { "$ref": "base.schema.json#/$defs/retroId" },
+        "justification_doc": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Path to a doc justifying the pin (e.g. reviews/<date>/<file>.md)."
+        },
+        "note": { "type": "string" },
+        "source": { "$ref": "base.schema.json#/$defs/source" }
+      },
+      "anyOf": [
+        { "required": ["retro_id"] },
+        { "required": ["justification_doc"] }
+      ]
+    }
+  }
+}

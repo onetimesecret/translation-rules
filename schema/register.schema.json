@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onetimesecret.github.io/translation-rules/schema/register.schema.json",
+  "title": "Locale Register Lock",
+  "description": "Per-locale register: form, pronoun, possessives, forbidden tokens, exceptions. Per SPEC.md §1, §2.2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "source",
+    "form",
+    "pronoun",
+    "forbidden_tokens",
+    "exceptions"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "base.schema.json#/$defs/dottedId",
+      "description": "Dotted ID, e.g. register.de_AT."
+    },
+    "source": {
+      "$ref": "base.schema.json#/$defs/source",
+      "description": "Provenance for this token set as a whole. Per-token source overrides if present."
+    },
+    "form": {
+      "type": "string",
+      "enum": ["formal", "informal", "mixed", "other"]
+    },
+    "pronoun": {
+      "type": "string",
+      "minLength": 1
+    },
+    "possessive": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "forbidden_tokens": {
+      "description": "Tokens whose presence in target locale content is a register violation. Required. May be an empty list, but never null.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/forbiddenToken" }
+    },
+    "exceptions": {
+      "description": "Allowlist of strings (or contexts) where forbidden tokens may legitimately appear. Required field; may be an empty list, never null.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/exception" }
+    },
+    "rule_ref": {
+      "$ref": "base.schema.json#/$defs/dottedId"
+    },
+    "baseline_ref": {
+      "$ref": "base.schema.json#/$defs/dottedId"
+    },
+    "retro_refs": {
+      "type": "array",
+      "items": { "$ref": "base.schema.json#/$defs/retroId" },
+      "uniqueItems": true
+    },
+    "register_spec": {
+      "description": "Free-form extension hook for non-binary register systems (ja keigo, ko politeness). SPEC §8.",
+      "type": "object"
+    },
+    "authority_refs": {
+      "description": "Flat references to external authorities (e.g. OQLF). SPEC §8.",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "forbiddenToken": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token", "context", "severity"],
+      "properties": {
+        "token": {
+          "type": "string",
+          "minLength": 1
+        },
+        "context": {
+          "type": "string",
+          "enum": ["standalone_word", "word_prefix", "substring", "any"]
+        },
+        "severity": { "$ref": "base.schema.json#/$defs/severity" },
+        "source": { "$ref": "base.schema.json#/$defs/source" },
+        "note": { "type": "string" }
+      }
+    },
+    "exception": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token", "reason"],
+      "properties": {
+        "token": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 },
+        "scope": { "type": "string" },
+        "source": { "$ref": "base.schema.json#/$defs/source" }
+      }
+    }
+  }
+}

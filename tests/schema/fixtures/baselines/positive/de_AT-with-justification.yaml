@@ -1,0 +1,8 @@
+id: baselines
+source: native-speaker:dlb
+baselines:
+  fr_CA:
+    commit: 4982d4f84
+    justification_doc: "reviews/2026-04-12/locale-quality-analysis-fr_CA.md"
+    invariants:
+      - "register.fr_CA.form=formal"

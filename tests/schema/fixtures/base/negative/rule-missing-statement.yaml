@@ -1,0 +1,9 @@
+__meta__:
+  reason: "Each rule item requires id, modality, statement, severity. Missing 'statement' should fail."
+  expected_error_path: /rules/0
+id: base
+source: SPEC.md
+rules:
+  - id: rule.interpolation-vars
+    modality: MUST
+    severity: error

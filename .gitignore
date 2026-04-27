@@ -4,4 +4,6 @@
 *.txt
 *.log
 *.db
+__pycache__/
+*.pyc
 

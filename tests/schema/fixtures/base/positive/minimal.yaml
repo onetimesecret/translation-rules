@@ -1,0 +1,19 @@
+id: base
+source: SPEC.md
+rules:
+  - id: rule.interpolation-vars
+    modality: MUST
+    statement: "Interpolation variables in the target must match the source character-for-character."
+    severity: error
+    rule_ref: rule.interpolation-vars
+  - id: rule.no-emoji
+    modality: MUST_NOT
+    statement: "Translations must not introduce emoji that are absent from the source string."
+    severity: warning
+anti_patterns:
+  - id: anti.harmonize-rewrites
+    statement: "Harmonization changes keys only; never text rewrites."
+    severity: error
+    source: "reviews/2026-04-12/cross-locale-audit.md"
+context:
+  - "OneTimeSecret is a secrets-sharing application. UI strings are user-facing."

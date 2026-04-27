@@ -1,0 +1,10 @@
+__meta__:
+  reason: "modality must be RFC 2119 enum; 'must' (lowercase) is invalid."
+  expected_error_path: /rules/0/modality
+id: base
+source: SPEC.md
+rules:
+  - id: rule.interpolation-vars
+    modality: must
+    statement: "Interpolation must match."
+    severity: error

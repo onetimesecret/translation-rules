@@ -1,0 +1,8 @@
+__meta__:
+  reason: "Term IDs must use the uuid form <kind>.<key>#<8hex>. A dotted-only id is invalid."
+  expected_error_path: /terms/0/id
+id: glossary.de_AT
+source: SPEC.md
+terms:
+  - id: term.secret_object
+    key: secret_object

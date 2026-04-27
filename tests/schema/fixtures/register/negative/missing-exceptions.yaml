@@ -1,0 +1,9 @@
+__meta__:
+  reason: "SPEC.md §2.2 — exceptions field is required even when empty."
+  expected_error_path: /
+id: register.de_AT
+source: SPEC.md#1
+form: formal
+pronoun: Sie
+forbidden_tokens:
+  - { token: du, context: standalone_word, severity: error }
