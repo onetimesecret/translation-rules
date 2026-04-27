@@ -27,3 +27,9 @@ Format per entry:
 - Type: provenance / schema-extension
 - Defer until: P1-1 schema design
 - Detail: Every `forbidden_tokens` entry (or the register file as a whole) should carry a `source:` field — e.g., `SPEC.md §1`, `reviews/2026-04-12/cross-locale-audit.md`, `native-speaker:<initials>`, or `null`. "Obvious now" rots fast; provenance survives the rot. Applies to de_AT too even though its current source is SPEC-verbatim.
+
+## 2026-04-26 — de_AT informal-plural-possessive paradigm coverage gap
+- Surfaced in: P0-1 implementation
+- Type: content
+- Defer until: knowledge-base population phase, after P1-1 schema lands
+- Detail: The Phase 0 forbidden-token list for de_AT (per `SPEC.md` §1) carries `euch` and `euer` but not the inflected possessive paradigm `eure / euren / eurem / eurer / eures`. The asymmetry is inherited verbatim from the SPEC; the `dein` paradigm gets all 5 forms enumerated, the `euer` paradigm only gets the citation form. A single `\beur` word_prefix entry would close the gap, but mixing prefix-matching with the explicit-enumeration scheme requires the P1-1 schema to settle context semantics first. Revisit during knowledge-base population with native-speaker confirmation.
