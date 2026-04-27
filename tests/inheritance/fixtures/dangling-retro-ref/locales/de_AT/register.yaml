@@ -1,0 +1,8 @@
+id: register.de_AT
+source: tests/inheritance/fixtures/dangling-retro-ref
+form: formal
+pronoun: Sie
+forbidden_tokens: []
+exceptions: []
+retro_refs:
+  - 2099-01-01-this-retro-does-not-exist

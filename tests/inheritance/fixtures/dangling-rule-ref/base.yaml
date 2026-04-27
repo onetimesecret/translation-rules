@@ -1,0 +1,7 @@
+id: base
+source: tests/inheritance/fixtures/dangling-rule-ref
+rules:
+  - id: rule.exists
+    modality: SHOULD
+    statement: An existing rule.
+    severity: warning

@@ -1,0 +1,19 @@
+{
+  "kind": "positive",
+  "locale": "de_AT",
+  "chain": ["de_AT", "de", "base"],
+  "merged_keys": ["id", "source", "inherits", "rules", "context"],
+  "rule_ids": [
+    "rule.universal-truth",
+    "rule.de-shared",
+    "rule.de_AT.formality"
+  ],
+  "merge_strategy": "append",
+  "expect_top_id": "rules.de_AT",
+  "provenance_for": {
+    "/id": "locales/de_AT/rules.yaml",
+    "/inherits": "locales/de_AT/rules.yaml",
+    "/merge_strategy": "locales/de_AT/rules.yaml",
+    "/context/0": "base.yaml"
+  }
+}
