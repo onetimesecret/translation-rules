@@ -9,6 +9,23 @@
 # context rule. Exits non-zero if any forbidden token is found.
 #
 # Schema enforcement is out of scope (see P1-1). yq parsability is the bar.
+#
+# Matching policy (issue #4 AC originally specified case-sensitive; widened
+# during P0-2 follow-up): grep runs case-insensitive (-i) so sentence-initial
+# capitals like "Du" / "Dein" are caught. Tokens in `forbidden_tokens` are
+# all lowercase informal pronouns/possessives with no formal-context
+# homographs in German, so the false-positive risk is negligible.
+#
+# Locale: grep is invoked with LC_ALL=C so `\b` uses byte-boundary semantics.
+# This keeps word boundaries stable around umlauts (ä/ö/ü/ß) regardless of
+# the host locale; without it, GNU grep's POSIX `\w` definition can shift
+# under UTF-8 locales and produce inconsistent matches.
+#
+# Exit codes:
+#   0  clean (or --dry-run)
+#   1  one or more forbidden tokens matched
+#   2  usage / config error (bad args, missing yq, bad register.yaml)
+#   3  glob expanded to zero files (likely misconfigured CI path)
 
 set -euo pipefail
 
@@ -20,6 +37,12 @@ Usage: bin/lint-register <locale> <path-glob> [--dry-run]
   <path-glob>  Quoted shell glob of content files to scan (e.g.,
                "onetimesecret/locales/content/de_AT/*.json")
   --dry-run    Print tokens that would be checked; do not scan files.
+
+Exit codes:
+  0  clean (or --dry-run)
+  1  forbidden token(s) matched
+  2  usage / config error
+  3  glob expanded to zero files (likely misconfigured path)
 EOF
   exit 2
 }
@@ -84,8 +107,9 @@ FILES=( $GLOB )
 shopt -u nullglob
 
 if [ "${#FILES[@]}" -eq 0 ]; then
-  echo "warning: no files matched glob: $GLOB" >&2
-  exit 0
+  echo "error: no files matched glob: $GLOB" >&2
+  echo "  (a CI gate that scans nothing silently is worse than no gate; check the path)" >&2
+  exit 3
 fi
 
 VIOLATIONS=0
@@ -103,8 +127,12 @@ for row in "${ROWS[@]}"; do
       ;;
   esac
 
-  # grep -E -n -H prints file:line:matched-line; -o would lose line context.
-  # We re-format the output to file:line: token=<token> matched: <line>.
+  # grep flags:
+  #   -E extended regex; -n line numbers; -H print filename
+  #   -i case-insensitive (catches sentence-initial Du/Dein/Dich/etc.)
+  #   -I skip binary files (avoids "Binary file X matches" garbage output)
+  # LC_ALL=C pins byte semantics so `\b` behaves consistently around
+  # umlauts (ä/ö/ü/ß); host UTF-8 locales can otherwise drift the boundary.
   while IFS= read -r hit; do
     file="${hit%%:*}"
     rest="${hit#*:}"
@@ -112,7 +140,7 @@ for row in "${ROWS[@]}"; do
     matched="${rest#*:}"
     echo "${file}:${lineno}: forbidden token '${token}' (${context}) — ${matched}"
     VIOLATIONS=$((VIOLATIONS + 1))
-  done < <(grep -E -n -H "$pattern" "${FILES[@]}" 2>/dev/null || true)
+  done < <(LC_ALL=C grep -E -n -H -i -I "$pattern" "${FILES[@]}" 2>/dev/null || true)
 done
 
 if [ "$VIOLATIONS" -gt 0 ]; then

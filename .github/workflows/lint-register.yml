@@ -14,11 +14,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install yq
+      - name: Install yq (pinned + checksum-verified)
+        env:
+          # Pin to a known release. Bump deliberately, not via `latest`.
+          # Source: https://github.com/mikefarah/yq/releases/tag/v4.53.2
+          YQ_VERSION: v4.53.2
+          # SHA-256 of yq_linux_amd64, extracted from the release's
+          # `checksums` file via the upstream `extract-checksum.sh` helper:
+          #   ./extract-checksum.sh SHA-256 yq_linux_amd64
+          # Verify by re-running that helper against the release artifacts
+          # before bumping YQ_VERSION.
+          YQ_SHA256: d56bf5c6819e8e696340c312bd70f849dc1678a7cda9c2ad63eebd906371d56b
         run: |
-          sudo wget -qO /usr/local/bin/yq \
-            https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-          sudo chmod +x /usr/local/bin/yq
+          set -euo pipefail
+          tmpdir="$(mktemp -d)"
+          curl -fsSL -o "${tmpdir}/yq" \
+            "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"
+          echo "${YQ_SHA256}  ${tmpdir}/yq" | sha256sum -c -
+          sudo install -m 0755 "${tmpdir}/yq" /usr/local/bin/yq
+          rm -rf "${tmpdir}"
           yq --version
 
       - name: Validate register.yaml files parse
