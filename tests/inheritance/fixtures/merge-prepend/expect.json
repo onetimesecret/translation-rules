@@ -1,0 +1,7 @@
+{
+  "kind": "positive",
+  "locale": "de_AT",
+  "chain": ["de_AT", "base"],
+  "merge_strategy": "prepend",
+  "rule_ids": ["rule.child", "rule.parent"]
+}

@@ -1,0 +1,6 @@
+id: base
+source: tests/inheritance/fixtures/merge-dedup
+rules: []
+context:
+  - "shared line"
+  - "parent-only line"

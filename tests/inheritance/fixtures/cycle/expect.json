@@ -1,0 +1,6 @@
+{
+  "kind": "negative",
+  "locale": "de_AT",
+  "error_type": "InheritanceError",
+  "error_substring": "cycle"
+}

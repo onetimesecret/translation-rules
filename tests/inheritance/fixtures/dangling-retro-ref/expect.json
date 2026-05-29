@@ -1,0 +1,6 @@
+{
+  "kind": "negative",
+  "locale": "de_AT",
+  "error_type": "ResolutionError",
+  "error_substring": "2099-01-01-this-retro-does-not-exist"
+}
