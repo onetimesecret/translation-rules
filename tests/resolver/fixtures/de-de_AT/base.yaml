@@ -1,0 +1,20 @@
+id: base
+source: SPEC.md
+rules:
+  - id: rule.register-lock
+    modality: MUST
+    statement: Use the locale's locked register form in all UI and email content.
+    severity: error
+    docs:
+      - docs/localization/register.md
+  - id: rule.brevity
+    modality: SHOULD
+    statement: Prefer concise phrasing where meaning is preserved.
+    severity: info
+anti_patterns:
+  - id: anti.changelog-as-guidance
+    statement: Do not treat change-log prose as translation guidance.
+    severity: warning
+    rule_ref: rule.register-lock
+context:
+  - Generated artifact; do not edit by hand.

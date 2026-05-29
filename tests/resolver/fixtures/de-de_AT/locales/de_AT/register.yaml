@@ -1,0 +1,17 @@
+id: register.de_AT
+source: reviews/2026-04-12/
+form: formal
+pronoun: Sie
+possessive:
+  - Ihr
+  - Ihres
+forbidden_tokens:
+  - token: du
+    context: standalone_word
+    severity: error
+    note: informal pronoun; de_AT is locked to formal Sie
+exceptions:
+  - token: Duden
+    reason: proper noun (the German dictionary); contains the 'du' substring
+    source: native-speaker:AT
+rule_ref: rule.register-lock

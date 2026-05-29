@@ -1,0 +1,7 @@
+id: base
+source: SPEC.md
+rules:
+  - id: rule.register-lock
+    modality: MUST
+    statement: Use the locale's locked register form.
+    severity: error

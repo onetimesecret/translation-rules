@@ -1,0 +1,5 @@
+{
+  "locale": "de_AT",
+  "error_type": "ModelError",
+  "error_substring": "status=superseded but no retro"
+}
