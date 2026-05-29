@@ -1,0 +1,11 @@
+id: baselines
+source: SPEC.md#1
+baselines:
+  de_AT:
+    commit: b08e59838
+    pinned_on: 2026-04-12
+    invariants:
+      - "register.de_AT.form=formal"
+      - "register.de_AT.pronoun=Sie"
+      - "glossary.de_AT.secret_object=Geheimnis"
+    retro_id: 2026-04-12-de_AT-register-flip

@@ -1,0 +1,10 @@
+__meta__:
+  reason: "additionalProperties: false must reject typos. SPEC §2.2 'Schemas forbid null where an empty list is required' implies a closed surface."
+  expected_error_path: /
+id: register.de_AT
+source: SPEC.md#1
+form: formal
+pronoun: Sie
+forbidden_tokens: []
+exceptions: []
+forbidden_token: []

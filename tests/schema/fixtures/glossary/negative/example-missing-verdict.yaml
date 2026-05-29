@@ -1,0 +1,12 @@
+__meta__:
+  reason: "Each example requires id, source, target, verdict. Missing 'verdict' should fail."
+  expected_error_path: /terms/0/examples/0
+id: glossary.de_AT
+source: SPEC.md
+terms:
+  - id: term.secret_object#7f3a91c2
+    key: secret_object
+    examples:
+      - id: ex.burn#a12b45ef
+        source: "Burn this secret"
+        target: "Dieses Geheimnis verbrennen"

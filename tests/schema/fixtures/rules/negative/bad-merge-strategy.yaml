@@ -1,0 +1,6 @@
+__meta__:
+  reason: "merge_strategy must be append | replace | prepend | dedup."
+  expected_error_path: /merge_strategy
+id: rules.de_AT
+source: SPEC.md
+merge_strategy: union

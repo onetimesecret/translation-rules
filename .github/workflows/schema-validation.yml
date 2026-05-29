@@ -1,0 +1,31 @@
+name: schema-validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  schema-fixtures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pinned validator deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install \
+            "jsonschema>=4.21,<5" \
+            "referencing>=0.32,<1" \
+            "pyyaml>=6,<7"
+
+      - name: Run schema fixture suite
+        run: python tests/schema/run.py

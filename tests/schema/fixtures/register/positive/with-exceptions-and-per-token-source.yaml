@@ -1,0 +1,17 @@
+id: register.fr_CA
+source: native-speaker:dlb
+form: formal
+pronoun: vous
+forbidden_tokens:
+  - token: tu
+    context: standalone_word
+    severity: error
+    source: native-speaker:dlb
+  - token: toi
+    context: standalone_word
+    severity: error
+exceptions:
+  - token: tu
+    reason: "Quoted speech in user-supplied content; never appears in UI strings."
+    scope: user_content
+authority_refs: [OQLF]

@@ -1,0 +1,8 @@
+__meta__:
+  reason: "P1-1 acceptance — source field is required (string or null)."
+  expected_error_path: /
+id: register.de_AT
+form: formal
+pronoun: Sie
+forbidden_tokens: []
+exceptions: []

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onetimesecret.github.io/translation-rules/schema/glossary.schema.json",
+  "title": "Locale Glossary",
+  "description": "Per-locale glossary with sense-split terms and worked examples. Per SPEC.md §2.2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "source", "terms"],
+  "properties": {
+    "id": {
+      "$ref": "base.schema.json#/$defs/dottedId",
+      "description": "Dotted ID for the glossary, e.g. glossary.de_AT."
+    },
+    "source": { "$ref": "base.schema.json#/$defs/source" },
+    "terms": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/term" }
+    }
+  },
+  "$defs": {
+    "term": {
+      "description": "A glossary term. id is uuid-form; key is the human-readable grep target.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "key"],
+      "properties": {
+        "id": { "$ref": "base.schema.json#/$defs/uuidId" },
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable identifier, e.g. 'secret_object'. The id 8-char suffix survives renames; this key is the grep target."
+        },
+        "en": {
+          "type": "string",
+          "description": "Source-language form."
+        },
+        "disambiguation": {
+          "$ref": "#/$defs/disambiguation"
+        },
+        "examples": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/example" }
+        },
+        "rule_refs": {
+          "type": "array",
+          "items": { "$ref": "base.schema.json#/$defs/dottedId" },
+          "uniqueItems": true
+        },
+        "rationale": { "type": "string" },
+        "source": { "$ref": "base.schema.json#/$defs/source" }
+      },
+      "patternProperties": {
+        "^[a-z]{2,3}(_[A-Z]{2})?$": {
+          "description": "Locale-keyed target form (e.g. de_AT: Geheimnis). May be a single string or a sense-split mapping.",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z][a-zA-Z0-9_-]*$": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["target"],
+                  "properties": {
+                    "target": { "type": "string", "minLength": 1 },
+                    "rule_ref": { "$ref": "base.schema.json#/$defs/dottedId" },
+                    "rationale": { "type": "string" }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "disambiguation": {
+      "description": "Heuristic guidance for picking among senses.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "heuristic": { "type": "string" },
+        "key_patterns": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "example": {
+      "description": "A worked translation example. Example IDs use the uuid form ex.<key>#<8hex>.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source", "target", "verdict"],
+      "properties": {
+        "id": { "$ref": "base.schema.json#/$defs/uuidId" },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Source-language string (typically English)."
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Target-language string."
+        },
+        "verdict": {
+          "type": "string",
+          "enum": ["good", "bad", "borderline"]
+        },
+        "rule_refs": {
+          "type": "array",
+          "items": { "$ref": "base.schema.json#/$defs/dottedId" },
+          "uniqueItems": true
+        },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

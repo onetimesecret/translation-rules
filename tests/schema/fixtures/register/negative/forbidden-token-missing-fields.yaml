@@ -1,0 +1,11 @@
+__meta__:
+  reason: "Each forbidden_token entry requires token, context, severity. Missing 'context' should fail."
+  expected_error_path: /forbidden_tokens/0
+id: register.de_AT
+source: SPEC.md#1
+form: formal
+pronoun: Sie
+forbidden_tokens:
+  - token: du
+    severity: error
+exceptions: []

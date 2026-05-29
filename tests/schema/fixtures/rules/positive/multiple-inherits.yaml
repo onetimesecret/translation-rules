@@ -1,0 +1,4 @@
+id: rules.pt_PT
+source: native-speaker:tba
+inherits: [rules.pt, base]
+rules: []

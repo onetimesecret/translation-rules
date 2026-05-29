@@ -1,0 +1,6 @@
+__meta__:
+  reason: "inherits as a list must have at least one entry; an empty list is meaningless."
+  expected_error_path: /inherits
+id: rules.de_AT
+source: SPEC.md
+inherits: []

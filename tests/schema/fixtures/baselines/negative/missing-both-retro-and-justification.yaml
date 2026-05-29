@@ -1,0 +1,9 @@
+__meta__:
+  reason: "Each baseline entry requires retro_id OR justification_doc (P1-1 acceptance: 'one of two')."
+  expected_error_path: /baselines/de_AT
+id: baselines
+source: SPEC.md
+baselines:
+  de_AT:
+    commit: b08e59838
+    invariants: ["register.de_AT.form=formal"]

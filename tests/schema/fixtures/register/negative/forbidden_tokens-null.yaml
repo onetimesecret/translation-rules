@@ -1,0 +1,9 @@
+__meta__:
+  reason: "SPEC.md §2.2 — forbidden_tokens: null is the headline failure case schemas exist to reject."
+  expected_error_path: /forbidden_tokens
+id: register.de_AT
+source: SPEC.md#1
+form: formal
+pronoun: Sie
+forbidden_tokens: null
+exceptions: []

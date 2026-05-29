@@ -1,0 +1,13 @@
+id: rules.de_AT
+source: SPEC.md#7
+inherits: rules.de
+merge_strategy: append
+rules:
+  - id: rule.de_AT.formality
+    modality: MUST
+    statement: "de_AT uses formal Sie-form throughout product UI and email content."
+    severity: error
+    rule_ref: register.de_AT.formality
+register_ref: register.de_AT
+glossary_ref: glossary.de_AT
+baseline_ref: baselines.de_AT

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onetimesecret.github.io/translation-rules/schema/base.schema.json",
+  "title": "Universal Rules (base.yaml)",
+  "description": "Validates the top-level base.yaml of universal rules; also serves as the shared $defs library for sibling schemas. Per SPEC.md §2.1, §2.2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "source"],
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/dottedId",
+      "description": "Universal rules root ID, e.g. 'base'."
+    },
+    "source": { "$ref": "#/$defs/source" },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ruleItem" }
+    },
+    "anti_patterns": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/antiPatternItem" }
+    },
+    "context": {
+      "description": "Project-specific informational notes; not binding. SPEC §2.3.",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "dottedId": {
+      "description": "Dotted-path identifier for rule/register/baseline IDs. Each segment starts alphanumeric; locale-code segments may include uppercase region tags (de_AT, pt_PT). Rule keys may contain hyphens (register-lock).",
+      "type": "string",
+      "pattern": "^[a-z][a-zA-Z0-9_-]*(\\.[a-zA-Z0-9][a-zA-Z0-9_-]*)*$"
+    },
+    "uuidId": {
+      "description": "Stable identifier for terms and worked examples. <kind>.<key>#<8hex>, per SPEC.md §4. Suffix is exactly 8 lowercase hex digits.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*\\.[a-z][a-zA-Z0-9_-]*#[0-9a-f]{8}$"
+    },
+    "retroId": {
+      "description": "Retrospective ID format: YYYY-MM-DD-<slug>. Matches the filename without .md.",
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}-[a-zA-Z0-9_-]+$"
+    },
+    "isoDate": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "commitSha": {
+      "description": "Short or full git commit SHA.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$"
+    },
+    "localeCode": {
+      "description": "Locale code (e.g. de, de_AT, pt_PT, zh).",
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(_[A-Z]{2})?$"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["error", "warning", "info"]
+    },
+    "modality": {
+      "description": "RFC 2119-style modality of a rule.",
+      "type": "string",
+      "enum": ["MUST", "MUST_NOT", "SHOULD", "SHOULD_NOT", "MAY"]
+    },
+    "mergeStrategy": {
+      "type": "string",
+      "enum": ["append", "replace", "prepend", "dedup"]
+    },
+    "source": {
+      "description": "Provenance pointer — SPEC reference, reviews/<date>/ path, native-speaker:<initials>, or null when explicitly unsourced. Required field on every rule file.",
+      "type": ["string", "null"]
+    },
+    "ruleItem": {
+      "description": "A single rule. id is a dotted path; statement is the human-readable rule.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "modality", "statement", "severity"],
+      "properties": {
+        "id": { "$ref": "#/$defs/dottedId" },
+        "modality": { "$ref": "#/$defs/modality" },
+        "statement": { "type": "string", "minLength": 1 },
+        "severity": { "$ref": "#/$defs/severity" },
+        "rule_ref": { "$ref": "#/$defs/dottedId" },
+        "docs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "rationale": { "type": "string" },
+        "source": { "$ref": "#/$defs/source" }
+      }
+    },
+    "antiPatternItem": {
+      "description": "A pattern to avoid. Has the same shape as a rule but lives in a separate partition.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement"],
+      "properties": {
+        "id": { "$ref": "#/$defs/dottedId" },
+        "statement": { "type": "string", "minLength": 1 },
+        "severity": { "$ref": "#/$defs/severity" },
+        "rule_ref": { "$ref": "#/$defs/dottedId" },
+        "docs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "rationale": { "type": "string" },
+        "source": { "$ref": "#/$defs/source" }
+      }
+    }
+  }
+}

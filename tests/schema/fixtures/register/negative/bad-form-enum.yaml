@@ -1,0 +1,9 @@
+__meta__:
+  reason: "form must be one of formal | informal | mixed | other."
+  expected_error_path: /form
+id: register.de_AT
+source: null
+form: respectful
+pronoun: Sie
+forbidden_tokens: []
+exceptions: []

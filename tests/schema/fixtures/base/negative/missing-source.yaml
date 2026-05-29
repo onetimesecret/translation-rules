@@ -1,0 +1,5 @@
+__meta__:
+  reason: "source is required on every rule file (P1-1 acceptance)."
+  expected_error_path: /
+id: base
+rules: []
