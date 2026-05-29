@@ -19,13 +19,14 @@ Extend the app-only `SPEC.md` (rule-system that prevents the 2026-04-12 de_AT fo
 
 ## Current state
 - **Done (committed):** P1-1 (6 JSON schemas), P1-2 (resolver: load/validate/inheritance/merge/ids — tested). No production YAML content yet by design.
-- **Uncommitted (this session):** `SPEC-cross-property.md` (the deliverable), `HANDOFF.md`. `en-translation-docs/` also shows untracked.
+  - `SPEC-cross-property.md` (the deliverable), `HANDOFF.md`. `en-translation-docs/` also shows untracked.
 - **Two decisions (DECIDED 2026-05-29):** (1) source inversion runs as the **first act of Phase 1.5** (after P1-3 emit), short docs-guidance freeze during cutover; (2) `surface` facet lands **at first prose migration** (first docs locale, Phase 1.5) per SPEC §8 — not now. Both per the doc's recommendations.
 - **Not started:** P1-3 (resolver lint + dual emit md/JSON) — blocks everything downstream including the inversion.
 
 ## Key files
 - `SPEC.md` — app-scoped authority design (the spine; don't rewrite)
 - `SPEC-cross-property.md` — this session's deliverable
+- `P1-3-PLAN.md`
 - `.github/ISSUE_DRAFTS/00-clearinghouse.md` — phased rollout
 - `resolver/{resolve,merge,inheritance,loader,ids,validate}.py` — P1-2, done
 - `schema/*.schema.json` — P1-1, done
@@ -45,7 +46,5 @@ git --no-pager log --oneline -5
 python tests/schema/run.py && python tests/inheritance/run.py
 ```
 
-## Likely next steps
-1. User decides on the two open decisions.
-2. If proceeding: scope P1-3 (lint + emit) — prerequisite for the inversion and all property consumption.
-3. Consider committing `SPEC-cross-property.md` (and deciding whether to keep the shallow clones).
+## Next steps
+1. Proceed with P1-3 (lint + emit) — prerequisite for the inversion and all property consumption.
