@@ -1,0 +1,6 @@
+{
+  "_provenance": "Verbatim 'post' strings from b08e59838 (2026-04-12 de_AT register flip). See reviews/2026-04-12/cross-locale-audit.md lines 41–48 for the first two; the third (hat dir … geschickt) is paraphrased in the QA brief from the same incident's email.json. Expected: lint-register exits 1 with at least one 'deine' and one 'dir' match.",
+  "verify_email": "Bitte verifiziere deine E-Mail",
+  "session_auth": "Gib deine Anmeldedaten ein",
+  "incoming": "%{sender_email} hat dir ein Geheimnis geschickt"
+}

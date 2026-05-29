@@ -1,0 +1,71 @@
+name: lint-register
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint-register:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install yq (pinned + checksum-verified)
+        env:
+          # Pin to a known release. Bump deliberately, not via `latest`.
+          # Source: https://github.com/mikefarah/yq/releases/tag/v4.53.2
+          YQ_VERSION: v4.53.2
+          # SHA-256 of yq_linux_amd64, extracted from the release's
+          # `checksums` file via the upstream `extract-checksum.sh` helper:
+          #   ./extract-checksum.sh SHA-256 yq_linux_amd64
+          # Verify by re-running that helper against the release artifacts
+          # before bumping YQ_VERSION.
+          YQ_SHA256: d56bf5c6819e8e696340c312bd70f849dc1678a7cda9c2ad63eebd906371d56b
+        run: |
+          set -euo pipefail
+          tmpdir="$(mktemp -d)"
+          curl -fsSL -o "${tmpdir}/yq" \
+            "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"
+          echo "${YQ_SHA256}  ${tmpdir}/yq" | sha256sum -c -
+          sudo install -m 0755 "${tmpdir}/yq" /usr/local/bin/yq
+          rm -rf "${tmpdir}"
+          yq --version
+
+      - name: Validate register.yaml files parse
+        run: |
+          shopt -s nullglob
+          fail=0
+          for f in locales/*/register.yaml; do
+            if ! yq '.' "$f" >/dev/null 2>&1; then
+              echo "::error file=$f::register.yaml is not valid YAML"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: Self-test linter against fixtures
+        run: |
+          # Phase 0 linter has no real content to scan in this repo;
+          # we exercise --dry-run for every authored locale to confirm the
+          # token list parses end-to-end. Real content scanning happens in
+          # the app repo's CI gate (P1-4b).
+          shopt -s nullglob
+          for d in locales/*/; do
+            locale="$(basename "$d")"
+            if [ -f "${d}register.yaml" ]; then
+              echo "::group::dry-run ${locale}"
+              bin/lint-register "$locale" "non-existent-glob/*" --dry-run
+              echo "::endgroup::"
+            fi
+          done
+
+      - name: Fixture-driven test harness
+        # Reproduces the 2026-04-12 de_AT regression strings and asserts
+        # exit codes for clean / violation / binary-skip / empty-glob /
+        # missing-register paths. Failure here means the linter's contract
+        # has drifted; investigate before merging.
+        run: bash tests/lint-register.sh

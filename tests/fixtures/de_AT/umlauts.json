@@ -1,0 +1,6 @@
+{
+  "_provenance": "Strings with umlauts (ä/ö/ü) adjacent to forbidden-token-shaped letter sequences. None contain a forbidden token. Regression check on the LC_ALL=C change (commit 108a95b) — if grep's \\b semantics drift under a UTF-8 host locale, false positives could surface here. Expected: lint-register exits 0.",
+  "about_data": "Über Ihre Daten",
+  "for_verification": "Für die Verifizierung",
+  "please_check": "Bitte prüfen Sie das Dokument"
+}

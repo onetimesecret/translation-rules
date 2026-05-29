@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+# lint-register — Phase 0 forbidden-token grep against locale content.
+#
+# Usage:
+#   bin/lint-register <locale> <path-glob> [--dry-run]
+#
+# Reads locales/<locale>/register.yaml, extracts forbidden_tokens via yq,
+# then greps each file matched by <path-glob> for each token using its
+# context rule. Exits non-zero if any forbidden token is found.
+#
+# Schema enforcement is out of scope (see P1-1). yq parsability is the bar.
+#
+# Matching policy (issue #4 AC originally specified case-sensitive; widened
+# during P0-2 follow-up): grep runs case-insensitive (-i) so sentence-initial
+# capitals like "Du" / "Dein" are caught. Tokens in `forbidden_tokens` are
+# all lowercase informal pronouns/possessives with no formal-context
+# homographs in German, so the false-positive risk is negligible.
+#
+# Locale: grep is invoked with LC_ALL=C so `\b` uses byte-boundary semantics.
+# This keeps word boundaries stable around umlauts (ä/ö/ü/ß) regardless of
+# the host locale; without it, GNU grep's POSIX `\w` definition can shift
+# under UTF-8 locales and produce inconsistent matches.
+#
+# Exit codes:
+#   0  clean (or --dry-run)
+#   1  one or more forbidden tokens matched
+#   2  usage / config error (bad args, missing yq, bad register.yaml)
+#   3  glob expanded to zero files (likely misconfigured CI path)
+
+set -euo pipefail
+
+usage() {
+  cat >&2 <<'EOF'
+Usage: bin/lint-register <locale> <path-glob> [--dry-run]
+
+  <locale>     Locale code matching locales/<locale>/register.yaml
+  <path-glob>  Quoted shell glob of content files to scan (e.g.,
+               "onetimesecret/locales/content/de_AT/*.json")
+  --dry-run    Print tokens that would be checked; do not scan files.
+
+Exit codes:
+  0  clean (or --dry-run)
+  1  forbidden token(s) matched
+  2  usage / config error
+  3  glob expanded to zero files (likely misconfigured path)
+EOF
+  exit 2
+}
+
+if ! command -v yq >/dev/null 2>&1; then
+  echo "error: yq is required (https://github.com/mikefarah/yq). Install with: brew install yq" >&2
+  exit 2
+fi
+
+DRY_RUN=0
+ARGS=()
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) DRY_RUN=1 ;;
+    -h|--help) usage ;;
+    *) ARGS+=("$arg") ;;
+  esac
+done
+
+if [ "${#ARGS[@]}" -lt 2 ]; then
+  usage
+fi
+
+LOCALE="${ARGS[0]}"
+GLOB="${ARGS[1]}"
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+REGISTER_FILE="${REPO_ROOT}/locales/${LOCALE}/register.yaml"
+
+if [ ! -f "$REGISTER_FILE" ]; then
+  echo "error: register file not found: $REGISTER_FILE" >&2
+  exit 2
+fi
+
+if ! yq '.' "$REGISTER_FILE" >/dev/null 2>&1; then
+  echo "error: register file is not valid YAML: $REGISTER_FILE" >&2
+  exit 2
+fi
+
+# Extract token+context pairs as TAB-separated rows.
+mapfile -t ROWS < <(yq -r '.forbidden_tokens[] | [.token, .context] | @tsv' "$REGISTER_FILE")
+
+if [ "${#ROWS[@]}" -eq 0 ]; then
+  echo "warning: ${LOCALE} has no forbidden_tokens; nothing to lint" >&2
+  exit 0
+fi
+
+if [ "$DRY_RUN" -eq 1 ]; then
+  echo "would check ${#ROWS[@]} tokens for locale ${LOCALE}:"
+  for row in "${ROWS[@]}"; do
+    token="${row%%	*}"
+    context="${row##*	}"
+    echo "  ${token}  (${context})"
+  done
+  exit 0
+fi
+
+# Expand glob safely; tolerate no-match.
+shopt -s nullglob
+# shellcheck disable=SC2206  # Intentional word-split of user-supplied glob.
+FILES=( $GLOB )
+shopt -u nullglob
+
+if [ "${#FILES[@]}" -eq 0 ]; then
+  echo "error: no files matched glob: $GLOB" >&2
+  echo "  (a CI gate that scans nothing silently is worse than no gate; check the path)" >&2
+  exit 3
+fi
+
+VIOLATIONS=0
+
+for row in "${ROWS[@]}"; do
+  token="${row%%	*}"
+  context="${row##*	}"
+
+  case "$context" in
+    standalone_word) pattern="\\b${token}\\b" ;;
+    word_prefix)     pattern="\\b${token}" ;;
+    *)
+      echo "error: unknown context '${context}' for token '${token}' in ${REGISTER_FILE}" >&2
+      exit 2
+      ;;
+  esac
+
+  # grep flags:
+  #   -E extended regex; -n line numbers; -H print filename
+  #   -i case-insensitive (catches sentence-initial Du/Dein/Dich/etc.)
+  #   -I skip binary files (avoids "Binary file X matches" garbage output)
+  # LC_ALL=C pins byte semantics so `\b` behaves consistently around
+  # umlauts (ä/ö/ü/ß); host UTF-8 locales can otherwise drift the boundary.
+  while IFS= read -r hit; do
+    file="${hit%%:*}"
+    rest="${hit#*:}"
+    lineno="${rest%%:*}"
+    matched="${rest#*:}"
+    echo "${file}:${lineno}: forbidden token '${token}' (${context}) — ${matched}"
+    VIOLATIONS=$((VIOLATIONS + 1))
+  done < <(LC_ALL=C grep -E -n -H -i -I "$pattern" "${FILES[@]}" 2>/dev/null || true)
+done
+
+if [ "$VIOLATIONS" -gt 0 ]; then
+  echo ""
+  echo "FAIL: ${VIOLATIONS} forbidden-token match(es) in ${LOCALE} (scanned ${#FILES[@]} file(s))" >&2
+  exit 1
+fi
+
+echo "OK: ${LOCALE} clean — ${#ROWS[@]} tokens checked across ${#FILES[@]} file(s)"

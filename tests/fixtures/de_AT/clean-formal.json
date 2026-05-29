@@ -1,0 +1,6 @@
+{
+  "_provenance": "Verbatim 'pre' strings from b08e59838's parent — the formal de_AT register that the regression destroyed. See reviews/2026-04-12/cross-locale-audit.md lines 42–46. Expected: lint-register exits 0.",
+  "verify_email": "Bitte verifizieren Sie Ihre E-Mail",
+  "session_auth": "Geben Sie Ihre Anmeldedaten ein",
+  "ready_message": "Ihre sichere Nachricht ist bereit"
+}

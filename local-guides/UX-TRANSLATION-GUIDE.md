@@ -57,6 +57,35 @@ Resolution: P3 context → Use full term in heading, abbreviation in button
 Example: Section titled "Two-Factor Authentication" + button "Enable MFA"
 ```
 
+## Anti-pattern: harmonize vs rewrite
+
+**Rule of thumb:** harmonize = keys only; never text rewrites.
+
+A task labeled "harmonize" is a structural pass, not a translation pass. The
+boundary is not a soft preference — it is the line between safe automation
+and the failure mode that produced the 2026-04-12 de_AT register flip
+(see [`retrospectives/2026-04-12-de_AT-register-flip.md`](../retrospectives/2026-04-12-de_AT-register-flip.md)).
+
+**Harmonization MAY touch:**
+- Key paths and key names (renames, hierarchy alignment)
+- Variable placeholder names and order (`{name}` ↔ `{user}`, interpolation
+  syntax)
+- JSON/YAML structure: indentation, key ordering, file splits
+- Whitespace, trailing commas, encoding fixes
+
+**Harmonization MUST NOT touch:**
+- Register or formality (e.g., `Sie` ↔ `du`, `vous` ↔ `tu`, `Ön` ↔ `te`,
+  `您` ↔ `你`)
+- Tone, voice, or imperative person
+- Terminology or glossary choices (e.g., `Geheimnis` ↔ `Nachricht`,
+  `besked` ↔ `hemmelighed`)
+- The text content of any translated string value
+
+**If a task labeled "harmonize" appears to require text rewrites, the task
+is mislabeled.** Stop. File a retrospective or escalate. Do not reframe a
+text rewrite as harmonization to fit the task description — that is exactly
+the path that produced the cross-locale contamination on 2026-04-10.
+
 ## Button Text Strategy
 
 ### Core Principle: Context + Concise Action
