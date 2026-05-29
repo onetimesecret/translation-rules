@@ -1,0 +1,59 @@
+---
+title: Translations & Localization
+description: Information about available language translations and how to contribute to localizing Onetime Secret
+---
+
+
+Onetime Secret documentation is available in multiple languages to serve our diverse global community. We're continuously working to expand our language offerings and improve existing translations.
+
+## Available Languages
+
+Onetime Secret documentation is currently available in the following languages:
+
+- [**English (en)**](/en/) - Default and reference version
+- [**Български (bg)**](/bg/) - Bulgarian
+- [**Dansk (da)**](/da/) - Danish
+- [**Deutsch (de)**](/de/) - German
+- [**Español (es)**](/es/) - Spanish
+- [**Français (fr)**](/fr/) - French
+- [**Italiano (it)**](/it/) - Italian
+- [**日本語 (ja)**](/ja/) - Japanese
+- [**한국어 (ko)**](/ko/) - Korean
+- [**Māori (mi)**](/mi/) - Māori
+- [**Nederlands (nl)**](/nl/) - Dutch
+- [**Polski (pl)**](/pl/) - Polish
+- [**Português (pt-BR)**](/pt-br/) - Portuguese (Brazil)
+- [**Svenska (sv)**](/sv/) - Swedish
+- [**Türkçe (tr)**](/tr/) - Turkish
+- [**Українська (uk)**](/uk/) - Ukrainian
+- [**简体中文 (zh-CN)**](/zh-cn/) - Simplified Chinese
+
+You can switch between languages using the language selector in the top-right corner of any page.
+
+## Contributing Translations
+
+We welcome contributions to our translation efforts. If you'd like to help translate Onetime Secret documentation to your language, please follow these guidelines:
+
+### Translation Workflow
+
+1. **Locate content**: Original English content is stored in the `/content/docs/en/` directory
+2. **Create corresponding files**: Create matching files in your language's directory (e.g., `/content/docs/de/`)
+3. **Keep structure**: Maintain the same directory structure and file naming conventions
+4. **Preserve frontmatter**: Copy all frontmatter fields, translating only the values
+5. **Submit your work**: Use [GitHub Pull Requests](https://github.com/onetimesecret/onetimesecret) for submissions
+
+### Translation Standards
+
+For consistent, high-quality translations:
+
+- Follow our [Translation Style Guide](/en/translations/guide) for comprehensive guidelines on tone, voice, and formatting
+- Refer to our [Terminology Glossary](/en/translations/glossary) for standardized translations of key terms
+- Use the [Quality Checklist](/en/translations/universal/quality-checklist) to verify your translation meets all requirements before submission
+
+## Automatic Fallback
+
+When content is not available in your selected language, you'll automatically see the English version with a notification indicating the content hasn't been translated yet.
+
+## Need Help?
+
+If you have questions about translations or need assistance contributing, please [contact our team](https://onetimesecret.com/feedback) or open an issue on our [GitHub repository](https://github.com/onetimesecret/onetimesecret).
