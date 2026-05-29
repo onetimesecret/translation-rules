@@ -1,0 +1,4 @@
+id: rules.de_AT
+source: tests/inheritance/fixtures/undefined-parent
+inherits: rules.does_not_exist
+rules: []

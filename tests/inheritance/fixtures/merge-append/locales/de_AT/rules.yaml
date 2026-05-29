@@ -1,0 +1,11 @@
+id: rules.de_AT
+source: tests/inheritance/fixtures/merge-append
+inherits: base
+merge_strategy: append
+rules:
+  - id: rule.child
+    modality: MUST
+    statement: Child rule.
+    severity: error
+context:
+  - "child context line"

@@ -1,0 +1,9 @@
+id: rules.de_AT
+source: tests/inheritance/fixtures/dangling-rule-ref
+inherits: base
+rules:
+  - id: rule.de_AT.cite
+    modality: MUST
+    statement: References a rule that does not exist.
+    severity: error
+    rule_ref: rule.does_not_exist

@@ -29,3 +29,6 @@ jobs:
 
       - name: Run schema fixture suite
         run: python tests/schema/run.py
+
+      - name: Run resolver inheritance fixture suite
+        run: python tests/inheritance/run.py

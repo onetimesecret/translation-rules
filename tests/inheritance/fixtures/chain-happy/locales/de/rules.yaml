@@ -1,0 +1,8 @@
+id: rules.de
+source: tests/inheritance/fixtures/chain-happy
+inherits: base
+rules:
+  - id: rule.de-shared
+    modality: SHOULD
+    statement: Prefer Sie/Ihr in business contexts.
+    severity: warning

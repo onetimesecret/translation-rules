@@ -1,0 +1,9 @@
+id: base
+source: tests/inheritance/fixtures/merge-replace
+rules:
+  - id: rule.parent
+    modality: SHOULD
+    statement: Parent rule.
+    severity: warning
+context:
+  - "parent context line"
