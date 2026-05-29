@@ -30,7 +30,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
+from datetime import datetime, timezone
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
@@ -56,6 +58,10 @@ from resolver.loader import (
     load_yaml_file,
 )
 from resolver.merge import MergeError, merge_chain
+from resolver.model import ModelError, build_model
+from resolver.lint import lint_model
+from resolver.emit_json import emit_json
+from resolver.emit_markdown import emit_markdown
 from resolver.validate import (
     SchemaBundle,
     ValidationFailed,
@@ -404,6 +410,13 @@ def resolve_locale(
     if baselines is not None:
         _check_refs("baselines", baselines.data, index, errors)
     for retro in retros:
+        # A retro's refs are only meaningful for the locales it targets. A
+        # de_AT-scoped retro referencing rule.de_AT-formality must not be
+        # ref-checked against the `de` layer's index (where that rule does not
+        # exist). Universal retros (empty affected_locales) check everywhere.
+        locs = retro.data.get("affected_locales") or []
+        if locs and locale not in locs:
+            continue
         _check_refs(f"retro {retro.path.name}", retro.data, index, errors)
 
     if errors:
@@ -427,6 +440,11 @@ def resolve_locale(
         "provenance": provenance,
         "chain": [n.locale for n in chain_nodes],
         "index_records": len(index.all_records()),
+        # Raw per-locale leaves + retros surfaced for the P1-3 assemble step
+        # (resolver/model.py). emit/lint are pure projections of these.
+        "register": next((f.data for f in locale_files if f.schema_name == "register"), None),
+        "glossary": next((f.data for f in locale_files if f.schema_name == "glossary"), None),
+        "retros": [r.data for r in retros],
     }
 
 
@@ -434,11 +452,98 @@ class ResolutionError(Exception):
     """Raised when ID resolution fails (dangling refs, etc.)."""
 
 
+class LintFailed(Exception):
+    """Raised when --lint finds an error-severity issue."""
+
+
+def _resolve_source_commit(repo_root: Path, override: str | None) -> str:
+    """The translation-rules commit pinned into emitted artifacts. Explicit
+    override wins (tests pass a stub); else the rules repo HEAD; else UNPINNED
+    when not a git tree."""
+    if override:
+        return override
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
+            capture_output=True, text=True, check=True,
+        )
+        return out.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "UNPINNED"
+
+
+def _discover_locales(locales_dir: Path) -> list[str]:
+    return sorted(
+        p.name for p in locales_dir.iterdir()
+        if p.is_dir() and not p.name.startswith(".")
+    ) if locales_dir.exists() else []
+
+
+def _emit_for_locale(
+    locale: str,
+    result: dict[str, Any],
+    *,
+    formats: set[str],
+    do_lint: bool,
+    source_commit: str,
+    generated_at: str,
+    emit_dir: Path,
+) -> dict[str, Any]:
+    """Assemble the model once, then project to the requested outputs + lint."""
+    model = build_model(
+        locale=locale,
+        merged_rules=result["merged_rules"],
+        register=result.get("register"),
+        glossary=result.get("glossary"),
+        retros=result.get("retros") or [],
+        source_commit=source_commit,
+        generated_at=generated_at,
+    )
+    written: list[str] = []
+    if "json" in formats:
+        path = emit_dir / ".resolved" / f"{locale}.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(emit_json(model), encoding="utf-8")
+        written.append(str(path))
+    if "md" in formats:
+        path = emit_dir / "for-translators" / f"{locale}.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(emit_markdown(model, source_commit), encoding="utf-8")
+        written.append(str(path))
+
+    lint_result = None
+    if do_lint:
+        lint_result = lint_model(model)
+    return {"model": model, "written": written, "lint": lint_result}
+
+
+def _emit_formats(raw: str | None) -> set[str]:
+    if not raw:
+        return set()
+    out = {f.strip() for f in raw.split(",") if f.strip()}
+    unknown = out - {"md", "json"}
+    if unknown:
+        raise argparse.ArgumentTypeError(f"unknown --emit format(s): {sorted(unknown)}; valid: md, json")
+    return out
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(prog="resolver/resolve.py", description=__doc__)
-    parser.add_argument("locale", help="Locale code, e.g. de_AT.")
+    parser.add_argument("locale", nargs="?", help="Locale code, e.g. de_AT. Omit with --all.")
+    parser.add_argument("--all", action="store_true",
+                        help="Resolve every locale under --locales-dir.")
     parser.add_argument("--validate-only", action="store_true",
-                        help="Run pipeline but do not write resolver/index.json.")
+                        help="Run pipeline but do not write resolver/index.json or artifacts.")
+    parser.add_argument("--lint", action="store_true",
+                        help="Run step-6 lint on the resolved model; non-zero exit on error findings.")
+    parser.add_argument("--emit", type=_emit_formats, default=set(),
+                        help="Comma-separated artifacts to write: md,json (default: none).")
+    parser.add_argument("--emit-dir", default=".",
+                        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/for-translators/ (default: .).")
+    parser.add_argument("--source-commit", default=None,
+                        help="Override the translation-rules SHA pinned into artifacts (default: git HEAD or UNPINNED).")
+    parser.add_argument("--generated-at", default=None,
+                        help="Override _meta.generated_at (ISO 8601). Default: now (UTC). Pin for reproducible output.")
     parser.add_argument("--locales-dir", default="locales",
                         help="Directory containing per-locale YAML files (default: locales).")
     parser.add_argument("--base-file", default="base.yaml",
@@ -464,28 +569,70 @@ def main(argv: list[str]) -> int:
         project_root=Path(args.project_root).resolve(),
     )
 
-    try:
-        result = resolve_locale(args.locale, inputs, validate_only=args.validate_only)
-    except (LoaderError, ValidationFailed, InheritanceError, MergeError, ResolutionError, IdError) as exc:
-        print(_format_error("error", exc), file=sys.stderr)
-        return 1
-    except FileNotFoundError as exc:
-        print(_format_error("setup", exc), file=sys.stderr)
-        return 2
-
-    chain_str = " -> ".join(result["chain"]) if result["chain"] else "(no chain)"
-    summary = (
-        f"resolved {args.locale}: chain={chain_str}, "
-        f"refs={result['index_records']} ids indexed"
-    )
-    if args.validate_only:
-        # Per issue #8: --validate-only prints merged tree to stdout, exits 0.
-        json.dump(result["merged_rules"], sys.stdout, indent=2, sort_keys=True)
-        sys.stdout.write("\n")
-        print(summary, file=sys.stderr)
+    if args.all:
+        locales = _discover_locales(inputs.locales_dir)
+        if not locales:
+            print(f"setup: no locale dirs under {inputs.locales_dir}", file=sys.stderr)
+            return 2
+    elif args.locale:
+        locales = [args.locale]
     else:
-        print(summary)
-        print(f"wrote {inputs.index_path}")
+        parser.error("a locale is required unless --all is given")
+
+    source_commit = _resolve_source_commit(inputs.project_root, args.source_commit)
+    generated_at = args.generated_at or datetime.now(timezone.utc).isoformat()
+    emit_dir = Path(args.emit_dir).resolve()
+
+    lint_failures = 0
+    for locale in locales:
+        try:
+            result = resolve_locale(locale, inputs, validate_only=args.validate_only)
+            emitted = _emit_for_locale(
+                locale, result,
+                formats=args.emit,
+                do_lint=args.lint,
+                source_commit=source_commit,
+                generated_at=generated_at,
+                emit_dir=emit_dir,
+            ) if (args.emit or args.lint) else None
+        except (LoaderError, ValidationFailed, InheritanceError, MergeError,
+                ResolutionError, IdError, ModelError) as exc:
+            print(_format_error(f"error ({locale})", exc), file=sys.stderr)
+            return 1
+        except FileNotFoundError as exc:
+            print(_format_error(f"setup ({locale})", exc), file=sys.stderr)
+            return 2
+
+        chain_str = " -> ".join(result["chain"]) if result["chain"] else "(no chain)"
+        summary = (
+            f"resolved {locale}: chain={chain_str}, "
+            f"refs={result['index_records']} ids indexed"
+        )
+
+        if args.validate_only and not args.emit:
+            # Per issue #8: --validate-only prints merged tree to stdout, exits 0.
+            json.dump(result["merged_rules"], sys.stdout, indent=2, sort_keys=True)
+            sys.stdout.write("\n")
+            print(summary, file=sys.stderr)
+        else:
+            print(summary)
+            if not args.validate_only:
+                print(f"wrote {inputs.index_path}")
+        if emitted:
+            for path in emitted["written"]:
+                print(f"emitted {path}")
+            lint_result = emitted["lint"]
+            if lint_result is not None:
+                status = "pass" if lint_result.ok else "FAIL"
+                print(f"lint {locale}: {status} ({len(lint_result.findings)} findings)")
+                for f in lint_result.findings:
+                    print(f"  [{f.severity}] {f.check}: {f.message}", file=sys.stderr)
+                if not lint_result.ok:
+                    lint_failures += 1
+
+    if lint_failures:
+        print(f"lint: {lint_failures} locale(s) failed", file=sys.stderr)
+        return 1
     return 0
 
 
