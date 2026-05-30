@@ -1,0 +1,6 @@
+id: rules.de_AT
+source: SPEC.md
+inherits: base
+merge_strategy: append
+register_ref: register.de_AT
+glossary_ref: glossary.de_AT

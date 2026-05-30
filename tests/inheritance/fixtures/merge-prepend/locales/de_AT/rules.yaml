@@ -1,0 +1,9 @@
+id: rules.de_AT
+source: tests/inheritance/fixtures/merge-prepend
+inherits: base
+merge_strategy: prepend
+rules:
+  - id: rule.child
+    modality: MUST
+    statement: Child rule.
+    severity: error

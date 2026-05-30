@@ -1,0 +1,25 @@
+id: glossary.de_AT
+source: reviews/2026-04-12/
+terms:
+  - id: term.secret_object#7f3a91c2
+    key: secret_object
+    en: secret
+    de_AT:
+      noun:
+        target: Geheimnis
+        rule_ref: rule.register-lock
+    examples:
+      - id: ex.secret-good#a12b45ef
+        source: Your secret has been created.
+        target: Ihr Geheimnis wurde erstellt.
+        verdict: good
+      - id: ex.secret-inflected#c56d89bb
+        source: The secret's link has expired.
+        target: Der Link des Geheimnisses ist abgelaufen.
+        verdict: good
+        note: head-position genitive inflection; word_prefix must match
+      - id: ex.secret-bad#b34c67aa
+        source: Your secret has been created.
+        target: Dein Geheimnis wurde erstellt.
+        verdict: bad
+        note: informal possessive Dein; demonstrates the wrong form

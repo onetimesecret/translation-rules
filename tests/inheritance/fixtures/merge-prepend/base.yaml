@@ -1,0 +1,7 @@
+id: base
+source: tests/inheritance/fixtures/merge-prepend
+rules:
+  - id: rule.parent
+    modality: SHOULD
+    statement: Parent rule.
+    severity: warning

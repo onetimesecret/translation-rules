@@ -1,0 +1,8 @@
+id: rules.de_AT
+source: tests/inheritance/fixtures/merge-dedup
+inherits: base
+merge_strategy: dedup
+rules: []
+context:
+  - "shared line"
+  - "child-only line"

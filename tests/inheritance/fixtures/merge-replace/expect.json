@@ -1,0 +1,9 @@
+{
+  "kind": "positive",
+  "locale": "de_AT",
+  "chain": ["de_AT", "base"],
+  "merge_strategy": "replace",
+  "rule_ids": ["rule.child"],
+  "context_count": 1,
+  "context_first": "child context line"
+}

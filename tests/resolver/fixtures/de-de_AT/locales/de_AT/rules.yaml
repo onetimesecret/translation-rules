@@ -1,0 +1,12 @@
+id: rules.de_AT
+source: reviews/2026-04-12/
+inherits: rules.de
+merge_strategy: append
+rules:
+  - id: rule.de_AT-formality
+    modality: MUST
+    statement: de_AT uses the formal Sie-form throughout product UI and email content.
+    severity: error
+    rule_ref: register.de_AT
+register_ref: register.de_AT
+glossary_ref: glossary.de_AT

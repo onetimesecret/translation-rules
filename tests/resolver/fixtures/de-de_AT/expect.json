@@ -1,0 +1,11 @@
+{
+  "locale": "de_AT",
+  "source_commit": "TESTSHA0",
+  "generated_at": "2026-05-29T00:00:00+00:00",
+  "json_golden": "expected/de_AT.resolved.json",
+  "md_golden": "expected/de_AT.for-translators.md",
+  "lint_ok": true,
+  "declined_includes": ["2026-05-01-decline-du-for-marketing"],
+  "declined_excludes": ["2026-05-02-fr-only-decline"],
+  "fold": {"rule.de_AT-formality": ["2026-04-12-de_at-formality"]}
+}

@@ -1,0 +1,10 @@
+id: register.de_AT
+source: SPEC.md
+form: formal
+pronoun: Sie
+forbidden_tokens:
+  - token: du
+    context: standalone_word
+    severity: error
+    note: informal pronoun
+exceptions: []

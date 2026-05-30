@@ -1,0 +1,9 @@
+id: base
+source: SPEC.md §2.2
+rules:
+  - id: rule.universal-truth
+    modality: MUST
+    statement: Source-language strings are authoritative.
+    severity: error
+context:
+  - "Universal context line."
