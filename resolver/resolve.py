@@ -35,7 +35,7 @@ import sys
 from datetime import datetime, timezone
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 # Allow running as a script or as a module.
 if __package__ in (None, ""):
@@ -362,7 +362,6 @@ def resolve_locale(
 
     chain_nodes = []
     if rules_files:
-        rules_path = rules_files[0].path
         # Pre-load+validate every parent in the chain.
         def loader(p: Path):
             data = load_yaml_file(p)
