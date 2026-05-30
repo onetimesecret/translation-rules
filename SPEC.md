@@ -18,7 +18,7 @@ The single smallest implementation that would have blocked the 2026-04-12 de_AT 
 - `retrospectives/2026-04-12-de_AT-register-flip.md` with `affected_rules: [register.de_AT.formality]` and `status: applied`
 - One-line anti-pattern in the existing UX guide: "harmonize = keys only; never text rewrites"
 
-**Gate.** App repo CI invokes `bin/lint-register` against `locales/content/<locale>/*.json` for every PR that touches locale content. Zero tolerance. PR blocked if any forbidden token appears.
+**Gate (planned — not yet wired; see §2.4 Status).** App repo CI invokes `bin/lint-register` against `locales/content/<locale>/*.json` for every PR that touches locale content. Zero tolerance. PR blocked if any forbidden token appears. This is the load-bearing gate and does not exist in the app repo today.
 
 **Reversibility.** All Phase 0 artifacts are additive. Removing them restores current state.
 
@@ -139,7 +139,10 @@ _meta: { source_commit, schema_version, generated_at }
 register: { form, pronoun, forbidden_tokens, rule_ref }
 glossary:
   <term>:
-    <sense>: { target, rule_ref, examples: [...] }
+    en: <source>
+    senses: { <sense>: { target, rule_ref } }
+    examples: [...]   # term-level (not sense-nested); each annotated with the
+                      # senses its target matches. See resolver/model.py header.
 rules: [...]        # MUST/MUST NOT items, severity, rule_ref
 context: [...]      # project-specific info, not binding
 rationale_index: { rule_id: [doc_paths] }   # fetch on demand
@@ -151,13 +154,15 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 ### 2.4 CI gates
 
-**This repo:** schema validation; resolver tests (merge, inheritance); lint across every resolved locale; retrospective lifecycle enforcement (§4); `_archive/` firewall — file moves out of it require label approval; forbidden-token grep against embedded examples and docs.
+**Status (2026-05-30).** Most gates below are the target design, not yet wired. Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests) and `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`). Everything else in this section, and every gate in the App-repo block, is **planned** — including the load-bearing one (app-repo forbidden-token grep against real content). No app-repo integration exists yet (no submodule, no content gate). Phases below depend on these landing.
 
-**App repo:** submodule pointer freshness on locale-content PRs; `.resolved/<locale>.json`'s `_meta.source_commit` equals submodule SHA; `forbidden_tokens` grep against `locales/content/<locale>/*.json`; `for-translators/*.md` hash matches resolver output — hand edits rejected.
+**This repo (planned, except the two implemented above):** schema validation; resolver tests (merge, inheritance); lint across every resolved locale; retrospective lifecycle enforcement (§4); `_archive/` firewall — file moves out of it require label approval; forbidden-token grep against embedded examples and docs.
 
-**Cross-repo pipeline gate.** A locale content PR is blocked unless the submodule is current, resolved JSON was regenerated in the same PR, and lint passes. This is what mechanically prevents the next class of "bypass by direct edit."
+**App repo (planned — none built):** submodule pointer freshness on locale-content PRs; `.resolved/<locale>.json`'s `_meta.source_commit` equals submodule SHA; `forbidden_tokens` grep against `locales/content/<locale>/*.json`; `for-translators/*.md` hash matches resolver output — hand edits rejected.
 
-**How the 2026-04 failure mode is mechanically prevented:**
+**Cross-repo pipeline gate (planned).** A locale content PR is blocked unless the submodule is current, resolved JSON was regenerated in the same PR, and lint passes. This is what mechanically prevents the next class of "bypass by direct edit."
+
+**How the 2026-04 failure mode is mechanically prevented (by design — see Status above for what is wired today):**
 1. Change-log-style prose physically lives in `_archive/` or `retrospectives/` — neither is compiled into output.
 2. `for-translators/*.md` is generated and hash-locked. A report cannot be pasted in.
 3. Rules are YAML with schema. Prose cannot reach the `rules` partition without authoring a schema-valid file.
@@ -167,6 +172,8 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 ## 3. Feedback Cycle
 
 The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
+
+**Status (2026-05-30).** The `[CI-ENFORCED: ...]` and `[CI: ...]` annotations below describe the target design. None of the lifecycle gates (7-day orphan timeout, applied-transition PR check, retro→applied on merge, cross-repo lint/hash match) are wired yet — see §2.4 Status for what CI actually runs today. Read the annotations as "intended enforcement," not "current."
 
 ```
             (incident signal OR scheduled audit)
