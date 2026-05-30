@@ -36,8 +36,13 @@ def _is_word_char(ch: str) -> bool:
     return ch.isalnum() or ch == "_"
 
 
-def contains(haystack: str, needle: str, mode: str) -> bool:
-    """True if `needle` is present in `haystack` under `mode`.
+def find_spans(haystack: str, needle: str, mode: str) -> list[tuple[int, int]]:
+    """All (start, end) spans where `needle` matches `haystack` under `mode`.
+
+    Spans index into the *casefolded* haystack, not the original — callers that
+    compare spans across calls (e.g. lint's forbidden-vs-exception containment)
+    must do so consistently in casefolded space, which they do because every
+    span here is computed against the same `_casefold(haystack)`.
 
     - standalone_word: needle bounded by non-word chars on both sides
     - word_prefix:     needle begins a word (left boundary), any suffix allowed
@@ -47,24 +52,31 @@ def contains(haystack: str, needle: str, mode: str) -> bool:
     if mode not in VALID_MODES:
         raise ValueError(f"unknown match mode {mode!r}; valid: {VALID_MODES}")
     if not needle:
-        return False
+        return []
     hay = _casefold(haystack)
     need = _casefold(needle)
-    if mode in ("substring", "any"):
-        return need in hay
-    start = 0
     nlen = len(need)
+    spans: list[tuple[int, int]] = []
+    start = 0
     while True:
         idx = hay.find(need, start)
         if idx < 0:
-            return False
-        left_ok = idx == 0 or not _is_word_char(hay[idx - 1])
-        if mode == "word_prefix":
-            if left_ok:
-                return True
-        else:  # standalone_word
-            right = idx + nlen
-            right_ok = right == len(hay) or not _is_word_char(hay[right])
-            if left_ok and right_ok:
-                return True
+            return spans
+        end = idx + nlen
+        if mode in ("substring", "any"):
+            spans.append((idx, end))
+        else:
+            left_ok = idx == 0 or not _is_word_char(hay[idx - 1])
+            if mode == "word_prefix":
+                if left_ok:
+                    spans.append((idx, end))
+            else:  # standalone_word
+                right_ok = end == len(hay) or not _is_word_char(hay[end])
+                if left_ok and right_ok:
+                    spans.append((idx, end))
         start = idx + 1
+
+
+def contains(haystack: str, needle: str, mode: str) -> bool:
+    """True if `needle` is present in `haystack` under `mode`."""
+    return bool(find_spans(haystack, needle, mode))

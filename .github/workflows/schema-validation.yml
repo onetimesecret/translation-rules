@@ -32,3 +32,6 @@ jobs:
 
       - name: Run resolver inheritance fixture suite
         run: python tests/inheritance/run.py
+
+      - name: Run resolver emit + lint fixture suite
+        run: python tests/resolver/run.py

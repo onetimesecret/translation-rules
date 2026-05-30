@@ -452,10 +452,6 @@ class ResolutionError(Exception):
     """Raised when ID resolution fails (dangling refs, etc.)."""
 
 
-class LintFailed(Exception):
-    """Raised when --lint finds an error-severity issue."""
-
-
 def _resolve_source_commit(repo_root: Path, override: str | None) -> str:
     """The translation-rules commit pinned into emitted artifacts. Explicit
     override wins (tests pass a stub); else the rules repo HEAD; else UNPINNED

@@ -24,7 +24,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from resolver.matching import DEFAULT_TARGET_MODE, contains
+from resolver.matching import DEFAULT_TARGET_MODE, find_spans
 
 FATAL = {"error"}
 
@@ -66,15 +66,22 @@ class LintResult:
         }
 
 
-def _exception_allows(target: str, token: str, exceptions: list[dict[str, Any]]) -> bool:
-    """True if a forbidden-token hit is covered by an allowlist entry: an
-    exception whose token contains the forbidden token and is itself present in
-    the target (e.g. forbidden 'du' inside allowed 'Duden')."""
+def _exception_spans(target: str, exceptions: list[dict[str, Any]]) -> list[tuple[int, int]]:
+    """All occurrence spans of every allowlisted exception token in `target`
+    (casefolded space, matching find_spans)."""
+    spans: list[tuple[int, int]] = []
     for exc in exceptions:
         etok = exc.get("token", "")
-        if contains(etok, token, "substring") and contains(target, etok, "substring"):
-            return True
-    return False
+        spans.extend(find_spans(target, etok, "substring"))
+    return spans
+
+
+def _hit_allowed(hit: tuple[int, int], exception_spans: list[tuple[int, int]]) -> bool:
+    """True iff this forbidden-token hit falls *inside* an allowlisted exception
+    occurrence (e.g. the 'du' span inside a 'Duden' span). A standalone 'du'
+    elsewhere in the same target is not covered just because 'Duden' appears."""
+    hs, he = hit
+    return any(es <= hs and he <= ee for es, ee in exception_spans)
 
 
 def lint_model(model: dict[str, Any]) -> LintResult:
@@ -94,10 +101,14 @@ def lint_model(model: dict[str, Any]) -> LintResult:
             ex_id = ex.get("id")
 
             # Check 1/3: forbidden tokens must be absent from good examples.
+            # A hit is suppressed only when it falls inside an allowlisted
+            # exception occurrence — not whenever the exception merely appears.
+            exc_spans = _exception_spans(target, exceptions)
             for ft in forbidden:
                 tok = ft.get("token", "")
                 mode = ft.get("context", "any")
-                if contains(target, tok, mode) and not _exception_allows(target, tok, exceptions):
+                hits = find_spans(target, tok, mode)
+                if hits and any(not _hit_allowed(h, exc_spans) for h in hits):
                     result.findings.append(Finding(
                         check="forbidden_token",
                         severity=ft.get("severity", "error"),
