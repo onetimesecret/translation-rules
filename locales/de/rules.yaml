@@ -1,0 +1,12 @@
+id: rules.de
+source: local-guides/UX-TRANSLATION-GUIDE.md
+inherits: base
+merge_strategy: append
+# Minimal inheritance parent for the de family. Carries only what de_AT (and
+# future de_* locales) need to inherit: the German formal-register rule.
+rules:
+  - id: rule.de-sie
+    modality: MUST
+    statement: German content uses the formal Sie form (Sie / Ihr / Ihre), not the informal du.
+    severity: error
+    rule_ref: rule.register-lock

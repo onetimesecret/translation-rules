@@ -1,0 +1,16 @@
+id: rules.de_AT
+source: reviews/2026-04-12/
+inherits: rules.de
+merge_strategy: append
+# de_AT-specific layer. register.de_AT.formality is the rule the 2026-04-12
+# retrospective and locales/de_AT/register.yaml both reference; defining it here
+# is what makes those references resolve.
+rules:
+  - id: register.de_AT.formality
+    modality: MUST
+    statement: de_AT uses the formal Sie-form throughout product UI and email content; informal du/dein forms are forbidden.
+    severity: error
+    rule_ref: rule.de-sie
+register_ref: register.de_AT
+glossary_ref: glossary.de_AT
+baseline_ref: baselines.de_AT

@@ -1,0 +1,66 @@
+id: base
+source: local-guides/UX-TRANSLATION-GUIDE.md
+# Universal rules absorbed from local-guides/{UX,SECURITY}-TRANSLATION-GUIDE.md.
+# Mechanical MUST/MUST_NOT rules live here; SHOULD/MAY items render into the
+# non-binding `context` partition by the resolver (SPEC §2.3). Rationale prose
+# is referenced via `docs:` and lives under base/docs/, never inlined.
+rules:
+  - id: rule.register-lock
+    modality: MUST
+    statement: Use the locale's locked register form (formality, pronoun, possessives) in all UI and email content.
+    severity: error
+    docs:
+      - base/docs/register-lock.md
+  - id: rule.security-generic-messages
+    modality: MUST
+    statement: Keep web.auth.security.* messages generic — never reveal which credential failed, precise timing, attempt counts, or account existence.
+    severity: error
+    docs:
+      - base/docs/security-messages.md
+  - id: rule.preserve-interpolation
+    modality: MUST
+    statement: Preserve interpolation placeholders ({var}, {0}, %{var}) exactly — identical names, count, and syntax as the source string.
+    severity: error
+  - id: rule.pluralization-syntax
+    modality: MUST
+    statement: Express countable strings with vue-i18n pipe syntax so the target language's plural forms are expressible.
+    severity: error
+  - id: rule.brand-names-untranslated
+    modality: MUST_NOT
+    statement: Do not translate or transliterate brand names (Onetime Secret, One-Time Secret, Identity Plus, Starlight); adapt only the surrounding grammar.
+    severity: error
+  - id: rule.meta-keys-untranslated
+    modality: MUST_NOT
+    statement: Do not translate underscore-prefixed metadata keys (_README, _meta, _translation_guidelines); they are documentation and never user-facing.
+    severity: error
+  - id: rule.terminology-consistency
+    modality: MUST
+    statement: Use the glossary's chosen term for each concept consistently; do not vary terminology across strings for the same sense.
+    severity: error
+    docs:
+      - base/docs/terminology.md
+  - id: rule.destructive-action-object
+    modality: MUST
+    statement: Destructive or irreversible action labels name their object (Delete Account, not Delete).
+    severity: warning
+  - id: rule.brevity
+    modality: SHOULD
+    statement: Prefer concise phrasing where meaning is preserved, and respect component character limits.
+    severity: info
+  - id: rule.message-voice
+    modality: SHOULD
+    statement: Use active imperative voice for action labels and declarative voice for status and error messages.
+    severity: info
+anti_patterns:
+  - id: anti.changelog-as-guidance
+    statement: Do not treat change-log or descriptive prose as prescriptive translation guidance.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: anti.harmonize-text-rewrite
+    statement: Harmonize keys only — never rewrite translated text. A harmonize task that requires text changes is mislabeled; stop and escalate.
+    severity: error
+    rule_ref: rule.register-lock
+    docs:
+      - base/docs/harmonize.md
+context:
+  - Brand names stay in English across all locales; only surrounding grammar adapts.
