@@ -1,0 +1,9 @@
+{
+  "kind": "positive",
+  "locale": "de_AT",
+  "chain": ["de_AT", "base"],
+  "merge_strategy": "append",
+  "rule_ids": ["rule.parent", "rule.child"],
+  "context_count": 2,
+  "context_first": "parent context line"
+}

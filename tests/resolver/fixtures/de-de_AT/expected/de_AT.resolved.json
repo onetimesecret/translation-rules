@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "generated_at": "2026-05-29T00:00:00+00:00",
+    "locale": "de_AT",
+    "schema_version": "1",
+    "source_commit": "TESTSHA0"
+  },
+  "anti_patterns_ref": [
+    {
+      "id": "anti.changelog-as-guidance",
+      "rule_ref": "rule.register-lock",
+      "severity": "warning",
+      "statement": "Do not treat change-log prose as translation guidance."
+    }
+  ],
+  "context": [
+    "Generated artifact; do not edit by hand.",
+    "[SHOULD] Prefer concise phrasing where meaning is preserved."
+  ],
+  "declined_index": [
+    {
+      "affected_locales": [
+        "de_AT"
+      ],
+      "affected_rules": [
+        "rule.de_AT-formality"
+      ],
+      "declined_reason": "Marketing requested informal du; rejected to keep register consistent across UI and email.",
+      "id": "2026-05-01-decline-du-for-marketing",
+      "would_change_decision_if": "A native-speaker audit shows the formal Sie-form measurably harms conversion."
+    }
+  ],
+  "glossary": {
+    "secret_object": {
+      "en": "secret",
+      "examples": [
+        {
+          "id": "ex.secret-good#a12b45ef",
+          "senses": [
+            "noun"
+          ],
+          "source": "Your secret has been created.",
+          "target": "Ihr Geheimnis wurde erstellt.",
+          "verdict": "good"
+        },
+        {
+          "id": "ex.secret-inflected#c56d89bb",
+          "note": "head-position genitive inflection; word_prefix must match",
+          "senses": [
+            "noun"
+          ],
+          "source": "The secret's link has expired.",
+          "target": "Der Link des Geheimnisses ist abgelaufen.",
+          "verdict": "good"
+        },
+        {
+          "id": "ex.secret-bad#b34c67aa",
+          "note": "informal possessive Dein; demonstrates the wrong form",
+          "senses": [
+            "noun"
+          ],
+          "source": "Your secret has been created.",
+          "target": "Dein Geheimnis wurde erstellt.",
+          "verdict": "bad"
+        }
+      ],
+      "senses": {
+        "noun": {
+          "rule_ref": "rule.register-lock",
+          "target": "Geheimnis"
+        }
+      }
+    }
+  },
+  "rationale_index": {
+    "rule.register-lock": [
+      "docs/localization/register.md"
+    ]
+  },
+  "register": {
+    "exceptions": [
+      {
+        "reason": "proper noun (the German dictionary); contains the 'du' substring",
+        "source": "native-speaker:AT",
+        "token": "Duden"
+      }
+    ],
+    "forbidden_tokens": [
+      {
+        "context": "standalone_word",
+        "note": "informal pronoun; de_AT is locked to formal Sie",
+        "severity": "error",
+        "token": "du"
+      }
+    ],
+    "form": "formal",
+    "possessive": [
+      "Ihr",
+      "Ihres"
+    ],
+    "pronoun": "Sie",
+    "rule_ref": "rule.register-lock"
+  },
+  "rules": [
+    {
+      "id": "rule.register-lock",
+      "modality": "MUST",
+      "severity": "error",
+      "statement": "Use the locale's locked register form in all UI and email content."
+    },
+    {
+      "id": "rule.de-sie",
+      "modality": "MUST",
+      "rule_ref": "rule.register-lock",
+      "severity": "error",
+      "statement": "German content uses the formal Sie form."
+    },
+    {
+      "id": "rule.de_AT-formality",
+      "modality": "MUST",
+      "retro_refs": [
+        "2026-04-12-de_at-formality"
+      ],
+      "rule_ref": "register.de_AT",
+      "severity": "error",
+      "statement": "de_AT uses the formal Sie-form throughout product UI and email content."
+    }
+  ]
+}

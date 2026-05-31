@@ -1,0 +1,9 @@
+id: rules.de_AT
+source: tests/inheritance/fixtures/chain-happy
+inherits: rules.de
+merge_strategy: append
+rules:
+  - id: rule.de_AT.formality
+    modality: MUST
+    statement: Sie/Ihr only — du/dein are forbidden tokens.
+    severity: error

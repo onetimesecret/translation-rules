@@ -1,0 +1,6 @@
+{
+  "kind": "negative",
+  "locale": "de_AT",
+  "error_type": "ResolutionError",
+  "error_substring": "rule.does_not_exist"
+}

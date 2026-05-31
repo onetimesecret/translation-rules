@@ -1,0 +1,4 @@
+id: rules.de
+source: tests/inheritance/fixtures/cycle
+inherits: rules.de_AT
+rules: []

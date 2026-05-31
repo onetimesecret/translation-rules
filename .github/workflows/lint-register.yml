@@ -69,3 +69,12 @@ jobs:
         # missing-register paths. Failure here means the linter's contract
         # has drifted; investigate before merging.
         run: bash tests/lint-register.sh
+
+      - name: Gate-orchestration harness (P1-4b workflow)
+        # Executes the LITERAL run-block from the drafted app-repo gate
+        # (.github/ISSUE_DRAFTS/p1-4b-validate-register.workflow.yml) against a
+        # simulated app tree: auto-discovery loop, per-locale content mapping,
+        # and the empty-scan guard. Proves the gate — not just bin/lint-register
+        # — blocks the 2026-04-12 incident content before it is copied into the
+        # app repo. Failure means the draft's orchestration has drifted.
+        run: bash tests/validate-register-workflow.sh

@@ -1,0 +1,215 @@
+{
+  "ids": [
+    {
+      "file": "retrospectives/2026-04-12-de_AT-register-flip.md",
+      "id": "2026-04-12-de_AT-register-flip",
+      "json_pointer": "/id",
+      "key": "2026-04-12-de_AT-register-flip",
+      "kind": "retrospective"
+    },
+    {
+      "file": "retrospectives/2026-04-26-start-translation-session-conventions-drift.md",
+      "id": "2026-04-26-start-translation-session-conventions-drift",
+      "json_pointer": "/id",
+      "key": "2026-04-26-start-translation-session-conventions-drift",
+      "kind": "retrospective"
+    },
+    {
+      "file": "base.yaml",
+      "id": "anti.changelog-as-guidance",
+      "json_pointer": "/anti_patterns/0/id",
+      "key": "anti.changelog-as-guidance",
+      "kind": "anti_patterns"
+    },
+    {
+      "file": "base.yaml",
+      "id": "anti.harmonize-text-rewrite",
+      "json_pointer": "/anti_patterns/1/id",
+      "key": "anti.harmonize-text-rewrite",
+      "kind": "anti_patterns"
+    },
+    {
+      "file": "base.yaml",
+      "id": "base",
+      "json_pointer": "/id",
+      "key": "base",
+      "kind": "base"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines",
+      "json_pointer": "/id",
+      "key": "baselines",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.de_AT",
+      "json_pointer": "/baselines/de_AT",
+      "key": "de_AT",
+      "kind": "baselines"
+    },
+    {
+      "file": "locales/de_AT/glossary.yaml",
+      "id": "ex.message-enter#9a4a3f91",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "message-enter",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/de_AT/glossary.yaml",
+      "id": "ex.message-informal#78142c00",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "message-informal",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/de_AT/glossary.yaml",
+      "id": "ex.secret-created#e4355c4f",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "secret-created",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/de_AT/glossary.yaml",
+      "id": "ex.secret-genitive#cb21d6c1",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-genitive",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/de_AT/glossary.yaml",
+      "id": "ex.secret-informal#40c23f2d",
+      "json_pointer": "/terms/0/examples/2/id",
+      "key": "secret-informal",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/de_AT/glossary.yaml",
+      "id": "glossary.de_AT",
+      "json_pointer": "/id",
+      "key": "glossary.de_AT",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/de_AT/register.yaml",
+      "id": "register.de_AT",
+      "json_pointer": "/id",
+      "key": "register.de_AT",
+      "kind": "register"
+    },
+    {
+      "file": "locales/de_AT/rules.yaml",
+      "id": "register.de_AT.formality",
+      "json_pointer": "/rules/0/id",
+      "key": "register.de_AT.formality",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.brand-names-untranslated",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.brand-names-untranslated",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.brevity",
+      "json_pointer": "/rules/8/id",
+      "key": "rule.brevity",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/de/rules.yaml",
+      "id": "rule.de-sie",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.de-sie",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.destructive-action-object",
+      "json_pointer": "/rules/7/id",
+      "key": "rule.destructive-action-object",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.message-voice",
+      "json_pointer": "/rules/9/id",
+      "key": "rule.message-voice",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.meta-keys-untranslated",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.meta-keys-untranslated",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.pluralization-syntax",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.pluralization-syntax",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.preserve-interpolation",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.preserve-interpolation",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.register-lock",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.register-lock",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.security-generic-messages",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.security-generic-messages",
+      "kind": "rules"
+    },
+    {
+      "file": "base.yaml",
+      "id": "rule.terminology-consistency",
+      "json_pointer": "/rules/6/id",
+      "key": "rule.terminology-consistency",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/de/rules.yaml",
+      "id": "rules.de",
+      "json_pointer": "/id",
+      "key": "rules.de",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/de_AT/rules.yaml",
+      "id": "rules.de_AT",
+      "json_pointer": "/id",
+      "key": "rules.de_AT",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/de_AT/glossary.yaml",
+      "id": "term.secret_object#c0902808",
+      "json_pointer": "/terms/0/id",
+      "key": "secret_object",
+      "kind": "term"
+    },
+    {
+      "file": "locales/de_AT/glossary.yaml",
+      "id": "term.secret_payload#1687a617",
+      "json_pointer": "/terms/1/id",
+      "key": "secret_payload",
+      "kind": "term"
+    }
+  ],
+  "schema_version": 1
+}

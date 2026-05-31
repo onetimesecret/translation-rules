@@ -9,7 +9,7 @@ affected_locales: [de_AT]
 affected_rules: [register.de_AT.formality]
 examples_added: []
 baseline_pins: [baselines.de_AT]
-resolved_in_commit: null
+resolved_in_commit: 8cf0e22
 supersedes: []
 declined_reason: null
 would_change_decision_if: null

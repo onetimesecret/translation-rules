@@ -1,0 +1,5 @@
+{
+  "locale": "de_AT",
+  "error_type": "ResolutionError",
+  "error_substring": "dangling reference 'rule.does-not-exist'"
+}

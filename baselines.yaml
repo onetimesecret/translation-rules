@@ -1,0 +1,11 @@
+id: baselines
+source: reviews/2026-04-12/cross-locale-audit.md
+baselines:
+  de_AT:
+    commit: f95b03f44
+    pinned_on: 2026-04-12
+    invariants:
+      - register.formality=Sie
+      - glossary.secret_object=Geheimnis
+    retro_id: 2026-04-12-de_AT-register-flip
+    note: "State frozen here was acceptable: last commit before the de_AT contamination sequence began, per reviews/2026-04-12/cross-locale-audit.md. Not a curation commit."

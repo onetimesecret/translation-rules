@@ -1,0 +1,3 @@
+id: base
+source: tests/inheritance/fixtures/dangling-retro-ref
+rules: []

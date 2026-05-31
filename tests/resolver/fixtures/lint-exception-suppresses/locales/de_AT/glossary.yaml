@@ -1,0 +1,21 @@
+id: glossary.de_AT
+source: SPEC.md
+terms:
+  - id: term.secret_object#7f3a91c2
+    key: secret_object
+    en: secret
+    de_AT:
+      noun:
+        target: Geheimnis
+    examples:
+      - id: ex.du-only-inside-duden#a12b45ef
+        source: Your secret is in the dictionary.
+        target: Ihr Geheimnis steht im Duden.
+        verdict: good
+        note: >-
+          SEEDED — the ONLY word_prefix 'du' hit is the one beginning 'Duden',
+          which falls inside the allowlisted exception span and must be
+          suppressed. No standalone/other 'du'. Contains sense target
+          'Geheimnis'. Expected: zero findings, lint_ok:true. Pins the
+          suppress direction of _hit_allowed (a regression making it always
+          return False would flag forbidden_token and fail this fixture).

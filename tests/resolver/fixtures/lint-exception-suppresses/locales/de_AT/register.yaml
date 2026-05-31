@@ -1,0 +1,16 @@
+id: register.de_AT
+source: SPEC.md
+form: formal
+pronoun: Sie
+forbidden_tokens:
+  - token: du
+    context: word_prefix
+    severity: error
+    note: >-
+      word_prefix mode so the 'du' beginning 'Duden' is a real hit — the only
+      mode that lets a forbidden hit fall inside the exception token and so
+      exercises the suppress direction of _hit_allowed.
+exceptions:
+  - token: Duden
+    reason: proper noun (the German dictionary); contains the 'du' prefix
+    source: native-speaker:AT

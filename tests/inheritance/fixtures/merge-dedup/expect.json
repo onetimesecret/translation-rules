@@ -1,0 +1,8 @@
+{
+  "kind": "positive",
+  "locale": "de_AT",
+  "chain": ["de_AT", "base"],
+  "merge_strategy": "dedup",
+  "context_count": 3,
+  "context_first": "shared line"
+}

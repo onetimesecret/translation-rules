@@ -1,0 +1,20 @@
+id: glossary.de_AT
+source: SPEC.md
+terms:
+  - id: term.secret_object#7f3a91c2
+    key: secret_object
+    en: secret
+    de_AT:
+      noun:
+        target: Geheimnis
+    examples:
+      - id: ex.has-forbidden#a12b45ef
+        source: You created your secret.
+        target: du hast dein Geheimnis erstellt.
+        verdict: good
+        note: SEEDED — good example carries standalone forbidden token 'du'
+      - id: ex.missing-sense#b34c67aa
+        source: Your password was created.
+        target: Ihr Passwort wurde erstellt.
+        verdict: good
+        note: SEEDED — good example does not contain the sense target 'Geheimnis'
