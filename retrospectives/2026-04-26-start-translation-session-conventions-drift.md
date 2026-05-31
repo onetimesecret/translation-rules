@@ -6,7 +6,7 @@ triggered_by:
   commits: []
   incident: "Hand-maintained 'Locale Conventions Reference' table in /d:start-translation-session.md drifts from authoritative register guidance — same failure pattern as 2026-04-12, different location"
 affected_locales: [de, de_AT, es, pt_BR, fr_CA, fr_FR, it, nl, ja, zh, ko, ru]
-affected_rules: [register.de_AT.formality]
+affected_rules: []
 examples_added: []
 baseline_pins: []
 resolved_in_commit: null
@@ -59,8 +59,16 @@ resolver landing.
 
 ## Affected rules and resolution path
 
-- `register.de_AT.formality` — already locked by this Phase 0 PR; the
-  table's `de | informal du` claim must not be inferred to apply to de_AT.
+- `register.de_AT.formality` — already locked by the 2026-04-12 retro
+  (its target; `resolved_in_commit: 8cf0e22`). This guardrail only
+  *references* it: the table's `de | informal du` claim must not be
+  inferred to apply to de_AT. It is therefore **not** in `affected_rules`,
+  which per SPEC §3 records only ids this retro's closing PR will *touch*.
+  `affected_rules` is empty because this retro's closure is structural —
+  the resolver landing and table removal below — not a rule edit. (Do not
+  re-add a dotted rule here: the resolver requires every `affected_rule` to
+  resolve in every `affected_locale`, and this drift spans locales where a
+  de_AT-only rule does not exist.)
 - Phase 1 P1-2 (resolver) and P1-4 (cross-repo wiring) close this retro
   by making the inlined table redundant. Until then, the table should
   carry an explicit `de_AT: formal "Sie"` row and a note pointing to this
