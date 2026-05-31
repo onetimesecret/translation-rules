@@ -29,7 +29,11 @@ class ValidationFailed(Exception):
     def _render(self) -> str:
         lines = [f"{self.path}: schema validation failed ({len(self.errors)} error(s))"]
         for err in self.errors[:10]:
-            loc = "/" + "/".join(str(p) for p in err.absolute_path) if err.absolute_path else "/"
+            loc = (
+                "/" + "/".join(str(p) for p in err.absolute_path)
+                if err.absolute_path
+                else "/"
+            )
             lines.append(f"  {loc}: {err.message}")
         if len(self.errors) > 10:
             lines.append(f"  ... and {len(self.errors) - 10} more")
@@ -70,7 +74,9 @@ def build_registry(schema_dir: Path) -> SchemaBundle:
     return SchemaBundle(schema_dir)
 
 
-def validate_file(path: Path, data: Any, schema_name: str, bundle: SchemaBundle) -> None:
+def validate_file(
+    path: Path, data: Any, schema_name: str, bundle: SchemaBundle
+) -> None:
     """Validate `data` against the named schema. Raises ValidationFailed on error."""
     validator = bundle.validator_for(schema_name)
     errors = sorted(validator.iter_errors(data), key=lambda e: list(e.absolute_path))

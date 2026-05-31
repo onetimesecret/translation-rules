@@ -172,11 +172,13 @@ def build_model(
 
     # Per-locale, non-superseded retros split by status.
     applied = [
-        r for r in retros
+        r
+        for r in retros
         if r.get("status") == "applied" and _retro_applies_to(r, locale)
     ]
     declined = [
-        r for r in retros
+        r
+        for r in retros
         if r.get("status") == "declined" and _retro_applies_to(r, locale)
     ]
 
@@ -225,13 +227,15 @@ def build_model(
 
     declined_index: list[dict[str, Any]] = []
     for r in sorted(declined, key=lambda x: x.get("id", "")):
-        declined_index.append({
-            "id": r["id"],
-            "affected_rules": r.get("affected_rules") or [],
-            "affected_locales": r.get("affected_locales") or [],
-            "declined_reason": r.get("declined_reason"),
-            "would_change_decision_if": r.get("would_change_decision_if"),
-        })
+        declined_index.append(
+            {
+                "id": r["id"],
+                "affected_rules": r.get("affected_rules") or [],
+                "affected_locales": r.get("affected_locales") or [],
+                "declined_reason": r.get("declined_reason"),
+                "would_change_decision_if": r.get("would_change_decision_if"),
+            }
+        )
 
     return {
         "_meta": {

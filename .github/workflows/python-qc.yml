@@ -1,0 +1,44 @@
+name: python-qc
+
+# Conventional Python quality gates for the resolver/ and tests/ code:
+# lint, format, and type-check. The fixture test suites are gated separately
+# in schema-validation.yml — they are not duplicated here.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  python-qc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv (pinned)
+        uses: astral-sh/setup-uv@v6
+        with:
+          # Pin deliberately; bump when the local toolchain moves.
+          version: "0.9.7"
+          enable-cache: true
+
+      - name: Install dependencies (locked)
+        # --locked fails if uv.lock is stale, keeping CI reproducible.
+        run: uv sync --locked --python 3.11
+
+      - name: Lint (ruff check)
+        run: uv run ruff check .
+
+      - name: Format check (ruff format)
+        run: uv run ruff format --check .
+
+      - name: Type check (pyright)
+        run: uv run pyright

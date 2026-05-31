@@ -1,0 +1,37 @@
+[project]
+name = "translation-rules-resolver"
+version = "0.0.0"
+description = "Resolver and quality gates for the translation-rules authority repo."
+requires-python = ">=3.11"
+# Runtime deps mirror the inline pins already used by the existing CI
+# workflows (schema-validation.yml). Keep the two in sync when bumping.
+dependencies = [
+    "jsonschema>=4.21,<5",
+    "referencing>=0.32,<1",
+    "pyyaml>=6,<7",
+]
+
+# Tooling for the python-qc workflow. `uv sync` installs this group by default.
+[dependency-groups]
+dev = [
+    "ruff==0.15.15",
+    "pyright==1.1.404",
+]
+
+[tool.uv]
+# This repo is a collection of scripts (resolver/, tests/, bin/), not an
+# installable package — only resolve its dependencies, don't build it.
+package = false
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+extend-exclude = ["build"]
+# Lint rule set is intentionally left at ruff's defaults (E/F). The codebase is
+# green on these today; expanding the set (I/UP/B/...) is a separate, deliberate
+# change so the QC gate stays meaningful rather than red on arrival.
+
+[tool.pyright]
+include = ["resolver", "tests"]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"

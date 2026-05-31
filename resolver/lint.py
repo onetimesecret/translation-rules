@@ -66,7 +66,9 @@ class LintResult:
         }
 
 
-def _exception_spans(target: str, exceptions: list[dict[str, Any]]) -> list[tuple[int, int]]:
+def _exception_spans(
+    target: str, exceptions: list[dict[str, Any]]
+) -> list[tuple[int, int]]:
     """All occurrence spans of every allowlisted exception token in `target`
     (casefolded space, matching find_spans)."""
     spans: list[tuple[int, int]] = []
@@ -109,27 +111,31 @@ def lint_model(model: dict[str, Any]) -> LintResult:
                 mode = ft.get("context", "any")
                 hits = find_spans(target, tok, mode)
                 if hits and any(not _hit_allowed(h, exc_spans) for h in hits):
-                    result.findings.append(Finding(
-                        check="forbidden_token",
-                        severity=ft.get("severity", "error"),
-                        message=f"good example contains forbidden token {tok!r}",
-                        term=term_key,
-                        example_id=ex_id,
-                        token=tok,
-                    ))
+                    result.findings.append(
+                        Finding(
+                            check="forbidden_token",
+                            severity=ft.get("severity", "error"),
+                            message=f"good example contains forbidden token {tok!r}",
+                            term=term_key,
+                            example_id=ex_id,
+                            token=tok,
+                        )
+                    )
 
             # Check 2: good example must demonstrate at least one sense target.
             if senses and not ex.get("senses"):
                 targets = sorted(b.get("target", "") for b in senses.values())
-                result.findings.append(Finding(
-                    check="sense_target_presence",
-                    severity="error",
-                    message=(
-                        f"good example does not contain any sense target "
-                        f"(expected one of {targets}, mode={DEFAULT_TARGET_MODE})"
-                    ),
-                    term=term_key,
-                    example_id=ex_id,
-                ))
+                result.findings.append(
+                    Finding(
+                        check="sense_target_presence",
+                        severity="error",
+                        message=(
+                            f"good example does not contain any sense target "
+                            f"(expected one of {targets}, mode={DEFAULT_TARGET_MODE})"
+                        ),
+                        term=term_key,
+                        example_id=ex_id,
+                    )
+                )
 
     return result

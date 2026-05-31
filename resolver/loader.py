@@ -30,7 +30,9 @@ class StringDateLoader(yaml.SafeLoader):
 
 
 StringDateLoader.yaml_implicit_resolvers = {
-    ch: [(tag, regex) for tag, regex in resolvers if tag != "tag:yaml.org,2002:timestamp"]
+    ch: [
+        (tag, regex) for tag, regex in resolvers if tag != "tag:yaml.org,2002:timestamp"
+    ]
     for ch, resolvers in yaml.SafeLoader.yaml_implicit_resolvers.items()
 }
 
