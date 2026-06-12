@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history: the retro lifecycle gate diffs against the PR base
+          # ref to enforce the applied-transition check (SPEC §3).
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -40,3 +44,17 @@ jobs:
 
       - name: Run resolver emit + lint fixture suite
         run: python tests/resolver/run.py
+
+      - name: Run retro lifecycle test suite
+        run: python tests/retro_lifecycle/run.py
+
+      - name: Retrospective lifecycle gate (SPEC §3)
+        # The one graced id is a structural retro whose closure is blocked on
+        # cross-repo work (P1-4b/P1-5b) — see its body and RECOVERY-PLAN.md.
+        # The waiver is per-id: any new retro left pending >7 days fails CI.
+        run: |
+          ARGS=(--grace 2026-04-26-start-translation-session-conventions-drift)
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            ARGS+=(--diff-base "origin/${{ github.base_ref }}")
+          fi
+          python resolver/retro_lifecycle.py "${ARGS[@]}"

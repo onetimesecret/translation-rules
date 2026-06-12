@@ -1,6 +1,6 @@
 # P1-3 Implementation Plan — Resolver lint + dual emit
 
-**Status.** Plan for review. Implements SPEC §2.3 steps 5–7 on top of P1-2 (steps 1–4, committed). No code yet.
+**Status.** Implemented and merged (PR #17/#19); see §7 for how each open question resolved. Retained as the decision record for SPEC §2.3 steps 5–7.
 
 **Why it blocks everything.** Both cross-property decisions (HANDOFF, 2026-05-29) wait on this: the guidance-source inversion is "first act of Phase 1.5, *after* P1-3 emit," and every property consumes `.resolved/<locale>.json` — which only exists once emit lands.
 
@@ -109,3 +109,25 @@ Each step is independently testable. No production YAML content is created — f
 1. **Gap A**: accept reusing `forbiddenToken.context` semantics for example/target match — and the match mode (`word_prefix` vs `substring`) decided by grepping real de/de_AT examples for tail-position compounds first?
 2. **Gap B**: fold step 5 into P1-3, or split to P1-4?
 3. **§4 hash scope**: is `.resolved/<locale>.json` hash-checked like the MD, and which `_meta` fields are masked?
+
+---
+
+## 7. Resolutions (recorded 2026-06-12, post-merge)
+
+The implementation landed before this section was written; the decisions were
+made in code and review but not recorded here. Closing the loop:
+
+1. **Gap A → `word_prefix`** (2026-05-29). The de/de_AT `good` examples were
+   checked and place sense terms in head position only — no tail/interior
+   compounds — so `word_prefix` is the safe default. Pinned at
+   `resolver/matching.py` (`DEFAULT_TARGET_MODE = "word_prefix"`); the
+   per-sense override field stays deferred per SPEC §8 until observed data
+   demands it.
+2. **Gap B → folded into P1-3.** Step 5 (attach retros, `declined_index`)
+   shipped with emit in `resolver/model.py` (`build_model`); the
+   `declined_index`-ships-empty risk never materialized.
+3. **§4 hash scope → markdown only** (Q3, 2026-05-29). The JSON is *not*
+   content-hash-checked; the app-repo gate checks
+   `_meta.source_commit == submodule SHA` only. Recorded in
+   `resolver/emit_json.py`'s module docstring. `_meta.generated_at` is
+   caller-injected, so golden tests pin it rather than masking it.
