@@ -154,9 +154,7 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 ### 2.4 CI gates
 
-**Status (2026-05-30).** Most gates below are the target design, not yet wired. Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests) and `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`). Everything else in this section, and every gate in the App-repo block, is **planned** — including the load-bearing one (app-repo forbidden-token grep against real content). No app-repo integration exists yet (no submodule, no content gate). Phases below depend on these landing.
-
-**This repo (planned, except the two implemented above):** schema validation; resolver tests (merge, inheritance); lint across every resolved locale; retrospective lifecycle enforcement (§4); `_archive/` firewall — file moves out of it require label approval; forbidden-token grep against embedded examples and docs.
+**Status (2026-06-12).** Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests, retro lifecycle gate), `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`), `python-qc.yml` (ruff lint/format, pyright), and the §3 retrospective lifecycle gates (`resolver/retro_lifecycle.py`: 7-day orphan timeout, applied-transition diff check). Still planned in this repo: `_archive/` firewall (no top-level `_archive/` exists yet to guard); forbidden-token grep against embedded examples and docs; review findings-manifest check. Every gate in the App-repo block is **planned** — including the load-bearing one (app-repo forbidden-token grep against real content). No app-repo integration exists yet (no submodule, no content gate). Phases below depend on these landing.
 
 **App repo (planned — none built):** submodule pointer freshness on locale-content PRs; `.resolved/<locale>.json`'s `_meta.source_commit` equals submodule SHA; `forbidden_tokens` grep against `locales/content/<locale>/*.json`; `for-translators/*.md` hash matches resolver output — hand edits rejected.
 
@@ -173,7 +171,7 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
 
-**Status (2026-05-30).** The `[CI-ENFORCED: ...]` and `[CI: ...]` annotations below describe the target design. None of the lifecycle gates (7-day orphan timeout, applied-transition PR check, retro→applied on merge, cross-repo lint/hash match) are wired yet — see §2.4 Status for what CI actually runs today. Read the annotations as "intended enforcement," not "current."
+**Status (2026-06-12).** The 7-day orphan timeout and the applied-transition PR check are wired (`resolver/retro_lifecycle.py`, run by `schema-validation.yml`; one pre-existing pending retro carries an explicit, per-id grace in the workflow until its cross-repo closure lands). Still not wired: retro→applied automation on merge, and the cross-repo lint/hash gates — see §2.4 Status. Read the remaining `[CI-ENFORCED: ...]` annotations accordingly.
 
 ```
             (incident signal OR scheduled audit)
