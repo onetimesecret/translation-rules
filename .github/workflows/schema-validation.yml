@@ -61,3 +61,9 @@ jobs:
             ARGS+=(--diff-base "origin/${{ github.base_ref }}")
           fi
           python resolver/retro_lifecycle.py "${ARGS[@]}"
+
+      - name: Run review manifest test suite
+        run: python tests/review_manifest/run.py
+
+      - name: Review findings-manifest gate (SPEC §3)
+        run: python resolver/review_manifest.py
