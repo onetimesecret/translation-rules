@@ -48,6 +48,9 @@ jobs:
       - name: Run retro lifecycle test suite
         run: python tests/retro_lifecycle/run.py
 
+      - name: Lint embedded docs (SPEC §2.3)
+        run: python resolver/lint_embedded.py
+
       - name: Retrospective lifecycle gate (SPEC §3)
         # The one graced id is a structural retro whose closure is blocked on
         # cross-repo work (P1-4b/P1-5b) — see its body and RECOVERY-PLAN.md.
