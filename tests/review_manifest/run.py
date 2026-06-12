@@ -69,11 +69,16 @@ def run_cases() -> list[tuple[str, bool, str]]:
         "every frozen-inventory path is exempt",
         all(is_exempt(Path(p)) for p in GRANDFATHERED),
     )
-    # The inventory is frozen at the 30 docs present when the gate landed.
+    # The inventory is frozen at the 29 review docs present when the gate
+    # landed; README indexes are exempt by name and deliberately not tracked.
     case(
-        "frozen inventory holds exactly 30 paths",
-        len(GRANDFATHERED) == 30,
+        "frozen inventory holds exactly 29 paths",
+        len(GRANDFATHERED) == 29,
         f"len={len(GRANDFATHERED)}",
+    )
+    case(
+        "frozen inventory tracks no README (exempt by name already)",
+        not any(Path(p).name == "README.md" for p in GRANDFATHERED),
     )
     case("top-level README.md is exempt", is_exempt(Path("README.md")))
     case(

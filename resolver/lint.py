@@ -15,8 +15,10 @@ Five assertions, all on the assembled model (resolver/model.py):
      use `du`"), so an occurrence inside an inline code span (backticks) or a
      fenced code block is an allowed mention; only bare-prose occurrences are
      violations. Code spans/fences are blanked with same-length whitespace
-     before scanning, so finding line numbers index the original doc. The
-     register `exceptions` allowlist applies as in check 1.
+     before scanning, so finding line numbers index the original doc. A doc
+     ending inside an unterminated fence is itself an error finding
+     (`unclosed_code_fence`) — blanking-to-EOF would otherwise hide tokens.
+     The register `exceptions` allowlist applies as in check 1.
   5. rationale-doc presence — every `rationale_index` path must exist (i.e. be
      present in the supplied docs mapping). Dangling refs are hard errors per
      SPEC §2.2; resolver ref-walking covers dotted/uuid/retro ids only, so
@@ -113,25 +115,38 @@ def _hit_allowed(hit: tuple[int, int], exception_spans: list[tuple[int, int]]) -
     return any(es <= hs and he <= ee for es, ee in exception_spans)
 
 
-_INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
+_INLINE_CODE_RE = re.compile(
+    # CommonMark-style inline code: an opening backtick run, content that
+    # neither starts nor ends with a backtick (but may contain runs of a
+    # different length, e.g. ``der `du`-Fall``), and a closing run of the
+    # same length not extended by a further backtick.
+    r"(`+)([^`\n](?:[^\n]*?[^`\n])?)\1(?!`)"
+)
 
 
-def _blank_code(text: str) -> str:
+def _blank_code(text: str) -> tuple[str, int | None]:
     """Copy of `text` with fenced code blocks (``` delimited, fences included)
     and inline code spans replaced by same-length whitespace. Every newline is
     kept, so spans and line numbers computed on the result index the original
-    doc. Token occurrences inside code are mentions, not uses (docstring #4)."""
+    doc. Token occurrences inside code are mentions, not uses (docstring #4).
+
+    Returns (blanked, fence_open_line): fence_open_line is the 1-based line of
+    the last unmatched ``` marker when the doc ends inside a fence (everything
+    after it was blanked, so the caller must fail loudly rather than silently
+    passing), or None when all fences close."""
     out: list[str] = []
     fenced = False
-    for line in text.split("\n"):
+    fence_open_line: int | None = None
+    for i, line in enumerate(text.split("\n")):
         if line.lstrip().startswith("```"):
             fenced = not fenced
+            fence_open_line = i + 1 if fenced else None
             out.append(" " * len(line))
         elif fenced:
             out.append(" " * len(line))
         else:
             out.append(_INLINE_CODE_RE.sub(lambda m: " " * len(m.group(0)), line))
-    return "\n".join(out)
+    return "\n".join(out), fence_open_line
 
 
 def _lint_docs(
@@ -143,7 +158,22 @@ def _lint_docs(
 ) -> None:
     """Checks 4 + 5: bare-prose forbidden tokens in docs; dangling doc paths."""
     for path in sorted(docs):
-        prose = _blank_code(docs[path])
+        prose, fence_open_line = _blank_code(docs[path])
+        if fence_open_line is not None:
+            # An unterminated fence blanks the rest of the doc — a forbidden
+            # token after it would be silently missed, so fail loudly instead.
+            result.findings.append(
+                Finding(
+                    check="unclosed_code_fence",
+                    severity="error",
+                    message=(
+                        "doc ends inside an unterminated ``` fence; mention "
+                        "scanning is unsound past it — close the fence"
+                    ),
+                    doc=path,
+                    line=fence_open_line,
+                )
+            )
         # find_spans offsets index the casefolded text; count newlines there
         # (casefolding never adds/removes them) so `line` stays exact even
         # when casefolding changes string length (e.g. ß -> ss).

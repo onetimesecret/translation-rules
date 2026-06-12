@@ -64,10 +64,11 @@ MANIFEST_HEADING = "## Findings manifest"
 
 # SPEC §3 grandfather clause: "Existing `reviews/` directories remain as-is.
 # Historical QA reviews are preserved as raw input; no backfill into
-# retrospective format." This is the exact reviews/ inventory at the time the
+# retrospective format." These are the 29 review documents present when the
 # gate landed (2026-06-12), frozen by path rather than by a date cutoff: a
 # document added later into an old dated directory is still a NEW review
-# document. Do NOT add paths to this set — new review docs carry manifests.
+# document. README.md indexes are exempt by name and not tracked here.
+# Do NOT add paths to this set — new review docs carry manifests.
 GRANDFATHERED = frozenset(
     {
         "2025-11-14/polish-translation-review.md",
@@ -91,7 +92,6 @@ GRANDFATHERED = frozenset(
         "2025-11-16/locale-quality-analysis-tr.md",
         "2025-11-16/locale-quality-analysis-uk.md",
         "2025-11-16/locale-quality-analysis-zh-cn.md",
-        "2026-04-12/README.md",
         "2026-04-12/advice-for-saas-translator-skill.md",
         "2026-04-12/criteria.md",
         "2026-04-12/cross-locale-audit.md",
