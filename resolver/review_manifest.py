@@ -223,7 +223,8 @@ def _check_bullet(
     retro = RETRO_TAG_RE.search(text)
     wont_fix = WONT_FIX_TAG_RE.search(text)
     if not retro and not wont_fix:
-        head = text.splitlines()[0]
+        # `- ` with no text yields an empty bullet; splitlines() would be [].
+        head = text.splitlines()[0] if text else ""
         if len(head) > 60:
             head = head[:57] + "..."
         findings.append(

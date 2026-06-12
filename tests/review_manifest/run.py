@@ -189,6 +189,22 @@ def run_cases() -> list[tuple[str, bool, str]]:
         f"findings={f}",
     )
 
+    # A bare `- ` bullet has no text at all — must report cleanly, not crash.
+    f = check_manifest(
+        _doc(
+            "## Findings manifest\n"
+            "\n"
+            "- \n"
+            "- Real finding. retro: 2026-06-01-example-retro\n"
+        ),
+        KNOWN_IDS,
+    )
+    case(
+        "empty bullet errors instead of crashing",
+        len(f) == 1 and f[0].check == "untagged_finding",
+        f"findings={f}",
+    )
+
     # `- none` is a sentinel only as the single bullet; alongside real
     # findings it is just an untagged bullet.
     f = check_manifest(
