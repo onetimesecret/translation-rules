@@ -149,7 +149,9 @@ def mint_id(kind: str, key: str, index: IdIndex) -> str:
         salt = f":{attempt}"
 
 
-def collect_ids_from_tree(data: Any, file_path: str, kinds: Iterable[str] | None = None) -> list[IdRecord]:
+def collect_ids_from_tree(
+    data: Any, file_path: str, kinds: Iterable[str] | None = None
+) -> list[IdRecord]:
     """Walk a parsed YAML tree, returning every `id:` field whose value matches the uuid form.
 
     Records the JSONPath cursor where each id was found. `kinds`, if given,
@@ -161,7 +163,13 @@ def collect_ids_from_tree(data: Any, file_path: str, kinds: Iterable[str] | None
     return out
 
 
-def _walk(value: Any, file_path: str, cursor: str, out: list[IdRecord], allowed: set[str] | None) -> None:
+def _walk(
+    value: Any,
+    file_path: str,
+    cursor: str,
+    out: list[IdRecord],
+    allowed: set[str] | None,
+) -> None:
     if isinstance(value, dict):
         # If this mapping itself has an `id:` of uuid form, record it.
         raw_id = value.get("id")
@@ -172,7 +180,15 @@ def _walk(value: Any, file_path: str, cursor: str, out: list[IdRecord], allowed:
                 pass  # not a uuid-form id; that's fine for dottedId rule ids
             else:
                 if allowed is None or kind in allowed:
-                    out.append(IdRecord(id=raw_id, kind=kind, key=key, file=file_path, json_pointer=cursor or "/"))
+                    out.append(
+                        IdRecord(
+                            id=raw_id,
+                            kind=kind,
+                            key=key,
+                            file=file_path,
+                            json_pointer=cursor or "/",
+                        )
+                    )
         for k, v in value.items():
             _walk(v, file_path, f"{cursor}/{k}", out, allowed)
     elif isinstance(value, list):

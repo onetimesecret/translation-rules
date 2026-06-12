@@ -34,7 +34,9 @@ def _coerce_inherits(raw: Any, source: Path) -> list[str]:
         return [raw]
     if isinstance(raw, list) and all(isinstance(x, str) for x in raw):
         return list(raw)
-    raise InheritanceError(f"{source}: 'inherits' must be a string or list of strings, got {type(raw).__name__}")
+    raise InheritanceError(
+        f"{source}: 'inherits' must be a string or list of strings, got {type(raw).__name__}"
+    )
 
 
 def _parent_locale_from_id(rule_id: str) -> str:
@@ -68,13 +70,17 @@ def build_chain(
     and trivially testable with in-memory fakes.
     """
     chain: list[ChainNode] = []
-    seen: dict[str, Path] = {}  # locale -> path that introduced it; used for cycle messages
+    seen: dict[
+        str, Path
+    ] = {}  # locale -> path that introduced it; used for cycle messages
 
     current_id = f"rules.{locale}"
     current_path = _id_to_path(current_id, locales_dir, base_path)
 
     while True:
-        cur_locale = "base" if current_id == "base" else _parent_locale_from_id(current_id)
+        cur_locale = (
+            "base" if current_id == "base" else _parent_locale_from_id(current_id)
+        )
         if cur_locale in seen:
             cycle = " -> ".join([n.locale for n in chain] + [cur_locale])
             raise InheritanceError(f"inheritance cycle detected: {cycle}")

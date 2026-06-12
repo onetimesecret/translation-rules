@@ -35,13 +35,17 @@ def emit_markdown(model: dict[str, Any], source_commit: str) -> str:
         lines.append(f"- Form: **{register.get('form')}**")
         lines.append(f"- Pronoun: `{register.get('pronoun')}`")
         if register.get("possessive"):
-            lines.append(f"- Possessive: {', '.join(f'`{p}`' for p in register['possessive'])}")
+            lines.append(
+                f"- Possessive: {', '.join(f'`{p}`' for p in register['possessive'])}"
+            )
         forbidden = register.get("forbidden_tokens") or []
         if forbidden:
             lines.append("- Forbidden tokens:")
             for ft in forbidden:
                 note = f" — {ft['note']}" if ft.get("note") else ""
-                lines.append(f"  - `{ft.get('token')}` ({ft.get('context')}, {ft.get('severity')}){note}")
+                lines.append(
+                    f"  - `{ft.get('token')}` ({ft.get('context')}, {ft.get('severity')}){note}"
+                )
         exceptions = register.get("exceptions") or []
         if exceptions:
             lines.append("- Exceptions:")
@@ -68,7 +72,9 @@ def emit_markdown(model: dict[str, Any], source_commit: str) -> str:
     if rules:
         _section(lines, "Rules (binding)")
         for r in rules:
-            lines.append(f"- **{r.get('modality')}** ({r.get('severity')}): {r.get('statement')} `[{r.get('id')}]`")
+            lines.append(
+                f"- **{r.get('modality')}** ({r.get('severity')}): {r.get('statement')} `[{r.get('id')}]`"
+            )
 
     context = model.get("context") or []
     if context:

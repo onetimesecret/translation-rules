@@ -34,7 +34,10 @@ from typing import Any
 try:
     import yaml
 except ImportError:
-    print("error: PyYAML required (pip install pyyaml or uv run --with pyyaml)", file=sys.stderr)
+    print(
+        "error: PyYAML required (pip install pyyaml or uv run --with pyyaml)",
+        file=sys.stderr,
+    )
     sys.exit(2)
 
 
@@ -53,7 +56,9 @@ class StringDateLoader(yaml.SafeLoader):
 
 
 StringDateLoader.yaml_implicit_resolvers = {
-    ch: [(tag, regex) for tag, regex in resolvers if tag != "tag:yaml.org,2002:timestamp"]
+    ch: [
+        (tag, regex) for tag, regex in resolvers if tag != "tag:yaml.org,2002:timestamp"
+    ]
     for ch, resolvers in yaml.SafeLoader.yaml_implicit_resolvers.items()
 }
 
@@ -128,7 +133,9 @@ def load_fixture(path: Path) -> tuple[Any, dict[str, Any]]:
 
 def error_path(err: ValidationError) -> str:
     """Render a ValidationError's path as a slash-joined string for assertion."""
-    return "/" + "/".join(str(p) for p in err.absolute_path) if err.absolute_path else "/"
+    return (
+        "/" + "/".join(str(p) for p in err.absolute_path) if err.absolute_path else "/"
+    )
 
 
 def run_schema(schema_name: str, registry: Registry) -> tuple[int, int]:
@@ -160,16 +167,22 @@ def run_schema(schema_name: str, registry: Registry) -> tuple[int, int]:
             try:
                 data, meta = load_fixture(fixture_path)
             except Exception as exc:
-                print(f"  FAIL {fixture_path.relative_to(REPO_ROOT)}: load error: {exc}")
+                print(
+                    f"  FAIL {fixture_path.relative_to(REPO_ROOT)}: load error: {exc}"
+                )
                 failed += 1
                 continue
 
-            errors = sorted(validator.iter_errors(data), key=lambda e: list(e.absolute_path))
+            errors = sorted(
+                validator.iter_errors(data), key=lambda e: list(e.absolute_path)
+            )
             rel = fixture_path.relative_to(REPO_ROOT)
 
             if kind == "positive":
                 if errors:
-                    print(f"  FAIL {rel}: positive fixture should validate, got {len(errors)} errors")
+                    print(
+                        f"  FAIL {rel}: positive fixture should validate, got {len(errors)} errors"
+                    )
                     for err in errors[:5]:
                         print(f"        {error_path(err)}: {err.message}")
                     failed += 1
@@ -178,7 +191,9 @@ def run_schema(schema_name: str, registry: Registry) -> tuple[int, int]:
                     passed += 1
             else:  # negative
                 if not errors:
-                    print(f"  FAIL {rel}: negative fixture should fail, but validated cleanly")
+                    print(
+                        f"  FAIL {rel}: negative fixture should fail, but validated cleanly"
+                    )
                     failed += 1
                     continue
 
@@ -203,7 +218,9 @@ def main(argv: list[str]) -> int:
     targets = argv[1:] if len(argv) > 1 else SCHEMA_NAMES
     bad = [t for t in targets if t not in SCHEMA_NAMES]
     if bad:
-        print(f"error: unknown schema(s): {bad}. Known: {SCHEMA_NAMES}", file=sys.stderr)
+        print(
+            f"error: unknown schema(s): {bad}. Known: {SCHEMA_NAMES}", file=sys.stderr
+        )
         return 2
 
     try:

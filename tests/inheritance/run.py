@@ -83,25 +83,37 @@ def _build_inputs(fixture_root: Path) -> ResolverInputs:
     )
 
 
-def _check_positive(name: str, result: dict[str, Any], expect: dict[str, Any]) -> list[str]:
+def _check_positive(
+    name: str, result: dict[str, Any], expect: dict[str, Any]
+) -> list[str]:
     errs: list[str] = []
     if "chain" in expect and result["chain"] != expect["chain"]:
-        errs.append(f"chain mismatch: got {result['chain']}, expected {expect['chain']}")
+        errs.append(
+            f"chain mismatch: got {result['chain']}, expected {expect['chain']}"
+        )
     merged = result["merged_rules"]
     if "expect_top_id" in expect and merged.get("id") != expect["expect_top_id"]:
-        errs.append(f"top id mismatch: got {merged.get('id')!r}, expected {expect['expect_top_id']!r}")
+        errs.append(
+            f"top id mismatch: got {merged.get('id')!r}, expected {expect['expect_top_id']!r}"
+        )
     if "rule_ids" in expect:
         actual_ids = [r.get("id") for r in (merged.get("rules") or [])]
         if actual_ids != expect["rule_ids"]:
-            errs.append(f"rule_ids mismatch: got {actual_ids}, expected {expect['rule_ids']}")
+            errs.append(
+                f"rule_ids mismatch: got {actual_ids}, expected {expect['rule_ids']}"
+            )
     if "context_count" in expect:
         ctx = merged.get("context") or []
         if len(ctx) != expect["context_count"]:
-            errs.append(f"context count mismatch: got {len(ctx)}, expected {expect['context_count']}")
+            errs.append(
+                f"context count mismatch: got {len(ctx)}, expected {expect['context_count']}"
+            )
     if "context_first" in expect:
         ctx = merged.get("context") or []
         if not ctx or ctx[0] != expect["context_first"]:
-            errs.append(f"context first mismatch: got {ctx[:1]!r}, expected {expect['context_first']!r}")
+            errs.append(
+                f"context first mismatch: got {ctx[:1]!r}, expected {expect['context_first']!r}"
+            )
     if "provenance_for" in expect:
         prov = result.get("provenance") or {}
         for cursor, expected_source in expect["provenance_for"].items():

@@ -84,17 +84,26 @@ def _run_fixture(fixture_root: Path) -> tuple[bool, str]:
         try:
             r = resolve_locale(locale, _build_inputs(fixture_root), validate_only=True)
             build_model(
-                locale=locale, merged_rules=r["merged_rules"],
-                register=r.get("register"), glossary=r.get("glossary"),
+                locale=locale,
+                merged_rules=r["merged_rules"],
+                register=r.get("register"),
+                glossary=r.get("glossary"),
                 retros=r.get("retros") or [],
-                source_commit="TESTSHA0", generated_at="2026-01-01T00:00:00+00:00",
+                source_commit="TESTSHA0",
+                generated_at="2026-01-01T00:00:00+00:00",
             )
         except Exception as exc:  # noqa: BLE001
             if not isinstance(exc, expected_cls):
-                return False, f"wrong error: got {type(exc).__name__}, expected {expect['error_type']}"
+                return (
+                    False,
+                    f"wrong error: got {type(exc).__name__}, expected {expect['error_type']}",
+                )
             sub = expect.get("error_substring")
             if sub and sub not in str(exc):
-                return False, f"error substring not found: expected {sub!r}, got {str(exc)!r}"
+                return (
+                    False,
+                    f"error substring not found: expected {sub!r}, got {str(exc)!r}",
+                )
             return True, "ok (raised as expected)"
         return False, f"expected {expect['error_type']} but pipeline completed"
 
@@ -131,12 +140,16 @@ def _run_fixture(fixture_root: Path) -> tuple[bool, str]:
             got_checks = {f.check for f in lr.findings}
             missing = set(expect["lint_checks"]) - got_checks
             if missing:
-                errs.append(f"lint missing expected checks {sorted(missing)} (got {sorted(got_checks)})")
+                errs.append(
+                    f"lint missing expected checks {sorted(missing)} (got {sorted(got_checks)})"
+                )
 
     declined_ids = {d["id"] for d in model["declined_index"]}
     for want_id in expect.get("declined_includes", []):
         if want_id not in declined_ids:
-            errs.append(f"declined_index missing {want_id!r} (got {sorted(declined_ids)})")
+            errs.append(
+                f"declined_index missing {want_id!r} (got {sorted(declined_ids)})"
+            )
     for bad_id in expect.get("declined_excludes", []):
         if bad_id in declined_ids:
             errs.append(f"declined_index must exclude {bad_id!r} but it is present")
@@ -146,7 +159,9 @@ def _run_fixture(fixture_root: Path) -> tuple[bool, str]:
         if rule is None:
             errs.append(f"fold: rule {rule_id!r} not in rules partition")
         elif rule.get("retro_refs") != want_refs:
-            errs.append(f"fold: {rule_id} retro_refs got {rule.get('retro_refs')}, expected {want_refs}")
+            errs.append(
+                f"fold: {rule_id} retro_refs got {rule.get('retro_refs')}, expected {want_refs}"
+            )
 
     if errs:
         return False, "; ".join(errs)
@@ -159,7 +174,9 @@ def _first_diff(label: str, got: str, want: str) -> str:
         if gl != wl:
             return f"{label} golden mismatch at line {i}: got {gl!r}, want {wl!r}"
     if len(g) != len(w):
-        return f"{label} golden length mismatch: got {len(g)} lines, want {len(w)} lines"
+        return (
+            f"{label} golden length mismatch: got {len(g)} lines, want {len(w)} lines"
+        )
     return f"{label} golden mismatch (no line diff found)"
 
 

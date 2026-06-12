@@ -39,7 +39,11 @@ def _merge_lists(parent: list, child: list, strategy: str) -> list:
         out: list = []
         for item in _copy_list(parent) + _copy_list(child):
             try:
-                key = item if isinstance(item, (str, int, float, bool, type(None))) else repr(item)
+                key = (
+                    item
+                    if isinstance(item, (str, int, float, bool, type(None)))
+                    else repr(item)
+                )
             except Exception:
                 key = repr(item)
             if key in seen:
@@ -47,10 +51,14 @@ def _merge_lists(parent: list, child: list, strategy: str) -> list:
             seen.add(key)
             out.append(item)
         return out
-    raise MergeError(f"unknown merge strategy: {strategy!r}; valid: {VALID_LIST_STRATEGIES}")
+    raise MergeError(
+        f"unknown merge strategy: {strategy!r}; valid: {VALID_LIST_STRATEGIES}"
+    )
 
 
-def _stamp_subtree(value: Any, provenance: dict[str, str], cursor: str, source: str) -> None:
+def _stamp_subtree(
+    value: Any, provenance: dict[str, str], cursor: str, source: str
+) -> None:
     """Stamp every leaf path under `value` with `source`."""
     if isinstance(value, dict):
         if not value:
@@ -91,7 +99,9 @@ def _merge_pair(
         for key, c_val in child.items():
             sub_cursor = f"{cursor}/{key}"
             if key in parent:
-                out[key] = _merge_pair(parent[key], c_val, child_source, strategy, provenance, sub_cursor)
+                out[key] = _merge_pair(
+                    parent[key], c_val, child_source, strategy, provenance, sub_cursor
+                )
             else:
                 out[key] = _copy_value(c_val)
                 _stamp_subtree(c_val, provenance, sub_cursor, child_source)
@@ -140,7 +150,9 @@ def merge_chain(chain: list[ChainNode]) -> tuple[dict[str, Any], dict[str, str]]
             strategy = raw
             break
     if strategy not in VALID_LIST_STRATEGIES:
-        raise MergeError(f"invalid merge_strategy {strategy!r}; valid: {VALID_LIST_STRATEGIES}")
+        raise MergeError(
+            f"invalid merge_strategy {strategy!r}; valid: {VALID_LIST_STRATEGIES}"
+        )
 
     # Initialise from root (base).
     root = chain[-1]

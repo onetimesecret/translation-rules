@@ -6,6 +6,8 @@
 *.db
 __pycache__/
 *.pyc
+.venv/
+.ruff_cache/
 
 # Local resolver verification output. Real generated artifacts are committed to
 # the app repo (SPEC §2.3), not here.

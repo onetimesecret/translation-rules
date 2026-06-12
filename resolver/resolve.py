@@ -182,7 +182,9 @@ def _load_locale_files(
         from resolver.validate import validate_file
 
         validate_file(path, data, schema_name, bundle)
-        out.append(LoadedFile(path=path, schema_name=schema_name, data=data, locale=locale))
+        out.append(
+            LoadedFile(path=path, schema_name=schema_name, data=data, locale=locale)
+        )
     return out
 
 
@@ -198,7 +200,9 @@ def _load_retros(inputs: ResolverInputs, bundle: SchemaBundle) -> list[LoadedFil
         from resolver.validate import validate_file
 
         validate_file(path, data, "retrospective", bundle)
-        out.append(LoadedFile(path=path, schema_name="retrospective", data=data, locale=None))
+        out.append(
+            LoadedFile(path=path, schema_name="retrospective", data=data, locale=None)
+        )
     return out
 
 
@@ -213,14 +217,18 @@ def _load_baselines(inputs: ResolverInputs, bundle: SchemaBundle) -> LoadedFile 
     return LoadedFile(path=path, schema_name="baselines", data=data, locale=None)
 
 
-def _index_dotted_ids_in_rules(data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path) -> None:
+def _index_dotted_ids_in_rules(
+    data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path
+) -> None:
     """Capture top-level + nested rule/anti_pattern dotted ids."""
     rel = _rel(file_path, root)
     top_id = data.get("id")
     if isinstance(top_id, str):
         # base.yaml's top id is "base"; locale rules files use "rules.<locale>".
         top_kind = "base" if top_id == "base" else "rules"
-        sink.add_dotted(IdRecord(id=top_id, kind=top_kind, key=top_id, file=rel, json_pointer="/id"))
+        sink.add_dotted(
+            IdRecord(id=top_id, kind=top_kind, key=top_id, file=rel, json_pointer="/id")
+        )
     for partition in ("rules", "anti_patterns"):
         items = data.get(partition)
         if not isinstance(items, list):
@@ -239,18 +247,26 @@ def _index_dotted_ids_in_rules(data: dict[str, Any], file_path: Path, sink: Comb
                 )
 
 
-def _index_register(data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path) -> None:
+def _index_register(
+    data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path
+) -> None:
     rel = _rel(file_path, root)
     rid = data.get("id")
     if isinstance(rid, str):
-        sink.add_dotted(IdRecord(id=rid, kind="register", key=rid, file=rel, json_pointer="/id"))
+        sink.add_dotted(
+            IdRecord(id=rid, kind="register", key=rid, file=rel, json_pointer="/id")
+        )
 
 
-def _index_glossary(data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path) -> None:
+def _index_glossary(
+    data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path
+) -> None:
     rel = _rel(file_path, root)
     rid = data.get("id")
     if isinstance(rid, str):
-        sink.add_dotted(IdRecord(id=rid, kind="glossary", key=rid, file=rel, json_pointer="/id"))
+        sink.add_dotted(
+            IdRecord(id=rid, kind="glossary", key=rid, file=rel, json_pointer="/id")
+        )
     terms = data.get("terms")
     if not isinstance(terms, list):
         return
@@ -261,10 +277,16 @@ def _index_glossary(data: dict[str, Any], file_path: Path, sink: CombinedIndex, 
         if isinstance(tid, str) and ID_RE.match(tid):
             kind, key, _suf = parse_id(tid)
             sink.add_uuid(
-                IdRecord(id=tid, kind=kind, key=key, file=rel, json_pointer=f"/terms/{ti}/id")
+                IdRecord(
+                    id=tid, kind=kind, key=key, file=rel, json_pointer=f"/terms/{ti}/id"
+                )
             )
         for ei, ex in enumerate(term.get("examples") or []):
-            if isinstance(ex, dict) and isinstance(ex.get("id"), str) and ID_RE.match(ex["id"]):
+            if (
+                isinstance(ex, dict)
+                and isinstance(ex.get("id"), str)
+                and ID_RE.match(ex["id"])
+            ):
                 kind, key, _ = parse_id(ex["id"])
                 sink.add_uuid(
                     IdRecord(
@@ -277,11 +299,15 @@ def _index_glossary(data: dict[str, Any], file_path: Path, sink: CombinedIndex, 
                 )
 
 
-def _index_baselines(data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path) -> None:
+def _index_baselines(
+    data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path
+) -> None:
     rel = _rel(file_path, root)
     rid = data.get("id")
     if isinstance(rid, str):
-        sink.add_dotted(IdRecord(id=rid, kind="baselines", key=rid, file=rel, json_pointer="/id"))
+        sink.add_dotted(
+            IdRecord(id=rid, kind="baselines", key=rid, file=rel, json_pointer="/id")
+        )
     blocks = data.get("baselines")
     if isinstance(blocks, dict):
         for locale in blocks:
@@ -296,12 +322,16 @@ def _index_baselines(data: dict[str, Any], file_path: Path, sink: CombinedIndex,
             )
 
 
-def _index_retro(data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path) -> None:
+def _index_retro(
+    data: dict[str, Any], file_path: Path, sink: CombinedIndex, root: Path
+) -> None:
     rel = _rel(file_path, root)
     rid = data.get("id")
     if isinstance(rid, str):
         sink.add_retro(
-            IdRecord(id=rid, kind="retrospective", key=rid, file=rel, json_pointer="/id")
+            IdRecord(
+                id=rid, kind="retrospective", key=rid, file=rel, json_pointer="/id"
+            )
         )
 
 
@@ -310,7 +340,11 @@ def _walk_refs(data: Any, cursor: str, out: list[tuple[str, str]]) -> None:
     if isinstance(data, dict):
         for key, value in data.items():
             sub = f"{cursor}/{key}"
-            if key in DOTTED_REF_FIELDS or key in RETRO_REF_FIELDS or key in UUID_REF_FIELDS:
+            if (
+                key in DOTTED_REF_FIELDS
+                or key in RETRO_REF_FIELDS
+                or key in UUID_REF_FIELDS
+            ):
                 if isinstance(value, str):
                     out.append((sub, value))
                 elif isinstance(value, list):
@@ -353,7 +387,9 @@ def resolve_locale(
     # Step 1b: load + validate locale leaves (rules, register, glossary).
     locale_files = _load_locale_files(locale, inputs, bundle)
     if not locale_files:
-        raise FileNotFoundError(f"no YAML files found under {inputs.locales_dir / locale}")
+        raise FileNotFoundError(
+            f"no YAML files found under {inputs.locales_dir / locale}"
+        )
 
     # Step 1c: parents on the inheritance chain for rules.yaml only.
     rules_files = [f for f in locale_files if f.schema_name == "rules"]
@@ -441,8 +477,12 @@ def resolve_locale(
         "index_records": len(index.all_records()),
         # Raw per-locale leaves + retros surfaced for the P1-3 assemble step
         # (resolver/model.py). emit/lint are pure projections of these.
-        "register": next((f.data for f in locale_files if f.schema_name == "register"), None),
-        "glossary": next((f.data for f in locale_files if f.schema_name == "glossary"), None),
+        "register": next(
+            (f.data for f in locale_files if f.schema_name == "register"), None
+        ),
+        "glossary": next(
+            (f.data for f in locale_files if f.schema_name == "glossary"), None
+        ),
         "retros": [r.data for r in retros],
     }
 
@@ -460,7 +500,9 @@ def _resolve_source_commit(repo_root: Path, override: str | None) -> str:
     try:
         out = subprocess.run(
             ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
-            capture_output=True, text=True, check=True,
+            capture_output=True,
+            text=True,
+            check=True,
         )
         return out.stdout.strip()
     except (subprocess.CalledProcessError, FileNotFoundError):
@@ -468,10 +510,15 @@ def _resolve_source_commit(repo_root: Path, override: str | None) -> str:
 
 
 def _discover_locales(locales_dir: Path) -> list[str]:
-    return sorted(
-        p.name for p in locales_dir.iterdir()
-        if p.is_dir() and not p.name.startswith(".")
-    ) if locales_dir.exists() else []
+    return (
+        sorted(
+            p.name
+            for p in locales_dir.iterdir()
+            if p.is_dir() and not p.name.startswith(".")
+        )
+        if locales_dir.exists()
+        else []
+    )
 
 
 def _emit_for_locale(
@@ -518,39 +565,81 @@ def _emit_formats(raw: str | None) -> set[str]:
     out = {f.strip() for f in raw.split(",") if f.strip()}
     unknown = out - {"md", "json"}
     if unknown:
-        raise argparse.ArgumentTypeError(f"unknown --emit format(s): {sorted(unknown)}; valid: md, json")
+        raise argparse.ArgumentTypeError(
+            f"unknown --emit format(s): {sorted(unknown)}; valid: md, json"
+        )
     return out
 
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(prog="resolver/resolve.py", description=__doc__)
-    parser.add_argument("locale", nargs="?", help="Locale code, e.g. de_AT. Omit with --all.")
-    parser.add_argument("--all", action="store_true",
-                        help="Resolve every locale under --locales-dir.")
-    parser.add_argument("--validate-only", action="store_true",
-                        help="Run pipeline but do not write resolver/index.json or artifacts.")
-    parser.add_argument("--lint", action="store_true",
-                        help="Run step-6 lint on the resolved model; non-zero exit on error findings.")
-    parser.add_argument("--emit", type=_emit_formats, default=set(),
-                        help="Comma-separated artifacts to write: md,json (default: none).")
-    parser.add_argument("--emit-dir", default=".",
-                        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/for-translators/ (default: .).")
-    parser.add_argument("--source-commit", default=None,
-                        help="Override the translation-rules SHA pinned into artifacts (default: git HEAD or UNPINNED).")
-    parser.add_argument("--generated-at", default=None,
-                        help="Override _meta.generated_at (ISO 8601). Default: now (UTC). Pin for reproducible output.")
-    parser.add_argument("--locales-dir", default="locales",
-                        help="Directory containing per-locale YAML files (default: locales).")
-    parser.add_argument("--base-file", default="base.yaml",
-                        help="Path to universal rules YAML (default: base.yaml).")
-    parser.add_argument("--retrospectives-dir", default="retrospectives",
-                        help="Directory containing retrospective .md files (default: retrospectives).")
-    parser.add_argument("--schema-dir", default=str(DEFAULT_SCHEMA_DIR),
-                        help="Directory containing JSON Schemas (default: <repo>/schema).")
-    parser.add_argument("--index-path", default="resolver/index.json",
-                        help="Path to write resolver index (default: resolver/index.json).")
-    parser.add_argument("--project-root", default=".",
-                        help="Project root for relative paths in index.json (default: .).")
+    parser.add_argument(
+        "locale", nargs="?", help="Locale code, e.g. de_AT. Omit with --all."
+    )
+    parser.add_argument(
+        "--all", action="store_true", help="Resolve every locale under --locales-dir."
+    )
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+        help="Run pipeline but do not write resolver/index.json or artifacts.",
+    )
+    parser.add_argument(
+        "--lint",
+        action="store_true",
+        help="Run step-6 lint on the resolved model; non-zero exit on error findings.",
+    )
+    parser.add_argument(
+        "--emit",
+        type=_emit_formats,
+        default=set(),
+        help="Comma-separated artifacts to write: md,json (default: none).",
+    )
+    parser.add_argument(
+        "--emit-dir",
+        default=".",
+        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/for-translators/ (default: .).",
+    )
+    parser.add_argument(
+        "--source-commit",
+        default=None,
+        help="Override the translation-rules SHA pinned into artifacts (default: git HEAD or UNPINNED).",
+    )
+    parser.add_argument(
+        "--generated-at",
+        default=None,
+        help="Override _meta.generated_at (ISO 8601). Default: now (UTC). Pin for reproducible output.",
+    )
+    parser.add_argument(
+        "--locales-dir",
+        default="locales",
+        help="Directory containing per-locale YAML files (default: locales).",
+    )
+    parser.add_argument(
+        "--base-file",
+        default="base.yaml",
+        help="Path to universal rules YAML (default: base.yaml).",
+    )
+    parser.add_argument(
+        "--retrospectives-dir",
+        default="retrospectives",
+        help="Directory containing retrospective .md files (default: retrospectives).",
+    )
+    parser.add_argument(
+        "--schema-dir",
+        default=str(DEFAULT_SCHEMA_DIR),
+        help="Directory containing JSON Schemas (default: <repo>/schema).",
+    )
+    parser.add_argument(
+        "--index-path",
+        default="resolver/index.json",
+        help="Path to write resolver index (default: resolver/index.json).",
+    )
+    parser.add_argument(
+        "--project-root",
+        default=".",
+        help="Project root for relative paths in index.json (default: .).",
+    )
     args = parser.parse_args(argv)
 
     inputs = ResolverInputs(
@@ -582,16 +671,28 @@ def main(argv: list[str]) -> int:
     for locale in locales:
         try:
             result = resolve_locale(locale, inputs, validate_only=args.validate_only)
-            emitted = _emit_for_locale(
-                locale, result,
-                formats=args.emit,
-                do_lint=args.lint,
-                source_commit=source_commit,
-                generated_at=generated_at,
-                emit_dir=emit_dir,
-            ) if (args.emit or args.lint) else None
-        except (LoaderError, ValidationFailed, InheritanceError, MergeError,
-                ResolutionError, IdError, ModelError) as exc:
+            emitted = (
+                _emit_for_locale(
+                    locale,
+                    result,
+                    formats=args.emit,
+                    do_lint=args.lint,
+                    source_commit=source_commit,
+                    generated_at=generated_at,
+                    emit_dir=emit_dir,
+                )
+                if (args.emit or args.lint)
+                else None
+            )
+        except (
+            LoaderError,
+            ValidationFailed,
+            InheritanceError,
+            MergeError,
+            ResolutionError,
+            IdError,
+            ModelError,
+        ) as exc:
             print(_format_error(f"error ({locale})", exc), file=sys.stderr)
             return 1
         except FileNotFoundError as exc:
