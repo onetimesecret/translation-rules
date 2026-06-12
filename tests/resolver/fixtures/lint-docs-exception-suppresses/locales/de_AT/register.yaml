@@ -1,0 +1,15 @@
+id: register.de_AT
+source: SPEC.md
+form: formal
+pronoun: Sie
+forbidden_tokens:
+  - token: du
+    context: word_prefix
+    severity: error
+    note: >-
+      word_prefix mode so the 'du' beginning 'Duden' is a real hit in doc
+      prose — exercises the exceptions-allowlist suppression in the docs scan.
+exceptions:
+  - token: Duden
+    reason: proper noun (the German dictionary); contains the 'du' prefix
+    source: native-speaker:AT

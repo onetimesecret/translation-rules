@@ -521,10 +521,35 @@ def _discover_locales(locales_dir: Path) -> list[str]:
     )
 
 
+def load_lint_docs(
+    inputs: ResolverInputs, locale: str, model: dict[str, Any]
+) -> dict[str, str]:
+    """Embedded rationale docs for the step-6 docs lint, keyed by
+    project-root-relative path: every *.md under base/docs/ and
+    locales/<locale>/docs/, plus every `rationale_index` path that exists on
+    disk. A rationale_index path absent from the returned mapping surfaces as
+    a dangling-doc finding in lint_model (doc paths are not ref-walked by the
+    step-4 ID resolution, so existence is enforced at lint time)."""
+    root = inputs.project_root
+    docs: dict[str, str] = {}
+    for docs_dir in (root / "base" / "docs", inputs.locales_dir / locale / "docs"):
+        if not docs_dir.is_dir():
+            continue
+        for path in sorted(docs_dir.rglob("*.md")):
+            docs[_rel(path, root)] = path.read_text(encoding="utf-8")
+    for paths in (model.get("rationale_index") or {}).values():
+        for rel_path in paths:
+            path = root / rel_path
+            if rel_path not in docs and path.is_file():
+                docs[rel_path] = path.read_text(encoding="utf-8")
+    return docs
+
+
 def _emit_for_locale(
     locale: str,
     result: dict[str, Any],
     *,
+    inputs: ResolverInputs,
     formats: set[str],
     do_lint: bool,
     source_commit: str,
@@ -555,7 +580,7 @@ def _emit_for_locale(
 
     lint_result = None
     if do_lint:
-        lint_result = lint_model(model)
+        lint_result = lint_model(model, docs=load_lint_docs(inputs, locale, model))
     return {"model": model, "written": written, "lint": lint_result}
 
 
@@ -675,6 +700,7 @@ def main(argv: list[str]) -> int:
                 _emit_for_locale(
                     locale,
                     result,
+                    inputs=inputs,
                     formats=args.emit,
                     do_lint=args.lint,
                     source_commit=source_commit,
@@ -722,7 +748,13 @@ def main(argv: list[str]) -> int:
                 status = "pass" if lint_result.ok else "FAIL"
                 print(f"lint {locale}: {status} ({len(lint_result.findings)} findings)")
                 for f in lint_result.findings:
-                    print(f"  [{f.severity}] {f.check}: {f.message}", file=sys.stderr)
+                    where = ""
+                    if f.doc is not None:
+                        where = f" ({f.doc}:{f.line})" if f.line else f" ({f.doc})"
+                    print(
+                        f"  [{f.severity}] {f.check}: {f.message}{where}",
+                        file=sys.stderr,
+                    )
                 if not lint_result.ok:
                     lint_failures += 1
 

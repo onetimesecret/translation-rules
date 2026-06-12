@@ -18,7 +18,7 @@ The single smallest implementation that would have blocked the 2026-04-12 de_AT 
 - `retrospectives/2026-04-12-de_AT-register-flip.md` with `affected_rules: [register.de_AT.formality]` and `status: applied`
 - One-line anti-pattern in the existing UX guide: "harmonize = keys only; never text rewrites"
 
-**Gate (planned — not yet wired; see §2.4 Status).** App repo CI invokes `bin/lint-register` against `locales/content/<locale>/*.json` for every PR that touches locale content. Zero tolerance. PR blocked if any forbidden token appears. This is the load-bearing gate and does not exist in the app repo today.
+**Gate (live since 2026-06; see §2.4 Status).** App repo CI (`validate-register.yml`, landed via onetimesecret/onetimesecret#3432) invokes `bin/lint-register` from a read-only pinned checkout of this repo against `locales/content/<locale>/*.json` for every PR that touches locale content, covering every locale that has a `register.yaml` here. Zero tolerance. PR blocked if any forbidden token appears. This is the load-bearing gate; the fuller P1-4b form (submodule + resolved-artifact checks) is still planned.
 
 **Reversibility.** All Phase 0 artifacts are additive. Removing them restores current state.
 
@@ -154,9 +154,9 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 ### 2.4 CI gates
 
-**Status (2026-06-12).** Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests, retro lifecycle gate), `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`), `python-qc.yml` (ruff lint/format, pyright), and the §3 retrospective lifecycle gates (`resolver/retro_lifecycle.py`: 7-day orphan timeout, applied-transition diff check). Still planned in this repo: `_archive/` firewall (no top-level `_archive/` exists yet to guard); forbidden-token grep against embedded examples and docs; review findings-manifest check. Every gate in the App-repo block is **planned** — including the load-bearing one (app-repo forbidden-token grep against real content). No app-repo integration exists yet (no submodule, no content gate). Phases below depend on these landing.
+**Status (2026-06-12).** Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests; retro lifecycle, review findings-manifest, and real-tree resolver lint gates), `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`), `python-qc.yml` (ruff lint/format, pyright), the §3 retrospective lifecycle gates (`resolver/retro_lifecycle.py`: 7-day orphan timeout, applied-transition diff check), the §3 review findings-manifest check (`resolver/review_manifest.py`; pre-existing reviews grandfathered — see `reviews/README.md`), the forbidden-token lint over embedded examples and rationale docs (`resolver/lint.py`, run against the repo tree by `schema-validation.yml`; backtick-quoted token mentions in docs are allowed, bare-prose uses fail), and the `_archive/` firewall (`resolver/archive_firewall.py` + `archive-firewall.yml`: moving or copying a file out of `_archive/` or `retrospectives/_archive/` — or deleting one — requires the `prescriptive-promotion` label).
 
-**App repo (planned — none built):** submodule pointer freshness on locale-content PRs; `.resolved/<locale>.json`'s `_meta.source_commit` equals submodule SHA; `forbidden_tokens` grep against `locales/content/<locale>/*.json`; `for-translators/*.md` hash matches resolver output — hand edits rejected.
+**App repo:** the `forbidden_tokens` grep against `locales/content/<locale>/*.json` is **live** (`validate-register.yml` via onetimesecret/onetimesecret#3432 — `bin/lint-register` from a read-only pinned checkout of this repo, every governed locale). Still planned: submodule pointer freshness on locale-content PRs; `.resolved/<locale>.json`'s `_meta.source_commit` equals submodule SHA; `for-translators/*.md` hash matches resolver output — hand edits rejected.
 
 **Cross-repo pipeline gate (planned).** A locale content PR is blocked unless the submodule is current, resolved JSON was regenerated in the same PR, and lint passes. This is what mechanically prevents the next class of "bypass by direct edit."
 
@@ -171,7 +171,7 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
 
-**Status (2026-06-12).** The 7-day orphan timeout and the applied-transition PR check are wired (`resolver/retro_lifecycle.py`, run by `schema-validation.yml`; one pre-existing pending retro carries an explicit, per-id grace in the workflow until its cross-repo closure lands). Still not wired: retro→applied automation on merge, and the cross-repo lint/hash gates — see §2.4 Status. Read the remaining `[CI-ENFORCED: ...]` annotations accordingly.
+**Status (2026-06-12).** The 7-day orphan timeout and the applied-transition PR check are wired (`resolver/retro_lifecycle.py`, run by `schema-validation.yml`; one pre-existing pending retro carries an explicit, per-id grace in the workflow until its cross-repo closure lands). The review findings-manifest check is wired (`resolver/review_manifest.py`; documents existing before the gate are grandfathered by path — see `reviews/README.md`). Still not wired: retro→applied automation on merge, and the cross-repo hash gates — see §2.4 Status. Read the remaining `[CI-ENFORCED: ...]` annotations accordingly.
 
 ```
             (incident signal OR scheduled audit)

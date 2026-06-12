@@ -48,6 +48,12 @@ jobs:
       - name: Run retro lifecycle test suite
         run: python tests/retro_lifecycle/run.py
 
+      - name: Run archive firewall test suite
+        run: python tests/archive_firewall/run.py
+
+      - name: Run review manifest test suite
+        run: python tests/review_manifest/run.py
+
       - name: Retrospective lifecycle gate (SPEC §3)
         # The one graced id is a structural retro whose closure is blocked on
         # cross-repo work (P1-4b/P1-5b) — see its body and RECOVERY-PLAN.md.
@@ -58,3 +64,11 @@ jobs:
             ARGS+=(--diff-base "origin/${{ github.base_ref }}")
           fi
           python resolver/retro_lifecycle.py "${ARGS[@]}"
+
+      - name: Review findings-manifest gate (SPEC §3)
+        run: python resolver/review_manifest.py
+
+      # SPEC §2.4 "lint across every resolved locale" — fixtures alone never
+      # touch the real tree, so run the step-6 lint against it here.
+      - name: Resolver lint against repo tree (forbidden tokens in examples + embedded docs)
+        run: python resolver/resolve.py --all --lint --validate-only
