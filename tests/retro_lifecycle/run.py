@@ -29,6 +29,7 @@ try:
     from resolver.retro_lifecycle import (
         check_applied_transitions,
         check_pending_orphans,
+        check_stale_grace,
     )
 except ImportError as exc:
     print(f"setup: {exc}", file=sys.stderr)
@@ -89,6 +90,25 @@ def run_cases() -> list[tuple[str, bool, str]]:
     case(
         "unparseable date errors",
         len(f) == 1 and f[0].severity == "error",
+        f"findings={f}",
+    )
+
+    # --- stale grace waivers ---
+
+    f = check_stale_grace([_retro()], grace={"2026-06-10-example"})
+    case("grace matching a pending retro is not stale", f == [], f"findings={f}")
+
+    f = check_stale_grace([_retro(status="applied")], grace={"2026-06-10-example"})
+    case(
+        "grace pointing at a closed retro warns (non-fatal)",
+        len(f) == 1 and f[0].severity == "warning" and f[0].check == "stale_grace",
+        f"findings={f}",
+    )
+
+    f = check_stale_grace([_retro()], grace={"typo-id"})
+    case(
+        "grace with unknown id warns",
+        len(f) == 1 and f[0].retro_id == "typo-id",
         f"findings={f}",
     )
 

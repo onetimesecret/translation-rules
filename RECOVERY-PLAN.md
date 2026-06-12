@@ -13,7 +13,11 @@ built to make safe, and the order in which the freeze lifts.
 **Authority chain.** Every factual claim about the contamination traces to
 `reviews/2026-04-12/cross-locale-audit.md` (per-locale commits and severity)
 and `reviews/2026-04-12/locale-quality-analysis-de_AT.md` (baseline
-determination). The de_AT baseline is pinned in `baselines.yaml`.
+determination). The de_AT baseline is pinned in `baselines.yaml`. The
+coverage figures (~95% → ~81%) and the freeze itself are operational facts
+supplied by the maintainers — they are not derivable from this repo and
+should be re-confirmed against the app repo's i18n tooling before §4
+decision point 2 is acted on.
 
 ---
 
@@ -61,23 +65,34 @@ All commits below are in `onetimesecret/onetimesecret`. Layout eras:
 | da_DK | `6c1b55c16` | Medium | fix in place (brand-term swap only) | — |
 | zh | `311537d04` | Medium | fix in place (您 erosion, 消息 inflation) | — |
 
-Why de_AT's source is `f95b03f44` and **not** the immediate pre-incident state
-(`b08e59838^`): the incident was the endpoint of a five-month
-assistant→assistant drift loop. States downstream of the loop carry partial
-du-form drift even before the flip commit. `f95b03f44` is the last
-human-curated snapshot — formal *Sie* plus the Geheimnis/Nachricht split —
-and is recorded as the authoritative pin in `baselines.yaml`
-(`baselines.de_AT`). The same reasoning applies to uk's pre-reorg source.
+Why de_AT's source is `f95b03f44` and **not** a state nearer the incident:
+the incident was the endpoint of a five-month assistant→assistant drift loop,
+and `locale-quality-analysis-de_AT.md` settles the question — `f95b03f44` "is
+the last known-good human-curated de_AT content … the only defensible
+baseline," while the nearer candidate it evaluated (`e5fe5566f^`) "is
+downstream of the corrupting loop and carries partial du-form drift."
+(`baselines.yaml` pins the same commit while characterizing it as the last
+*acceptable* state rather than a curation event; the two sources agree on the
+pin, not on the wording.) For uk, the audit names `be5bdb5ca^` a usable
+revert source — clean formal Ви throughout.
 
 pt_PT and hu were essentially empty at the reorg; their usable baselines are
-the March 2026 translation pass (clean formal at `d8834a021`), which is
-already in the per-file layout — no key mapping needed, only value restore.
+the March 2026 translation pass at `d8834a021`, already in the per-file
+layout — no key mapping needed, only value restore. Note the asymmetry the
+audit records: hu's March state was clean formal *Ön*, but pt_PT's was
+"mixed você+tu leaning formal." Recovered pt_PT content therefore needs a
+**register-repair pass** (informal 2sg residue removed against its future
+`register.yaml`) on top of the restore — budget for it.
 
-**Verify before use.** Each candidate snapshot is confirmed with the marker
-counts from the audit before any values are taken from it, e.g. for de_AT:
-`Sie/Ihre` present throughout, zero du-paradigm tokens, Geheimnis ≈ 108 /
-Nachricht ≈ 65 occurrence ratio. If a snapshot fails its smoke test, stop and
-re-derive the baseline; do not improvise forward.
+**Verify before use.** Each candidate snapshot is confirmed before any values
+are taken from it: for de_AT, `Sie/Ihr*` present throughout, zero du-paradigm
+tokens, and **both** Geheimnis and Nachricht present (the split intact —
+a one-sided count means the wrong snapshot). Measure the snapshot's own
+Geheimnis/Nachricht counts at extraction time and carry them forward as the
+expected shape for step 4d; the audit's 108/65 figure was measured at
+`b08e59838^` (per-file era) and is a shape reference, not the baseline's
+expected value. If a snapshot fails its smoke test, stop and re-derive the
+baseline; do not improvise forward.
 
 ---
 
@@ -86,12 +101,12 @@ re-derive the baseline; do not improvise forward.
 Run inside a clone of `onetimesecret/onetimesecret`. Steps 1–4 are mechanical
 and agent-executable; steps 5–7 carry the human gates.
 
-**Step 1 — extract the three snapshots.**
+**Step 1 — extract the snapshots.**
 
 ```bash
 git show f95b03f44:src/locales/de_AT.json   > /tmp/deAT-baseline.json   # values
 git show be5bdb5ca^:src/locales/de_AT.json  > /tmp/deAT-reorg-flat.json # keymap aid
-git show b08e59838^ -- 'locales/content/de_AT/' # pre-incident per-file tree (keymap aid)
+# pre-incident per-file tree (keymap aid only — carries drift, do not take values):
 mkdir -p /tmp/deAT-preincident && git archive b08e59838^ locales/content/de_AT | tar -x -C /tmp/deAT-preincident
 ```
 
@@ -114,23 +129,31 @@ For every key in the *current* `locales/content/de_AT/*.json` structure:
   value left as-is for now (current value may be contaminated; queue entries
   are re-done under the new rules, not trusted).
 
-**Step 4 — mechanical validation (all must pass).**
+**Step 4 — mechanical validation (all must pass).** Paths assume the P1-4b
+layout: this repo as a submodule at `locales/translation-rules/` (per
+`.github/ISSUE_DRAFTS/p1-4b-app-repo-integration.md`; the minimal-slice
+workflow draft checks out at `.translation-rules` — adjust to whichever
+landed).
 
 ```bash
-# 4a. Register lint — the Phase 0 gate, zero tolerance:
-translation-rules/bin/lint-register de_AT 'locales/content/de_AT/*.json'
+# 4a. Register lint — the Phase 0 gate, zero tolerance, runs on the
+#     candidate content itself:
+locales/translation-rules/bin/lint-register de_AT 'locales/content/de_AT/*.json'
 
-# 4b. Resolver lint — the candidate values must satisfy the resolved model:
-python translation-rules/resolver/resolve.py de_AT --lint
+# 4b. Resolver green — regenerate the artifacts the retranslate queue and
+#     reviewers consume. Runs INSIDE the submodule (the resolver lints the
+#     rules model and embedded examples, NOT app content — content checks
+#     are 4a/4c/4d plus the P1-4b CI grep):
+(cd locales/translation-rules && python resolver/resolve.py de_AT --lint --emit=md,json)
 
 # 4c. Object/content split spot-grep (locale-quality-analysis item 3):
 #     no Nachricht as object of verbrennen/teilen/erstellen/löschen;
 #     no Geheimnis in post_reveal / encrypted_message / message_ready keys.
 
-# 4d. Marker-count smoke test against the audit's expected shape:
-#     du-paradigm = 0; Sie/Ihr* high; Geheimnis/Nachricht both present
-#     in roughly the baseline ratio (≈108/65) — a one-sided count is a
-#     red flag that the split collapsed again.
+# 4d. Marker-count smoke test: du-paradigm = 0; Sie/Ihr* high; Geheimnis and
+#     Nachricht both present in roughly the ratio measured on the baseline
+#     snapshot in §2 — a one-sided count is a red flag that the split
+#     collapsed again.
 ```
 
 **Step 5 — retranslate queue.** New keys are translated fresh by the
@@ -153,7 +176,9 @@ coverage number; the locale's freeze lifts at merge (§5).
 ## 4. Sequencing and dependencies
 
 ```
-P1-4a finish (this repo)          [done except retro lifecycle gate — wired 2026-06-12]
+P1-4a (this repo CI)              [core gates + retro lifecycle live as of
+        │                          2026-06-12; _archive/ firewall and
+        │                          embedded-docs grep still open — SPEC §2.4]
         │
 P1-4b: submodule + CI gate in app repo        [HUMAN-GATED, drafts ready:
         │                                      .github/ISSUE_DRAFTS/p1-4b-*]

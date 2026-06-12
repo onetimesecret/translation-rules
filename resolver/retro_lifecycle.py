@@ -18,8 +18,8 @@ Two CI-enforced checks the schema cannot express:
      `status: applied` must also touch every id in `affected_rules`
      (SPEC §3: "requires PR to also touch every ID in affected_rules").
      Enforced when `--diff-base <ref>` is given: a retro that is `applied` at
-     HEAD but not at the base ref must have, for each affected rule id, at
-     least one changed YAML file whose HEAD content contains that id.
+     HEAD but not at the merge base with <ref> must have, for each affected
+     rule id, at least one changed YAML file whose content contains that id.
      Retros with empty `affected_rules` are structural (see the 2026-04-26
      conventions-drift retro) and have nothing to touch — they pass.
 
@@ -145,6 +145,22 @@ def check_pending_orphans(
     return findings
 
 
+def check_stale_grace(retros: list[dict[str, Any]], grace: set[str]) -> list[Finding]:
+    """A grace id that matches no pending retro is stale (closed retro,
+    rename, or typo) — surface it so the waiver gets removed from the
+    workflow instead of lingering inert."""
+    pending_ids = {str(r.get("id")) for r in retros if r.get("status") == "pending"}
+    return [
+        Finding(
+            check="stale_grace",
+            severity="warning",
+            message="grace id matches no pending retro; remove the waiver",
+            retro_id=gid,
+        )
+        for gid in sorted(grace - pending_ids)
+    ]
+
+
 def check_applied_transitions(
     head_retros: list[dict[str, Any]],
     base_statuses: dict[str, str],
@@ -188,15 +204,28 @@ def _git(args: list[str]) -> str:
     return proc.stdout
 
 
-def _base_statuses(diff_base: str, retros_dir: Path) -> dict[str, str]:
-    """Retro id -> status at the base ref, parsed from `git show`."""
-    rel = retros_dir.relative_to(REPO_ROOT)
-    listing = _git(["ls-tree", "--name-only", diff_base, f"{rel}/"])
+def _merge_base(diff_base: str) -> str:
+    """The comparison point for both helpers below. Using the merge base for
+    the status read AND the diff keeps them consistent when the base branch
+    has moved since this branch diverged (on GitHub's PR merge-ref checkout
+    the merge base equals the base tip, so CI behavior is unchanged)."""
+    return _git(["merge-base", diff_base, "HEAD"]).strip()
+
+
+def _base_statuses(base_commit: str, retros_dir: Path) -> dict[str, str]:
+    """Retro id -> status at the comparison commit, parsed from `git show`."""
+    try:
+        rel = retros_dir.relative_to(REPO_ROOT)
+    except ValueError as exc:
+        raise RuntimeError(
+            f"--retros-dir must be inside the repo for --diff-base: {exc}"
+        ) from exc
+    listing = _git(["ls-tree", "--name-only", "-z", base_commit, f"{rel}/"])
     statuses: dict[str, str] = {}
-    for line in listing.splitlines():
-        if not line.endswith(".md") or line.endswith("README.md"):
+    for line in listing.split("\0"):
+        if not line.endswith(".md") or Path(line).name == "README.md":
             continue
-        text = _git(["show", f"{diff_base}:{line}"])
+        text = _git(["show", f"{base_commit}:{line}"])
         match = FRONTMATTER_RE.match(text)
         if not match:
             continue
@@ -206,9 +235,10 @@ def _base_statuses(diff_base: str, retros_dir: Path) -> dict[str, str]:
     return statuses
 
 
-def _changed_yaml_contents(diff_base: str) -> dict[str, str]:
-    """Changed-vs-base YAML paths -> HEAD content (deleted files excluded)."""
-    names = _git(["diff", "--name-only", "--diff-filter=d", f"{diff_base}...HEAD"])
+def _changed_yaml_contents(base_commit: str) -> dict[str, str]:
+    """Changed-vs-base YAML paths -> their current content (HEAD in CI, the
+    working tree in dirty local runs). Deleted files excluded."""
+    names = _git(["diff", "--name-only", "--diff-filter=d", base_commit, "HEAD"])
     out: dict[str, str] = {}
     for name in names.splitlines():
         if not (name.endswith(".yaml") or name.endswith(".yml")):
@@ -258,16 +288,24 @@ def main(argv: list[str] | None = None) -> int:
         print(f"setup: {exc}", file=sys.stderr)
         return 2
 
-    today = date.fromisoformat(args.today) if args.today else date.today()
+    try:
+        today = date.fromisoformat(args.today) if args.today else date.today()
+    except ValueError as exc:
+        print(f"setup: --today: {exc}", file=sys.stderr)
+        return 2
+    grace = set(args.grace)
     result = LifecycleResult()
     result.findings.extend(
-        check_pending_orphans(retros, today, set(args.grace), args.max_pending_days)
+        check_pending_orphans(retros, today, grace, args.max_pending_days)
     )
+
+    result.findings.extend(check_stale_grace(retros, grace))
 
     if args.diff_base:
         try:
-            base_statuses = _base_statuses(args.diff_base, retros_dir)
-            changed = _changed_yaml_contents(args.diff_base)
+            base_commit = _merge_base(args.diff_base)
+            base_statuses = _base_statuses(base_commit, retros_dir)
+            changed = _changed_yaml_contents(base_commit)
         except RuntimeError as exc:
             print(f"setup: {exc}", file=sys.stderr)
             return 2
