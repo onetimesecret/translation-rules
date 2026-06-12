@@ -220,7 +220,7 @@ The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
 - `pending → applied`: requires PR to also touch every ID in `affected_rules` and populate `resolved_in_commit`. CI-enforced.
 - `pending → declined`: requires `declined_reason` and `would_change_decision_if` fields. Human-gated.
 - `applied → superseded`: only via a newer retro whose `supersedes` list contains this id.
-- `pending` with no transition after 7 days blocks next main PR.
+- `pending` with no transition after 7 days blocks next main PR. A retro whose closure is blocked on work outside this repo may carry an explicit per-id waiver in the CI workflow (`--grace <retro-id>`): the overdue retro then reports as a non-fatal warning, the waiver itself is a reviewable diff, and the gate flags the waiver as stale once the retro leaves `pending`.
 
 **Declined retros stay as active guardrails** (not archived). Resolver emits per-locale decline index surfacing summaries to agents. Before an agent proposes changing a locale's register or glossary, it checks the decline index — if covered, the agent must either match a `would_change_decision_if` condition or escalate.
 
