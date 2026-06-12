@@ -1,0 +1,66 @@
+name: publish
+
+# Tag every merge to main so the app repo (onetimesecret/onetimesecret) can pin
+# its submodule to a named resolver release. Issue #10 (P1-4a) acceptance
+# criterion: ".github/workflows/publish.yml tags main on merge."
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+# Serialize releases so two quick merges to main cannot race to mint a tag.
+concurrency:
+  group: publish-tag
+  cancel-in-progress: false
+
+jobs:
+  tag-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history + tags: we count commits from the root and check
+          # whether this version's tag already exists.
+          fetch-depth: 0
+          fetch-tags: true
+
+      # Annotated tags record a tagger, so a bare runner needs a git identity;
+      # without this, `git tag -a` aborts with "Committer identity unknown."
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine version tag
+        id: version
+        run: |
+          set -euo pipefail
+          # N = total commits reachable from HEAD. main is append-only, so N is
+          # strictly monotonic and never collides. (Counting "commits since the
+          # last tag" — the original scheme — resets to 1 the moment the first
+          # tag lands, walking the version backward and colliding with v0.0.1.)
+          count=$(git rev-list --count HEAD)
+          echo "tag=v0.0.${count}" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        run: |
+          set -euo pipefail
+          tag="${{ steps.version.outputs.tag }}"
+          # The monotonic count can only repeat if this exact commit is being
+          # re-released (e.g. a manual workflow re-run), so an existing tag means
+          # "already released" — not "no new commits." Skip honestly.
+          if git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
+            echo "Tag ${tag} already exists; ${GITHUB_SHA} is already released. Nothing to do."
+            exit 0
+          fi
+          git tag -a "${tag}" -m "Release ${tag}
+
+          translation-rules at ${GITHUB_SHA}
+
+          Pin the app-repo submodule to this tag (or its commit) to consume a
+          named resolver release. See README.md for the submodule contract."
+          git push origin "${tag}"
+          echo "Released ${tag} (${GITHUB_SHA})."
