@@ -1,0 +1,39 @@
+name: archive-firewall
+
+# The _archive/ firewall (SPEC §2.1): moving or copying a file out of an
+# archive tree — or deleting one — requires the `prescriptive-promotion`
+# label on the PR. This is a separate workflow rather than a step in
+# schema-validation.yml because it must re-run when labels change without a
+# new push — hence the labeled/unlabeled trigger types.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  archive-firewall:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: the gate diffs against the PR base ref to find
+          # renames, copies, and deletes that cross the archive boundary.
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Archive firewall gate (SPEC §2.1)
+        # Labels reach the gate through an env var holding a JSON array, not
+        # shell interpolation — label text is attacker-controlled on forks.
+        env:
+          LABELS_JSON: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+        run: |
+          python resolver/archive_firewall.py \
+            --diff-base "origin/${{ github.base_ref }}" \
+            --labels-env LABELS_JSON
