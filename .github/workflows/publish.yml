@@ -1,0 +1,62 @@
+name: publish
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  tag-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version tag
+        id: version
+        run: |
+          set -euo pipefail
+          # Count commits since last tag (or from root if no tags)
+          if git describe --tags 2>/dev/null; then
+            last_tag=$(git describe --tags --abbrev=0)
+            commit_count=$(git rev-list --count "${last_tag}..HEAD")
+          else
+            commit_count=$(git rev-list --count HEAD)
+          fi
+          # Increment patch version: v0.0.N where N = commit count (incremental numbering)
+          echo "tag=v0.0.${commit_count}" >> "$GITHUB_OUTPUT"
+
+      - name: Check if tag already exists
+        id: check-tag
+        run: |
+          tag="${{ steps.version.outputs.tag }}"
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create and push tag
+        if: steps.check-tag.outputs.exists == 'false'
+        run: |
+          tag="${{ steps.version.outputs.tag }}"
+          git tag -a "$tag" -m "Release $tag
+
+          Resolver version: translation-rules at ${{ github.sha }}
+
+          For submodule pinning: add this repo as a submodule and pin to this tag.
+          See README.md for integration details."
+          git push origin "$tag"
+
+      - name: Report
+        if: always()
+        run: |
+          tag="${{ steps.version.outputs.tag }}"
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "Released: $tag"
+          else
+            echo "No new commits; skipping tag"
+          fi
