@@ -269,6 +269,39 @@ def _changed_yaml_contents(base_commit: str) -> dict[str, str]:
     return out
 
 
+def check_archive_egress(base_commit: str) -> list[Finding]:
+    """SPEC §2.1 archive firewall. Moving a file out of `_archive/` requires
+    explicit approval. Detects any file whose path was in `_archive/` at base
+    commit but is no longer in `_archive/` at HEAD (removed or moved out)."""
+    findings: list[Finding] = []
+
+    try:
+        # Get all files in archive at base commit
+        base_archive = _git(["ls-tree", "--name-only", "-r", base_commit]).splitlines()
+        base_archive_files = {f for f in base_archive if "/_archive/" in f}
+
+        # Get all files in archive at HEAD
+        head_archive = _git(["ls-tree", "--name-only", "-r", "HEAD"]).splitlines()
+        head_archive_files = {f for f in head_archive if "/_archive/" in f}
+
+        # Find files that were in archive at base but not at HEAD
+        egress_files = base_archive_files - head_archive_files
+        for f in sorted(egress_files):
+            findings.append(
+                Finding(
+                    check="archive_egress",
+                    severity="error",
+                    message=f"file moved or deleted from _archive/; requires approval",
+                    retro_id=f,
+                )
+            )
+    except RuntimeError:
+        # If base commit doesn't exist or git fails, no archive to check
+        pass
+
+    return findings
+
+
 def load_retros(retros_dir: Path) -> list[dict[str, Any]]:
     retros: list[dict[str, Any]] = []
     for path in sorted(retros_dir.iterdir()):
@@ -332,6 +365,7 @@ def main(argv: list[str] | None = None) -> int:
         result.findings.extend(
             check_applied_transitions(retros, base_statuses, changed)
         )
+        result.findings.extend(check_archive_egress(base_commit))
 
     for f in result.findings:
         stream = sys.stderr if f.severity in FATAL else sys.stdout
