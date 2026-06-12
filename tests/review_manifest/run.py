@@ -189,6 +189,23 @@ def run_cases() -> list[tuple[str, bool, str]]:
         f"findings={f}",
     )
 
+    # A finding maps to exactly one outcome; both tags on one bullet is
+    # ambiguous even when each would be valid on its own.
+    f = check_manifest(
+        _doc(
+            "## Findings manifest\n"
+            "\n"
+            "- Drift in nav strings. retro: 2026-06-01-example-retro "
+            "wont_fix: also too minor to act on.\n"
+        ),
+        KNOWN_IDS,
+    )
+    case(
+        "bullet with both retro and wont_fix tags errors",
+        len(f) == 1 and f[0].check == "ambiguous_tag",
+        f"findings={f}",
+    )
+
     # A bare `- ` bullet has no text at all — must report cleanly, not crash.
     f = check_manifest(
         _doc(

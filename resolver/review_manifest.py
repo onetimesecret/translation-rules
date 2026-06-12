@@ -222,6 +222,21 @@ def _check_bullet(
     findings: list[Finding] = []
     retro = RETRO_TAG_RE.search(text)
     wont_fix = WONT_FIX_TAG_RE.search(text)
+    if retro and wont_fix:
+        # SPEC §3: each finding maps to a retro id OR a wont_fix rationale.
+        # Carrying both leaves the finding's outcome ambiguous.
+        return [
+            Finding(
+                check="ambiguous_tag",
+                severity="error",
+                message=(
+                    f"bullet {n} carries both `retro: {retro.group(1)}` and "
+                    f"`wont_fix:`; a finding maps to exactly one outcome — "
+                    f"pick one"
+                ),
+                doc=doc,
+            )
+        ]
     if not retro and not wont_fix:
         # `- ` with no text yields an empty bullet; splitlines() would be [].
         head = text.splitlines()[0] if text else ""

@@ -23,7 +23,7 @@ are exempt.
 Every new review document must end with a findings manifest: the last
 `##`-level heading is exactly `## Findings manifest`, followed only by `- `
 bullets (indented continuation lines and blank lines are fine — anything
-else fails CI). Each bullet maps one finding to a tracking tag:
+else fails CI). Each bullet maps one finding to exactly one tracking tag:
 
 - `retro: <id>` — the id of a retrospective in `retrospectives/`
   (including `_archive/`; superseded retros are still valid tags), or
