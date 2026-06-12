@@ -115,6 +115,18 @@ def check_pending_orphans(
                 )
             )
             continue
+        if filed > today:
+            # A future date would make the retro un-ageable, silently
+            # exempting it from the timeout — treat as an authoring error.
+            findings.append(
+                Finding(
+                    check="pending_orphan",
+                    severity="error",
+                    message=f"date {raw_date!r} is in the future",
+                    retro_id=rid,
+                )
+            )
+            continue
         age = (today - filed).days
         if age <= max_pending_days:
             continue
@@ -180,7 +192,15 @@ def check_applied_transitions(
         rid = str(r.get("id", "?"))
         if base_statuses.get(rid) == "applied":
             continue  # not a transition in this diff
-        for rule_id in r.get("affected_rules") or []:
+        # This load path is not schema-validated, so normalize defensively:
+        # a scalar becomes a one-id list (never per-character iteration) and
+        # entries are coerced to str (never `int in str` TypeErrors).
+        raw_rules = r.get("affected_rules")
+        if raw_rules is None:
+            raw_rules = []
+        elif not isinstance(raw_rules, list):
+            raw_rules = [raw_rules]
+        for rule_id in (str(x) for x in raw_rules):
             if not any(rule_id in text for text in changed_yaml_contents.values()):
                 findings.append(
                     Finding(

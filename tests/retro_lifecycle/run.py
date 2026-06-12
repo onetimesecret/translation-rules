@@ -93,6 +93,14 @@ def run_cases() -> list[tuple[str, bool, str]]:
         f"findings={f}",
     )
 
+    # A future date must not silently exempt a pending retro from the timeout.
+    f = check_pending_orphans([_retro(date="2026-12-01")], TODAY, grace=set())
+    case(
+        "future date errors instead of bypassing the timeout",
+        len(f) == 1 and f[0].severity == "error" and "future" in f[0].message,
+        f"findings={f}",
+    )
+
     # --- stale grace waivers ---
 
     f = check_stale_grace([_retro()], grace={"2026-06-10-example"})
@@ -189,6 +197,32 @@ def run_cases() -> list[tuple[str, bool, str]]:
     case(
         "every affected rule must be touched, not just one",
         len(f) == 1 and "rule.de-sie" in f[0].message,
+        f"findings={f}",
+    )
+
+    # Frontmatter on this load path is not schema-validated: a scalar
+    # affected_rules must behave as a one-id list, not iterate per character.
+    scalar = _retro(status="applied", affected_rules="register.de_AT.formality")
+    f = check_applied_transitions(
+        [scalar],
+        base_statuses={"2026-06-10-example": "pending"},
+        changed_yaml_contents={"base.yaml": "id: base\n"},
+    )
+    case(
+        "scalar affected_rules enforced as a single id",
+        len(f) == 1 and "register.de_AT.formality" in f[0].message,
+        f"findings={f}",
+    )
+
+    numeric = _retro(status="applied", affected_rules=[123])
+    f = check_applied_transitions(
+        [numeric],
+        base_statuses={"2026-06-10-example": "pending"},
+        changed_yaml_contents={"base.yaml": "id: 123\n"},
+    )
+    case(
+        "numeric affected_rules entries do not crash",
+        f == [],
         f"findings={f}",
     )
 

@@ -53,10 +53,8 @@ jobs:
         # cross-repo work (P1-4b/P1-5b) — see its body and RECOVERY-PLAN.md.
         # The waiver is per-id: any new retro left pending >7 days fails CI.
         run: |
-          DIFF_BASE=""
+          ARGS=(--grace 2026-04-26-start-translation-session-conventions-drift)
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            DIFF_BASE="--diff-base origin/${{ github.base_ref }}"
+            ARGS+=(--diff-base "origin/${{ github.base_ref }}")
           fi
-          python resolver/retro_lifecycle.py \
-            --grace 2026-04-26-start-translation-session-conventions-drift \
-            $DIFF_BASE
+          python resolver/retro_lifecycle.py "${ARGS[@]}"
