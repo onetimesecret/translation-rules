@@ -1,0 +1,5 @@
+{
+  "locale": "de_AT",
+  "lint_ok": false,
+  "lint_checks": ["rationale_doc_missing"]
+}

@@ -29,6 +29,11 @@ expect.json shape:
       "fold": {"rule.x": ["retro-id"]}       # optional: rule.retro_refs
     }
 
+Lint runs with the fixture's embedded docs loaded via
+resolver.resolve.load_lint_docs — docs-lint fixtures just place .md files under
+base/docs/ or locales/<locale>/docs/ in the fixture root (or reference them
+from a rule's `docs:` list) and assert via lint_ok / lint_checks.
+
 Exit codes: 0 all passed · 1 a fixture failed · 2 harness setup error.
 """
 
@@ -46,7 +51,12 @@ try:
     from resolver.emit_markdown import emit_markdown
     from resolver.lint import lint_model
     from resolver.model import ModelError, build_model
-    from resolver.resolve import ResolutionError, ResolverInputs, resolve_locale
+    from resolver.resolve import (
+        ResolutionError,
+        ResolverInputs,
+        load_lint_docs,
+        resolve_locale,
+    )
 except ImportError as exc:
     print(f"setup: {exc}", file=sys.stderr)
     sys.exit(2)
@@ -133,7 +143,8 @@ def _run_fixture(fixture_root: Path) -> tuple[bool, str]:
             errs.append(_first_diff("md", got, want))
 
     if "lint_ok" in expect or "lint_checks" in expect:
-        lr = lint_model(model)
+        docs = load_lint_docs(_build_inputs(fixture_root), locale, model)
+        lr = lint_model(model, docs=docs)
         if "lint_ok" in expect and lr.ok != expect["lint_ok"]:
             errs.append(f"lint ok mismatch: got {lr.ok}, expected {expect['lint_ok']}")
         if "lint_checks" in expect:
