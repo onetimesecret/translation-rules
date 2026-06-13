@@ -2,7 +2,7 @@
 
 Stable ID format: `<kind>.<key>#<8hex>`. The 8-char suffix survives renames
 and file moves; the kind+key is the grep target. The resolver is the sole
-writer of `resolver/index.json`. `bin/mint-id` is read-only against the
+writer of `lib/resolver/index.json`. `bin/mint-id` is read-only against the
 index — it computes a deterministic suffix and verifies (or refuses) based
 on whether `<kind>.<key>` is already registered.
 
@@ -32,7 +32,7 @@ class IdError(Exception):
 
 @dataclass
 class IdRecord:
-    """One entry in resolver/index.json."""
+    """One entry in lib/resolver/index.json."""
 
     id: str
     kind: str
@@ -52,7 +52,7 @@ class IdRecord:
 
 @dataclass
 class IdIndex:
-    """In-memory id index. Persists as resolver/index.json (sorted by id)."""
+    """In-memory id index. Persists as lib/resolver/index.json (sorted by id)."""
 
     by_id: dict[str, IdRecord] = field(default_factory=dict)
     by_kind_key: dict[tuple[str, str], IdRecord] = field(default_factory=dict)

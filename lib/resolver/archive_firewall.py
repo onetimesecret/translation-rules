@@ -32,7 +32,7 @@ CI path, which avoids shell-interpolating attacker-controlled label text
 into a command line.
 
 Usage:
-    resolver/archive_firewall.py --diff-base <ref>
+    lib/resolver/archive_firewall.py --diff-base <ref>
                                  [--label NAME]...
                                  [--labels-env VARNAME]
 
@@ -53,7 +53,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 PROMOTION_LABEL = "prescriptive-promotion"
 

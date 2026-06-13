@@ -1,6 +1,6 @@
 """Lint a resolved model. SPEC.md §2.3 step 6.
 
-Five assertions, all on the assembled model (resolver/model.py):
+Five assertions, all on the assembled model (lib/resolver/model.py):
 
   1. forbidden-token absence — no register `forbidden_tokens` entry appears in a
      `good` example's target, unless covered by an `exceptions` allowlist entry.

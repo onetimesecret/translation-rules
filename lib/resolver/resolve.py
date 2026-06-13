@@ -14,11 +14,11 @@ Pipeline:
   2. Build inheritance chain for rules.yaml (de_AT -> de -> base)
   3. Merge with provenance
   4. Resolve every dotted/uuid/retro reference against a combined index;
-     emit resolver/index.json
+     emit lib/resolver/index.json
 
 Usage:
-    resolver/resolve.py de_AT --validate-only
-    resolver/resolve.py de_AT --locales-dir locales --base-file base.yaml
+    lib/resolver/resolve.py de_AT --validate-only
+    lib/resolver/resolve.py de_AT --locales-dir locales --base-file base.yaml
 
 Exit codes:
     0  success
@@ -68,7 +68,7 @@ from resolver.validate import (
     build_registry,
 )
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 DEFAULT_SCHEMA_DIR = REPO_ROOT / "schema"
 
 # Reference field names by shape.
@@ -476,7 +476,7 @@ def resolve_locale(
         "chain": [n.locale for n in chain_nodes],
         "index_records": len(index.all_records()),
         # Raw per-locale leaves + retros surfaced for the P1-3 assemble step
-        # (resolver/model.py). emit/lint are pure projections of these.
+        # (lib/resolver/model.py). emit/lint are pure projections of these.
         "register": next(
             (f.data for f in locale_files if f.schema_name == "register"), None
         ),
@@ -525,14 +525,14 @@ def load_lint_docs(
     inputs: ResolverInputs, locale: str, model: dict[str, Any]
 ) -> dict[str, str]:
     """Embedded rationale docs for the step-6 docs lint, keyed by
-    project-root-relative path: every *.md under base/docs/ and
+    project-root-relative path: every *.md under docs/ and
     locales/<locale>/docs/, plus every `rationale_index` path that exists on
     disk. A rationale_index path absent from the returned mapping surfaces as
     a dangling-doc finding in lint_model (doc paths are not ref-walked by the
     step-4 ID resolution, so existence is enforced at lint time)."""
     root = inputs.project_root
     docs: dict[str, str] = {}
-    for docs_dir in (root / "base" / "docs", inputs.locales_dir / locale / "docs"):
+    for docs_dir in (root / "docs", inputs.locales_dir / locale / "docs"):
         if not docs_dir.is_dir():
             continue
         for path in sorted(docs_dir.rglob("*.md")):
@@ -597,7 +597,9 @@ def _emit_formats(raw: str | None) -> set[str]:
 
 
 def main(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(prog="resolver/resolve.py", description=__doc__)
+    parser = argparse.ArgumentParser(
+        prog="lib/resolver/resolve.py", description=__doc__
+    )
     parser.add_argument(
         "locale", nargs="?", help="Locale code, e.g. de_AT. Omit with --all."
     )
@@ -607,7 +609,7 @@ def main(argv: list[str]) -> int:
     parser.add_argument(
         "--validate-only",
         action="store_true",
-        help="Run pipeline but do not write resolver/index.json or artifacts.",
+        help="Run pipeline but do not write lib/resolver/index.json or artifacts.",
     )
     parser.add_argument(
         "--lint",
@@ -657,8 +659,8 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument(
         "--index-path",
-        default="resolver/index.json",
-        help="Path to write resolver index (default: resolver/index.json).",
+        default="lib/resolver/index.json",
+        help="Path to write resolver index (default: lib/resolver/index.json).",
     )
     parser.add_argument(
         "--project-root",

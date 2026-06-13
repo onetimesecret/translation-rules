@@ -32,7 +32,7 @@ GRANDFATHERED below. `README.md` files are directory indexes, not review
 documents, and are exempt at any depth.
 
 Usage:
-    resolver/review_manifest.py [--reviews-dir reviews]
+    lib/resolver/review_manifest.py [--reviews-dir reviews]
                                 [--retros-dir retrospectives]
 
 Exit codes:
@@ -50,8 +50,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO_ROOT))
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(REPO_ROOT / "lib"))
 
 from resolver.loader import (  # noqa: E402
     LoaderError,

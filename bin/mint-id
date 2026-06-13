@@ -6,7 +6,7 @@
 """Mint or look up a stable id of the form `<kind>.<key>#<8hex>`.
 
 The id index is owned by the resolver. This CLI is read-only against
-resolver/index.json: it returns the existing id if (kind, key) is already
+lib/resolver/index.json: it returns the existing id if (kind, key) is already
 registered; otherwise it computes the deterministic suffix that the resolver
 will assign on its next run. This keeps id minting offline-safe — authors do
 not need to run the full resolver to choose an id while drafting YAML.
@@ -28,7 +28,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(REPO_ROOT / "lib"))
 
 from resolver.ids import IdError, IdIndex, mint_id  # noqa: E402
 
@@ -41,7 +41,7 @@ def main(argv: list[str]) -> int:
         return 1
     kind, key = argv
     try:
-        index = IdIndex.load(REPO_ROOT / "resolver" / "index.json")
+        index = IdIndex.load(REPO_ROOT / "lib" / "resolver" / "index.json")
         new_id = mint_id(kind, key, index)
     except IdError as exc:
         print(f"error: {exc}", file=sys.stderr)

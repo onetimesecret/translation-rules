@@ -39,7 +39,7 @@ translation-rules/
 │   ├── baselines.schema.json
 │   └── retrospective.schema.json
 ├── base.yaml                            # universal rules
-├── base/docs/                           # rationale prose, embedded by resolver
+├── docs/                                # rationale prose, embedded by resolver
 ├── baselines.yaml                       # {locale: {commit, invariants, retro_id}}
 ├── locales/<locale>/
 │   ├── rules.yaml
@@ -52,13 +52,14 @@ translation-rules/
 │   └── _archive/                        # superseded retros
 ├── reviews/                             # existing raw QA reviews; preserved as-is
 ├── _archive/                            # prescriptive/descriptive firewall
-├── resolver/
-│   ├── resolve.py                       # CLI entry: merge + lint + emit
-│   ├── merge.py
-│   ├── lint.py
-│   ├── emit_markdown.py
-│   ├── emit_json.py
-│   └── ids.py                           # UUID index + lookup
+├── lib/
+│   └── resolver/                        # resolver package (lib/ is the source root)
+│       ├── resolve.py                   # CLI entry: merge + lint + emit
+│       ├── merge.py
+│       ├── lint.py
+│       ├── emit_markdown.py
+│       ├── emit_json.py
+│       └── ids.py                       # UUID index + lookup
 ├── tests/
 ├── bin/
 │   ├── generate-for-translators         # legacy, retired after resolver parity
@@ -120,7 +121,7 @@ Schemas forbid `null` where an empty list or explicit absence field is required.
 
 **Output commit policy:** Generated artifacts (`for-translators/<locale>.md` and `.resolved/<locale>.json`) are committed to the app repo, not CI-generated-only. This is required for the file-hash CI check in §2.4 to have a baseline to compare against, and so translators and external reviewers can browse the current guide without running the resolver.
 
-`resolver/resolve.py <locale> [--lint] [--emit=md,json] [--all]` drives everything:
+`lib/resolver/resolve.py <locale> [--lint] [--emit=md,json] [--all]` drives everything:
 
 1. **Load + schema-validate.** Reject malformed input at this boundary.
 2. **Compute inheritance chain.** `de_AT → de → base`. Cycle-detected.
@@ -142,7 +143,7 @@ glossary:
     en: <source>
     senses: { <sense>: { target, rule_ref } }
     examples: [...]   # term-level (not sense-nested); each annotated with the
-                      # senses its target matches. See resolver/model.py header.
+                      # senses its target matches. See lib/resolver/model.py header.
 rules: [...]        # MUST/MUST NOT items, severity, rule_ref
 context: [...]      # project-specific info, not binding
 rationale_index: { rule_id: [doc_paths] }   # fetch on demand
@@ -154,7 +155,7 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 ### 2.4 CI gates
 
-**Status (2026-06-12).** Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests; retro lifecycle, review findings-manifest, and real-tree resolver lint gates), `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`), `python-qc.yml` (ruff lint/format, pyright), the §3 retrospective lifecycle gates (`resolver/retro_lifecycle.py`: 7-day orphan timeout, applied-transition diff check), the §3 review findings-manifest check (`resolver/review_manifest.py`; pre-existing reviews grandfathered — see `reviews/README.md`), the forbidden-token lint over embedded examples and rationale docs (`resolver/lint.py`, run against the repo tree by `schema-validation.yml`; backtick-quoted token mentions in docs are allowed, bare-prose uses fail), and the `_archive/` firewall (`resolver/archive_firewall.py` + `archive-firewall.yml`: moving or copying a file out of `_archive/` or `retrospectives/_archive/` — or deleting one — requires the `prescriptive-promotion` label).
+**Status (2026-06-12).** Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests; retro lifecycle, review findings-manifest, and real-tree resolver lint gates), `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`), `python-qc.yml` (ruff lint/format, pyright), the §3 retrospective lifecycle gates (`lib/resolver/retro_lifecycle.py`: 7-day orphan timeout, applied-transition diff check), the §3 review findings-manifest check (`lib/resolver/review_manifest.py`; pre-existing reviews grandfathered — see `reviews/README.md`), the forbidden-token lint over embedded examples and rationale docs (`lib/resolver/lint.py`, run against the repo tree by `schema-validation.yml`; backtick-quoted token mentions in docs are allowed, bare-prose uses fail), and the `_archive/` firewall (`lib/resolver/archive_firewall.py` + `archive-firewall.yml`: moving or copying a file out of `_archive/` or `retrospectives/_archive/` — or deleting one — requires the `prescriptive-promotion` label).
 
 **App repo:** the `forbidden_tokens` grep against `locales/content/<locale>/*.json` is **live** (`validate-register.yml` via onetimesecret/onetimesecret#3432 — `bin/lint-register` from a read-only pinned checkout of this repo, every governed locale). Still planned: submodule pointer freshness on locale-content PRs; `.resolved/<locale>.json`'s `_meta.source_commit` equals submodule SHA; `for-translators/*.md` hash matches resolver output — hand edits rejected.
 
@@ -171,7 +172,7 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
 
-**Status (2026-06-12).** The 7-day orphan timeout and the applied-transition PR check are wired (`resolver/retro_lifecycle.py`, run by `schema-validation.yml`; one pre-existing pending retro carries an explicit, per-id grace in the workflow until its cross-repo closure lands). The review findings-manifest check is wired (`resolver/review_manifest.py`; documents existing before the gate are grandfathered by path — see `reviews/README.md`). Still not wired: retro→applied automation on merge, and the cross-repo hash gates — see §2.4 Status. Read the remaining `[CI-ENFORCED: ...]` annotations accordingly.
+**Status (2026-06-12).** The 7-day orphan timeout and the applied-transition PR check are wired (`lib/resolver/retro_lifecycle.py`, run by `schema-validation.yml`; one pre-existing pending retro carries an explicit, per-id grace in the workflow until its cross-repo closure lands). The review findings-manifest check is wired (`lib/resolver/review_manifest.py`; documents existing before the gate are grandfathered by path — see `reviews/README.md`). Still not wired: retro→applied automation on merge, and the cross-repo hash gates — see §2.4 Status. Read the remaining `[CI-ENFORCED: ...]` annotations accordingly.
 
 ```
             (incident signal OR scheduled audit)
@@ -234,7 +235,7 @@ The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
 
 `translation-pluribus-util` is not replaced by the resolver. Two integration points:
 
-**UUID pattern for stable IDs.** Adopt pluribus's 8-char-UUID scheme for rename-survivable identity. Every rule, term, example, and retrospective carries a stable ID of the form `<kind>.<key>#<8char>` (e.g., `term.secret_object#7f3a91c2`, `ex.burn#a12b45ef`, `rule.register-lock#c81d44e0`). The human-readable key is the grep target; the 8-char suffix survives renames, file moves, and reorganizations. `bin/mint-id` generates them on first authoring. The resolver emits `resolver/index.json` committed to the repo so both grep-by-key and grep-by-id remain fast.
+**UUID pattern for stable IDs.** Adopt pluribus's 8-char-UUID scheme for rename-survivable identity. Every rule, term, example, and retrospective carries a stable ID of the form `<kind>.<key>#<8char>` (e.g., `term.secret_object#7f3a91c2`, `ex.burn#a12b45ef`, `rule.register-lock#c81d44e0`). The human-readable key is the grep target; the 8-char suffix survives renames, file moves, and reorganizations. `bin/mint-id` generates them on first authoring. The resolver emits `lib/resolver/index.json` committed to the repo so both grep-by-key and grep-by-id remain fast.
 
 **Bundle/split for cross-locale operations.** Pluribus's prepare → combine → split → restore pipeline maps onto cross-locale review workflows:
 
@@ -303,8 +304,8 @@ Neither is part of this repo's design. Both are execution substrate. No cross-re
 
 **Phase 1 (MVP end-to-end for de_AT).**
 
-1. Land `schema/` and `resolver/` skeletons.
-2. Write `base.yaml` by absorbing mechanical rules from existing UX and security guides. Leave rationale in `base/docs/`.
+1. Land `schema/` and `lib/resolver/` skeletons.
+2. Write `base.yaml` by absorbing mechanical rules from existing UX and security guides. Leave rationale in `docs/`.
 3. Hand-convert `locales/de_AT/{rules,register,glossary}.yaml`. Draft `locales/de/rules.yaml` as inheritance parent.
 4. Implement merge + lint + emit. Test fixtures for de → de_AT.
 5. Move existing `reviews/2026-04-12/` retrospective content into new `retrospectives/` format with validated frontmatter. Preserve raw reviews/.

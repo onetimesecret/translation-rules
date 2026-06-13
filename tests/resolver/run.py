@@ -31,7 +31,7 @@ expect.json shape:
 
 Lint runs with the fixture's embedded docs loaded via
 resolver.resolve.load_lint_docs — docs-lint fixtures just place .md files under
-base/docs/ or locales/<locale>/docs/ in the fixture root (or reference them
+docs/ or locales/<locale>/docs/ in the fixture root (or reference them
 from a rule's `docs:` list) and assert via lint_ok / lint_checks.
 
 Exit codes: 0 all passed · 1 a fixture failed · 2 harness setup error.
@@ -44,7 +44,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(REPO_ROOT / "lib"))
 
 try:
     from resolver.emit_json import emit_json

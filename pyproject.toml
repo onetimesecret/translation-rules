@@ -19,7 +19,7 @@ dev = [
 ]
 
 [tool.uv]
-# This repo is a collection of scripts (resolver/, tests/, bin/), not an
+# This repo is a collection of scripts (lib/resolver/, tests/, bin/), not an
 # installable package — only resolve its dependencies, don't build it.
 package = false
 
@@ -32,6 +32,7 @@ extend-exclude = ["build"]
 # change so the QC gate stays meaningful rather than red on arrival.
 
 [tool.pyright]
-include = ["resolver", "tests"]
+include = ["lib/resolver", "tests"]
+extraPaths = ["lib"]
 pythonVersion = "3.11"
 typeCheckingMode = "basic"

@@ -213,7 +213,7 @@ def build_model(
             # Advisory (SHOULD/SHOULD_NOT/MAY) is non-binding -> context, as a
             # rendered string. Keeps the `rules` partition pure MUST/MUST_NOT,
             # which is the anti-drift cue (SPEC §2.3). ID linkage already lives
-            # in resolver/index.json, so nothing is lost.
+            # in lib/resolver/index.json, so nothing is lost.
             context.append(f"[{modality}] {item.get('statement')}")
 
     anti_patterns_ref: list[dict[str, Any]] = []

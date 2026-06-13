@@ -104,8 +104,8 @@ otherwise.
 
 ```bash
 uv sync                                              # resolver + dev deps
-python resolver/resolve.py <locale> --lint --emit md,json   # resolve one locale
-python resolver/resolve.py --all --lint                     # resolve every locale
+python lib/resolver/resolve.py <locale> --lint --emit md,json   # resolve one locale
+python lib/resolver/resolve.py --all --lint                     # resolve every locale
 ```
 
 CI runs the schema, type-check, register-lint, and `_archive/` firewall gates on

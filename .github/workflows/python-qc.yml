@@ -1,6 +1,6 @@
 name: python-qc
 
-# Conventional Python quality gates for the resolver/ and tests/ code:
+# Conventional Python quality gates for the lib/resolver/ and tests/ code:
 # lint, format, and type-check. The fixture test suites are gated separately
 # in schema-validation.yml — they are not duplicated here.
 

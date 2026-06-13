@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(REPO_ROOT / "lib"))
 
 try:
     from resolver.archive_firewall import (
@@ -44,18 +44,14 @@ def run_cases() -> list[tuple[str, bool, str]]:
 
     # --- promotion check: gated changes ---
 
-    f = check_archive_moves(
-        [("R100", "_archive/notes.md", "base/docs/notes.md")], NO_LABEL
-    )
+    f = check_archive_moves([("R100", "_archive/notes.md", "docs/notes.md")], NO_LABEL)
     case(
         "move out of _archive/ without label errors",
         len(f) == 1 and f[0].severity == "error" and f[0].check == "archive_promotion",
         f"findings={f}",
     )
 
-    f = check_archive_moves(
-        [("R100", "_archive/notes.md", "base/docs/notes.md")], LABEL
-    )
+    f = check_archive_moves([("R100", "_archive/notes.md", "docs/notes.md")], LABEL)
     case(
         "move out with label warns (exactly one, non-fatal)",
         len(f) == 1 and f[0].severity == "warning",
@@ -95,7 +91,7 @@ def run_cases() -> list[tuple[str, bool, str]]:
     )
 
     f = check_archive_moves(
-        [("R100", "_archive/a.md", "base/docs/a.md"), ("D", "_archive/b.md", None)],
+        [("R100", "_archive/a.md", "docs/a.md"), ("D", "_archive/b.md", None)],
         NO_LABEL,
     )
     case(
@@ -122,15 +118,13 @@ def run_cases() -> list[tuple[str, bool, str]]:
     case("rename between the two archive trees passes", f == [], f"findings={f}")
 
     # Moving INTO the archive is demotion, not promotion — unrestricted.
-    f = check_archive_moves(
-        [("R100", "base/docs/notes.md", "_archive/notes.md")], NO_LABEL
-    )
+    f = check_archive_moves([("R100", "docs/notes.md", "_archive/notes.md")], NO_LABEL)
     case("move into the archive passes", f == [], f"findings={f}")
 
     # Exactly the two SPEC §2.1 trees are gated; prefix lookalikes are not.
     f = check_archive_moves(
         [
-            ("R100", "_archived/foo.md", "base/docs/foo.md"),
+            ("R100", "_archived/foo.md", "docs/foo.md"),
             ("D", "tests/_archive/foo.md", None),
         ],
         NO_LABEL,
@@ -141,7 +135,7 @@ def run_cases() -> list[tuple[str, bool, str]]:
         f"findings={f}",
     )
 
-    f = check_archive_moves([("M", "resolver/resolve.py", None)], NO_LABEL)
+    f = check_archive_moves([("M", "lib/resolver/resolve.py", None)], NO_LABEL)
     case("record for an unrelated path passes", f == [], f"findings={f}")
 
     # --- -z record parser ---
@@ -153,10 +147,10 @@ def run_cases() -> list[tuple[str, bool, str]]:
         f"records={p}",
     )
 
-    p = parse_name_status("R100\0_archive/a.md\0base/docs/a.md\0")
+    p = parse_name_status("R100\0_archive/a.md\0docs/a.md\0")
     case(
         "parser: rename record carries src and dst",
-        p == [("R100", "_archive/a.md", "base/docs/a.md")],
+        p == [("R100", "_archive/a.md", "docs/a.md")],
         f"records={p}",
     )
 

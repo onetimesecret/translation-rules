@@ -29,7 +29,7 @@ schema/retrospective.schema.json; supersede pairing is enforced cross-file by
 resolver/model.py. Neither is duplicated here.
 
 Usage:
-    resolver/retro_lifecycle.py [--retros-dir retrospectives]
+    lib/resolver/retro_lifecycle.py [--retros-dir retrospectives]
                                 [--today YYYY-MM-DD]
                                 [--max-pending-days 7]
                                 [--grace <retro-id>]...
@@ -51,8 +51,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO_ROOT))
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(REPO_ROOT / "lib"))
 
 import yaml  # noqa: E402
 
