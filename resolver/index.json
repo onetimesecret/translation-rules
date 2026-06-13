@@ -15,6 +15,13 @@
       "kind": "retrospective"
     },
     {
+      "file": "retrospectives/2026-05-30-de_AT-secret-sense-split.md",
+      "id": "2026-05-30-de_AT-secret-sense-split",
+      "json_pointer": "/id",
+      "key": "2026-05-30-de_AT-secret-sense-split",
+      "kind": "retrospective"
+    },
+    {
       "file": "base.yaml",
       "id": "anti.changelog-as-guidance",
       "json_pointer": "/anti_patterns/0/id",
