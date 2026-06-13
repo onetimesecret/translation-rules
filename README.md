@@ -57,64 +57,9 @@ runs a CI gate that rejects translation PRs containing forbidden tokens.
   glossary.yaml         secret object → Geheimnis / secret message → Nachricht
 ```
 
-**The loop — agents author, structure enforces, humans audit:**
-
-```
-  SOURCES — already decided, frozen            ROLES
-  ─────────────────────────────────           ──────────────────────────────────
-  _references/local-guides/*.md  ┐  provenance
-  shipped JSON @ baseline commit ┘──────────►  ① agents author rules · this repo
-                                                  base.yaml · rules · register · glossary
-                                                  every value cites a source
-                                                       │
-                              resolve.py — closure + schema; dangling ref → REJECTED
-                                                       │  green
-                                                       ▼
-                                               ② artifacts
-                                                  .resolved/<loc>.json     (agent context)
-                                                  for-translators/<loc>.md (human guide)
-                                                       │  vendored as submodule, pinned by SHA
-                                                       ▼
-                                               ③ agents translate · app repo
-                                                  consume .resolved → write content/<loc>/*.json
-                                                       │  every content PR
-                                                       ▼
-                                               ④ bin/lint-register gate (live)
-                                                  forbidden token → FAIL · clean → merge
-
-  Humans don't author ①–④. The human role is QC: review the agent's reasoning,
-  ask it to explain, triangulate the provenance — then accept, probe, or reject.
-```
-
-**Inside ① — what makes agent-authoring safe (the "disciplined" part):**
-
-```
-  agent drafts a rule
-       │
-       ▼
-  [ cites accepted provenance? ]──no─► reject   (no source = no rule;
-       │ yes                                      never from running prose)
-       ▼
-  [ closes? — resolve.py ]──────no─► reject   (dangling ref / bad schema)
-       │ yes
-       ▼
-  [ survives maintainer QC? ]───no─► back to agent   (can't defend it → no ship)
-       │ yes
-       ▼
-  minted · committed ──────────────────────────────────────────────► ②
-```
-
-**Decide once, enforce forever — why a rule outlives the task:**
-
-```
-  one rule, authored once (provenance: de.md's du/Sie success row):
-     register.de_AT.formality  →  lock Sie / Ihr,  forbid du-form
-
-  …then applied to every later translation task automatically, no one re-asked:
-     "Your secret has been created."  (de_AT)
-        ├─ agent writes  "Dein Geheimnis…"  ─► lint ─► ✗  du-form 'Dein' forbidden
-        └─ agent writes  "Ihr Geheimnis…"   ─► lint ─► ✓  merges
-```
+**The end-to-end picture** — the authoring→enforcement loop, the agent/human
+split, the authoring discipline, and decide-once enforcement — is diagrammed in
+[`SPEC.md`](SPEC.md) §2 (Target Architecture).
 
 **Design, rationale, and the current state of every gate live in
 [`SPEC.md`](SPEC.md).** This README documents only the contract the app repo
