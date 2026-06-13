@@ -61,10 +61,7 @@
       "items": { "$ref": "base.schema.json#/$defs/dottedId" }
     },
     "resolved_in_commit": {
-      "oneOf": [
-        { "$ref": "base.schema.json#/$defs/commitSha" },
-        { "type": "null" }
-      ]
+      "oneOf": [{ "$ref": "base.schema.json#/$defs/commitSha" }, { "type": "null" }]
     },
     "supersedes": {
       "type": "array",
