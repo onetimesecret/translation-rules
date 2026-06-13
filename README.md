@@ -53,6 +53,35 @@ runs a CI gate that rejects translation PRs containing forbidden tokens.
   glossary.yaml         secret object → Geheimnis / secret message → Nachricht
 ```
 
+**The loop — agents author, structure enforces, humans audit:**
+
+```
+  SOURCES — already decided, frozen            ROLES
+  ─────────────────────────────────           ──────────────────────────────────
+  _references/local-guides/*.md  ┐  provenance
+  shipped JSON @ baseline commit ┘──────────►  ① agents author rules · this repo
+                                                  base.yaml · rules · register · glossary
+                                                  every value cites a source
+                                                       │
+                              resolve.py — closure + schema; dangling ref → REJECTED
+                                                       │  green
+                                                       ▼
+                                               ② artifacts
+                                                  .resolved/<loc>.json     (agent context)
+                                                  for-translators/<loc>.md (human guide)
+                                                       │  vendored as submodule, pinned by SHA
+                                                       ▼
+                                               ③ agents translate · app repo
+                                                  consume .resolved → write content/<loc>/*.json
+                                                       │  every content PR
+                                                       ▼
+                                               ④ bin/lint-register gate (live)
+                                                  forbidden token → FAIL · clean → merge
+
+  Humans don't author ①–④. The human role is QC: review the agent's reasoning,
+  ask it to explain, triangulate the provenance — then accept, probe, or reject.
+```
+
 **Design, rationale, and the current state of every gate live in
 [`SPEC.md`](SPEC.md).** This README documents only the contract the app repo
 depends on, deliberately kept small so it does not drift from the code. For how
