@@ -8,9 +8,13 @@ words are forbidden — and enforces them mechanically in the app repo's CI.
 was silently flipped from formal (`Sie`) to informal (`du`) across email and UI
 strings. The cause: an agent read a conversational change-log as prescriptive
 guidance. This repo makes that class of error impossible by requiring all
-binding guidance to be human-authored YAML, schema-validated, and CI-enforced.
+binding guidance to live in structured YAML that cites an accepted source,
+passes schema and reference validation, and is CI-enforced — so a rule can
+never originate from unreviewed prose, whoever or whatever drafts it.
 
-**How it works.** You author rules in YAML (`rules/locales/<locale>/`). A resolver
+**How it works.** Rules live as structured YAML in `rules/locales/<locale>/`,
+drafted from accepted sources — in practice by an agent — and audited by a
+maintainer, never free-written. A resolver
 reads those files, validates them, and emits two artifacts per locale: a
 human-readable guide (`for-translators/<locale>.md`) and a machine-readable
 model (`.resolved/<locale>.json`). The app repo consumes those artifacts and
@@ -80,6 +84,36 @@ runs a CI gate that rejects translation PRs containing forbidden tokens.
 
   Humans don't author ①–④. The human role is QC: review the agent's reasoning,
   ask it to explain, triangulate the provenance — then accept, probe, or reject.
+```
+
+**Inside ① — what makes agent-authoring safe (the "disciplined" part):**
+
+```
+  agent drafts a rule
+       │
+       ▼
+  [ cites accepted provenance? ]──no─► reject   (no source = no rule;
+       │ yes                                      never from running prose)
+       ▼
+  [ closes? — resolve.py ]──────no─► reject   (dangling ref / bad schema)
+       │ yes
+       ▼
+  [ survives maintainer QC? ]───no─► back to agent   (can't defend it → no ship)
+       │ yes
+       ▼
+  minted · committed ──────────────────────────────────────────────► ②
+```
+
+**Decide once, enforce forever — why a rule outlives the task:**
+
+```
+  one rule, authored once (provenance: de.md's du/Sie success row):
+     register.de_AT.formality  →  lock Sie / Ihr,  forbid du-form
+
+  …then applied to every later translation task automatically, no one re-asked:
+     "Your secret has been created."  (de_AT)
+        ├─ agent writes  "Dein Geheimnis…"  ─► lint ─► ✗  du-form 'Dein' forbidden
+        └─ agent writes  "Ihr Geheimnis…"   ─► lint ─► ✓  merges
 ```
 
 **Design, rationale, and the current state of every gate live in
