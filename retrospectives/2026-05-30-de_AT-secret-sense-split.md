@@ -23,7 +23,8 @@ The 2026-04-12 incident had two distinct findings. The
 [register-flip retrospective](2026-04-12-de_AT-register-flip.md) carries the
 formality finding (`Sie` → `du`) and locks `register.de_AT.formality`. This
 retrospective carries the **second** finding from the same harmonization
-wave: the English word *secret* collapsed onto a single German term.
+wave: de_AT's two renderings of the *secret* concept — the protected object
+and the message payload — collapsed onto a single German term.
 
 The harmonization commit `b08e59838` zeroed `Geheimnis` (108 → 0) and more
 than tripled `Nachricht` (65 → 201). Both German words had been doing
@@ -46,13 +47,20 @@ translator was an agent reading a flat gloss, the distinction was lost.
 
 ## What changed
 
-`locales/de_AT/glossary.yaml` (commit `47d4741`) splits *secret* into two
-terms, each with a machine-checkable disambiguation surface:
+`locales/de_AT/glossary.yaml` (commit `47d4741`) splits the conflated *secret*
+concept into two terms — each anchored to its own English source string and a
+machine-checkable disambiguation surface:
 
-- **`term.secret_object#c0902808`** → `Geheimnis`. Disambiguated by lifecycle
-  verbs and key patterns `["*secret*", "*.burn*", "*.share*", "*.expire*"]`.
-- **`term.secret_payload#1687a617`** → `Nachricht`. Disambiguated by
-  input/compose context and key patterns `["*.message*", "*.content*", "*.body*"]`.
+- **`term.secret_object#c0902808`** (`en: secret`) → `Geheimnis`. Disambiguated
+  by lifecycle verbs and key patterns `["*secret*", "*.burn*", "*.share*", "*.expire*"]`.
+- **`term.secret_payload#1687a617`** (`en: secret message`) → `Nachricht`.
+  Disambiguated by input/compose context and key patterns `["*.message*", "*.content*", "*.body*"]`.
+
+The two terms anchor to *different* English strings — the bare word `secret`
+for the object, the composite phrase `secret message` for the payload — not two
+senses of one word. That is exactly why the `key_patterns` sets stay disjoint:
+the payload term keys off message/content/body contexts, the object term off
+the lifecycle vocabulary.
 
 Five worked examples ship with them (`examples_added`). Three are `good`
 anchors — including a genitive inflection (`des Geheimnisses`) proving the
@@ -115,3 +123,11 @@ This is the glossary sibling of the register-flip retro: same incident, same
 harmonization commit, distinct finding, distinct fix dated when the
 disambiguation actually landed (`47d4741`, 2026-05-30). Splitting them keeps
 each finding independently auditable and each fix traceable to its own commit.
+
+`triggered_by.commits` pins only `b08e59838` — the commit the register-flip
+retrospective's evidence identifies as the one that zeroed `Geheimnis` and
+tripled `Nachricht`. That retro's other two `triggered_by` commits
+(`4982d4f84`, `44b3c3352`) are part of the same incident set but are not
+re-pinned here: the sense-collapse evidence in `reviews/2026-04-12/` ties the
+term-count change specifically to `b08e59838`. They remain recorded against the
+incident in the register-flip retro, so the cross-reference is not lost.
