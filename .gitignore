@@ -12,6 +12,3 @@ __pycache__/
 # Local resolver verification output. Real generated artifacts are committed to
 # the app repo (SPEC §2.3), not here.
 /generated/
-/.resolved/
-/for-translators/
-
