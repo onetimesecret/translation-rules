@@ -639,17 +639,17 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument(
         "--locales-dir",
-        default="locales",
+        default="rules/locales",
         help="Directory containing per-locale YAML files (default: locales).",
     )
     parser.add_argument(
         "--base-file",
-        default="base.yaml",
+        default="rules/base.yaml",
         help="Path to universal rules YAML (default: base.yaml).",
     )
     parser.add_argument(
         "--retrospectives-dir",
-        default="retrospectives",
+        default="rules/retrospectives",
         help="Directory containing retrospective .md files (default: retrospectives).",
     )
     parser.add_argument(

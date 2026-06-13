@@ -298,7 +298,7 @@ def load_known_retro_ids(retros_dir: Path) -> set[str]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--reviews-dir", default=str(REPO_ROOT / "_references" / "reviews"))
-    parser.add_argument("--retros-dir", default=str(REPO_ROOT / "retrospectives"))
+    parser.add_argument("--retros-dir", default=str(REPO_ROOT / "rules" / "retrospectives"))
     args = parser.parse_args(argv)
 
     reviews_dir = Path(args.reviews_dir).resolve()

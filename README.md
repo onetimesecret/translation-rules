@@ -10,7 +10,7 @@ strings. The cause: an agent read a conversational change-log as prescriptive
 guidance. This repo makes that class of error impossible by requiring all
 binding guidance to be human-authored YAML, schema-validated, and CI-enforced.
 
-**How it works.** You author rules in YAML (`locales/<locale>/`). A resolver
+**How it works.** You author rules in YAML (`rules/locales/<locale>/`). A resolver
 reads those files, validates them, and emits two artifacts per locale: a
 human-readable guide (`for-translators/<locale>.md`) and a machine-readable
 model (`.resolved/<locale>.json`). The app repo consumes those artifacts and
@@ -27,13 +27,13 @@ runs a CI gate that rejects translation PRs containing forbidden tokens.
 ```
   this repo                          app repo (onetimesecret)
   ─────────────────────────────      ──────────────────────────────────────
-  locales/de_AT/
+  rules/locales/de_AT/
     register.yaml  ─┐
     rules.yaml     ─┤─► resolver ──► for-translators/de_AT.md   (human guide)
     glossary.yaml  ─┘                .resolved/de_AT.json        (agent context)
-  locales/de/                               │
+  rules/locales/de/                         │
     rules.yaml ────────────────────── submodule + CI gate
-  base.yaml                                 │
+  rules/base.yaml                           │
                                             ▼
                                    PR touching de_AT strings?
                                    forbidden token found → FAIL
@@ -42,15 +42,15 @@ runs a CI gate that rejects translation PRs containing forbidden tokens.
 **Inheritance — how de_AT gets its rules:**
 
 ```
-  base.yaml          universal rules (brand names, interpolation, pluralization...)
+  rules/base.yaml       universal rules (brand names, interpolation, pluralization...)
       │
-  locales/de/        German-specific rules (formal Sie form)
+  rules/locales/de/     German-specific rules (formal Sie form)
   rules.yaml
       │
-  locales/de_AT/     Austrian overrides + register lock + glossary
+  rules/locales/de_AT/  Austrian overrides + register lock + glossary
   rules.yaml
-  register.yaml      form: formal, pronoun: Sie, forbidden: [du, dein, deine...]
-  glossary.yaml      secret object → Geheimnis / secret message → Nachricht
+  register.yaml         form: formal, pronoun: Sie, forbidden: [du, dein, deine...]
+  glossary.yaml         secret object → Geheimnis / secret message → Nachricht
 ```
 
 **Design, rationale, and the current state of every gate live in
@@ -108,6 +108,6 @@ python lib/resolver/resolve.py <locale> --lint --emit md,json   # resolve one lo
 python lib/resolver/resolve.py --all --lint                     # resolve every locale
 ```
 
-CI runs the schema, type-check, register-lint, and `_archive/` firewall gates on
+CI runs the schema, type-check, register-lint, and `rules/_archive/` firewall gates on
 every PR. `SPEC.md` §2.4 is the authoritative, current list of those gates and
 what each enforces.
