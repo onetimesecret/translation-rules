@@ -567,14 +567,14 @@ def _emit_for_locale(
         generated_at=generated_at,
     )
     written: list[str] = []
+    out_dir = emit_dir / "for-translators"
+    out_dir.mkdir(parents=True, exist_ok=True)
     if "json" in formats:
-        path = emit_dir / ".resolved" / f"{locale}.json"
-        path.parent.mkdir(parents=True, exist_ok=True)
+        path = out_dir / f"{locale}.json"
         path.write_text(emit_json(model), encoding="utf-8")
         written.append(str(path))
     if "md" in formats:
-        path = emit_dir / "for-translators" / f"{locale}.md"
-        path.parent.mkdir(parents=True, exist_ok=True)
+        path = out_dir / f"{locale}.md"
         path.write_text(emit_markdown(model, source_commit), encoding="utf-8")
         written.append(str(path))
 
@@ -622,8 +622,8 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument(
         "--emit-dir",
-        default=".",
-        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/for-translators/ (default: .).",
+        default="generated",
+        help="Root for emitted artifacts: <dir>/for-translators/ (default: generated).",
     )
     parser.add_argument(
         "--source-commit",
