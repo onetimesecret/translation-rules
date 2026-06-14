@@ -39,7 +39,7 @@ jobs:
         run: |
           shopt -s nullglob
           fail=0
-          for f in locales/*/register.yaml; do
+          for f in rules/locales/*/register.yaml; do
             if ! yq '.' "$f" >/dev/null 2>&1; then
               echo "::error file=$f::register.yaml is not valid YAML"
               fail=1
@@ -54,7 +54,7 @@ jobs:
           # token list parses end-to-end. Real content scanning happens in
           # the app repo's CI gate (P1-4b).
           shopt -s nullglob
-          for d in locales/*/; do
+          for d in rules/locales/*/; do
             locale="$(basename "$d")"
             if [ -f "${d}register.yaml" ]; then
               echo "::group::dry-run ${locale}"

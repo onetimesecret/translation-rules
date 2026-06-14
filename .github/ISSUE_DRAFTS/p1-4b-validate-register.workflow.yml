@@ -76,7 +76,7 @@ jobs:
           rules=.translation-rules
           fail=0
           scanned=0
-          for d in "$rules"/locales/*/; do
+          for d in "$rules"/rules/locales/*/; do
             locale="$(basename "$d")"
             [ -f "${d}register.yaml" ] || continue
             content_dir="locales/content/${locale}"
@@ -87,7 +87,7 @@ jobs:
             scanned=$((scanned + 1))
             echo "::group::lint ${locale}"
             # The authority's own linter. It resolves register.yaml relative to
-            # its own location (.translation-rules/locales/<locale>/) and the
+            # its own location (.translation-rules/rules/locales/<locale>/) and the
             # content glob relative to this job's CWD (the app repo root).
             # Non-zero from lint-register — forbidden token (1), config (2), or
             # empty glob (3) — fails the gate.
