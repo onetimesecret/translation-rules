@@ -44,14 +44,18 @@ def run_cases() -> list[tuple[str, bool, str]]:
 
     # --- promotion check: gated changes ---
 
-    f = check_archive_moves([("R100", "rules/_archive/notes.md", "docs/notes.md")], NO_LABEL)
+    f = check_archive_moves(
+        [("R100", "rules/_archive/notes.md", "docs/notes.md")], NO_LABEL
+    )
     case(
         "move out of _archive/ without label errors",
         len(f) == 1 and f[0].severity == "error" and f[0].check == "archive_promotion",
         f"findings={f}",
     )
 
-    f = check_archive_moves([("R100", "rules/_archive/notes.md", "docs/notes.md")], LABEL)
+    f = check_archive_moves(
+        [("R100", "rules/_archive/notes.md", "docs/notes.md")], LABEL
+    )
     case(
         "move out with label warns (exactly one, non-fatal)",
         len(f) == 1 and f[0].severity == "warning",
@@ -59,7 +63,8 @@ def run_cases() -> list[tuple[str, bool, str]]:
     )
 
     f = check_archive_moves(
-        [("R087", "rules/retrospectives/_archive/old.md", "retrospectives/old.md")], NO_LABEL
+        [("R087", "rules/retrospectives/_archive/old.md", "retrospectives/old.md")],
+        NO_LABEL,
     )
     case(
         "move out of retrospectives/_archive/ is gated",
@@ -91,7 +96,10 @@ def run_cases() -> list[tuple[str, bool, str]]:
     )
 
     f = check_archive_moves(
-        [("R100", "rules/_archive/a.md", "docs/a.md"), ("D", "rules/_archive/b.md", None)],
+        [
+            ("R100", "rules/_archive/a.md", "docs/a.md"),
+            ("D", "rules/_archive/b.md", None),
+        ],
         NO_LABEL,
     )
     case(
@@ -108,17 +116,27 @@ def run_cases() -> list[tuple[str, bool, str]]:
     f = check_archive_moves([("M", "rules/_archive/notes.md", None)], NO_LABEL)
     case("modify inside archive passes", f == [], f"findings={f}")
 
-    f = check_archive_moves([("R100", "rules/_archive/a.md", "rules/_archive/sub/a.md")], NO_LABEL)
+    f = check_archive_moves(
+        [("R100", "rules/_archive/a.md", "rules/_archive/sub/a.md")], NO_LABEL
+    )
     case("rename within an archive tree passes", f == [], f"findings={f}")
 
     f = check_archive_moves(
-        [("R100", "rules/_archive/old-retro.md", "rules/retrospectives/_archive/old-retro.md")],
+        [
+            (
+                "R100",
+                "rules/_archive/old-retro.md",
+                "rules/retrospectives/_archive/old-retro.md",
+            )
+        ],
         NO_LABEL,
     )
     case("rename between the two archive trees passes", f == [], f"findings={f}")
 
     # Moving INTO the archive is demotion, not promotion — unrestricted.
-    f = check_archive_moves([("R100", "docs/notes.md", "rules/_archive/notes.md")], NO_LABEL)
+    f = check_archive_moves(
+        [("R100", "docs/notes.md", "rules/_archive/notes.md")], NO_LABEL
+    )
     case("move into the archive passes", f == [], f"findings={f}")
 
     # Exactly the two SPEC §2.1 trees are gated; prefix lookalikes are not.
