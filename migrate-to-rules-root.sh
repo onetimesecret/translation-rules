@@ -60,6 +60,16 @@ sed -i '' \
   -e 's|"file": "locales/|"file": "rules/locales/|' \
   lib/resolver/index.json
 
+echo "== Phase 7: repoint archive paths in firewall test fixtures =="
+# Promotion-check cases (lines 45-139) only. The -z parser cases below them feed
+# arbitrary path strings and assert round-trip equality, so their expected-output
+# tuples must stay on the pre-move paths. Quote-anchoring (leading ") additionally
+# skips the tests/_archive/ and _archived/ lookalikes, which must remain ungated.
+sed -i '' \
+  -e '45,139 s|"_archive/|"rules/_archive/|g' \
+  -e '45,139 s|"retrospectives/_archive/|"rules/retrospectives/_archive/|g' \
+  tests/archive_firewall/run.py
+
 echo
 echo "== Move + edits complete. NOT YET DONE (separate, lower-risk): =="
 echo "  - SPEC.md §2.1 layout block + path mentions (prose; hand-edit)"

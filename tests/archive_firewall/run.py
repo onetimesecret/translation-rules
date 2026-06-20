@@ -63,13 +63,7 @@ def run_cases() -> list[tuple[str, bool, str]]:
     )
 
     f = check_archive_moves(
-        [
-            (
-                "R087",
-                "rules/retrospectives/_archive/old.md",
-                "rules/retrospectives/old.md",
-            )
-        ],
+        [("R087", "rules/retrospectives/_archive/old.md", "retrospectives/old.md")],
         NO_LABEL,
     )
     case(
@@ -93,7 +87,7 @@ def run_cases() -> list[tuple[str, bool, str]]:
     )
 
     f = check_archive_moves(
-        [("C075", "rules/_archive/notes.md", "rules/locales/de/notes.md")], NO_LABEL
+        [("C075", "rules/_archive/notes.md", "locales/de/notes.md")], NO_LABEL
     )
     case(
         "copy out of the archive is gated",
@@ -148,7 +142,7 @@ def run_cases() -> list[tuple[str, bool, str]]:
     # Exactly the two SPEC §2.1 trees are gated; prefix lookalikes are not.
     f = check_archive_moves(
         [
-            ("R100", "rules/_archived/foo.md", "docs/foo.md"),
+            ("R100", "_archived/foo.md", "docs/foo.md"),
             ("D", "tests/_archive/foo.md", None),
         ],
         NO_LABEL,
