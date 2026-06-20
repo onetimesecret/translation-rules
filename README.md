@@ -8,9 +8,13 @@ words are forbidden — and enforces them mechanically in the app repo's CI.
 was silently flipped from formal (`Sie`) to informal (`du`) across email and UI
 strings. The cause: an agent read a conversational change-log as prescriptive
 guidance. This repo makes that class of error impossible by requiring all
-binding guidance to be human-authored YAML, schema-validated, and CI-enforced.
+binding guidance to live in structured YAML that cites an accepted source,
+passes schema and reference validation, and is CI-enforced — so a rule can
+never originate from unreviewed prose, whoever or whatever drafts it.
 
-**How it works.** You author rules in YAML (`rules/locales/<locale>/`). A resolver
+**How it works.** Rules live as structured YAML in `rules/locales/<locale>/`,
+drafted from accepted sources — in practice by an agent — and audited by a
+maintainer, never free-written. A resolver
 reads those files, validates them, and emits two artifacts per locale: a
 human-readable guide (`for-translators/<locale>.md`) and a machine-readable
 model (`.resolved/<locale>.json`). The app repo consumes those artifacts and
@@ -52,6 +56,10 @@ runs a CI gate that rejects translation PRs containing forbidden tokens.
   register.yaml         form: formal, pronoun: Sie, forbidden: [du, dein, deine...]
   glossary.yaml         secret object → Geheimnis / secret message → Nachricht
 ```
+
+**The end-to-end picture** — the authoring→enforcement loop, the agent/human
+split, the authoring discipline, and decide-once enforcement — is diagrammed in
+[`SPEC.md`](SPEC.md) §2 (Target Architecture).
 
 **Design, rationale, and the current state of every gate live in
 [`SPEC.md`](SPEC.md).** This README documents only the contract the app repo

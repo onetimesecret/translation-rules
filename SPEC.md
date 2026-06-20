@@ -26,6 +26,65 @@ The single smallest implementation that would have blocked the 2026-04-12 de_AT 
 
 ## 2. Target Architecture
 
+**The loop, end to end.** Rules are authored here, compiled to enforceable artifacts, and consumed by translation agents in the app repo; the human role is audit, not authorship. These three diagrams are the conceptual model — §2.1–§2.4 specify each stage.
+
+```
+  SOURCES — already decided, frozen            ROLES
+  ─────────────────────────────────           ──────────────────────────────────
+  _references/local-guides/*.md  ┐  provenance
+  shipped JSON @ baseline commit ┘──────────►  ① agents author rules · this repo
+                                                  base.yaml · rules · register · glossary
+                                                  every value cites a source
+                                                       │
+                              resolve.py — closure + schema; dangling ref → REJECTED
+                                                       │  green
+                                                       ▼
+                                               ② artifacts
+                                                  .resolved/<loc>.json     (agent context)
+                                                  for-translators/<loc>.md (human guide)
+                                                       │  vendored as submodule, pinned by SHA
+                                                       ▼
+                                               ③ agents translate · app repo
+                                                  consume .resolved → write content/<loc>/*.json
+                                                       │  every content PR
+                                                       ▼
+                                               ④ bin/lint-register gate (live)
+                                                  forbidden token → FAIL · clean → merge
+
+  Humans don't author ①–④. The human role is QC: review the agent's reasoning,
+  ask it to explain, triangulate the provenance — then accept, probe, or reject.
+```
+
+**Inside ① — what makes agent-authoring safe.** The schema gate (§2.2) checks *structure*, not *sourcing*: a well-formed `du` rule passes schema. The barrier against a well-formed-but-wrongly-sourced rule is the authoring discipline — mandatory provenance plus maintainer audit — not the author's humanity.
+
+```
+  agent drafts a rule
+       │
+       ▼
+  [ cites accepted provenance? ]──no─► reject   (no source = no rule;
+       │ yes                                      never from running prose)
+       ▼
+  [ closes? — resolve.py ]──────no─► reject   (dangling ref / bad schema)
+       │ yes
+       ▼
+  [ survives maintainer QC? ]───no─► back to agent   (can't defend it → no ship)
+       │ yes
+       ▼
+  minted · committed ──────────────────────────────────────────────► ②
+```
+
+**Decide once, enforce forever.** A rule authored once binds every later translation task through the register gate (§2.4); the decision is not re-litigated per task.
+
+```
+  one rule, authored once (provenance: de.md's du/Sie success row):
+     register.de_AT.formality  →  lock Sie / Ihr,  forbid du-form
+
+  …then applied to every later translation task automatically, no one re-asked:
+     "Your secret has been created."  (de_AT)
+        ├─ agent writes  "Dein Geheimnis…"  ─► lint ─► ✗  du-form 'Dein' forbidden
+        └─ agent writes  "Ihr Geheimnis…"   ─► lint ─► ✓  merges
+```
+
 ### 2.1 Directory layout
 
 ```
@@ -73,7 +132,7 @@ Two `_archive/` directories with distinct purposes. `retrospectives/_archive/` h
 
 ### 2.2 File formats
 
-**YAML as source, JSON Schema as contract.** Schema is authoritative; YAML is the human-authored surface validated at resolver entry. Alternatives rejected: JSON-as-source (too noisy for prose fields), YAML-without-schema (implicit coercion is exactly the drift vector the system exists to prevent).
+**YAML as source, JSON Schema as contract.** Schema is authoritative; YAML is the authored surface validated at resolver entry. Alternatives rejected: JSON-as-source (too noisy for prose fields), YAML-without-schema (implicit coercion is exactly the drift vector the system exists to prevent).
 
 Minimal `register.yaml`:
 
@@ -151,7 +210,7 @@ declined_index: [...]                        # per-locale decline summaries
 anti_patterns_ref: [...]
 ```
 
-The `rules`/`context`/`rationale` partition is the surface-level cue that prevents the change-log-as-guidance failure. Only `rules` and `register` bind behavior. Conversational prose cannot reach the `rules` partition without passing through a human-authored YAML file with a schema.
+The `rules`/`context`/`rationale` partition is the surface-level cue that prevents the change-log-as-guidance failure. Only `rules` and `register` bind behavior. Conversational prose cannot reach the `rules` partition without passing through a schema-validated, provenance-citing YAML file, audited at merge.
 
 ### 2.4 CI gates
 
