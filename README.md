@@ -11,6 +11,9 @@ depends on, deliberately kept small so it does not drift from the code. For how
 a gate works or whether it is live, read `SPEC.md` (§2.4) and the resolver — not
 this file.
 
+Design notes (non-binding agent analysis, not part of the app-repo contract):
+[`docs/agent-authored-rules.md`](docs/agent-authored-rules.md).
+
 ## Consuming this repo (the app-repo contract)
 
 The app repo vendors this repo as a git submodule and commits the resolver's

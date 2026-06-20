@@ -4,6 +4,8 @@
 
 **Status.** Draft v1. The target architecture is specified; Phase 0 is shippable immediately. Later phases depend on Phase 0 operating for >1 incident cycle without reversal.
 
+**Related (non-binding).** [`docs/agent-authored-rules.md`](docs/agent-authored-rules.md) is a combined-agent design analysis arguing for agent-authored, task-bound rules. It proposes a direction; it is not ratified design and binds nothing.
+
 ---
 
 ## 1. Phase 0 — Minimum Viable Prevention
