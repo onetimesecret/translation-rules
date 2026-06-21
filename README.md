@@ -66,3 +66,23 @@ python resolver/resolve.py --all --lint                     # resolve every loca
 CI runs the schema, type-check, register-lint, and `_archive/` firewall gates on
 every PR. `SPEC.md` §2.4 is the authoritative, current list of those gates and
 what each enforces.
+
+## Reviews vs retrospectives
+
+**Review** = raw observation. Prose, no schema, human/agent-authored, lives in
+`reviews/<date>/`. Answers *"what did we see?"* Can be one locale or a 29-locale
+roll-up — both are reviews. Ends in a findings manifest.
+
+**Retrospective** = the decision a finding drives. Schema'd frontmatter,
+lifecycle-tracked (`pending→applied`), lives in `retrospectives/`. Answers
+*"what rule changes because of it, and is it done?"*
+
+A cross-locale roll-up file is a second review document (observation), sitting
+alongside the per-locale ones. Its job is to *name* the patterns that span
+locales; each pattern then gets one retro that the relevant per-locale manifests
+tag.
+
+Rule of thumb: **many reviews can point at one retro; one retro can be cited by
+many reviews.** Observation is many-to-one with decision. If you're recording
+what you noticed → review. If you're committing to a rule/lint change and
+tracking it to closure → retro.
