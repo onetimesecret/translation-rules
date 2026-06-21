@@ -9,3 +9,23 @@ baselines:
       - glossary.secret_object=Geheimnis
     retro_id: 2026-04-12-de_AT-register-flip
     note: "State frozen here was acceptable: last commit before the de_AT contamination sequence began, per reviews/2026-04-12/cross-locale-audit.md. Not a curation commit."
+  fr:
+    commit: 4a64f7bda86bd35ea4786d93731018139a55cf65
+    pinned_on: 2026-06-21
+    invariants:
+      - register.formality=vous
+      - glossary.secret_object=secret
+      - glossary.passphrase=phrase secrète
+      - glossary.password=mot de passe
+      - glossary.email=e-mail
+    justification_doc: onetimesecret/locales/guides/for-translators/fr.md
+    note: "Backfill pin for the fr structured-rules layer. No retro exists; the source of truth is the app-repo French translator guide. AGENT-AUTHORED content pending native-speaker (FR) sign-off. Commit is the current branch tip at authoring time, not a curated content commit."
+  fr_CA:
+    commit: 4a64f7bda86bd35ea4786d93731018139a55cf65
+    pinned_on: 2026-06-21
+    invariants:
+      - register.formality=vous
+      - glossary.secret_object=secret
+      - glossary.email=courriel
+    justification_doc: onetimesecret/locales/guides/for-translators/fr_CA.md
+    note: "Backfill pin for the fr_CA structured-rules layer (inherits rules.fr). Delta from fr is glossary.email=courriel. No retro exists; source of truth is the app-repo Canadian French translator guide. AGENT-AUTHORED content pending native-speaker (CA) sign-off. Commit is the current branch tip at authoring time, not a curated content commit."

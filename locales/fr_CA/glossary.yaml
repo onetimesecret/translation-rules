@@ -1,0 +1,57 @@
+id: glossary.fr_CA
+source: onetimesecret/locales/guides/for-translators/fr_CA.md
+# Canadian French glossary. The resolver loads glossary per-locale and does NOT
+# merge it across the rules inheritance chain, so this file carries the fr_CA
+# terms directly rather than relying on glossary.fr inheritance. The substantive
+# DELTA from fr is the email term: fr_CA locks "courriel" (grounded in the live
+# fr_CA app content, which uses "courriel" throughout — e.g. "Adresse courriel",
+# "votre boîte de courriel"), whereas fr uses the European "e-mail". The secret
+# anchor term is restated here to demonstrate the shared core under the fr_CA
+# register. Every other core term is unchanged from glossary.fr and is governed by
+# the inherited rules.fr / register.fr.formality.
+# AGENT-AUTHORED; requires native-speaker (CA) sign-off before merge — see PR label.
+terms:
+  - id: term.email_ca#287480a5
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. In Canadian French this is 'courriel', never the European 'e-mail'."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    fr_CA:
+      noun:
+        target: courriel
+        rule_ref: rule.fr_CA-courriel
+    rule_refs: [register.fr.formality, rule.fr_CA-courriel]
+    examples:
+      - id: ex.email-ca-good#75bba47a
+        source: "Enter your email address."
+        target: "Saisissez votre adresse courriel."
+        verdict: good
+        rule_refs: [register.fr.formality, rule.fr_CA-courriel]
+      - id: ex.email-ca-bad#b8f4c2e2
+        source: "Enter your email address."
+        target: "Saisissez votre adresse e-mail."
+        verdict: bad
+        note: "Uses the European 'e-mail' instead of the Canadian 'courriel' — violates rule.fr_CA-courriel."
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application; identical to fr."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    fr_CA:
+      noun:
+        target: secret
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.fr.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created."
+        target: "Votre secret a été créé."
+        verdict: good
+        rule_refs: [register.fr.formality]
+      - id: ex.secret-informal-bad#250567fe
+        source: "Your secret has been created."
+        target: "Ton secret a été créé."
+        verdict: bad
+        note: "Informal possessive 'Ton' — the forbidden tutoiement register (shared with fr)."

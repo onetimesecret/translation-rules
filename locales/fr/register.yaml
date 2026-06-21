@@ -1,0 +1,22 @@
+id: register.fr
+source: onetimesecret/locales/guides/for-translators/fr.md
+# French is locked to the formal vous register. Grounded in the live app content
+# (onetimesecret/locales/content/fr_FR/*.json and fr_CA/*.json): every string uses
+# vous/votre/vos (e.g. "Inscrivez-vous", "votre compte", "vos identifiants") and
+# zero standalone informal tutoiement tokens appear. This mirrors de_AT's Sie-lock:
+# the informal tu/ton/ta/tes/toi/te forms become forbidden standalone-word tokens.
+# AGENT-AUTHORED; requires native-speaker (FR) sign-off — see PR label.
+form: formal
+pronoun: vous
+possessive: [votre, vos]
+forbidden_tokens:
+  - { token: tu,  context: standalone_word, severity: error, note: "informal subject pronoun" }
+  - { token: ton, context: standalone_word, severity: error, note: "informal possessive (masc.)" }
+  - { token: ta,  context: standalone_word, severity: error, note: "informal possessive (fem.)" }
+  - { token: tes, context: standalone_word, severity: error, note: "informal possessive (plural)" }
+  - { token: toi, context: standalone_word, severity: error, note: "informal stressed pronoun" }
+  - { token: te,  context: standalone_word, severity: error, note: "informal object pronoun (non-contracted)" }
+  - { token: toi-même, context: standalone_word, severity: error, note: "informal reflexive" }
+exceptions: []
+rule_ref: register.fr.formality
+baseline_ref: baselines.fr
