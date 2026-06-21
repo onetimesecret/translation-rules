@@ -573,7 +573,12 @@ def _emit_for_locale(
         path.write_text(emit_json(model), encoding="utf-8")
         written.append(str(path))
     if "md" in formats:
-        path = emit_dir / "for-translators" / f"{locale}.md"
+        # SPEC §2.3: the human guide is emitted to
+        # <emit-dir>/guides/for-translators/<locale>.md (the app repo vendors it
+        # at locales/guides/for-translators/), alongside the JSON's
+        # <emit-dir>/.resolved/. Keeping the `guides/` segment lets a single
+        # `--emit-dir locales` land both artifacts in their canonical homes.
+        path = emit_dir / "guides" / "for-translators" / f"{locale}.md"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(emit_markdown(model, source_commit), encoding="utf-8")
         written.append(str(path))
