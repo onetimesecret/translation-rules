@@ -66,3 +66,9 @@ python resolver/resolve.py --all --lint                     # resolve every loca
 CI runs the schema, type-check, register-lint, and `_archive/` firewall gates on
 every PR. `SPEC.md` §2.4 is the authoritative, current list of those gates and
 what each enforces.
+
+## Reviews vs retrospectives
+
+Reviews are raw observations; retrospectives are the lifecycle-tracked decisions
+findings drive. The canonical definition — including how cross-locale roll-ups
+fit — lives in [`reviews/README.md`](reviews/README.md#review-vs-retrospective).
