@@ -59,11 +59,11 @@ otherwise.
 
 ```bash
 uv sync                                              # resolver + dev deps
-python resolver/resolve.py <locale> --lint --emit md,json   # resolve one locale
-python resolver/resolve.py --all --lint                     # resolve every locale
+python lib/resolver/resolve.py <locale> --lint --emit md,json   # resolve one locale
+python lib/resolver/resolve.py --all --lint                     # resolve every locale
 ```
 
-CI runs the schema, type-check, register-lint, and `_archive/` firewall gates on
+CI runs the schema, type-check, register-lint, and `rules/_archive/` firewall gates on
 every PR. `SPEC.md` §2.4 is the authoritative, current list of those gates and
 what each enforces.
 
@@ -71,4 +71,4 @@ what each enforces.
 
 Reviews are raw observations; retrospectives are the lifecycle-tracked decisions
 findings drive. The canonical definition — including how cross-locale roll-ups
-fit — lives in [`reviews/README.md`](reviews/README.md#review-vs-retrospective).
+fit — lives in [`_references/reviews/README.md`](_references/reviews/README.md#review-vs-retrospective).

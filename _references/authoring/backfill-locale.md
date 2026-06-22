@@ -4,19 +4,19 @@ What it takes to make `<locale>` resolved-only-ready: a non-empty
 `.resolved/<locale>.json` (register + glossary, not just `base.yaml`) that
 passes lint. Until this is done, a locale must NOT be flipped to resolved-only —
 `base.yaml` alone gives an agent no register and no terminology, which
-re-opens the register-regression class (see `retrospectives/`,
-`reviews/2026-04-12/`).
+re-opens the register-regression class (see `rules/retrospectives/`,
+`_references/reviews/2026-04-12/`).
 
 **Source of truth for the content.** Lift the terminology, formality, and
 critical rules from the app repo's existing prose guide —
 `onetimesecret/locales/guides/for-translators/<locale>.md` — plus the live
 `locales/content/<locale>/*.json`. You are *transcribing* agreed knowledge
 into schema, not inventing it. Targets/examples you author are AGENT-AUTHORED
-and need native-speaker sign-off before merge (PR label; see `locales/de_AT/`).
+and need native-speaker sign-off before merge (PR label; see `rules/locales/de_AT/`).
 
-## Files to create under `locales/<locale>/`
+## Files to create under `rules/locales/<locale>/`
 
-Validate against `schema/*.json`. Copy `locales/de_AT/` as the worked example.
+Validate against `schema/*.json`. Copy `rules/locales/de_AT/` as the worked example.
 
 1. **`register.yaml`** — the binding register lock. Required: `id`
    (`register.<locale>`), `source`, `form`
@@ -61,8 +61,8 @@ bin/mint-id rule <key>     # rule           -> rule.<key>#<8hex>
 ## Inheritance
 
 `inherits` must resolve or the resolver fails. A regional variant needs its
-base-language parent to exist first: for `fr_CA`, create `locales/fr/`
-(inheriting `base`) **then** `locales/fr_CA/` inheriting `rules.fr` — mirroring
+base-language parent to exist first: for `fr_CA`, create `rules/locales/fr/`
+(inheriting `base`) **then** `rules/locales/fr_CA/` inheriting `rules.fr` — mirroring
 `de_AT -> de -> base`. A standalone language inherits `base` directly.
 
 ## Verify (must pass before merge)
@@ -70,7 +70,7 @@ base-language parent to exist first: for `fr_CA`, create `locales/fr/`
 The resolver is `uv`-managed; `uv run` auto-syncs deps from the lockfile.
 
 ```
-uv run resolver/resolve.py <locale> --lint --validate-only   # resolves + lints, no writes
+uv run lib/resolver/resolve.py <locale> --lint --validate-only   # resolves + lints, no writes
 ```
 
 Lint (SPEC §2.3 step 6) checks only `good` examples:
@@ -82,13 +82,13 @@ Lint (SPEC §2.3 step 6) checks only `good` examples:
 Then emit the committed artifacts into the app repo:
 
 ```
-uv run resolver/resolve.py <locale> --lint --emit=md,json --emit-dir <path-to>/onetimesecret/locales
+uv run lib/resolver/resolve.py <locale> --lint --emit=md,json --emit-dir <path-to>/onetimesecret/locales
 # writes onetimesecret/locales/.resolved/<locale>.json + .../guides/for-translators/<locale>.md
 ```
 
 ## Done
 
-- `uv run resolver/resolve.py <locale> --lint` exits 0;
+- `uv run lib/resolver/resolve.py <locale> --lint` exits 0;
 - `.resolved/<locale>.json` has populated `register` and `glossary` (not just
   base `rules`);
 - `bin/lint-register <locale> "<app>/locales/content/<locale>/*.json"` is clean;
