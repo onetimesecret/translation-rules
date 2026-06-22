@@ -37,6 +37,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.it_IT
 glossary_ref: glossary.it_IT
-# baseline_ref: baselines.it_IT is intentionally omitted until a human reviewer
-# adds the `baselines.it_IT` entry to baselines.yaml centrally — a dangling
-# reference fails the resolver, and this task must not edit baselines.yaml.
+baseline_ref: baselines.it_IT

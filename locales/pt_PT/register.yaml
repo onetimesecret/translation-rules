@@ -36,5 +36,4 @@ possessive: [teu, tua, teus, tuas, seu, sua, seus, suas]
 forbidden_tokens: []
 exceptions: []
 rule_ref: register.pt.formality
-# baseline_ref deferred: baselines.pt_PT is pinned centrally by the reviewer
-# (mirrors locales/fr_FR/register.yaml's deferred-baseline handling).
+baseline_ref: baselines.pt_PT

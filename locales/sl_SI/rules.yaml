@@ -49,7 +49,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.sl_SI
 glossary_ref: glossary.sl_SI
-# baseline_ref intentionally omitted: no baselines.sl_SI entry exists yet and this
-# backfill must not edit the shared baselines.yaml. The resolver hard-fails on a
-# dangling baseline_ref, and the field is optional per rules.schema.json, so it is
-# left out until a reviewer adds the central baselines.sl_SI pin.
+baseline_ref: baselines.sl_SI

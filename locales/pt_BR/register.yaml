@@ -33,5 +33,4 @@ forbidden_tokens:
   - { token: ti,   context: standalone_word, severity: error, note: "tu-form prepositional pronoun" }
 exceptions: []
 rule_ref: register.pt.formality
-# baseline_ref deferred: baselines.pt_BR is pinned centrally by the reviewer
-# (mirrors locales/fr_FR/register.yaml's deferred-baseline handling).
+baseline_ref: baselines.pt_BR

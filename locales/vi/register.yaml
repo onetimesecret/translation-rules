@@ -73,8 +73,4 @@ register_spec:
     hierarchical/intimate kinship pronouns (anh/chị/em/ông/bà/cô/chú/bác/ngài)
     or rude/intimate pronouns (mày/tao/tớ/cậu) as the generic 2nd-person UI
     address. All tone marks and diacritics must be preserved.
-# baseline_ref: baselines.vi is intentionally omitted — no `baselines.vi` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. A
-# human reviewer adds the pin centrally to baselines.yaml at commit time
-# (mirroring the fr / de_AT baselines entries); this and rules.yaml can then
-# carry `baseline_ref: baselines.vi`.
+baseline_ref: baselines.vi

@@ -42,6 +42,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.sv_SE
 glossary_ref: glossary.sv_SE
-# baseline_ref: baselines.sv_SE is intentionally omitted until a human reviewer
-# adds the baselines.sv_SE entry to baselines.yaml centrally — a dangling
-# reference fails the resolver, and this task must not edit baselines.yaml.
+baseline_ref: baselines.sv_SE

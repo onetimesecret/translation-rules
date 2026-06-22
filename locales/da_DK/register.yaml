@@ -37,7 +37,4 @@ possessive: [din, dit, dine]
 forbidden_tokens: []
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref: baselines.da_DK is intentionally omitted — baselines.yaml has no
-# da_DK entry yet and is off-limits to this change. A dangling baseline_ref would
-# fail the resolver; a human reviewer pins the baseline centrally (mirroring the
-# fr/de_AT baselines entries), after which this and rules.yaml can carry it.
+baseline_ref: baselines.da_DK

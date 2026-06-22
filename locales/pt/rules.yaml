@@ -36,5 +36,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.pt
 glossary_ref: glossary.pt
-# baseline_ref deferred: baselines.pt is pinned centrally by the reviewer
-# (mirrors locales/fr_FR/rules.yaml's deferred-baseline handling).
+baseline_ref: baselines.pt

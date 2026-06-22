@@ -34,6 +34,4 @@ rules:
     rule_ref: rule.terminology-consistency
 register_ref: register.el_GR
 glossary_ref: glossary.el_GR
-# baseline_ref: baselines.el_GR is intentionally omitted until a human reviewer
-# adds the `baselines.el_GR` entry to baselines.yaml centrally — a dangling
-# reference fails the resolver, and this task must not edit baselines.yaml.
+baseline_ref: baselines.el_GR

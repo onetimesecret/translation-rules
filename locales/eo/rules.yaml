@@ -48,6 +48,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.eo
 glossary_ref: glossary.eo
-# baseline_ref: baselines.eo is intentionally omitted until a human reviewer adds
-# the `baselines.eo` entry to baselines.yaml centrally — a dangling reference
-# fails the resolver, and this task must not edit baselines.yaml.
+baseline_ref: baselines.eo

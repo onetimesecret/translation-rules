@@ -95,8 +95,4 @@ register_spec:
     rule.ko-register-politeness and this spec rather than forbidden_tokens.
     Concise verbal-noun labels on buttons (복사, 소각, 공유) are the prescribed UI
     voice, NOT a register violation.
-# baseline_ref: baselines.ko is intentionally omitted — no `baselines.ko` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
-# pin is for a human reviewer to add to baselines.yaml centrally at commit time
-# (mirroring the fr / de_AT baselines entries); this and rules.yaml can then
-# carry `baseline_ref: baselines.ko`.
+baseline_ref: baselines.ko

@@ -38,7 +38,4 @@ forbidden_tokens:
   - { token: σου,   context: standalone_word, severity: error, note: "informal 2sg weak possessive/genitive clitic — formal is σας; 0 standalone hits in live content. Left as standalone_word so the preposition-free σ' contraction and word-internal sequences are not flagged." }
 exceptions: []
 rule_ref: register.el_GR.formality
-# baseline_ref: baselines.el_GR is intentionally omitted — no `baselines.el_GR`
-# entry exists in baselines.yaml yet, and a dangling reference fails the resolver.
-# The pin is for a human reviewer to add to baselines.yaml centrally at commit
-# time (mirroring the fr / de_AT baselines entries).
+baseline_ref: baselines.el_GR

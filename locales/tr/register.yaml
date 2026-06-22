@@ -52,8 +52,4 @@ forbidden_tokens:
   - { token: senin, context: standalone_word, severity: error, note: "informal 2sg possessive pronoun ('your'); standalone_word avoids matching unrelated agglutinated words" }
 exceptions: []
 rule_ref: rule.tr-register-formal
-# baseline_ref: baselines.tr is intentionally omitted — no `baselines.tr` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. A
-# human reviewer pins the baseline centrally at commit time (mirroring the fr /
-# de_AT entries), after which this and rules.yaml can carry baseline_ref:
-# baselines.tr. (Deferred, cf. locales/es/register.yaml.)
+baseline_ref: baselines.tr

@@ -31,8 +31,4 @@ possessive: [dein, deine, deinen, deinem, deiner, deines]
 forbidden_tokens: []
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref: baselines.de is intentionally omitted — no `baselines.de` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
-# pin is for a human reviewer to add to baselines.yaml centrally at commit time
-# (mirroring the `de_AT`/`fr` baselines entries), after which this and rules.yaml
-# can carry `baseline_ref: baselines.de`.
+baseline_ref: baselines.de

@@ -15,5 +15,4 @@ merge_strategy: append
 rules: []
 register_ref: register.fr_FR
 glossary_ref: glossary.fr_FR
-# baseline_ref deferred: baselines.fr_FR is pinned centrally by the reviewer
-# (mirrors locales/fr_CA/register.yaml's deferred-baseline handling).
+baseline_ref: baselines.fr_FR
