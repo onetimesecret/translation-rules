@@ -1,0 +1,201 @@
+id: glossary.nl
+source: onetimesecret/locales/guides/for-translators/nl.md
+# Sense-split of the core domain terminology from the Dutch translator guide's
+# terminology tables (nl.md §Woordenlijst, §Kernterminologie, §Kritische
+# vertaalregels), grounded against the live app content in
+# onetimesecret/locales/content/nl/. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (NL) sign-off before merge — see PR
+# label. Each `good` example uses the informal `je` register and contains the
+# term's target; each `bad` example demonstrates a forbidden form (the formal
+# u/uw register, or the wrong/forbidden term such as `geheim`).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render as bericht / beveiligd bericht, never geheim."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    nl:
+      noun:
+        target: bericht
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency, rule.register-lock]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created."
+        target: "Je bericht is aangemaakt."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Informal possessive 'Je' and the noun term 'bericht'."
+      - id: ex.secret-geheim-bad#250567fe
+        source: "Your secret has been created."
+        target: "Uw geheim is aangemaakt."
+        verdict: bad
+        note: "Formal possessive 'Uw' (forbidden register) AND 'geheim' instead of 'bericht' (criminal-underworld associations) — violates both register-lock and rule.nl-secret-noun."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective/state sense of secret/secure — protection of information. Render as beveiligd; avoid geheim and vertrouwelijk in general UI text."
+      key_patterns: ["*secure*", "*secured*", "*.protect*"]
+    nl:
+      adjective:
+        target: beveiligd
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency, rule.register-lock]
+    examples:
+      - id: ex.secret-adjective-good#7c1d5a40
+        source: "Share secure links with anyone."
+        target: "Deel beveiligde links met iedereen."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Adjective sense 'beveiligde' (word_prefix of 'beveiligd')."
+      - id: ex.secret-adjective-bad#9e2f01b7
+        source: "Share secure links with anyone."
+        target: "Deel vertrouwelijke links met iedereen."
+        verdict: bad
+        note: "'vertrouwelijke' is reserved for formal legal contexts and sounds defensive in general UI — should be 'beveiligde'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    nl:
+      noun:
+        target: wachtwoordzin
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency, rule.register-lock]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Voer de wachtwoordzin in om dit bericht te bekijken."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Uses 'wachtwoordzin' (secret protection), distinct from the account 'wachtwoord'."
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Voer het wachtwoord in om dit bericht te bekijken."
+        verdict: bad
+        note: "Uses 'wachtwoord' (login credential) where 'wachtwoordzin' (secret protection) is meant — violates rule.nl-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    nl:
+      noun:
+        target: wachtwoord
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency, rule.register-lock]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Voer je wachtwoord in om in te loggen."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Informal possessive 'je' plus the account term 'wachtwoord'."
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Voer uw wachtwoord in om in te loggen."
+        verdict: bad
+        note: "Formal possessive 'uw' — the forbidden formal register; should be 'je'."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. Verb 'verbranden' for the action label; past participle 'verbrand' for the resulting status."
+      key_patterns: ["*burn*", "*.destroy*"]
+    nl:
+      verb:
+        target: verbranden
+        rule_ref: rule.terminology-consistency
+      state:
+        target: verbrand
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency, rule.register-lock]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Verbrand dit bericht voordat het wordt gelezen."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Imperative 'Verbrand' for the action, plus the noun 'bericht'."
+      - id: ex.burn-bad#4228df6b
+        source: "Burn this secret before it is read."
+        target: "Vernietig uw geheim voordat het wordt gelezen."
+        verdict: bad
+        note: "Formal 'uw' plus 'geheim' (forbidden noun) and 'Vernietig' instead of the glossary verb 'verbranden' — register and terminology drift."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. 'link' (borrowed, preferred in UI) or 'koppeling' (native, for longer documentation); pick one and stay consistent."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    nl:
+      noun:
+        target: link
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency, rule.register-lock]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy your secret link to share it."
+        target: "Kopieer je link om die te delen."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Informal imperative 'Kopieer' plus 'je' and the term 'link'."
+      - id: ex.link-bad#748809c5
+        source: "Copy your secret link to share it."
+        target: "Kopieer uw link om die te delen."
+        verdict: bad
+        note: "Formal possessive 'uw' — the forbidden formal register; should be 'je'."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'versleutelen', past participle 'versleuteld' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    nl:
+      verb:
+        target: versleutelen
+        rule_ref: rule.terminology-consistency
+      state:
+        target: versleuteld
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency, rule.register-lock]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Dit bericht is versleuteld met je wachtwoordzin."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "State 'versleuteld' plus informal 'je' and 'wachtwoordzin'."
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Dit bericht is versleuteld met uw wachtwoord."
+        verdict: bad
+        note: "Formal possessive 'uw' (forbidden register) plus 'wachtwoord' (account credential) where 'wachtwoordzin' is meant."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Written with a hyphen: e-mail."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    nl:
+      noun:
+        target: e-mail
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency, rule.register-lock]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Voer je e-mailadres in."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Informal possessive 'je' plus the term 'e-mail' (word_prefix of 'e-mailadres')."
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Voer uw e-mailadres in."
+        verdict: bad
+        note: "Formal possessive 'uw' — the forbidden formal register; should be 'je'."
