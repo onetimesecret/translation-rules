@@ -1,0 +1,19 @@
+id: rules.pt_BR
+source: onetimesecret/locales/guides/for-translators/pt_BR.md
+inherits: rules.pt
+merge_strategy: append
+# Brazilian Portuguese layer. The pt family parent (rules.pt / register.pt /
+# glossary.pt) was authored FROM the Brazilian conventions and live pt_BR content,
+# so pt_BR carries NO genuine regional delta: every Portuguese-wide rule from
+# rules.pt applies unchanged (você-form register, secret -> "mensagem confidencial",
+# senha/palavra-passe vs "frase secreta", imperative buttons) and every parent
+# glossary term is already the Brazilian form (senha, criptografar, compartilhar
+# via the share examples). Unlike pt_PT — whose deltas are the European lexis
+# (palavra-passe, encriptar, partilhar) — pt_BR adds no override rules; it is pure
+# inheritance. Mirrors locales/fr_FR/rules.yaml structurally.
+# AGENT-AUTHORED; requires native-speaker (pt_BR) sign-off before merge — see PR label.
+rules: []
+register_ref: register.pt_BR
+glossary_ref: glossary.pt_BR
+# baseline_ref deferred: baselines.pt_BR is pinned centrally by the reviewer
+# (mirrors locales/fr_FR/rules.yaml's deferred-baseline handling).

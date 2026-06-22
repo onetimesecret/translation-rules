@@ -1,0 +1,37 @@
+id: register.pt_BR
+source: onetimesecret/locales/guides/for-translators/pt_BR.md
+# Brazilian Portuguese register: the você-form (3rd-person-singular) direct address
+# with seu/sua possessives. Grounded in the live app content
+# (onetimesecret/locales/content/pt_BR/*.json): direct address consistently uses
+# the você-form — seu/sua/seus/suas = 324 occurrences (e.g. "Sua mensagem segura
+# foi entregue", "Seu conteúdo", "todos os seus segredos") — and the European
+# tu-form is entirely absent: standalone tu = 0, teu/tua/teus/tuas = 0. The prose
+# guide agrees ("Formality and Tone: Use 'Você'"; Principle #6 "professional yet
+# approachable voice using 'você'"). So the forbidden register is the European
+# tu-form: standalone tu, tu-form possessives teu/tua/teus/tuas, prepositional ti.
+# All zero in the live pt_BR content, so forbidding them is safe.
+#
+# This file is self-contained because the resolver loads register per-locale and
+# does NOT merge it across the rules inheritance chain (only rules.yaml inherits);
+# so pt_BR must restate the lock to keep .resolved/pt_BR.json's register populated.
+# It matches register.pt because pt_BR and the pt parent share the você-form (the
+# parent was grounded against pt_BR). Mirrors locales/fr_FR/register.yaml.
+#
+# Deliberately NOT forbidden: seu/sua/seus/suas — these ARE the você-register
+# possessives this locale uses (cf. locales/es/register.yaml leaving su/sus free).
+#
+# AGENT-AUTHORED; requires native-speaker (pt_BR) sign-off before merge — see PR label.
+form: formal
+pronoun: você
+possessive: [seu, sua, seus, suas]
+forbidden_tokens:
+  - { token: tu,   context: standalone_word, severity: error, note: "tu-form subject pronoun (European informal); pt_BR uses the você-form" }
+  - { token: teu,  context: standalone_word, severity: error, note: "tu-form possessive (masc.)" }
+  - { token: tua,  context: standalone_word, severity: error, note: "tu-form possessive (fem.)" }
+  - { token: teus, context: standalone_word, severity: error, note: "tu-form possessive (masc. plural)" }
+  - { token: tuas, context: standalone_word, severity: error, note: "tu-form possessive (fem. plural)" }
+  - { token: ti,   context: standalone_word, severity: error, note: "tu-form prepositional pronoun" }
+exceptions: []
+rule_ref: register.pt.formality
+# baseline_ref deferred: baselines.pt_BR is pinned centrally by the reviewer
+# (mirrors locales/fr_FR/register.yaml's deferred-baseline handling).

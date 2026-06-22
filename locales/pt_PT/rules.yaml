@@ -1,0 +1,37 @@
+id: rules.pt_PT
+source: onetimesecret/locales/guides/for-translators/pt_PT.md
+inherits: rules.pt
+merge_strategy: append
+# European Portuguese layer. Inherits every Portuguese-wide rule from rules.pt
+# (consistent direct-address register, secret -> "mensagem confidencial",
+# password vs "frase secreta", imperative buttons) and adds ONLY the pt_PT lexical
+# deltas, where European Portuguese differs from the Brazilian parent defaults:
+#   - password: "palavra-passe", not the Brazilian "senha"
+#   - encrypt:  "encriptar"/"encriptado", not the Brazilian "criptografar"
+#   - share:    "partilhar", not the Brazilian "compartilhar"
+# Grounded in the live app content (onetimesecret/locales/content/pt_PT/*.json):
+# "palavra-passe" 78×/"senha" 0×; "encript*" 7×/"criptograf*" 0×;
+# "partilh*" 40×/"compartilh*" 0×. Mirrors locales/fr_CA/rules.yaml (the variant
+# that overrides the parent's European default with its regional lexis), inverted:
+# here the parent default is Brazilian and pt_PT supplies the European forms.
+# AGENT-AUTHORED; requires native-speaker (pt_PT) sign-off before merge — see PR label.
+rules:
+  - id: rule.pt_PT-palavra-passe
+    modality: MUST
+    statement: European Portuguese uses "palavra-passe" for the account login password throughout UI and email content; the Brazilian "senha" is not used in pt_PT.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.pt_PT-encriptar
+    modality: MUST
+    statement: European Portuguese uses "encriptar"/"encriptado" for encryption; the Brazilian "criptografar"/"criptografado" is not used in pt_PT.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.pt_PT-partilhar
+    modality: MUST
+    statement: European Portuguese uses "partilhar" for sharing; the Brazilian "compartilhar" is not used in pt_PT.
+    severity: warning
+    rule_ref: rule.terminology-consistency
+register_ref: register.pt_PT
+glossary_ref: glossary.pt_PT
+# baseline_ref deferred: baselines.pt_PT is pinned centrally by the reviewer
+# (mirrors locales/fr_FR/rules.yaml's deferred-baseline handling).

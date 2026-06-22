@@ -1,0 +1,40 @@
+id: rules.pt
+source: onetimesecret/locales/guides/for-translators/pt_BR.md
+inherits: base
+merge_strategy: append
+# Portuguese-wide layer (base-inheriting family parent), mirroring locales/fr/rules.yaml.
+# Carries the Portuguese conventions shared by every pt_* variant: the secret ->
+# "mensagem confidencial" (never "segredo") rule, the senha/palavra-passe vs
+# "frase secreta" distinction, the imperative-for-buttons rule, and the consistent
+# direct-address register. Regional variants (pt_BR, pt_PT) inherit this and add
+# only their deltas (pt_PT overrides the European-specific lexis: palavra-passe,
+# encriptar, partilhar). The app ships pt_BR and pt_PT, not bare pt; this parent is
+# populated so it remains a valid governed locale and a real inheritance base.
+#
+# AGENT-AUTHORED transcription of onetimesecret/locales/guides/for-translators/pt_BR.md
+# and pt_PT.md; requires native-speaker (pt_BR + pt_PT) sign-off before merge — see PR label.
+rules:
+  - id: register.pt.formality
+    modality: MUST
+    statement: Portuguese content uses a consistent direct-address register throughout product UI and email content; mixing registers (e.g. switching between você-form and tu-form address within a locale) is forbidden.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.pt-secret-confidencial
+    modality: MUST
+    statement: Translate the noun "secret" as "mensagem confidencial" (or "conteúdo confidencial"), never as "segredo", which implies a personal secret rather than the shared protected message.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.pt-passphrase-password
+    modality: MUST
+    statement: Keep the account login credential (senha / palavra-passe) distinct from "frase secreta" (the credential that protects a secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.pt-imperative-buttons
+    modality: MUST
+    statement: Use the imperative for button and command labels (Criar, Visualizar, Enviar, Cancelar); use declarative/passive voice for status and informational text.
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.pt
+glossary_ref: glossary.pt
+# baseline_ref deferred: baselines.pt is pinned centrally by the reviewer
+# (mirrors locales/fr_FR/rules.yaml's deferred-baseline handling).

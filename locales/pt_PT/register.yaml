@@ -1,0 +1,40 @@
+id: register.pt_PT
+source: onetimesecret/locales/guides/for-translators/pt_PT.md
+# European Portuguese register — form: mixed. This is the key judgment call for the
+# pt_PT locale, and it DIFFERS from pt_BR (which is a clean você-form lock).
+#
+# The pt_PT prose guide PRESCRIBES the informal tu-form consistently ("Use 'Tu'";
+# "DO NOT MIX REGISTERS"). But the SHIPPED live content does not match its own
+# guide: onetimesecret/locales/content/pt_PT/*.json genuinely mixes both registers.
+#   - tu-form present:   teu/tua/teus/tuas = 129 occurrences (e.g. "A tua
+#     palavra-passe", "Introduz a tua palavra-passe", "Se não foste tu"), plus
+#     tu-form imperatives ("Introduz", "verifica a tua...").
+#   - você-form present: seu/sua/seus/suas = 171 occurrences (e.g. "Esqueceu-se da
+#     sua palavra-passe?", "Crie a Sua Conta"), plus você-form imperatives
+#     ("Introduza as suas credenciais", "Crie").
+# Because BOTH registers occur legitimately in the shipped content, neither the
+# tu-form tokens (tu/teu/tua...) NOR the você-form possessives (seu/sua...) can be
+# forbidden without flagging large amounts of valid live content. So this locale is
+# recorded as `form: mixed` with an EMPTY forbidden_tokens list, grounding the
+# register lock in reality rather than the guide's aspiration.
+#
+# JUDGMENT CALL for the native pt_PT reviewer: the guide wants pt_PT unified on the
+# tu-form. The shipped content is not unified. Either (a) the content should be
+# normalized to tu-form, after which this register can be tightened to
+# form: informal / pronoun: tu and forbid the você-form possessives seu/sua and the
+# você-form imperatives; or (b) the guide should be relaxed to accept the mixed
+# reality. Until that is decided by a native speaker, forbidding either side would
+# produce false positives against shipped strings, so forbidden_tokens stays empty.
+#
+# pronoun records the guide-preferred form (tu). This file is self-contained
+# because the resolver loads register per-locale and does NOT merge it across the
+# rules inheritance chain. Mirrors locales/fr_FR/register.yaml structurally.
+# AGENT-AUTHORED; requires native-speaker (pt_PT) sign-off before merge — see PR label.
+form: mixed
+pronoun: tu
+possessive: [teu, tua, teus, tuas, seu, sua, seus, suas]
+forbidden_tokens: []
+exceptions: []
+rule_ref: register.pt.formality
+# baseline_ref deferred: baselines.pt_PT is pinned centrally by the reviewer
+# (mirrors locales/fr_FR/register.yaml's deferred-baseline handling).

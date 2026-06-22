@@ -1,0 +1,35 @@
+id: register.pt
+source: onetimesecret/locales/guides/for-translators/pt_BR.md
+# Portuguese family-parent register: the shared/dominant Portuguese register, the
+# você-form (3rd-person-singular) direct address with seu/sua possessives. This is
+# the register the app ships dominant across the Portuguese family: the live
+# pt_BR content uses it exclusively (seu/sua = 324 occurrences, zero standalone
+# tu/teu/tua), and the live pt_PT content uses it for the majority of strings too
+# (seu/sua = 171, plus você-form imperatives like "Introduza"/"Crie"). The app
+# ships pt_BR and pt_PT, not bare pt, but this parent must carry a register so it
+# stays a valid governed locale; the você-form is the natural shared default.
+#
+# Locked to the você-form, so the forbidden register is the European tu-form
+# direct address: standalone tu and the tu-form possessives teu/tua/teus/tuas plus
+# the tu object/prepositional pronouns te/ti. These are zero in the live pt_BR
+# content, so forbidding them is safe here.
+#
+# Deliberately NOT forbidden: seu/sua/seus/suas — these ARE the você-register
+# possessives this locale uses, and are also the ordinary 3rd-person possessive
+# (cf. locales/es/register.yaml leaving su/sus free for the same reason).
+#
+# AGENT-AUTHORED; requires native-speaker (pt) sign-off before merge — see PR label.
+form: formal
+pronoun: você
+possessive: [seu, sua, seus, suas]
+forbidden_tokens:
+  - { token: tu,   context: standalone_word, severity: error, note: "tu-form subject pronoun (European informal); the você-form register does not use it" }
+  - { token: teu,  context: standalone_word, severity: error, note: "tu-form possessive (masc.)" }
+  - { token: tua,  context: standalone_word, severity: error, note: "tu-form possessive (fem.)" }
+  - { token: teus, context: standalone_word, severity: error, note: "tu-form possessive (masc. plural)" }
+  - { token: tuas, context: standalone_word, severity: error, note: "tu-form possessive (fem. plural)" }
+  - { token: ti,   context: standalone_word, severity: error, note: "tu-form prepositional pronoun" }
+exceptions: []
+rule_ref: register.pt.formality
+# baseline_ref deferred: baselines.pt is pinned centrally by the reviewer
+# (mirrors locales/fr_FR/register.yaml's deferred-baseline handling).

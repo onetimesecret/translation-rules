@@ -1,0 +1,87 @@
+id: glossary.pt_PT
+source: onetimesecret/locales/guides/for-translators/pt_PT.md
+# European Portuguese glossary — delta-only. The resolver merges glossaries along
+# the rules inheritance chain (ADR-001), keying by term `key`, so this file only
+# carries the terms whose European form differs from the Brazilian pt parent.
+# Every inherited pt term (secret_object -> mensagem confidencial, passphrase ->
+# frase secreta, burn -> queimar, link -> link, email -> e-mail) flows through
+# unchanged; only the genuine deltas are overridden:
+#   - password: "palavra-passe" (parent: "senha") — live pt_PT: palavra-passe 78×, senha 0×
+#   - encrypt:  "encriptar"/"encriptado" (parent: "criptografar") — live: encript* 7×, criptograf* 0×
+# A new "share" term ("partilhar", live: partilh* 40×, compartilh* 0×) is added
+# too, recording the European sharing verb. All inherited terms remain governed by
+# rules.pt; the deltas add the pt_PT-specific rules. Good examples use the
+# guide-preferred tu-form (the register is `mixed`, so neither form is forbidden;
+# bad examples show the Brazilian term, the wrong-register violation being shown
+# via the note rather than a forbidden-token lint).
+# AGENT-AUTHORED; requires native-speaker (pt_PT) sign-off before merge — see PR label.
+terms:
+  - id: term.password_pt#01adcfc9
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential. In European Portuguese this is 'palavra-passe', never the Brazilian 'senha'."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    pt_PT:
+      noun:
+        target: palavra-passe
+        rule_ref: rule.pt_PT-palavra-passe
+    rule_refs: [register.pt.formality, rule.pt_PT-palavra-passe]
+    examples:
+      - id: ex.password-pt-good#1d706f6e
+        source: "Enter your password to sign in."
+        target: "Introduz a tua palavra-passe para iniciar sessão."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.pt_PT-palavra-passe]
+      - id: ex.password-pt-bad#07c9b67f
+        source: "Enter your password to sign in."
+        target: "Introduz a tua senha para iniciar sessão."
+        verdict: bad
+        note: "Uses the Brazilian 'senha' instead of the European 'palavra-passe' — violates rule.pt_PT-palavra-passe."
+  - id: term.encrypt_pt#4c804385
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data. In European Portuguese the verb is 'encriptar', past participle 'encriptado', never the Brazilian 'criptografar'/'criptografado'."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    pt_PT:
+      verb:
+        target: encriptar
+        rule_ref: rule.pt_PT-encriptar
+      state:
+        target: encriptado
+        rule_ref: rule.pt_PT-encriptar
+    rule_refs: [register.pt.formality, rule.pt_PT-encriptar]
+    examples:
+      - id: ex.encrypt-pt-good#ef5eaa94
+        source: "Your content is encrypted at rest."
+        target: "O teu conteúdo é encriptado em repouso."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.pt_PT-encriptar]
+      - id: ex.encrypt-pt-bad#3739406f
+        source: "Your content is encrypted at rest."
+        target: "O teu conteúdo é criptografado em repouso."
+        verdict: bad
+        note: "Uses the Brazilian 'criptografado' instead of the European 'encriptado' — violates rule.pt_PT-encriptar."
+  - id: term.share_pt#043c3d4f
+    key: share
+    en: share
+    disambiguation:
+      heuristic: "The action of sharing a secret. In European Portuguese this is 'partilhar', never the Brazilian 'compartilhar'."
+      key_patterns: ["*share*", "*.send*"]
+    pt_PT:
+      verb:
+        target: partilhar
+        rule_ref: rule.pt_PT-partilhar
+    rule_refs: [register.pt.formality, rule.pt_PT-partilhar]
+    examples:
+      - id: ex.share-pt-good#450b0bf8
+        source: "Share a secret securely."
+        target: "Partilhar uma mensagem confidencial de forma segura."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.pt_PT-partilhar]
+      - id: ex.share-pt-bad#20dbcd2c
+        source: "Share a secret securely."
+        target: "Compartilhar uma mensagem confidencial de forma segura."
+        verdict: bad
+        note: "Uses the Brazilian 'compartilhar' instead of the European 'partilhar' — violates rule.pt_PT-partilhar."

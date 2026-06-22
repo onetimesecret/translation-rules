@@ -1,0 +1,176 @@
+id: glossary.pt
+source: onetimesecret/locales/guides/for-translators/pt_BR.md
+# Sense-split of the core domain terminology shared by both Portuguese variants,
+# from the pt_BR.md and pt_PT.md translator guides' terminology tables, grounded
+# against the live app content in onetimesecret/locales/content/pt_BR/*.json and
+# pt_PT/*.json. Terms common to BOTH variants live here (secret_object, passphrase,
+# burn, link, email); terms whose European form differs are carried with the
+# dominant Brazilian default here (password -> senha, encrypt -> criptografar) and
+# OVERRIDDEN in glossary.pt_PT (palavra-passe, encriptar). pt_BR inherits this
+# parent unchanged; pt_PT carries only its deltas (ADR-001 glossary inheritance).
+# Each `good` example uses the você-form register; each `bad` example demonstrates
+# a forbidden form (the tu-form register, or the wrong term).
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (pt)
+# sign-off before merge — see PR label.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. Translated as 'mensagem confidencial', never 'segredo'."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    pt:
+      noun:
+        target: mensagem confidencial
+        rule_ref: rule.pt-secret-confidencial
+    rule_refs: [register.pt.formality, rule.pt-secret-confidencial]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created."
+        target: "Sua mensagem confidencial foi criada."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.pt-secret-confidencial]
+      - id: ex.secret-informal-bad#250567fe
+        source: "Your secret has been created."
+        target: "O teu segredo foi criado."
+        verdict: bad
+        note: "Two violations: 'segredo' instead of 'mensagem confidencial' (rule.pt-secret-confidencial), and the tu-form possessive 'teu' (forbidden register)."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects a secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    pt:
+      noun:
+        target: frase secreta
+        rule_ref: rule.pt-passphrase-password
+    rule_refs: [register.pt.formality, rule.pt-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Digite a frase secreta para visualizar esta mensagem confidencial."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.pt-passphrase-password]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Digite a senha para visualizar esta mensagem confidencial."
+        verdict: bad
+        note: "Uses 'senha' (login credential) where 'frase secreta' (secret protection) is meant — violates rule.pt-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense. Brazilian 'senha'; pt_PT overrides to 'palavra-passe'."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    pt:
+      noun:
+        target: senha
+        rule_ref: rule.pt-passphrase-password
+    rule_refs: [register.pt.formality, rule.pt-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Digite sua senha para entrar na conta."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.pt-passphrase-password]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Digite a tua senha para iniciar a sessão."
+        verdict: bad
+        note: "Tu-form possessive 'tua' — the forbidden tu-form register for the você-form pt parent."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. Verb form for the action label, past participle for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    pt:
+      verb:
+        target: queimar
+        rule_ref: rule.terminology-consistency
+      state:
+        target: queimado
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.pt.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Queimar esta mensagem confidencial antes que seja lida."
+        verdict: good
+        note: "Infinitive 'Queimar' for the button label, per rule.pt-imperative-buttons."
+        rule_refs: [register.pt.formality, rule.pt-imperative-buttons]
+      - id: ex.burn-bad#4228df6b
+        source: "Burn this secret before it is read."
+        target: "Destruir esta mensagem confidencial antes que seja lida."
+        verdict: bad
+        note: "Uses 'Destruir' instead of the glossary term 'queimar' — terminology drift."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Same form ('e-mail') in both Portuguese variants."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    pt:
+      noun:
+        target: e-mail
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.pt.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Digite seu endereço de e-mail."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.terminology-consistency]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Digite o teu endereço de e-mail."
+        verdict: bad
+        note: "Tu-form possessive 'teu' — the forbidden tu-form register for the você-form pt parent."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Same form ('link') in both Portuguese variants."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    pt:
+      noun:
+        target: link
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.pt.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the secret link to share it."
+        target: "Copie o link para compartilhar sua mensagem confidencial."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.terminology-consistency]
+      - id: ex.link-bad#748809c5
+        source: "Copy the secret link to share it."
+        target: "Copia o teu link para partilhares a mensagem confidencial."
+        verdict: bad
+        note: "Tu-form possessive 'teu' plus tu-form verb 'partilhares' — the forbidden tu-form register for the você-form pt parent."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; Brazilian verb 'criptografar', past participle 'criptografado'. pt_PT overrides to 'encriptar'/'encriptado'."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    pt:
+      verb:
+        target: criptografar
+        rule_ref: rule.terminology-consistency
+      state:
+        target: criptografado
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.pt.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "Your content is encrypted at rest."
+        target: "Seu conteúdo é criptografado em repouso."
+        verdict: good
+        rule_refs: [register.pt.formality, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "Your content is encrypted at rest."
+        target: "O teu conteúdo é encriptado em repouso."
+        verdict: bad
+        note: "Uses the European 'encriptado' instead of the Brazilian 'criptografado', plus the tu-form possessive 'teu' — wrong term and forbidden register for the você-form pt parent."
