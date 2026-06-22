@@ -1,0 +1,39 @@
+id: register.pl
+source: onetimesecret/locales/guides/for-translators/pl.md
+# Polish is locked to the INFORMAL "ty" register. Grounded in the live app
+# content (onetimesecret/locales/content/pl/*.json): user-facing strings use
+# informal 2nd-person singular throughout — possessives Twój / Twoja / Twoje /
+# Twoją / Twoich (e.g. "Twój sekret został wyświetlony", "Twoja prywatność jest
+# chroniona"), object pronouns Ci / Cię ("%{sender_email} wysłał Ci sekret"),
+# and 2nd-sg verb forms (możesz, chcesz, otrzymasz, nie prosiłeś). The formal
+# Pan/Pani honorific address appears ZERO times. The prose guide concurs (§6
+# Direct Address; Summary §5).
+#
+# Because the locked register is informal, the FORBIDDEN register is the formal
+# one: the Pan/Pani honorific address forms and their case-inflected variants.
+# These are matched as standalone_word (NOT word_prefix/substring) on purpose —
+# "Pan"/"Pana" are substrings of valid Polish words present in the content
+# ("Panel", "panelu", "company", "expanded", "lifespan"), so a looser context
+# would false-positive. As standalone words they have zero legitimate use here.
+#
+# Note: the formal register also uses 3rd-person verb agreement, but those forms
+# overlap with the passive/declarative voice the informal register legitimately
+# uses for status messages ("Sekret został utworzony"), so they are not listed
+# as forbidden tokens — the honorific address words are the unambiguous markers.
+#
+# AGENT-AUTHORED; requires native-speaker (PL) sign-off — see PR label.
+form: informal
+pronoun: ty
+possessive: [Twój, Twoja, Twoje, Twojego, Twojej, Twoich, Twoją, Twoim, Twoimi]
+forbidden_tokens:
+  - { token: Pan,      context: standalone_word, severity: error, note: "formal honorific address (nominative, masc.)" }
+  - { token: Pani,     context: standalone_word, severity: error, note: "formal honorific address (fem.) / formal possessive 'your'" }
+  - { token: Pana,     context: standalone_word, severity: error, note: "formal honorific / formal possessive 'your' (gen./acc., masc.)" }
+  - { token: Panu,     context: standalone_word, severity: error, note: "formal honorific address (dative, masc.)" }
+  - { token: Panią,    context: standalone_word, severity: error, note: "formal honorific address (instr./acc., fem.)" }
+  - { token: Panem,    context: standalone_word, severity: error, note: "formal honorific address (instrumental, masc.)" }
+  - { token: Państwo,  context: standalone_word, severity: error, note: "formal plural honorific address (you, formal)" }
+  - { token: Państwa,  context: standalone_word, severity: error, note: "formal plural honorific / formal possessive 'your' (plural)" }
+exceptions: []
+rule_ref: register.pl.informality
+baseline_ref: baselines.pl

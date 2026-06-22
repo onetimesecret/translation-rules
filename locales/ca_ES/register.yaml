@@ -1,0 +1,34 @@
+id: register.ca_ES
+source: onetimesecret/locales/guides/for-translators/ca_ES.md
+# Catalan is locked to the INFORMAL tu register. Grounded in the live app content
+# (onetimesecret/locales/content/ca_ES/*.json): direct address consistently uses
+# the informal tu forms — informal possessives el teu / la teva / els teus /
+# les teves (e.g. "Introdueix la teva contrasenya per confirmar", "El teu missatge
+# s'autodestruirà després de ser visualitzat", "Comprova el teu correu electrònic")
+# and informal imperatives / clitics (Introdueix, Comprova, Assegura't, torna-ho,
+# destrueix-los, t'enviarem, Pots, Estàs). Zero standalone vostè / vostès / vós
+# (the formal address pronouns) appear anywhere in the live content. The prose
+# guide agrees: "Informal second person (tu) for friendly tone" (Voice and Tone /
+# Key Points). So the FORBIDDEN register is the formal vostè register; the
+# forbidden tokens are the formal address pronouns vostè / vostès (and vós).
+#
+# Deliberately NOT forbidden: the possessive seu / seva / seus / seves. In Catalan
+# these are also the ordinary 3rd-person possessives and appear legitimately in the
+# live content referring to third parties, not as a formal direct address — e.g.
+# "El remitent rebrà una notificació que el seu secret s'ha visualitzat", "la seva
+# pròpia infraestructura", "els membres de l'organització i els seus rols".
+# Forbidding seu/seva would flag valid 3rd-person prose, so they are left out (cf.
+# the prompt's warning, and the es agent leaving su/sus free). vostè/vostès/vós
+# have no such ambiguity as standalone words.
+#
+# AGENT-AUTHORED; requires native-speaker (CA) sign-off — see PR label.
+form: informal
+pronoun: tu
+possessive: [teu, teva, teus, teves]
+forbidden_tokens:
+  - { token: vostè,   context: standalone_word, severity: error, note: "formal address pronoun (singular) — the register ca_ES does NOT use" }
+  - { token: vostès,  context: standalone_word, severity: error, note: "formal address pronoun (plural) — the register ca_ES does NOT use" }
+  - { token: vós,     context: standalone_word, severity: error, note: "archaic/formal address pronoun — the register ca_ES does NOT use" }
+exceptions: []
+rule_ref: rule.register-lock
+baseline_ref: baselines.ca_ES

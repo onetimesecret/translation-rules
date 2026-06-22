@@ -1,0 +1,37 @@
+id: rules.fr
+source: onetimesecret/locales/guides/for-translators/fr.md
+inherits: base
+merge_strategy: append
+# French-wide layer (base-inheriting family parent), mirroring locales/de/rules.yaml
+# but populated because `fr` is itself a shipping locale, not just an inheritance
+# stub. Carries the French conventions shared by every fr_* variant: the formal
+# vous register, the French double-punctuation spacing rule, the infinitive-for-
+# buttons rule, and the mot de passe / phrase secrète distinction. Regional
+# variants (fr_CA) inherit this and add only their deltas.
+#
+# AGENT-AUTHORED transcription of onetimesecret/locales/guides/for-translators/fr.md;
+# requires native-speaker (FR) sign-off before merge — see PR label.
+rules:
+  - id: register.fr.formality
+    modality: MUST
+    statement: French content uses the formal vous register (vous / votre / vos) throughout product UI and email content; informal tutoiement (tu / ton / ta / tes) is forbidden.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.fr-punctuation-nbsp
+    modality: MUST
+    statement: Place a non-breaking space before the double punctuation marks `:` `;` `!` `?`, per French typographic convention.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.fr-infinitive-buttons
+    modality: MUST
+    statement: Use the infinitive for button and link labels (Mettre à niveau), and the noun form for titles and headings (Mise à niveau).
+    severity: warning
+    rule_ref: rule.message-voice
+  - id: rule.fr-passphrase-password
+    modality: MUST
+    statement: Keep mot de passe (system authentication / login) distinct from phrase secrète (protection of a secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+register_ref: register.fr
+glossary_ref: glossary.fr
+baseline_ref: baselines.fr

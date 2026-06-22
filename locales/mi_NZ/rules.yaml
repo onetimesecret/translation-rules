@@ -1,0 +1,41 @@
+id: rules.mi_NZ
+source: onetimesecret/locales/guides/for-translators/mi_NZ.md
+inherits: base
+merge_strategy: append
+# Te reo Māori (New Zealand) locale layer, inheriting base directly (standalone
+# language, no regional parent). Carries the Māori-wide conventions transcribed
+# from the translator guide (onetimesecret/locales/guides/for-translators/mi_NZ.md)
+# and grounded in the live app content (onetimesecret/locales/content/mi_NZ/*.json):
+#   - number-based 2nd-person address (singular koe for the single-user UI; there
+#     is NO T/V politeness split to lock);
+#   - the kupuhipa (account password) vs kupu karapa (secret passphrase)
+#     distinction;
+#   - the "secret" -> "karere huna" (hidden message) terminology choice;
+#   - imperative voice for buttons / passive-declarative for status messages.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live mi_NZ content;
+# requires native-speaker (te reo Māori) sign-off before merge — see PR label.
+rules:
+  - id: rule.mi_NZ-register-number
+    modality: MUST
+    statement: "Te reo Māori has no T/V (informal/formal) split; the 2nd-person pronoun marks NUMBER. Product UI addresses one user, so use the singular koe (and singular possessives tō / ō / tāu / āu) throughout. Do not address the single user with the dual kōrua (exactly two) or the plural koutou (three or more)."
+    severity: warning
+    rule_ref: rule.register-lock
+  - id: rule.mi_NZ-passphrase-password
+    modality: MUST
+    statement: "Keep kupuhipa (account login / authentication credential) distinct from kupu karapa (protection of an individual secret); never use one where the other is meant."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.mi_NZ-secret-karere-huna
+    modality: MUST
+    statement: "Render the product concept 'secret' (the noun) consistently as karere huna (hidden message), not mea huna (secret thing). Reserve the adjectives huna / matatapu / tūmataiti for the general secret/private sense."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.mi_NZ-voice-imperative-status
+    modality: SHOULD
+    statement: "Use active imperative voice for button and action labels (Waihanga, Tiaki, Tārua); use passive declarative voice for status messages (Kua hangaia, Kua tiakina, Kua tāruatia)."
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.mi_NZ
+glossary_ref: glossary.mi_NZ
+baseline_ref: baselines.mi_NZ

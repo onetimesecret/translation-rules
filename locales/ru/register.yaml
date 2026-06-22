@@ -1,0 +1,63 @@
+id: register.ru
+source: onetimesecret/locales/guides/for-translators/ru.md
+# Russian is locked to the FORMAL "вы" register (polite 2nd person, capitalized
+# Вы / Ваш when addressing the user). Grounded in the live app content
+# (onetimesecret/locales/content/ru/*.json): direct address consistently uses
+# the formal вы forms — subject pronoun Вы (84), formal possessives Ваш (65) /
+# Ваша (14) / Ваше (9) / Ваши (13), oblique pronouns Вас (22) / Вам (22) / Вами
+# (1) — e.g. "Введите Ваш пароль", "Этот секрет защищён кодовой фразой.
+# Отправитель должен передать её Вам отдельно.", "Вы можете безопасно закрыть
+# эту вкладку". The informal "ты" family (ты / твой / твоя / твоё / твои /
+# тебя / тебе / тобой) appears ZERO times as a standalone word anywhere in the
+# live content. The prose guide concurs: §4 "Formal Address (Вы)" and Pitfall
+# #4 "Informal Register Inconsistency" both record the formal "вы" form with
+# capitalization (Вы, Ваш). So the FORBIDDEN register is the informal "ты" one.
+#
+# This is the OPPOSITE register decision from the Slavic pilots pl/cs (both
+# locked INFORMAL "ty"); the register is per-locale and grounded in each app's
+# own content, not inherited by language family.
+#
+# Tokens are matched as standalone_word (NOT word_prefix/substring) on purpose,
+# exactly as in cs/pl: the bare pronoun "ты" is a substring of dozens of valid
+# Russian words present in the content — Секреты, аккаунты, минуты, почты, даты,
+# элементы, защиты, форматы, шрифты, лимиты, … — so a looser context would
+# false-positive. As standalone words the informal forms have zero legitimate
+# use in this formal corpus. Matching is Unicode-aware and casefolded
+# (resolver/matching.py: str.isalnum() treats Cyrillic as word chars), so each
+# lowercase token also catches its sentence-initial capitalized form (Ты, Твой).
+#
+# Deliberately NOT forbidden:
+#   - the informal singular imperative verb forms (e.g. "Введи" vs formal "Введите")
+#     — these are 2nd-sg verb endings that overlap nothing reliable as a
+#     standalone marker, and the live content carries no such forms; the informal
+#     pronouns/possessives below are the unambiguous standalone markers actually
+#     at risk in a register regression. (cf. pl/cs leaving 3rd-person verb
+#     agreement unlisted, es leaving su/sus unlisted.)
+#
+# AGENT-AUTHORED; requires native-speaker (RU) sign-off — see PR label.
+form: formal
+pronoun: вы
+possessive: [Ваш, Ваша, Ваше, Ваши, Вашего, Вашей, Ваших, Вашему, Вашим, Вашими, Вашем, Вашу]
+forbidden_tokens:
+  - { token: ты,     context: standalone_word, severity: error, note: "informal subject pronoun 'you' (sg.) — the register ru does NOT use; formal is Вы. standalone_word only: 'ты' is a substring of Секреты/минуты/почты/etc." }
+  - { token: тебя,   context: standalone_word, severity: error, note: "informal pronoun 'you' (gen./acc.) — formal is Вас" }
+  - { token: тебе,   context: standalone_word, severity: error, note: "informal pronoun 'you' (dat./prep.) — formal is Вам" }
+  - { token: тобой,  context: standalone_word, severity: error, note: "informal pronoun 'you' (instr.) — formal is Вами" }
+  - { token: тобою,  context: standalone_word, severity: error, note: "informal pronoun 'you' (instr., variant) — formal is Вами" }
+  - { token: твой,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. masc.) — formal is Ваш" }
+  - { token: твоя,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. fem.) — formal is Ваша" }
+  - { token: твоё,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. neut.) — formal is Ваше" }
+  - { token: твое,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. neut., е-for-ё spelling) — formal is Ваше" }
+  - { token: твои,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. pl.) — formal is Ваши" }
+  - { token: твоего, context: standalone_word, severity: error, note: "informal possessive 'your' (gen. masc./neut.) — formal is Вашего" }
+  - { token: твоей,  context: standalone_word, severity: error, note: "informal possessive 'your' (gen./dat./instr./prep. fem.) — formal is Вашей" }
+  - { token: твоих,  context: standalone_word, severity: error, note: "informal possessive 'your' (gen./prep. pl.) — formal is Ваших" }
+  - { token: твоему, context: standalone_word, severity: error, note: "informal possessive 'your' (dat. masc./neut.) — formal is Вашему" }
+  - { token: твоим,  context: standalone_word, severity: error, note: "informal possessive 'your' (instr. masc./neut.; dat. pl.) — formal is Вашим" }
+  - { token: твоими, context: standalone_word, severity: error, note: "informal possessive 'your' (instr. pl.) — formal is Вашими" }
+  - { token: твою,   context: standalone_word, severity: error, note: "informal possessive 'your' (acc. fem.) — formal is Вашу" }
+  - { token: твоём,  context: standalone_word, severity: error, note: "informal possessive 'your' (prep. masc./neut.) — formal is Вашем" }
+  - { token: твоем,  context: standalone_word, severity: error, note: "informal possessive 'your' (prep. masc./neut., е-for-ё spelling) — formal is Вашем" }
+exceptions: []
+rule_ref: rule.register-lock
+baseline_ref: baselines.ru

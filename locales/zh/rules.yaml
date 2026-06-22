@@ -1,0 +1,49 @@
+id: rules.zh
+source: onetimesecret/locales/guides/for-translators/zh.md
+inherits: base
+merge_strategy: append
+# Simplified Chinese locale layer, inheriting base directly (standalone language,
+# no regional parent). Carries the Chinese-wide conventions transcribed from the
+# translator guide (onetimesecret/locales/guides/for-translators/zh.md, richer
+# than zh-cn.md): the polite 您 register lock, the banned-秘密 three-tier
+# terminology system (内容 UI / 机密内容 docs / 机密信息 marketing), the 口令
+# (passphrase) vs 密码 (password) distinction, the burn -> 销毁 choice, the
+# secret-link -> 一次性链接 (not 秘密链接) choice, and the no-exclamation-mark
+# punctuation rule.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live zh content;
+# requires native-speaker (ZH) sign-off before merge — see PR label.
+rules:
+  - id: rule.zh-register-formal
+    modality: MUST
+    statement: "Chinese content uses the polite/formal 您 register (您 / 您的) for direct address throughout product UI and email content; the neutral/informal 你 (你 / 你的) is forbidden. Live content uses 您 exclusively (398 hits) and 你 never (0 hits)."
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.zh-secret-no-mimi
+    modality: MUST
+    statement: "Never render the product concept 'secret' as 秘密 (which carries personal/emotional connotations of something deliberately concealed). Use the three-tier system by context: 内容 (UI / buttons / labels / status / API), 机密内容 (FAQ / help / explanatory docs), 机密信息 (marketing / pricing / landing copy)."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.zh-secret-link
+    modality: MUST
+    statement: "Translate the product feature 'secret link' as 一次性链接 (one-time link), never 秘密链接; this emphasizes the core single-use characteristic. Plain 'link' (the URL) is 链接."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.zh-passphrase-password
+    modality: MUST
+    statement: "Keep 密码 (account login / authentication credential) distinct from 口令 (the credential that protects an individual piece of content); never use one where the other is meant."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.zh-burn-xiaohui
+    modality: MUST
+    statement: "Translate burn / burned consistently as 销毁 (action) and 已销毁 (state), per the agreed Chinese terminology (emphasizing permanence); do not vary across strings or use a literal 燃烧."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.zh-punctuation-no-exclamation
+    modality: SHOULD
+    statement: "Avoid exclamation marks (！ / !) except in quoted source material; maintain a professional, calm tone. Use declarative status forms (已复制, not 已复制！). No semicolons or abbreviations."
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.zh
+glossary_ref: glossary.zh
+baseline_ref: baselines.zh

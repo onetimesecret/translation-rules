@@ -1,0 +1,48 @@
+id: rules.hu
+source: onetimesecret/locales/guides/for-translators/hu.md
+inherits: base
+merge_strategy: append
+# Hungarian locale layer. hu is a standalone shipping language (no family parent),
+# so it inherits `base` directly — mirroring locales/fr/ and locales/nl/. Carries
+# the Hungarian conventions transcribed from
+# onetimesecret/locales/guides/for-translators/hu.md and grounded in the live app
+# content under onetimesecret/locales/content/hu/: the formal Ön-register lock, the
+# jelszó / hozzáférési mondat distinction, the burn -> végleges törlés terminology
+# choice, and the diacritics + vowel-harmony correctness rule the guide stresses.
+# Each rule_ref points at an existing base rule id.
+#
+# NOTE on rule.hu-register-formal: in Hungarian, formality is carried MAINLY by
+# verb conjugation (formal = 3rd-person "magázó" agreement) and possessive
+# suffixes, NOT by a standalone pronoun — the subject pronoun is usually dropped.
+# Those dimensions cannot be safely token-matched (they are agglutinated into
+# words), so the register.yaml forbidden_tokens list captures only the unambiguous
+# standalone informal pronouns (te / téged / neked / tiéd / veled / hozzád); the
+# conjugation + possessive-suffix dimension is captured HERE as a rule for the
+# human reviewer rather than as brittle substring tokens.
+#
+# AGENT-AUTHORED transcription; requires native-speaker (HU) sign-off before merge
+# — see PR label.
+rules:
+  - id: rule.hu-register-formal
+    modality: MUST
+    statement: Hungarian content uses the formal Ön register throughout product UI and email content — formal address pronoun Ön/Önök and 3rd-person ("magázó") verb conjugation for instructions and imperatives (e.g. "Adja meg", "Tesztelje", "lépjen kapcsolatba"). The informal 2nd-person "tegező" register (te / téged / neked, informal imperatives like "add meg", and informal possessive suffixes -d/-od/-ed such as "titkod") is forbidden for direct address.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.hu-passphrase-password
+    modality: MUST
+    statement: Keep jelszó (account login / authentication credential) distinct from hozzáférési mondat (protection of an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.hu-burn-permanent-deletion
+    modality: MUST
+    statement: Translate burn / burned consistently as végleges törlés (noun) / véglegesen törölve (state), per the agreed Hungarian terminology; do not vary across strings or use a literal "elégetés".
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.hu-diacritics-vowel-harmony
+    modality: MUST
+    statement: Diacritics are obligatory and meaning-bearing (á é í ó ö ő ú ü ű; e.g. kor vs kór) and case-suffixes must obey vowel harmony (házban, kertben — never "házben"); never strip diacritics or violate vowel harmony.
+    severity: warning
+    rule_ref: rule.terminology-consistency
+register_ref: register.hu
+glossary_ref: glossary.hu
+baseline_ref: baselines.hu

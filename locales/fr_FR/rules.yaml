@@ -1,0 +1,18 @@
+id: rules.fr_FR
+source: onetimesecret/locales/guides/for-translators/fr_FR.md
+inherits: rules.fr
+merge_strategy: append
+# France French layer. fr_FR is "metropolitan/European French" — the fr family
+# parent was authored largely FROM fr_FR content (the fr.md and fr_FR.md guides
+# are byte-identical, and the live onetimesecret/locales/content/fr_FR/*.json is
+# what grounds glossary.fr / register.fr). It therefore carries NO genuine
+# regional delta: every French-wide rule from rules.fr applies unchanged
+# (formal vous register, non-breaking-space punctuation, infinitive buttons,
+# mot de passe vs phrase secrète, and email -> "e-mail"). Unlike fr_CA — whose
+# delta is email -> "courriel" — fr_FR adds no override rules; it is pure
+# inheritance. Mirrors locales/fr_CA/rules.yaml structurally, minus the delta.
+# AGENT-AUTHORED; requires native-speaker (FR) sign-off before merge — see PR label.
+rules: []
+register_ref: register.fr_FR
+glossary_ref: glossary.fr_FR
+baseline_ref: baselines.fr_FR

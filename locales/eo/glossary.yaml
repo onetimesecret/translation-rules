@@ -1,0 +1,188 @@
+id: glossary.eo
+source: onetimesecret/locales/guides/for-translators/eo.md
+# Sense-split of the core domain terminology from the Esperanto translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/eo.md),
+# grounded against the live app content in onetimesecret/locales/content/eo/*.json.
+# Targets and worked examples are AGENT-AUTHORED and require native/fluent-speaker
+# (EO) sign-off before merge — see PR label.
+#
+# Register note: Esperanto has no T/V split, so every `good` example simply uses
+# the universal `vi`/`via` address. `bad` examples demonstrate either a wrong term
+# (e.g. pasvorto where sekreta frazo is meant, the x-system surrogate, or a
+# non-glossary synonym) or the archaic intimate `ci`/`cia` that register.eo
+# forbids. Good targets are quoted from or modelled on live strings where one
+# exists; each contains its term's sense target as a substring for lint.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application. Noun 'sekreto'; adjective 'sekreta' (e.g. sekreta mesaĝo, sekreta ligilo)."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    eo:
+      noun:
+        target: sekreto
+        rule_ref: rule.terminology-consistency
+      adjective:
+        target: sekreta
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-eo-good#c24bc788
+        source: "Your secret has been created securely."
+        target: "Via sekreto estis sekure kreita."
+        verdict: good
+        note: "Quoted from live content (secret-manage.json); universal 'Via' address, accusative not needed in a copular clause."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.secret-eo-bad#eba80e66
+        source: "Your secret has been created securely."
+        target: "Cia sekreto estis sekure kreita."
+        verdict: bad
+        note: "Uses the archaic intimate possessive 'Cia' instead of universal 'Via' — register.eo forbids the obsolete ci/cia."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose / protect-a-secret contexts signal this sense. Always 'sekreta frazo', never the coinage 'pasfrazo'."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    eo:
+      noun:
+        target: sekreta frazo
+        rule_ref: rule.eo-passphrase-password
+    rule_refs: [rule.register-lock, rule.eo-passphrase-password]
+    examples:
+      - id: ex.passphrase-eo-good#5de3e893
+        source: "This message is encrypted with your passphrase."
+        target: "Ĉi tiu mesaĝo estas ĉifrita per via sekreta frazo."
+        verdict: good
+        note: "Quoted from live content (secret-manage.json); uses 'sekreta frazo', not 'pasvorto'."
+        rule_refs: [rule.register-lock, rule.eo-passphrase-password]
+      - id: ex.passphrase-eo-bad#77a18aea
+        source: "This message is encrypted with your passphrase."
+        target: "Ĉi tiu mesaĝo estas ĉifrita per via pasvorto."
+        verdict: bad
+        note: "Uses 'pasvorto' (account credential) where 'sekreta frazo' (secret protection) is meant — violates rule.eo-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    eo:
+      noun:
+        target: pasvorto
+        rule_ref: rule.eo-passphrase-password
+    rule_refs: [rule.register-lock, rule.eo-passphrase-password]
+    examples:
+      - id: ex.password-eo-good#251da90f
+        source: "We received a request to reset your password."
+        target: "Ni ricevis peton restarigi vian pasvorton."
+        verdict: good
+        note: "Quoted from live content (email.json); universal 'vian' plus accusative 'pasvorton' on the direct object."
+        rule_refs: [rule.register-lock, rule.eo-passphrase-password]
+      - id: ex.password-eo-bad#173fed0d
+        source: "We received a request to reset your password."
+        target: "Ni ricevis peton restarigi cian pasvorton."
+        verdict: bad
+        note: "Uses the archaic intimate possessive 'cian' instead of universal 'vian' — register.eo forbids ci/cia."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of permanently deleting a secret before it is viewed. Verb 'forbruligi' for the action label, past participle 'forbruligita' for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    eo:
+      verb:
+        target: forbruligi
+        rule_ref: rule.eo-burn-forbruligi
+      state:
+        target: forbruligita
+        rule_ref: rule.eo-burn-forbruligi
+    rule_refs: [rule.register-lock, rule.eo-burn-forbruligi]
+    examples:
+      - id: ex.burn-eo-good#089f5752
+        source: "Yes, burn this secret"
+        target: "Jes, forbruligi ĉi tiun sekreton"
+        verdict: good
+        note: "Quoted from live content (00-common.json); infinitive 'forbruligi' for the action, accusative 'sekreton'."
+        rule_refs: [rule.register-lock, rule.eo-burn-forbruligi]
+      - id: ex.burn-eo-bad#15b49cf4
+        source: "Yes, burn this secret"
+        target: "Jes, detrui ĉi tiun sekreton"
+        verdict: bad
+        note: "Uses 'detrui' instead of the glossary term 'forbruligi' — terminology drift, violates rule.eo-burn-forbruligi."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    eo:
+      noun:
+        target: ligilo
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-eo-good#6d172607
+        source: "Your secret link will expire soon"
+        target: "Via sekreta ligilo baldaŭ eksvalidiĝos"
+        verdict: good
+        note: "Quoted from live content (email.json); 'ligilo' for the URL, universal 'Via'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.link-eo-bad#d7e18628
+        source: "Your secret link will expire soon"
+        target: "Cia sekreta ligilo baldaŭ eksvalidiĝos"
+        verdict: bad
+        note: "Uses the archaic intimate possessive 'Cia' instead of universal 'Via' — register.eo forbids ci/cia."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'ĉifri', past participle 'ĉifrita' for the encrypted state. Use the essential circumflex, never the x-system 'cxifri'."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    eo:
+      verb:
+        target: ĉifri
+        rule_ref: rule.terminology-consistency
+      state:
+        target: ĉifrita
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency, rule.eo-diacritics]
+    examples:
+      - id: ex.encrypt-eo-good#3b2e4546
+        source: "This information will be encrypted and viewed only once"
+        target: "Ĉi tiu informo estos ĉifrita kaj rigardata nur unufoje"
+        verdict: good
+        note: "Quoted from live content (feature-incoming.json); 'ĉifrita' with the essential circumflex."
+        rule_refs: [rule.register-lock, rule.terminology-consistency, rule.eo-diacritics]
+      - id: ex.encrypt-eo-bad#4c030a54
+        source: "This information will be encrypted and viewed only once"
+        target: "Ĉi tiu informo estos cxifrita kaj rigardata nur unufoje"
+        verdict: bad
+        note: "Uses the x-system surrogate 'cxifrita' instead of 'ĉifrita' — violates rule.eo-diacritics."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email message or address. 'retpoŝto' for the message / mail; 'retpoŝtadreso' (or 'retpoŝta adreso') for the address as account identifier."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    eo:
+      message:
+        target: retpoŝto
+        rule_ref: rule.terminology-consistency
+      address:
+        target: retpoŝtadreso
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-eo-good#f833f9a1
+        source: "Welcome - Please confirm your email"
+        target: "Bonvenon - Bonvolu konfirmi vian retpoŝton"
+        verdict: good
+        note: "Quoted from live content (email.json); 'retpoŝton' (message sense) with accusative -n, universal 'vian'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.email-eo-bad#f14d7622
+        source: "Welcome - Please confirm your email"
+        target: "Bonvenon - Bonvolu konfirmi cian retpoŝton"
+        verdict: bad
+        note: "Uses the archaic intimate possessive 'cian' instead of universal 'vian' — register.eo forbids ci/cia."

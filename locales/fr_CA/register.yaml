@@ -1,0 +1,26 @@
+id: register.fr_CA
+source: onetimesecret/locales/guides/for-translators/fr_CA.md
+# Canadian French register. fr_CA shares fr's formal vous lock — there is NO
+# formality delta between fr and fr_CA (the guides are identical on register, and
+# the live fr_CA app content uses vous/votre/vos with zero standalone tutoiement).
+# This file is self-contained because the resolver loads register per-locale and
+# does NOT merge it across the rules inheritance chain (only rules.yaml inherits);
+# so fr_CA must restate the lock to keep .resolved/fr_CA.json's register populated.
+# Mirrors locales/de_AT/register.yaml, which is likewise self-contained.
+# AGENT-AUTHORED; requires native-speaker (CA) sign-off before merge — see PR label.
+form: formal
+pronoun: vous
+possessive: [votre, vos]
+forbidden_tokens:
+  - { token: tu,  context: standalone_word, severity: error, note: "informal subject pronoun" }
+  - { token: ton, context: standalone_word, severity: error, note: "informal possessive (masc.)" }
+  - { token: ta,  context: standalone_word, severity: error, note: "informal possessive (fem.)" }
+  - { token: tes, context: standalone_word, severity: error, note: "informal possessive (plural)" }
+  - { token: toi, context: standalone_word, severity: error, note: "informal stressed pronoun" }
+  - { token: te,  context: standalone_word, severity: error, note: "informal object pronoun (non-contracted)" }
+  - { token: toi-même, context: standalone_word, severity: error, note: "informal reflexive" }
+  - { token: "t'", context: word_prefix, severity: error, note: "elided informal object/reflexive pronoun (t'envoie, t'inscrire)" }
+  - { token: "t’", context: word_prefix, severity: error, note: "elided informal pronoun, curly apostrophe (U+2019)" }
+exceptions: []
+rule_ref: register.fr.formality
+baseline_ref: baselines.fr_CA

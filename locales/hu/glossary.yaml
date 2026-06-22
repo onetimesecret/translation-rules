@@ -1,0 +1,210 @@
+id: glossary.hu
+source: onetimesecret/locales/guides/for-translators/hu.md
+# Sense-split of the core domain terminology from the Hungarian translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/hu.md
+# §Szójegyzék / §Hungarian Translation Notes), grounded against the live app
+# content in onetimesecret/locales/content/hu/. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (HU) sign-off before merge — see PR
+# label.
+#
+# Each `good` example uses the formal Ön register (3rd-person "magázó"
+# conjugation; no forbidden informal te-pronouns) and contains the term's sense
+# target as a word_prefix. Hungarian case-suffixes attach to noun stems, so
+# citation forms are chosen so the lint word_prefix check holds: nominative
+# `titok` (NOT `titka`/`titkot`, whose stem drops the o), `jelszó` (jelszót keeps
+# the prefix), `hivatkozás` (hivatkozást keeps it), `e-mail`, `titkosít` (prefix of
+# titkosítva/titkosított), and the noun phrase `hozzáférési mondat` /
+# `végleges törlés` (word_prefix matches even when the last word is suffixed).
+# Each `bad` example demonstrates a forbidden form (the informal te-register, or
+# the wrong/forbidden term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render as titok."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    hu:
+      noun:
+        target: titok
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.hu-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created. The link is ready to share."
+        target: "A titok létrejött. A hivatkozás megosztásra kész."
+        verdict: good
+        note: "Nominative 'titok' (stem-preserving, satisfies the word_prefix check); declarative status voice, no informal pronoun."
+        rule_refs: [rule.hu-register-formal]
+      - id: ex.secret-informal-bad#250567fe
+        source: "Your secret has been created."
+        target: "A te titkod létrejött."
+        verdict: bad
+        note: "Informal subject pronoun 'te' plus informal 2sg possessive suffix 'titkod' (-d) — the forbidden tegező register; should be the formal 'Az Ön titka'."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective / state sense of secret/secure — protection of information. Render as biztonságos (general) or titkos (confidential)."
+      key_patterns: ["*secure*", "*secured*", "*.protect*"]
+    hu:
+      adjective:
+        target: biztonságos
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.hu-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adjective-good#d1b19ed2
+        source: "Share secure links with anyone."
+        target: "Osszon meg biztonságos hivatkozásokat bárkivel."
+        verdict: good
+        note: "Adjective 'biztonságos' (word_prefix); formal 3rd-person imperative 'Osszon meg'."
+        rule_refs: [rule.hu-register-formal]
+      - id: ex.secret-adjective-bad#0ad15f16
+        source: "Share secure links with anyone."
+        target: "Ossz meg biztonságos hivatkozásokat bárkivel."
+        verdict: bad
+        note: "Informal 2sg imperative 'Ossz meg' (tegező) instead of the formal 'Osszon meg' — the forbidden register."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose / protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    hu:
+      noun:
+        target: hozzáférési mondat
+        rule_ref: rule.hu-passphrase-password
+    rule_refs: [rule.hu-register-formal, rule.hu-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Adja meg a hozzáférési mondatot a titok megtekintéséhez."
+        verdict: good
+        note: "Formal 3rd-person imperative 'Adja meg' (grounded: live content uses this verbatim); uses 'hozzáférési mondat', not 'jelszó'."
+        rule_refs: [rule.hu-register-formal, rule.hu-passphrase-password]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Adja meg a jelszót a titok megtekintéséhez."
+        verdict: bad
+        note: "Uses 'jelszó' (account credential) where 'hozzáférési mondat' (secret protection) is meant — violates rule.hu-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    hu:
+      noun:
+        target: jelszó
+        rule_ref: rule.hu-passphrase-password
+    rule_refs: [rule.hu-register-formal, rule.hu-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Adja meg a jelszót a bejelentkezéshez."
+        verdict: good
+        note: "Formal 3rd-person imperative 'Adja meg'; 'jelszót' keeps the 'jelszó' word_prefix; 'bejelentkezés' per the UI glossary."
+        rule_refs: [rule.hu-register-formal, rule.hu-passphrase-password]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Add meg a jelszavadat a bejelentkezéshez."
+        verdict: bad
+        note: "Informal 2sg imperative 'Add meg' plus informal possessive 'jelszavadat' (-d) — the forbidden tegező register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of permanently deleting a secret before it is viewed. Noun phrase 'végleges törlés' for the feature/label; 'véglegesen törölve' for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    hu:
+      noun:
+        target: végleges törlés
+        rule_ref: rule.hu-burn-permanent-deletion
+      state:
+        target: véglegesen törölve
+        rule_ref: rule.hu-burn-permanent-deletion
+    rule_refs: [rule.hu-register-formal, rule.hu-burn-permanent-deletion]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Végleges törlés: távolítsa el a titkot, mielőtt elolvasnák."
+        verdict: good
+        note: "Noun phrase 'Végleges törlés' (word_prefix) per the guide's burn -> végleges törlés choice; formal imperative 'távolítsa el'."
+        rule_refs: [rule.hu-register-formal, rule.hu-burn-permanent-deletion]
+      - id: ex.burn-bad#4228df6b
+        source: "Burn this secret before it is read."
+        target: "Égesse el a titkot, mielőtt elolvasnák."
+        verdict: bad
+        note: "Uses the literal 'Égesse el' (burn/incinerate) instead of the glossary term 'végleges törlés' — terminology drift."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Render as hivatkozás (preferred) — the live content also uses 'link' loanword, but the guide standardises on hivatkozás."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    hu:
+      noun:
+        target: hivatkozás
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.hu-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the secret link to share it."
+        target: "Másolja a hivatkozást a megosztáshoz."
+        verdict: good
+        note: "Formal 3rd-person imperative 'Másolja'; 'hivatkozást' keeps the 'hivatkozás' word_prefix."
+        rule_refs: [rule.hu-register-formal]
+      - id: ex.link-bad#748809c5
+        source: "Copy the secret link to share it."
+        target: "Másold a hivatkozást a megosztáshoz."
+        verdict: bad
+        note: "Informal 2sg imperative 'Másold' (-d) instead of the formal 'Másolja' — the forbidden tegező register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'titkosít', past participle 'titkosított' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    hu:
+      verb:
+        target: titkosít
+        rule_ref: rule.terminology-consistency
+      state:
+        target: titkosított
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.hu-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Ez az üzenet az Ön hozzáférési mondatával van titkosítva."
+        verdict: good
+        note: "Grounded verbatim in live content (secret-manage.json); formal possessive 'az Ön'; 'titkosítva' keeps the 'titkosít' word_prefix; 'hozzáférési mondat', not 'jelszó'."
+        rule_refs: [rule.hu-register-formal, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Ez az üzenet a te jelszavaddal van titkosítva."
+        verdict: bad
+        note: "Informal pronoun 'te' plus informal possessive 'jelszavaddal' (-d), AND 'jelszó' where 'hozzáférési mondat' is meant — register and terminology drift."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Written with a hyphen: e-mail."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    hu:
+      noun:
+        target: e-mail
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.hu-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Adja meg az e-mail címét."
+        verdict: good
+        note: "Formal 3rd-person imperative 'Adja meg' plus formal possessive 'címét'; 'e-mail' (word_prefix); hyphenated spelling per the guide."
+        rule_refs: [rule.hu-register-formal]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Add meg az e-mail címedet."
+        verdict: bad
+        note: "Informal 2sg imperative 'Add meg' plus informal possessive 'címedet' (-d) — the forbidden tegező register."

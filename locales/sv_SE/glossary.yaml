@@ -1,0 +1,178 @@
+id: glossary.sv_SE
+source: onetimesecret/locales/guides/for-translators/sv_SE.md
+# Sense-split of the core domain terminology from the Swedish translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/sv_SE.md),
+# grounded against the live app content in
+# onetimesecret/locales/content/sv_SE/*.json. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (SV) sign-off before merge — see PR
+# label. Each `good` example uses the informal du register and contains its
+# term's sense target (word_prefix); each `bad` example demonstrates a forbidden
+# form (the formal ni register, or the wrong term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application. Common gender: en hemlighet."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    sv_SE:
+      noun:
+        target: hemlighet
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.sv-secret-created-good#5e95e373
+        source: "Your secret has been created."
+        target: "Din hemlighet har skapats."
+        verdict: good
+        note: "Informal possessive 'Din' per the du register; declarative voice for status. 'hemlighet' is the glossary noun."
+        rule_refs: [rule.register-lock]
+      - id: ex.sv-secret-formal-bad#7c64675d
+        source: "Your secret has been created."
+        target: "Er hemlighet har skapats."
+        verdict: bad
+        note: "Formal possessive 'Er' (the ni-register V-form) used for direct address — the forbidden formal register; du-reform Swedish uses 'Din'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense. Compound word: lösenfras."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    sv_SE:
+      noun:
+        target: lösenfras
+        rule_ref: rule.sv-passphrase-password
+    rule_refs: [rule.register-lock, rule.sv-passphrase-password]
+    examples:
+      - id: ex.sv-passphrase-good#48571f1f
+        source: "Enter the passphrase to view this secret."
+        target: "Ange lösenfrasen för att visa denna hemlighet."
+        verdict: good
+        note: "Active imperative 'Ange'; uses 'lösenfras' (compound, one word), not 'lösenord'. Grounded in live phrasing ('Dubbelkolla den lösenfrasen')."
+        rule_refs: [rule.register-lock, rule.sv-passphrase-password]
+      - id: ex.sv-passphrase-bad#06928aa2
+        source: "Enter the passphrase to view this secret."
+        target: "Ange lösenordet för att visa denna hemlighet."
+        verdict: bad
+        note: "Uses 'lösenord' (account credential) where 'lösenfras' (secret protection) is meant — violates rule.sv-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense. Compound word: lösenord (neuter: ett lösenord)."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    sv_SE:
+      noun:
+        target: lösenord
+        rule_ref: rule.sv-passphrase-password
+    rule_refs: [rule.register-lock, rule.sv-passphrase-password]
+    examples:
+      - id: ex.sv-password-good#1a96853b
+        source: "Enter your password to sign in."
+        target: "Ange ditt lösenord för att logga in."
+        verdict: good
+        note: "Informal possessive 'ditt' per the du register; 'logga in' per the UI glossary; 'lösenord' (compound, one word)."
+        rule_refs: [rule.register-lock]
+      - id: ex.sv-password-bad#3480118c
+        source: "Enter your password to sign in."
+        target: "Ange ert lösenord för att logga in."
+        verdict: bad
+        note: "Formal possessive 'ert' (the ni-register V-form) instead of informal 'ditt' — the forbidden formal register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. The Swedish guide standardised on 'radera permanent' (delete permanently) rather than a literal burn; past participle 'raderad permanent' for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    sv_SE:
+      verb:
+        target: radera
+        rule_ref: rule.sv-burn-radera-permanent
+      state:
+        target: raderad
+        rule_ref: rule.sv-burn-radera-permanent
+    rule_refs: [rule.register-lock, rule.sv-burn-radera-permanent]
+    examples:
+      - id: ex.sv-burn-good#b453b5dd
+        source: "Burn this secret before it is read."
+        target: "Radera denna hemlighet permanent innan den läses."
+        verdict: good
+        note: "Active imperative 'Radera ... permanent' for the action label, per the guide's burn -> 'radera permanent' choice. Grounded in live string 'Radera denna hemlighet permanent'."
+        rule_refs: [rule.register-lock, rule.sv-burn-radera-permanent]
+      - id: ex.sv-burn-bad#f9b1e46b
+        source: "Burn this secret before it is read."
+        target: "Bränn denna hemlighet innan den läses."
+        verdict: bad
+        note: "Uses literal 'Bränn' (burn) instead of the glossary term 'radera permanent' — terminology drift."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Common gender: en länk."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    sv_SE:
+      noun:
+        target: länk
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.sv-link-good#d7117069
+        source: "Copy the secret link to share it."
+        target: "Kopiera din hemliga länk för att dela den."
+        verdict: good
+        note: "Active imperative 'Kopiera' plus informal possessive 'din'; uses 'länk' per the glossary."
+        rule_refs: [rule.register-lock]
+      - id: ex.sv-link-bad#fc48f282
+        source: "Copy the secret link to share it."
+        target: "Kopiera er hemliga länk för att dela den."
+        verdict: bad
+        note: "Formal possessive 'er' (the ni-register V-form) instead of informal 'din' — the forbidden formal register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'kryptera', past participle 'krypterad' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    sv_SE:
+      verb:
+        target: kryptera
+        rule_ref: rule.terminology-consistency
+      state:
+        target: krypterad
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.sv-encrypt-good#d6dbd00b
+        source: "This message is encrypted with your passphrase."
+        target: "Detta meddelande är krypterat med din lösenfras."
+        verdict: good
+        note: "Informal possessive 'din'; 'krypterat' (neuter agreement of 'krypterad') for the encrypted state; 'lösenfras' for secret protection."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.sv-encrypt-bad#b0971de5
+        source: "This message is encrypted with your passphrase."
+        target: "Detta meddelande är krypterat med er lösenfras."
+        verdict: bad
+        note: "Formal possessive 'er' (the ni-register V-form) instead of informal 'din' — the forbidden formal register."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Compound/hyphenated: e-post."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    sv_SE:
+      noun:
+        target: e-post
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.sv-email-good#3126ee9c
+        source: "Enter your email address."
+        target: "Ange din e-postadress."
+        verdict: good
+        note: "Informal possessive 'din' per the du register; 'e-post' per the glossary. Grounded in live phrasing ('Kontrollera din e-post')."
+        rule_refs: [rule.register-lock]
+      - id: ex.sv-email-bad#7f46f2c6
+        source: "Enter your email address."
+        target: "Ange er e-postadress."
+        verdict: bad
+        note: "Formal possessive 'er' (the ni-register V-form) instead of informal 'din' — the forbidden formal register."

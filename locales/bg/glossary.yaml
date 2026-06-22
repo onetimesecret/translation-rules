@@ -1,0 +1,208 @@
+id: glossary.bg
+source: onetimesecret/locales/guides/for-translators/bg.md
+# Sense-split of the core domain terminology from the Bulgarian translator guide
+# (## Глосар terminology tables, ## Специални съображения, and the Bulgarian
+# Translation Notes), grounded against the live app content in
+# onetimesecret/locales/content/bg/*.json. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (BG) sign-off before merge — see PR
+# label. Each `good` example uses the locked FORMAL "Вие" register (ваш/вашия/
+# вашата possessives, 2nd-plural verb forms) and contains its term's sense
+# target; each `bad` example demonstrates a forbidden form — the informal "ти"
+# register (твоя/твоята possessives, теб, можеш) — or the wrong term. Bulgarian
+# nouns inflect for the definite article (тайна → тайната) but have no case on
+# nouns; sense targets use the indefinite citation form and good examples keep it
+# in head position so the word_prefix sense-target check holds.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application. Use тайна, never the loanword секрет; substitute съобщение (message) only when the source means a message."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    bg:
+      noun:
+        target: тайна
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.bg-secret-created-good#c6051398
+        source: "Your secret has been created successfully."
+        target: "Вашата тайна е създадена успешно."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal possessive 'Вашата' plus passive/declarative voice for a status message; uses тайна (not секрет)."
+      - id: ex.bg-secret-informal-bad#bd906d47
+        source: "Your secret has been created successfully."
+        target: "Твоята тайна е създадена успешно."
+        verdict: bad
+        note: "Informal possessive 'Твоята' (informal 'your') — the forbidden informal register; formal would be 'Вашата'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect/view-a-secret contexts signal this sense. The guide's single most critical distinction."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    bg:
+      noun:
+        target: ключова фраза
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.bg-passphrase-good#55aacc0b
+        source: "This message is encrypted with your passphrase."
+        target: "Това съобщение е криптирано с вашата ключова фраза."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Live-content phrasing; formal possessive 'вашата' and the term ключова фраза (not парола)."
+      - id: ex.bg-passphrase-bad#cc9cda26
+        source: "This message is encrypted with your passphrase."
+        target: "Това съобщение е криптирано с твоята парола."
+        verdict: bad
+        note: "Uses 'парола' (account password) where 'ключова фраза' is meant — violates rule.bg-passphrase-password; also informal 'твоята'."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (distinct from a secret's passphrase). Sign-in, account, and registration contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    bg:
+      noun:
+        target: парола
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.bg-password-good#8b52a40e
+        source: "Enter your password to sign in."
+        target: "Въведете вашата парола, за да влезете."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal 2nd-plural imperative 'Въведете' plus formal possessive 'вашата'."
+      - id: ex.bg-password-bad#cdaff119
+        source: "Enter your password to sign in."
+        target: "Въведи твоята парола, за да влезеш."
+        verdict: bad
+        note: "Informal 2nd-singular imperative 'Въведи' plus informal possessive 'твоята' — the forbidden informal register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of destroying a secret before it is viewed. Verb/button form изтрий; state изтрит-а-о; add перманентно for irreversibility. The guide notes 'burned' may be изгорен but UI text clarifies permanent deletion."
+      key_patterns: ["*burn*", "*.destroy*", "*.delete*"]
+    bg:
+      verb:
+        target: изтрий
+        rule_ref: rule.terminology-consistency
+      state:
+        target: изтрита
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.bg-burn-good#ea986f21
+        source: "Burn this secret before it is read."
+        target: "Изтрийте тази тайна, преди да бъде прочетена."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal 2nd-plural imperative 'Изтрийте' (head form изтрий); names its object (тази тайна) per rule.destructive-action-object."
+      - id: ex.bg-burn-bad#9c05c3f5
+        source: "Burn this secret before it is read."
+        target: "Можеш да изтриеш твоята тайна, преди да бъде прочетена."
+        verdict: bad
+        note: "Informal 2nd-singular 'Можеш ... изтриеш' plus informal possessive 'твоята' — the forbidden informal register."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. връзка is the standard Bulgarian term across the app."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    bg:
+      noun:
+        target: връзка
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.bg-link-good#1ef8fbbd
+        source: "Copy the secret link to share it."
+        target: "Копирайте тайната връзка, за да я споделите."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal 2nd-plural imperatives 'Копирайте'/'споделите'; uses връзка."
+      - id: ex.bg-link-bad#2757d4ea
+        source: "Copy the secret link to share it."
+        target: "Копирай твоята тайна връзка, за да я споделиш."
+        verdict: bad
+        note: "Informal 2nd-singular 'споделиш' plus informal possessive 'твоята' — the forbidden informal register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; live content uses the криптиран family — криптиране (verb/noun), криптиран-о-а (encrypted state)."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    bg:
+      verb:
+        target: криптиране
+        rule_ref: rule.terminology-consistency
+      state:
+        target: криптирано
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.bg-encrypt-good#d508bd58
+        source: "This message is encrypted with your passphrase."
+        target: "Това съобщение е криптирано с вашата ключова фраза."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Live-content phrasing; encrypted state криптирано plus formal possessive 'вашата' and the term ключова фраза."
+      - id: ex.bg-encrypt-bad#57e988e1
+        source: "Your secret is encrypted with your passphrase."
+        target: "Твоята тайна е криптирана с твоята парола."
+        verdict: bad
+        note: "Informal possessive 'Твоята'/'твоята' plus 'парола' where ключова фраза is meant — forbidden informal register and term confusion."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. имейл is the standard live form."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    bg:
+      noun:
+        target: имейл
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.bg-email-good#e42808a9
+        source: "Enter your email address."
+        target: "Въведете вашия имейл адрес."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal 2nd-plural imperative 'Въведете' plus formal possessive 'вашия'."
+      - id: ex.bg-email-bad#6b702dc7
+        source: "Enter your email address."
+        target: "Въведи твоя имейл адрес."
+        verdict: bad
+        note: "Informal 2nd-singular imperative 'Въведи' plus informal possessive 'твоя' — the forbidden informal register."
+  - id: term.view#7ef567df
+    key: view
+    en: view
+    disambiguation:
+      heuristic: "The action of accessing/revealing a secret (view/reveal). преглед (noun) / прегледам (verb) is the standard live form."
+      key_patterns: ["*view*", "*.reveal*", "*.show*"]
+    bg:
+      noun:
+        target: преглед
+        rule_ref: rule.terminology-consistency
+      verb:
+        target: прегледайте
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.bg-view-good#3c1c5e01
+        source: "View this secret now."
+        target: "Прегледайте тази тайна сега."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal 2nd-plural imperative 'Прегледайте' (head form преглед-)."
+      - id: ex.bg-view-bad#ec589de3
+        source: "View this secret now."
+        target: "Прегледай твоята тайна сега."
+        verdict: bad
+        note: "Informal 2nd-singular imperative 'Прегледай' plus informal possessive 'твоята' — the forbidden informal register."

@@ -1,0 +1,49 @@
+id: rules.pl
+source: onetimesecret/locales/guides/for-translators/pl.md
+inherits: base
+merge_strategy: append
+# Polish locale layer. pl is a standalone shipping language (no family parent),
+# so it inherits `base` directly — mirroring locales/fr/rules.yaml but with the
+# OPPOSITE register decision: Polish is locked to the INFORMAL "ty" register.
+# That choice is grounded in the live app content
+# (onetimesecret/locales/content/pl/*.json), which uses informal 2nd-person
+# singular throughout (Twój/Twoje/Twoją possessives, możesz/chcesz/otrzymasz
+# verb forms, Ci/Cię object pronouns) and contains zero formal Pan/Pani address.
+# The prose guide agrees (§6 Direct Address, Summary §5: "Informal 'ty' form").
+#
+# rule.pl-pluralization captures the complex Polish plural system (1 / 2-4 / 5+),
+# which the guide flags as critical; it specialises the base
+# rule.pluralization-syntax. The hasło / fraza dostępowa distinction is the
+# single most critical terminology rule in the guide (§ Password vs. Passphrase).
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live content;
+# requires native-speaker (PL) sign-off before merge — see PR label.
+rules:
+  - id: register.pl.informality
+    modality: MUST
+    statement: Polish content uses the informal "ty" register (ty / Twój / Twoja / Twoje / Ci / Cię) with 2nd-person singular verb forms throughout product UI and email content; the formal Pan/Pani address is forbidden.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.pl-pluralization
+    modality: MUST
+    statement: Express countable strings with the three Polish plural forms (1 / 2-4 / 5+), choosing by the number's final digit (numbers ending 2-4 except 12-14 take the 2-4 form), via vue-i18n pipe syntax.
+    severity: error
+    rule_ref: rule.pluralization-syntax
+  - id: rule.pl-passphrase-password
+    modality: MUST
+    statement: Keep hasło (account login credential) distinct from fraza dostępowa (the passphrase protecting an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.pl-secret-not-message
+    modality: MUST
+    statement: Translate the core "secret" concept as sekret consistently; do not substitute wiadomość (message) unless the source specifically refers to a message format.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.pl-imperative-buttons
+    modality: SHOULD
+    statement: Use the 2nd-person-singular imperative for button and action labels (Utwórz, Zapisz, Wyślij); use passive voice or past participles for status and system messages.
+    severity: info
+    rule_ref: rule.message-voice
+register_ref: register.pl
+glossary_ref: glossary.pl
+baseline_ref: baselines.pl

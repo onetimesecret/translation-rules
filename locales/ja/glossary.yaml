@@ -1,0 +1,209 @@
+id: glossary.ja
+source: onetimesecret/locales/guides/for-translators/ja.md
+# Sense-split of the core domain terminology from the Japanese translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/ja.md §Core
+# Terminology, §Account-Related Terms), grounded against the live app content in
+# onetimesecret/locales/content/ja/*.json. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (JA) sign-off before merge — see PR
+# label.
+#
+# CJK TOKENIZATION NOTE (pilot lesson): SPEC §2.3 lint check 2 requires every
+# `good` example's target to contain a sense target in `word_prefix` mode. With
+# no spaces in Japanese, "word boundary" = start-of-string or a non-word char
+# (Japanese punctuation 。、「」 or ASCII space) — a kana/kanji left-neighbour is
+# a word char and blocks the match. So each `good` example below places its sense
+# target in HEAD position (or after punctuation), e.g. 削除されたシークレットは…
+# rather than …シークレットを削除…. Each `good` example uses the polite teineigo
+# register and is verified clean against register.ja forbidden_tokens; each `bad`
+# example demonstrates a forbidden form (casual 常体 register, or the wrong term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render as シークレット (katakana), never 秘密."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    ja:
+      noun:
+        target: シークレット
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created."
+        target: "シークレットが作成されました。"
+        verdict: good
+        note: "Polite passive/declarative 作成されました for a status message; katakana シークレット in head position."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-casual-bad#297307d4
+        source: "Your secret has been created."
+        target: "秘密ができたぜ。"
+        verdict: bad
+        note: "Casual emphatic ぜ (forbidden register) AND 秘密 instead of シークレット — violates both rule.ja-register-teineigo and rule.ja-secret-katakana."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective/state sense of secret/secure — protection of information. Render as 機密 (機密情報) or 安全な / セキュアな; reserve シークレット for the product-noun sense."
+      key_patterns: ["*secure*", "*secured*", "*.protect*"]
+    ja:
+      adjective:
+        target: 機密
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adjective-good#d1b19ed2
+        source: "Share confidential information securely."
+        target: "機密情報を安全に共有できます。"
+        verdict: good
+        note: "Adjective/general sense 機密 in head position; polite ます ending."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-adjective-bad#0ad15f16
+        source: "Share confidential information securely."
+        target: "シークレット情報を安全に共有できます。"
+        verdict: bad
+        note: "Uses the product-noun シークレット for the general adjective sense where 機密 is meant — terminology drift (rule.ja-secret-katakana)."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    ja:
+      noun:
+        target: パスフレーズ
+        rule_ref: rule.ja-passphrase-password
+    rule_refs: [rule.register-lock, rule.ja-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "パスフレーズを入力してください。"
+        verdict: good
+        note: "Verbatim from live content; polite request してください; パスフレーズ (secret protection), not パスワード, in head position."
+        rule_refs: [rule.register-lock, rule.ja-passphrase-password]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "パスワードを入力しろ。"
+        verdict: bad
+        note: "Casual imperative しろ (forbidden register) AND パスワード (account credential) where パスフレーズ (secret protection) is meant — violates both the register lock and rule.ja-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    ja:
+      noun:
+        target: パスワード
+        rule_ref: rule.ja-passphrase-password
+    rule_refs: [rule.register-lock, rule.ja-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "パスワードを入力してログインしてください。"
+        verdict: good
+        note: "Grounded in live content (パスワードでログインしてください); polite してください; account term パスワード in head position."
+        rule_refs: [rule.register-lock]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "パスワード入れろよ。"
+        verdict: bad
+        note: "Casual imperative 入れろ plus casual particle よ — the forbidden casual 常体 register; should be polite パスワードを入力してください。"
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. Rendered as 削除 (delete/remove), not the literal 燃やす. 削除 as the action label/verb, 削除済み for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    ja:
+      action:
+        target: 削除
+        rule_ref: rule.terminology-consistency
+      state:
+        target: 削除済み
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "A burned secret cannot be recovered."
+        target: "削除されたシークレットは復元できません。"
+        verdict: good
+        note: "Action term 削除 in head position; polite negative できません. Grounded in live 削除されました / 完全に削除されます."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.burn-bad#4228df6b
+        source: "A burned secret cannot be recovered."
+        target: "燃やしたシークレットは戻せないぞ。"
+        verdict: bad
+        note: "Uses literal 燃やす instead of the glossary term 削除 (terminology drift) AND casual emphatic ぞ (forbidden register)."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Rendered as the katakana リンク."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    ja:
+      noun:
+        target: リンク
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the link to share it."
+        target: "リンクをコピーして共有してください。"
+        verdict: good
+        note: "Grounded in live このリンクをコピー…; term リンク in head position; polite してください."
+        rule_refs: [rule.register-lock]
+      - id: ex.link-bad#748809c5
+        source: "Copy the link to share it."
+        target: "リンクをコピーして共有しろ。"
+        verdict: bad
+        note: "Casual imperative しろ — the forbidden casual register; should be polite してください."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; 暗号化 for the verbal-noun/action (暗号化する), 暗号化された / 暗号化済み for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    ja:
+      action:
+        target: 暗号化
+        rule_ref: rule.terminology-consistency
+      state:
+        target: 暗号化された
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "The encrypted message is protected with your passphrase."
+        target: "暗号化されたメッセージはパスフレーズで保護されています。"
+        verdict: good
+        note: "State 暗号化された in head position; polite passive 保護されています. Grounded in live このメッセージはパスフレーズで暗号化されています。"
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "The encrypted message is protected with your passphrase."
+        target: "暗号化されたメッセージはパスワードで守るぜ。"
+        verdict: bad
+        note: "Casual emphatic ぜ (forbidden register) AND パスワード (account credential) where パスフレーズ is meant — violates the register lock and rule.ja-passphrase-password."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Rendered as メール (or Eメール); メールアドレス for the address."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    ja:
+      noun:
+        target: メール
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "メールアドレスを入力してください。"
+        verdict: good
+        note: "Grounded in live メールアドレス…入力してください; term メール in head position (word_prefix of メールアドレス); polite してください."
+        rule_refs: [rule.register-lock]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "メールアドレス書けよ。"
+        verdict: bad
+        note: "Casual imperative 書け plus casual particle よ — the forbidden casual 常体 register; should be polite 入力してください."

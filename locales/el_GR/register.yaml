@@ -1,0 +1,41 @@
+id: register.el_GR
+source: onetimesecret/locales/guides/for-translators/el_GR.md
+# Greek is locked to the FORMAL εσείς (2nd-person plural) register. Grounded in
+# the live app content (onetimesecret/locales/content/el_GR/*.json): every
+# user-facing string addresses the reader with formal 2pl verb forms and the
+# formal possessive/genitive clitic σας — e.g. "Εισάγετε τα διαπιστευτήριά σας",
+# "Δημιουργήστε τον λογαριασμό σας", "Μπορείτε να συνδεθείτε τώρα.",
+# "Ξεχάσατε τον κωδικό σας;", "Όλα τα μυστικά σας θα διαγραφούν οριστικά."
+# The emphatic formal pronoun appears too ("Εάν δεν κάνατε εσείς αυτήν την
+# αλλαγή..."). A scan of all 19 files finds 300+ formal 2pl/σας hits and ZERO
+# standalone informal 2sg forms (εσύ / εσένα / σου — 0 occurrences each). The
+# prose guide agrees explicitly: el_GR.md "Voice and Tone" / "Common Translation
+# Patterns" record "Use polite εσείς forms for professional tone".
+#
+# So the FORBIDDEN register is the informal εσύ (2sg) register. The forbidden
+# tokens are the informal address pronouns that are unambiguous as standalone
+# words: εσύ (subject), εσένα (stressed object), and σου (weak possessive/genitive
+# clitic — its formal counterpart is σας; σου never appears standalone in the live
+# content). Informal 2sg verb imperatives/forms are NOT enumerated as tokens: they
+# are too many and the formal forms are used uniformly, so the pronoun set is the
+# reliable, unambiguous lock.
+#
+# Deliberately LEFT FREE (documented, not forbidden): σε and the elided σ'.
+# Although σε is also the informal 2sg weak object pronoun, it is overwhelmingly
+# the ordinary preposition "in/at/to" in the live content ("σε πολλές γλώσσες",
+# "προσβάσιμα σε όλους", "Η γλώσσα άλλαξε σε {0}"). Forbidding σε would flag
+# valid prepositional prose, so it is omitted per the rule against forbidding a
+# token that is ambiguous as a standalone word. εσύ / εσένα / σου have no such
+# collision.
+#
+# AGENT-AUTHORED; requires native-speaker (EL) sign-off — see PR label.
+form: formal
+pronoun: εσείς
+possessive: [σας]
+forbidden_tokens:
+  - { token: εσύ,   context: standalone_word, severity: error, note: "informal 2sg subject pronoun — the register el_GR does NOT use (formal is εσείς)" }
+  - { token: εσένα, context: standalone_word, severity: error, note: "informal 2sg stressed object pronoun — formal is εσάς" }
+  - { token: σου,   context: standalone_word, severity: error, note: "informal 2sg weak possessive/genitive clitic — formal is σας; 0 standalone hits in live content. Left as standalone_word so the preposition-free σ' contraction and word-internal sequences are not flagged." }
+exceptions: []
+rule_ref: register.el_GR.formality
+baseline_ref: baselines.el_GR

@@ -1,0 +1,53 @@
+id: register.sl_SI
+source: onetimesecret/locales/guides/for-translators/sl_SI.md
+# Slovenian is locked to the FORMAL "vi" register (vljudnostna oblika / polite
+# 2nd-person plural honorific address) — the OPPOSITE register decision from the
+# informal-locked pilots (pl "ty", es "tú", fr). Grounded in the live app content
+# (onetimesecret/locales/content/sl_SI/*.json): direct address uses the formal vi
+# throughout — formal possessives vaš / vaša / vaše / vašega / vašo / vašim
+# (e.g. "Vaša skrivnost je bila ogledana", "Vaše varno sporočilo je bilo
+# dostavljeno.", "Vse vaše skrivnosti bodo trajno izbrisane"), the formal subject
+# pronoun vi ("Če te spremembe niste opravili vi, nemudoma zavarujte svoj
+# račun."), and formal vi-imperatives (Vnesite, Preverite, Izberite, Poskusite,
+# Kliknite, Poskrbite, Nadaljujte). The informal "ti" possessive tvoj/tvoja/tvoje
+# and informal object pronouns tebe/tebi appear ZERO times. The prose guide
+# concurs: "Vljiva oblika 'vi' za profesionalni ton namesto neformalne 'ti'"
+# (Posebne ugotovitve) and Voice and Tone §"Polite Address Forms": "Always use
+# polite vi forms ... never informal ti."
+#
+# Because the locked register is FORMAL, the FORBIDDEN register is the INFORMAL
+# "ti": the informal 2nd-singular possessive (tvoj and its case/gender-inflected
+# forms) and the informal object/oblique pronouns (tebe, tebi, teboj/tabo).
+# These are matched as standalone_word (NOT word_prefix/substring) on purpose —
+# they are unambiguous as whole words and have zero legitimate use here.
+#
+# Deliberately NOT forbidden: the bare informal subject pronoun "ti". In Slovenian
+# "ti / Ti" is a homograph of the legitimate masc.-plural demonstrative/pronoun
+# "these / those / they", which appears in valid live content
+# ("Ti podatki pomagajo prilagoditi vaš račun..."). Forbidding standalone "ti"
+# would false-positive on that valid prose (cf. the prompt's warning to forbid
+# only tokens unambiguous as standalone words). The informal possessive tvoj* and
+# object pronouns tebe/tebi carry no such ambiguity and are the unambiguous
+# markers of the forbidden informal register.
+#
+# AGENT-AUTHORED; requires native-speaker (SL) sign-off — see PR label.
+form: formal
+pronoun: vi
+possessive: [vaš, vaša, vaše, vašega, vaši, vašo, vašem, vašim, vaših, vašimi]
+forbidden_tokens:
+  - { token: tvoj,    context: standalone_word, severity: error, note: "informal possessive 'your' (nom., masc. sg.) — the informal 'ti' register sl_SI does NOT use" }
+  - { token: tvoja,   context: standalone_word, severity: error, note: "informal possessive 'your' (fem. sg. / neut.-nom.pl.)" }
+  - { token: tvoje,   context: standalone_word, severity: error, note: "informal possessive 'your' (neut. sg. / fem.-acc. etc.)" }
+  - { token: tvojega, context: standalone_word, severity: error, note: "informal possessive 'your' (masc./neut. gen. sg.)" }
+  - { token: tvojo,   context: standalone_word, severity: error, note: "informal possessive 'your' (fem. acc. sg.)" }
+  - { token: tvoji,   context: standalone_word, severity: error, note: "informal possessive 'your' (dat./loc. fem. sg., nom. pl., etc.)" }
+  - { token: tvojem,  context: standalone_word, severity: error, note: "informal possessive 'your' (masc./neut. loc. sg.)" }
+  - { token: tvojim,  context: standalone_word, severity: error, note: "informal possessive 'your' (masc./neut. instr. sg., dat. pl.)" }
+  - { token: tvojih,  context: standalone_word, severity: error, note: "informal possessive 'your' (gen./loc. pl.)" }
+  - { token: tebe,    context: standalone_word, severity: error, note: "informal object pronoun 'you' (gen./acc. sg.) — informal 'ti' register" }
+  - { token: tebi,    context: standalone_word, severity: error, note: "informal object pronoun 'you' (dat./loc. sg.) — informal 'ti' register" }
+  - { token: teboj,   context: standalone_word, severity: error, note: "informal object pronoun 'you' (instr. sg., 's teboj') — informal 'ti' register" }
+exceptions: []
+rule_ref: rule.register-lock
+# time (mirroring fr/de_AT), after which this and rules.yaml can carry it.
+baseline_ref: baselines.sl_SI

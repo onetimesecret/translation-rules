@@ -1,0 +1,45 @@
+id: rules.sv_SE
+source: onetimesecret/locales/guides/for-translators/sv_SE.md
+inherits: base
+merge_strategy: append
+# Swedish locale layer. sv_SE is the only Swedish variant in the repo, so it
+# inherits `base` directly (no family `sv` parent), mirroring how
+# locales/es/rules.yaml and locales/nl/rules.yaml inherit base. Carries the
+# Swedish conventions transcribed from
+# onetimesecret/locales/guides/for-translators/sv_SE.md and grounded in the live
+# app content under onetimesecret/locales/content/sv_SE/: the informal `du`
+# register lock (du-reform), the lösenord / lösenfras distinction, the
+# burn -> "radera permanent" terminology choice, and the Swedish compound-word
+# orthography rule. Every rule_ref points at an existing base rule id.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live sv_SE
+# content; requires native-speaker (SV) sign-off before merge — see PR label.
+rules:
+  - id: rule.sv-register-informal
+    modality: MUST
+    statement: Swedish content uses the informal du register (du / din / ditt / dina) throughout product UI and email content, per the du-reform; the formal ni / Ni address form is forbidden.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.sv-passphrase-password
+    modality: MUST
+    statement: Keep lösenord (account login / authentication credential) distinct from lösenfras (protection of an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.sv-burn-radera-permanent
+    modality: MUST
+    statement: Translate burn / burned consistently as "radera permanent" (action) and "raderad permanent" (state), per the agreed Swedish terminology; do not vary across strings.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.sv-compound-words
+    modality: MUST
+    statement: Write Swedish compound words as a single word with no space or hyphen (lösenord, lösenfras, användargränssnitt), never split (NOT "lösen ord"); splitting is an orthography error that also breaks terminology consistency.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.sv-active-imperative-voice
+    modality: SHOULD
+    statement: Use the active imperative for buttons and user actions (Skapa, Radera, Logga in) and declarative past participles with correct gender agreement for status messages (Skapad, Raderad, Utgången).
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.sv_SE
+glossary_ref: glossary.sv_SE
+baseline_ref: baselines.sv_SE

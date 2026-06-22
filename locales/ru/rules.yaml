@@ -1,0 +1,69 @@
+id: rules.ru
+source: onetimesecret/locales/guides/for-translators/ru.md
+inherits: base
+merge_strategy: append
+# Russian locale layer. ru is a standalone shipping language (no family parent),
+# so it inherits `base` directly — mirroring locales/pl/rules.yaml and
+# locales/cs/rules.yaml (the closest Slavic pilots) in shape, but with the
+# OPPOSITE register decision: Russian is locked to the FORMAL "вы" register.
+# That choice is grounded in the live app content
+# (onetimesecret/locales/content/ru/*.json), which uses the formal вы forms
+# throughout (Вы 84x, Ваш/Ваша/Ваше/Ваши possessives 101x, Вас/Вам/Вами 45x,
+# "Введите Ваш пароль"), and contains zero standalone informal ты/твой address.
+# The prose guide agrees (§4 "Formal Address (Вы)"; Pitfall #4 "Informal
+# Register Inconsistency").
+#
+# rule.ru-pluralization captures the three-form Russian plural system (1 / 2-4 /
+# 5+, e.g. день / дня / дней), which the guide flags as critical (Notes §6,
+# Pitfall #3); it specialises the base rule.pluralization-syntax. The пароль /
+# кодовая фраза distinction is the single most critical terminology rule in the
+# guide (Глоссарий; Notes §1; "Важное различие"). The guide also stresses strict
+# gender agreement (Notes §5: секрет m / ссылка f / сообщение n) and mandatory
+# letter Ё (Notes §9), both captured below.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live content;
+# requires native-speaker (RU) sign-off before merge — see PR label.
+rules:
+  - id: rule.ru-register-formal
+    modality: MUST
+    statement: Russian content uses the formal "вы" register (Вы / Ваш / Ваша / Ваше / Ваши / Вас / Вам), capitalized when directly addressing the user, throughout product UI and email content; the informal "ты" register (ты / твой / твоя / твоё / тебя / тебе) is forbidden for direct address.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.ru-pluralization
+    modality: MUST
+    statement: Express countable strings with the three Russian plural forms (1 / 2-4 / 5+, e.g. день / дня / дней) via vue-i18n pipe syntax; select the form by the number's last digit (ending 1 except 11 = singular; ending 2-4 except 12-14 = few; 0, 5-9, 11-14 = many) and never collapse to a single plural.
+    severity: error
+    rule_ref: rule.pluralization-syntax
+  - id: rule.ru-passphrase-password
+    modality: MUST
+    statement: Keep пароль (account login credential) distinct from кодовая фраза (the passphrase protecting an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ru-secret-not-taina
+    modality: MUST
+    statement: Translate the core "secret" concept as секрет (masculine, neutral technical term) consistently; do not substitute тайна (which carries a personal/emotional connotation) or сообщение (message) unless the source specifically refers to a message.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ru-burn-unichtozhit
+    modality: MUST
+    statement: Translate burn / burned consistently as уничтожить (verb) and уничтожен (state), per the agreed Russian terminology; do not use a literal "сжечь", which is awkward in a digital context.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ru-gender-agreement
+    modality: MUST
+    statement: Maintain strict gender agreement between nouns, adjectives, and short-form past participles — секрет (masc.) → создан/удалён, ссылка (fem.) → создана/удалена, сообщение/шифрование (neut.) → создано/удалено; mismatched endings are errors.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ru-yo-letter
+    modality: MUST
+    statement: Use the letter Ё where required; do not substitute Е (всё vs все, ещё vs еще, удалён vs удален), since the substitution changes meaning or spelling.
+    severity: warning
+    rule_ref: rule.terminology-consistency
+  - id: rule.ru-imperative-buttons
+    modality: SHOULD
+    statement: Use the perfective infinitive (functioning as imperative) for button and action labels (Создать, Скопировать, Подтвердить); use passive voice or short-form past participles with correct gender agreement for status and system messages (Секрет создан, Скопировано в буфер обмена).
+    severity: info
+    rule_ref: rule.message-voice
+register_ref: register.ru
+glossary_ref: glossary.ru
+baseline_ref: baselines.ru

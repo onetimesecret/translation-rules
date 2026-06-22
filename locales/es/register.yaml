@@ -1,0 +1,31 @@
+id: register.es
+source: onetimesecret/locales/guides/for-translators/es.md
+# Spanish is locked to the INFORMAL tú register. Grounded in the live app content
+# (onetimesecret/locales/content/es/*.json): direct address consistently uses the
+# informal tú forms — informal possessives tu/tus (e.g. "Introduce tu contraseña",
+# "Tu mensaje seguro ha sido entregado.", "Todos tus secretos serán eliminados"),
+# informal object/prepositional pronouns te/ti/contigo, and informal imperatives
+# and clitics (Introduce, Asegúrate, inténtalo, ¿Olvidaste...?, Puedes, Estás).
+# Zero standalone usted/ustedes appear anywhere in the live content. The prose
+# guide agrees: §4 "Direct Address (Tú vs. Usted)" and Principle #4 both record
+# the informal tú form. So the FORBIDDEN register is the formal usted register;
+# the forbidden tokens are the formal address pronouns usted / ustedes.
+#
+# Deliberately NOT forbidden: the formal possessive su/sus. In Spanish su/sus is
+# also the ordinary 3rd-person possessive and appears legitimately in the live
+# content referring to third parties, not as a formal direct address — e.g.
+# "Se notificará al remitente que su secreto fue visto", "su propia
+# infraestructura", "en su lugar". Forbidding su/sus would flag valid 3rd-person
+# prose, so it is left out (cf. the prompt's warning not to forbid a token that
+# appears in valid words). usted/ustedes have no such ambiguity.
+#
+# AGENT-AUTHORED; requires native-speaker (ES) sign-off — see PR label.
+form: informal
+pronoun: tú
+possessive: [tu, tus]
+forbidden_tokens:
+  - { token: usted,   context: standalone_word, severity: error, note: "formal subject/object pronoun (singular) — the register es does NOT use" }
+  - { token: ustedes, context: standalone_word, severity: error, note: "formal subject/object pronoun (plural) — the register es does NOT use" }
+exceptions: []
+rule_ref: rule.register-lock
+baseline_ref: baselines.es

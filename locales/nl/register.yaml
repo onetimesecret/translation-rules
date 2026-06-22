@@ -1,0 +1,26 @@
+id: register.nl
+source: onetimesecret/locales/guides/for-translators/nl.md
+# Dutch is locked to the informal `je` register. Grounded in the live app content
+# (onetimesecret/locales/content/nl/*.json): the informal forms je / jij / jouw /
+# jezelf appear across all 19 content files and dominate every user-facing flow
+# (e.g. "Heb je een account nodig?", "Voer je wachtwoord in", "Maak je account
+# aan"). The formal forms u / uw appear in only ~8 files and a small minority of
+# strings, confined to legal/regulatory (feature-regions), generic error pages,
+# and enterprise/billing marketing copy — exactly the formal-B2B carve-out the
+# prose guide names. The guide is explicit: use "je" (informeel), not "u"
+# (formeel), for an accessible tone (nl.md §"Directe aanspraak (je vs. u)").
+# This is the inverse of the fr/de_AT formal locks: here the FORMAL register is
+# forbidden, so the formal pronoun/possessive/reflexive (u / uw / uwe / uzelf)
+# become forbidden standalone-word tokens.
+# AGENT-AUTHORED; requires native-speaker (NL) sign-off — see PR label.
+form: informal
+pronoun: je
+possessive: [je, jouw]
+forbidden_tokens:
+  - { token: u,     context: standalone_word, severity: error, note: "formal subject/object pronoun (the V-form this locale forbids); note 'u' is also the abbreviation for 'uur' — keep it out of good examples" }
+  - { token: uw,    context: standalone_word, severity: error, note: "formal possessive" }
+  - { token: uwe,   context: standalone_word, severity: error, note: "formal possessive, inflected/archaic form" }
+  - { token: uzelf, context: standalone_word, severity: error, note: "formal reflexive pronoun" }
+exceptions: []
+rule_ref: rule.register-lock
+baseline_ref: baselines.nl

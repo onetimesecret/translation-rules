@@ -1,0 +1,174 @@
+id: glossary.cs
+source: onetimesecret/locales/guides/for-translators/cs.md
+# Sense-split of the core domain terminology from the Czech translator guide's
+# terminology tables (Základní terminologie, Special Considerations), grounded
+# against the live app content in onetimesecret/locales/content/cs/*.json.
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (CS)
+# sign-off before merge — see PR label. Each `good` example uses the locked
+# informal "ty" register and contains its term's sense target; each `bad`
+# example demonstrates a forbidden form — the formal/plural register (váš / vám /
+# vás family). Czech nouns decline across 7 cases and verbs carry aspect, so
+# sense targets use a sensible citation form (nominative noun / a participle stem
+# for state senses) and good examples keep that form so the word_prefix
+# sense-target check holds.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application (neuter gender). Never substitute zpráva (message) for this sense."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    cs:
+      noun:
+        target: tajemství
+        rule_ref: rule.cs-secret-not-message
+    rule_refs: [rule.cs-register-informal, rule.cs-secret-not-message]
+    examples:
+      - id: ex.cs-secret-good#8934f759
+        source: "Your secret has been created successfully."
+        target: "Tvoje tajemství bylo úspěšně vytvořeno."
+        verdict: good
+        rule_refs: [rule.cs-register-informal]
+      - id: ex.cs-secret-bad#b2dacf1e
+        source: "Your secret has been created successfully."
+        target: "Vaše tajemství bylo úspěšně vytvořeno."
+        verdict: bad
+        note: "Formal/plural possessive 'Vaše' (formal 'your') — the forbidden formal register; informal would be 'Tvoje'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (feminine: fráze), distinct from the account login heslo and from a WebAuthn passkey (přístupový klíč). Protect/compose-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    cs:
+      noun:
+        target: přístupová fráze
+        rule_ref: rule.cs-passphrase-password
+    rule_refs: [rule.cs-register-informal, rule.cs-passphrase-password]
+    examples:
+      - id: ex.cs-passphrase-good#b85c7e37
+        source: "A passphrase is required to view this secret."
+        target: "Přístupová fráze je vyžadována pro zobrazení tohoto tajemství."
+        verdict: good
+        rule_refs: [rule.cs-register-informal]
+      - id: ex.cs-passphrase-bad#5a0d845f
+        source: "A passphrase is required to view this secret."
+        target: "Vaše heslo je vyžadováno pro zobrazení tohoto tajemství."
+        verdict: bad
+        note: "Uses 'heslo' (account password) where 'přístupová fráze' is meant — violates rule.cs-passphrase-password; also formal 'Vaše'."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (neuter: heslo), distinct from a secret's přístupová fráze. Sign-in, account, and reset-password contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    cs:
+      noun:
+        target: heslo
+        rule_ref: rule.cs-passphrase-password
+    rule_refs: [rule.cs-register-informal, rule.cs-passphrase-password]
+    examples:
+      - id: ex.cs-password-good#cf3d9571
+        source: "Enter your password to confirm."
+        target: "Pro potvrzení zadej své heslo."
+        verdict: good
+        rule_refs: [rule.cs-register-informal]
+      - id: ex.cs-password-bad#22813f4b
+        source: "Enter your password to confirm."
+        target: "Pro potvrzení zadejte vaše heslo."
+        verdict: bad
+        note: "Formal plural imperative 'zadejte' plus formal possessive 'vaše' — the forbidden formal register; informal is the singular 'zadej ... své'."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of permanently destroying a secret. Verb form 'trvale smazat' (perfective) for the action; 'trvale smazáno/smazán' for the resulting state. Do not use a literal 'spálit'."
+      key_patterns: ["*burn*", "*.destroy*"]
+    cs:
+      verb:
+        target: trvale smazat
+        rule_ref: rule.cs-burn-trvale-smazat
+      state:
+        target: trvale smazáno
+        rule_ref: rule.cs-burn-trvale-smazat
+    rule_refs: [rule.cs-register-informal, rule.cs-burn-trvale-smazat]
+    examples:
+      - id: ex.cs-burn-good#f26982cb
+        source: "After it is viewed, this secret will be permanently burned."
+        target: "Toto tajemství bude po zobrazení trvale smazáno."
+        verdict: good
+        rule_refs: [rule.cs-register-informal]
+      - id: ex.cs-burn-bad#2c40cacc
+        source: "Are you sure you want to burn this secret?"
+        target: "Jste si jisti, že chcete spálit toto tajemství?"
+        verdict: bad
+        note: "Formal 2nd-pl 'Jste/chcete' plus literal 'spálit' — violates the register lock and rule.cs-burn-trvale-smazat; informal is 'Jsi si jistý/á, že chceš trvale smazat ...'."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides one-time access to a secret (masculine: odkaz). Share/copy/reveal contexts signal this sense."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    cs:
+      noun:
+        target: odkaz
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.cs-register-informal, rule.terminology-consistency]
+    examples:
+      - id: ex.cs-link-good#05120873
+        source: "Copy the secret link and share it separately."
+        target: "Zkopíruj tajný odkaz a sdílej ho odděleně."
+        verdict: good
+        rule_refs: [rule.cs-register-informal]
+      - id: ex.cs-link-bad#e5456c40
+        source: "Copy the secret link and share it separately."
+        target: "Zkopírujte váš tajný odkaz a sdílejte ho odděleně."
+        verdict: bad
+        note: "Formal plural imperatives 'Zkopírujte/sdílejte' plus formal possessive 'váš' — the forbidden formal register; informal is 'Zkopíruj ... sdílej'."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data. Verb 'šifrovat'; participle stem 'šifrován' for the encrypted state (šifrováno / šifrována / šifrované, with gender agreement)."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    cs:
+      verb:
+        target: šifrovat
+        rule_ref: rule.terminology-consistency
+      state:
+        target: šifrován
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.cs-register-informal, rule.terminology-consistency]
+    examples:
+      - id: ex.cs-encrypt-good#432c330c
+        source: "This message is encrypted with your passphrase."
+        target: "Tato zpráva je šifrována tvojí přístupovou frází."
+        verdict: good
+        rule_refs: [rule.cs-register-informal]
+      - id: ex.cs-encrypt-bad#1cd2cd00
+        source: "This message is encrypted with your passphrase."
+        target: "Tato zpráva je šifrována vaší přístupovou frází."
+        verdict: bad
+        note: "Formal/plural possessive 'vaší' (formal 'your') — the forbidden formal register; informal would be 'tvojí'."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail (account identifier and notification contexts). Kept hyphenated as 'e-mail' in Czech, per the live content and guide."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    cs:
+      noun:
+        target: e-mail
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.cs-register-informal, rule.terminology-consistency]
+    examples:
+      - id: ex.cs-email-good#8107ddbe
+        source: "Enter your email and we'll send you a link."
+        target: "Zadej svůj e-mail, ať ti pošleme odkaz."
+        verdict: good
+        rule_refs: [rule.cs-register-informal]
+      - id: ex.cs-email-bad#b3bdd885
+        source: "Enter your email and we'll send you a link."
+        target: "Zadejte váš e-mail a my vám pošleme odkaz."
+        verdict: bad
+        note: "Formal plural imperative 'Zadejte' plus formal pronoun 'vám' and possessive 'váš' — the forbidden formal register; informal is 'Zadej svůj ... ti pošleme'."

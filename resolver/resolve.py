@@ -57,7 +57,7 @@ from resolver.loader import (
     load_retro_frontmatter,
     load_yaml_file,
 )
-from resolver.merge import MergeError, merge_chain
+from resolver.merge import MergeError, merge_chain, merge_glossary_terms
 from resolver.model import ModelError, build_model
 from resolver.lint import lint_model
 from resolver.emit_json import emit_json
@@ -413,6 +413,29 @@ def resolve_locale(
         merged_rules = base_data
         provenance = {}
 
+    # Glossary inheritance: merge along the same chain as rules, child-first.
+    # ADR-001: a child glossary that omits a term inherits the parent's term
+    # (term-key override). Without this, an fr_CA delta-only glossary would
+    # emit a `.resolved` missing inherited `fr` terminology — exactly the
+    # failure mode #29 surfaced. Register is intentionally NOT merged: registers
+    # are per-locale by design (see ADR-001 §Decision).
+    leaf_glossary = next(
+        (f.data for f in locale_files if f.schema_name == "glossary"), None
+    )
+    glossaries_child_first: list[dict] = []
+    if leaf_glossary is not None:
+        glossaries_child_first.append(leaf_glossary)
+    for node in chain_nodes:
+        if node.path == inputs.base_path or node.locale == locale:
+            continue
+        parent_glossary_path = inputs.locales_dir / node.locale / "glossary.yaml"
+        if not parent_glossary_path.exists():
+            continue
+        parent_glossary = load_yaml_file(parent_glossary_path)
+        validate_file(parent_glossary_path, parent_glossary, "glossary", bundle)
+        glossaries_child_first.append(parent_glossary)
+    merged_glossary = merge_glossary_terms(glossaries_child_first)
+
     # Step 1d: baselines + retrospectives (project-wide, locale-agnostic).
     baselines = _load_baselines(inputs, bundle)
     retros = _load_retros(inputs, bundle)
@@ -437,11 +460,17 @@ def resolve_locale(
         _index_retro(retro.data, retro.path, index, root)
 
     # Step 4: walk merged rules + per-locale leaves + baselines + retros for refs.
+    # The glossary is checked from the inheritance-merged view so inherited
+    # terms' refs are validated against the same combined index — leaf-only
+    # checking would silently skip parent terms.
     errors: list[str] = []
     _check_refs(f"rules ({locale})", merged_rules, index, errors)
     for f in locale_files:
-        if f.schema_name != "rules":
-            _check_refs(f"{f.schema_name} ({locale})", f.data, index, errors)
+        if f.schema_name in ("rules", "glossary"):
+            continue
+        _check_refs(f"{f.schema_name} ({locale})", f.data, index, errors)
+    if merged_glossary is not None:
+        _check_refs(f"glossary ({locale})", merged_glossary, index, errors)
     if baselines is not None:
         _check_refs("baselines", baselines.data, index, errors)
     for retro in retros:
@@ -457,38 +486,46 @@ def resolve_locale(
     if errors:
         raise ResolutionError("dangling references:\n  " + "\n  ".join(errors))
 
-    # Emit index.json (skip in validate-only mode).
-    if not validate_only:
-        idx_out = IdIndex()
-        for rec in index.all_records():
-            try:
-                idx_out.add(rec)
-            except IdError as exc:
-                # Two records sharing an id but different (kind,key) is a true
-                # error already surfaced by add_*; skip silently here.
-                _ = exc
-        idx_out.dump(inputs.index_path)
+    # NOTE: index.json is no longer written here. Under --all this function is
+    # called once per locale, and writing inside the loop made the dump
+    # last-write-wins (the committed index could never carry more than the final
+    # locale). The caller (main) now owns the dump: it writes a single locale's
+    # index for a single-locale run, or the UNION across every locale for --all.
+    # The CombinedIndex is surfaced so the caller can accumulate that union.
 
     return {
         "locale": locale,
         "merged_rules": merged_rules,
         "provenance": provenance,
         "chain": [n.locale for n in chain_nodes],
+        "index": index,
         "index_records": len(index.all_records()),
         # Raw per-locale leaves + retros surfaced for the P1-3 assemble step
         # (resolver/model.py). emit/lint are pure projections of these.
         "register": next(
             (f.data for f in locale_files if f.schema_name == "register"), None
         ),
-        "glossary": next(
-            (f.data for f in locale_files if f.schema_name == "glossary"), None
-        ),
+        "glossary": merged_glossary,
         "retros": [r.data for r in retros],
     }
 
 
 class ResolutionError(Exception):
     """Raised when ID resolution fails (dangling refs, etc.)."""
+
+
+def _accumulate_records(idx_out: IdIndex, records: list[IdRecord]) -> None:
+    """Add every record into idx_out, raising on a genuine cross-locale clash.
+
+    base.yaml / baselines.yaml / retrospective ids are SHARED — they appear in
+    every locale's CombinedIndex — so under --all the union re-adds identical
+    records many times. IdIndex.add is idempotent for an identical (id -> same
+    kind,key) re-add and only raises IdError when the SAME id maps to a
+    DIFFERENT (kind, key). We deliberately let that IdError propagate: a real
+    cross-locale id collision must surface, not be silently dropped.
+    """
+    for rec in records:
+        idx_out.add(rec)
 
 
 def _resolve_source_commit(repo_root: Path, override: str | None) -> str:
@@ -510,11 +547,15 @@ def _resolve_source_commit(repo_root: Path, override: str | None) -> str:
 
 
 def _discover_locales(locales_dir: Path) -> list[str]:
+    # A locale dir is one that actually carries leaf YAML (rules/register/
+    # glossary). Skip helper dirs that live under locales/ but hold tooling
+    # rather than translations (e.g. locales/scripts/) — otherwise --all would
+    # try to resolve them and trip the "no YAML files found" guard with exit 2.
     return (
         sorted(
             p.name
             for p in locales_dir.iterdir()
-            if p.is_dir() and not p.name.startswith(".")
+            if p.is_dir() and not p.name.startswith(".") and any(p.glob("*.yaml"))
         )
         if locales_dir.exists()
         else []
@@ -573,7 +614,12 @@ def _emit_for_locale(
         path.write_text(emit_json(model), encoding="utf-8")
         written.append(str(path))
     if "md" in formats:
-        path = emit_dir / "for-translators" / f"{locale}.md"
+        # SPEC §2.3: the human guide is emitted to
+        # <emit-dir>/guides/for-translators/<locale>.md (the app repo vendors it
+        # at locales/guides/for-translators/), alongside the JSON's
+        # <emit-dir>/.resolved/. Keeping the `guides/` segment lets a single
+        # `--emit-dir locales` land both artifacts in their canonical homes.
+        path = emit_dir / "guides" / "for-translators" / f"{locale}.md"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(emit_markdown(model, source_commit), encoding="utf-8")
         written.append(str(path))
@@ -623,7 +669,7 @@ def main(argv: list[str]) -> int:
     parser.add_argument(
         "--emit-dir",
         default=".",
-        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/for-translators/ (default: .).",
+        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/guides/for-translators/ (default: .).",
     )
     parser.add_argument(
         "--source-commit",
@@ -693,9 +739,16 @@ def main(argv: list[str]) -> int:
     emit_dir = Path(args.emit_dir).resolve()
 
     lint_failures = 0
+    # Accumulate the id index across every resolved locale. For a single-locale
+    # run this holds just that locale's records; under --all it becomes the
+    # UNION of all locales (base/baselines/retro ids are shared and re-added
+    # idempotently; a genuine id collision raises IdError via _accumulate_records).
+    union_index = IdIndex()
     for locale in locales:
         try:
             result = resolve_locale(locale, inputs, validate_only=args.validate_only)
+            if not args.validate_only:
+                _accumulate_records(union_index, result["index"].all_records())
             emitted = (
                 _emit_for_locale(
                     locale,
@@ -738,8 +791,6 @@ def main(argv: list[str]) -> int:
             print(summary, file=sys.stderr)
         else:
             print(summary)
-            if not args.validate_only:
-                print(f"wrote {inputs.index_path}")
         if emitted:
             for path in emitted["written"]:
                 print(f"emitted {path}")
@@ -757,6 +808,14 @@ def main(argv: list[str]) -> int:
                     )
                 if not lint_result.ok:
                     lint_failures += 1
+
+    # Dump the index ONCE, after the loop, over the accumulated union. This is
+    # the fix for the old last-write-wins bug: under --all the committed index
+    # now carries every locale's ids, not just the final one. --validate-only
+    # writes nothing; --index-path is honored via inputs.index_path.
+    if not args.validate_only:
+        union_index.dump(inputs.index_path)
+        print(f"wrote {inputs.index_path}")
 
     if lint_failures:
         print(f"lint: {lint_failures} locale(s) failed", file=sys.stderr)

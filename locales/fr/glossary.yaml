@@ -1,0 +1,167 @@
+id: glossary.fr
+source: onetimesecret/locales/guides/for-translators/fr.md
+# Sense-split of the core domain terminology from the French translator guide's
+# terminology tables, grounded against the live app content in
+# onetimesecret/locales/content/fr_FR/*.json. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (FR) sign-off before merge — see PR
+# label. Each `good` example uses the formal vous register; each `bad` example
+# demonstrates a forbidden form (informal tutoiement, or the wrong term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    fr:
+      noun:
+        target: secret
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.fr.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created."
+        target: "Votre secret a été créé."
+        verdict: good
+        rule_refs: [register.fr.formality]
+      - id: ex.secret-informal-bad#250567fe
+        source: "Your secret has been created."
+        target: "Ton secret a été créé."
+        verdict: bad
+        note: "Informal possessive 'Ton' — the forbidden tutoiement register."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects a secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    fr:
+      noun:
+        target: phrase secrète
+        rule_ref: rule.fr-passphrase-password
+    rule_refs: [register.fr.formality, rule.fr-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Saisissez la phrase secrète pour consulter ce secret."
+        verdict: good
+        rule_refs: [register.fr.formality]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Saisissez le mot de passe pour consulter ce secret."
+        verdict: bad
+        note: "Uses 'mot de passe' (login credential) where 'phrase secrète' (secret protection) is meant — violates rule.fr-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    fr:
+      noun:
+        target: mot de passe
+        rule_ref: rule.fr-passphrase-password
+    rule_refs: [register.fr.formality, rule.fr-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Saisissez votre mot de passe pour vous connecter."
+        verdict: good
+        rule_refs: [register.fr.formality]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Saisis ton mot de passe pour te connecter."
+        verdict: bad
+        note: "Informal imperative 'Saisis' plus 'ton' and 'te' — forbidden tutoiement register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. Verb form for the action label, past participle for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    fr:
+      verb:
+        target: brûler
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.fr.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Brûler ce secret avant qu'il ne soit lu."
+        verdict: good
+        note: "Infinitive 'Brûler' for the button label, per rule.fr-infinitive-buttons."
+        rule_refs: [register.fr.formality, rule.fr-infinitive-buttons]
+      - id: ex.burn-bad#4228df6b
+        source: "Burn this secret before it is read."
+        target: "Détruire ce secret avant qu'il ne soit lu."
+        verdict: bad
+        note: "Uses 'Détruire' instead of the glossary term 'brûler' — terminology drift."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    fr:
+      noun:
+        target: e-mail
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.fr.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Saisissez votre adresse e-mail."
+        verdict: good
+        rule_refs: [register.fr.formality]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Saisis ton adresse e-mail."
+        verdict: bad
+        note: "Informal 'Saisis' plus 'ton' — forbidden tutoiement register."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    fr:
+      noun:
+        target: lien
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.fr.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the secret link to share it."
+        target: "Copiez le lien secret pour le partager."
+        verdict: good
+        rule_refs: [register.fr.formality]
+      - id: ex.link-bad#748809c5
+        source: "Copy the secret link to share it."
+        target: "Copie ton lien secret pour le partager."
+        verdict: bad
+        note: "Informal imperative 'Copie' plus 'ton' — forbidden tutoiement register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'chiffrer', past participle 'chiffré' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    fr:
+      verb:
+        target: chiffrer
+        rule_ref: rule.terminology-consistency
+      state:
+        target: chiffré
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.fr.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Ce message est chiffré avec votre phrase secrète."
+        verdict: good
+        rule_refs: [register.fr.formality]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Ce message est crypté avec ta phrase secrète."
+        verdict: bad
+        note: "Uses 'crypté' (deprecated/incorrect in security French) instead of 'chiffré', plus informal 'ta'."

@@ -1,0 +1,201 @@
+id: glossary.it_IT
+source: onetimesecret/locales/guides/for-translators/it_IT.md
+# Sense-split of the core domain terminology from the Italian translator guide's
+# terminology tables (it_IT.md §Core Terminology Standards, §Standardized
+# Terminology), grounded against the live app content in
+# onetimesecret/locales/content/it_IT/. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (IT) sign-off before merge — see PR
+# label. Each `good` example uses the informal tu register AND contains the term's
+# target (lint checks both); each `bad` example demonstrates a forbidden form (the
+# formal Lei register, or the wrong/forbidden term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render as segreto, never the generic Messaggio / Monouso / Temporaneo."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    it_IT:
+      noun:
+        target: segreto
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-good#d81de1d4
+        source: "Your secret has been created."
+        target: "Il tuo segreto è stato creato."
+        verdict: good
+        note: "Informal possessive 'tuo' per the tu register; the noun term 'segreto'; declarative voice for status."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-bad#36c87b0a
+        source: "Your secret has been created."
+        target: "Il segreto è stato creato. Lei riceverà una notifica."
+        verdict: bad
+        note: "Formal address pronoun 'Lei' — the forbidden formal register; should use the informal tu form."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective/state sense — protected/secure content. Render as sicuro (secure) or segreto (confidential, e.g. 'link segreti'); agrees in gender/number with its noun."
+      key_patterns: ["*secure*", "*secured*", "*.protect*"]
+    it_IT:
+      adjective:
+        target: sicuro
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adjective-good#d1b19ed2
+        source: "Share a secure link with anyone."
+        target: "Condividi un link sicuro con chiunque."
+        verdict: good
+        note: "Informal imperative 'Condividi'; adjective 'sicuro' agrees with the masc. sing. 'link'."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-adjective-bad#0ad15f16
+        source: "Share a secure link with anyone."
+        target: "Condivida un link sicuro con chiunque."
+        verdict: bad
+        note: "Formal imperative 'Condivida' (Lei register) instead of informal 'Condividi' — the forbidden formal register."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    it_IT:
+      noun:
+        target: frase di sicurezza
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Inserisci la frase di sicurezza per visualizzare questo segreto."
+        verdict: good
+        note: "Informal imperative 'Inserisci'; uses 'frase di sicurezza', not 'password'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Inserisci la password per visualizzare questo segreto."
+        verdict: bad
+        note: "Uses 'password' (account credential) where 'frase di sicurezza' (secret protection) is meant — violates rule.it-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense. Kept in English: 'password'."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    it_IT:
+      noun:
+        target: password
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Inserisci la tua password per accedere."
+        verdict: good
+        note: "Informal imperative 'Inserisci' plus informal possessive 'tua'; 'accedere' for sign in. Matches the guide's worked Example 2."
+        rule_refs: [rule.register-lock]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Inserisca la Sua password per accedere."
+        verdict: bad
+        note: "Formal imperative 'Inserisca' plus formal possessive 'Sua' — the forbidden Lei register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. Verb 'distruggere' (or 'bruciare') for the action label; past participle 'distrutto' for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    it_IT:
+      verb:
+        target: distruggere
+        rule_ref: rule.terminology-consistency
+      state:
+        target: distrutto
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Distruggere questo segreto prima che venga letto."
+        verdict: good
+        note: "Infinitive 'Distruggere' for the button label, per the guide's burn -> distruggere choice."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.burn-bad#4228df6b
+        source: "Burn this secret before it is read."
+        target: "Cancellare questo segreto prima che venga letto."
+        verdict: bad
+        note: "Uses generic 'Cancellare' instead of the glossary verb 'distruggere' — terminology drift."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. 'link' (borrowed, preferred in UI) or 'collegamento' (native, for longer prose); pick one and stay consistent."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    it_IT:
+      noun:
+        target: link
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy your secret link to share it."
+        target: "Copia il tuo link segreto per condividerlo."
+        verdict: good
+        note: "Informal imperative 'Copia' plus informal possessive 'tuo'; uses 'link' per the glossary."
+        rule_refs: [rule.register-lock]
+      - id: ex.link-bad#748809c5
+        source: "Copy your secret link to share it."
+        target: "Copi il Suo link segreto per condividerlo."
+        verdict: bad
+        note: "Formal imperative 'Copi' plus formal possessive 'Suo' — the forbidden Lei register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'crittografare', past participle 'crittografato' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    it_IT:
+      verb:
+        target: crittografare
+        rule_ref: rule.terminology-consistency
+      state:
+        target: crittografato
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Questo messaggio è crittografato con la tua frase di sicurezza."
+        verdict: good
+        note: "State 'crittografato'; informal possessive 'tua'; uses 'frase di sicurezza' for the secret's passphrase."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Questo messaggio è criptato con la Sua frase di sicurezza."
+        verdict: bad
+        note: "Uses 'criptato' instead of the established security term 'crittografato', plus formal possessive 'Sua' (Lei register)."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Kept in English: 'email'."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    it_IT:
+      noun:
+        target: email
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Inserisci il tuo indirizzo email."
+        verdict: good
+        note: "Informal imperative 'Inserisci' plus informal possessive 'tuo'; 'email' per the glossary. Grounded in live content ('Inserisci la tua email')."
+        rule_refs: [rule.register-lock]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Inserisca il Suo indirizzo email."
+        verdict: bad
+        note: "Formal imperative 'Inserisca' plus formal possessive 'Suo' — the forbidden Lei register."

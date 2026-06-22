@@ -1,0 +1,40 @@
+id: rules.it_IT
+source: onetimesecret/locales/guides/for-translators/it_IT.md
+inherits: base
+merge_strategy: append
+# Italian locale layer. it_IT is the only Italian variant the app ships, so it
+# inherits `base` directly (no `it` family parent) — mirroring how
+# locales/es/rules.yaml and locales/nl/rules.yaml inherit base directly. Carries
+# the Italian conventions transcribed from
+# onetimesecret/locales/guides/for-translators/it_IT.md and grounded in the live
+# app content under onetimesecret/locales/content/it_IT/: the informal tu register
+# lock, the password / frase di sicurezza distinction, the secret -> segreto noun
+# choice the guide standardised on, and the active-imperative / passive-status
+# voice split. Every rule_ref points at an existing base rule id.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live it_IT content;
+# requires native-speaker (IT) sign-off before merge — see PR label.
+rules:
+  - id: rule.it-register-informal
+    modality: MUST
+    statement: Italian content uses the informal tu register (tu / tuo / tua / tuoi / tue / ti) throughout product UI and email content; the formal Lei register (the Lei address pronoun and the formal imperatives/possessives that go with it) is forbidden for direct address.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.it-passphrase-password
+    modality: MUST
+    statement: Keep password (account login / authentication credential) distinct from frase di sicurezza (protection of an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.it-secret-noun
+    modality: MUST
+    statement: Translate the noun "secret" consistently as segreto (never the generic Messaggio / Monouso / Temporaneo); Italian segreto correctly conveys confidential information and preserves the brand's security context.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.it-active-passive-voice
+    modality: SHOULD
+    statement: Use the active imperative for buttons and user actions (Crea, Copia, Elimina, Invia) and the passive/declarative voice for status and informational messages (Creato, Copiato, Eliminato, "Il segreto è stato visualizzato").
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.it_IT
+glossary_ref: glossary.it_IT
+baseline_ref: baselines.it_IT

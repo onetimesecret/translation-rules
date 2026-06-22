@@ -1,0 +1,56 @@
+id: register.hu
+source: onetimesecret/locales/guides/for-translators/hu.md
+# Hungarian is locked to the FORMAL "Ön" register. Grounded in the live app
+# content (onetimesecret/locales/content/hu/*.json): direct address consistently
+# uses the formal subject pronoun Ön and 3rd-person ("magázó") verb agreement —
+# e.g. "Az Ön fiókja", "Az Ön hozzáférési mondatával van titkosítva", "Ön hozta
+# létre ezt a titkot", and formal imperatives conjugated in the 3rd person
+# ("Adja meg a hozzáférési mondatot", "Adjon meg egy hozzáférési mondatot",
+# "Tesztelje az alkalmazást", "Biztosítsa ... fiókját", "lépjen kapcsolatba",
+# "hagyja figyelmen kívül", "Új titkot kell létrehoznia"). Zero informal 2nd-
+# person ("tegező") tokens (te / téged / neked / tiéd / veled) appear anywhere in
+# the live content. The prose guide agrees: "Voice and Tone" / "Help Text" both
+# say "Use formal address (maga/ön forms) for professional tone". So the FORBIDDEN
+# register is the INFORMAL te-register.
+#
+# HOW FORMALITY SURFACES — and why forbidden_tokens is short. In Hungarian, T/V
+# is carried MAINLY by verb conjugation (formal = 3rd-person agreement), not by a
+# standalone pronoun: the subject pronoun is usually dropped, so the contrast is
+# in the verb ending, not a word an agent can grep. There is no single informal
+# possessive word either (possession is a noun suffix: -d/-od/-ed = informal,
+# -e/-ja = neutral/formal, e.g. "titkod" vs "titka"); those live inside
+# agglutinated words and cannot be safely token-matched. The forbidden-token list
+# below therefore only captures the UNAMBIGUOUS, standalone informal address
+# pronouns; the conjugation/possessive-suffix dimension is captured as a rule
+# (rule.hu-register-formal in rules.yaml), not as a token. See per-token notes.
+#
+# Hungarian is agglutinative, so each forbidden token uses context:
+# standalone_word — `te` etc. appear as substrings inside many valid words
+# (tervezés, teszt, tehát, tartalmaz, neki, vele...). standalone_word matches only
+# when the token is bounded by non-word chars on both sides, so these flag the
+# informal pronoun without false-positiving on unrelated vocabulary.
+#
+# Deliberately NOT forbidden:
+#   - ön / önök / maga: these ARE the chosen formal register (Ön/Önök), or
+#     ambiguous — `maga` is also the ordinary reflexive ("Meggondolta magát?" =
+#     "Changed your mind?", which appears verbatim in workspace-billing.json), so
+#     forbidding it would flag valid 3rd-person reflexive prose.
+#   - possessive/verb suffixes (-d, -od, -ed, informal imperatives like "add
+#     meg"): agglutinated, not standalone — left to rule.hu-register-formal with a
+#     human-reviewable rationale rather than a brittle substring token.
+#
+# AGENT-AUTHORED; requires native-speaker (HU) sign-off — see PR label.
+form: formal
+pronoun: Ön
+possessive: [Ön, Önök]
+forbidden_tokens:
+  - { token: te,    context: standalone_word, severity: error, note: "informal 2sg subject pronoun (the tegező register hu does NOT use); substring of tervezés/teszt/tehát, so standalone_word only" }
+  - { token: téged, context: standalone_word, severity: error, note: "informal 2sg accusative pronoun" }
+  - { token: teged, context: standalone_word, severity: error, note: "informal 2sg accusative pronoun, diacritic-stripped spelling variant" }
+  - { token: neked, context: standalone_word, severity: error, note: "informal 2sg dative pronoun (to you); contrast formal Önnek" }
+  - { token: tiéd,  context: standalone_word, severity: error, note: "informal 2sg possessive pronoun (yours); contrast formal Öné" }
+  - { token: veled, context: standalone_word, severity: error, note: "informal 2sg comitative pronoun (with you); contrast formal Önnel" }
+  - { token: hozzád, context: standalone_word, severity: error, note: "informal 2sg allative pronoun (to/towards you); contrast formal Önhöz" }
+exceptions: []
+rule_ref: rule.hu-register-formal
+baseline_ref: baselines.hu

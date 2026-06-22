@@ -1,0 +1,207 @@
+id: glossary.mi_NZ
+source: onetimesecret/locales/guides/for-translators/mi_NZ.md
+# Sense-split of the core domain terminology from the te reo Māori translator
+# guide's terminology tables (onetimesecret/locales/guides/for-translators/mi_NZ.md
+# §Core Terminology, §Account-Related Terms, §Security Features), grounded against
+# the live app content in onetimesecret/locales/content/mi_NZ/*.json. Targets and
+# worked examples are AGENT-AUTHORED and require native-speaker (te reo Māori)
+# sign-off before merge — see PR label. Macronned vowels (ā ē ī ō ū) are used per
+# correct te reo orthography.
+#
+# Māori is space-delimited, so SPEC §2.3 lint check 2 (every `good` example's
+# target must contain a sense target in word_prefix mode) works normally: each
+# sense target below sits at a word boundary (start-of-string or after a space).
+# Each `good` example uses the singular koe address and is clean of the register
+# forbidden token (the plural koutou); each `bad` example demonstrates the wrong
+# form (plural koutou address, or the wrong term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render as 'karere huna' (hidden message), never 'mea huna'."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    mi_NZ:
+      noun:
+        target: karere huna
+        rule_ref: rule.mi_NZ-secret-karere-huna
+    rule_refs: [rule.register-lock, rule.mi_NZ-secret-karere-huna]
+    examples:
+      - id: ex.secret-good#d81de1d4
+        source: "Create a secret"
+        target: "Waihanga karere huna"
+        verdict: good
+        note: "Grounded in live 'Waihanga hononga huna' / 'Tohatoha karere huna'; imperative 'Waihanga' for the action label; 'karere huna' (not 'mea huna')."
+        rule_refs: [rule.register-lock, rule.mi_NZ-secret-karere-huna]
+      - id: ex.secret-bad#36c87b0a
+        source: "Create a secret"
+        target: "Waihanga mea huna mā koutou"
+        verdict: bad
+        note: "Uses 'mea huna' (secret thing) instead of the glossary term 'karere huna' AND addresses the single user with the plural 'koutou' — violates rule.mi_NZ-secret-karere-huna and the singular-address register."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective/state sense of secret/secure/private — protection of information. Render as 'haumaru' (secure), 'huna' (hidden), 'matatapu' / 'tūmataiti' (private); reserve 'karere huna' for the product-noun sense."
+      key_patterns: ["*secure*", "*secured*", "*.protect*", "*private*"]
+    mi_NZ:
+      adjective:
+        target: haumaru
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adj-good#10b14bad
+        source: "Secure links, available one time only."
+        target: "Hononga haumaru, kotahi noa te wā e wātea ai ki a koe."
+        verdict: good
+        note: "Grounded in live 'Ngā hononga haumaru kotahi noa te wā e mahi ai'; adjective 'haumaru' for the secure/state sense; singular 'koe'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.secret-adj-bad#ccab3c56
+        source: "Secure links, available one time only."
+        target: "Hononga karere huna, kotahi noa te wā e wātea ai ki a koutou."
+        verdict: bad
+        note: "Uses the product-noun 'karere huna' for the general adjective/secure sense where 'haumaru' is meant (terminology drift), AND addresses the single user with plural 'koutou'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense. Render as 'kupu karapa'."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    mi_NZ:
+      noun:
+        target: kupu karapa
+        rule_ref: rule.mi_NZ-passphrase-password
+    rule_refs: [rule.register-lock, rule.mi_NZ-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Set a passphrase to protect this secret."
+        target: "Kupu karapa hei tiaki i tēnei karere huna nāu."
+        verdict: good
+        note: "Grounded in live 'kupu karapa' usage; 'kupu karapa' (secret protection), not 'kupuhipa'; singular possessive 'nāu'."
+        rule_refs: [rule.register-lock, rule.mi_NZ-passphrase-password]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Set a passphrase to protect this secret."
+        target: "Whakatū kupuhipa hei tiaki i tēnei karere huna."
+        verdict: bad
+        note: "Uses 'kupuhipa' (account credential) where 'kupu karapa' (secret protection) is meant — violates rule.mi_NZ-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense. Render as 'kupuhipa'."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    mi_NZ:
+      noun:
+        target: kupuhipa
+        rule_ref: rule.mi_NZ-passphrase-password
+    rule_refs: [rule.register-lock, rule.mi_NZ-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Whakauru tō kupuhipa kia takiuru ai koe."
+        verdict: good
+        note: "Verbatim-grounded in live 'Whakauru tō kupuhipa'; account term 'kupuhipa' with singular possessive 'tō' and singular 'koe'."
+        rule_refs: [rule.register-lock, rule.mi_NZ-passphrase-password]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Whakauru ā koutou kupu karapa kia takiuru ai koutou."
+        verdict: bad
+        note: "Uses 'kupu karapa' (secret protection) where 'kupuhipa' (account credential) is meant, AND the plural 'koutou' for the single user — violates rule.mi_NZ-passphrase-password and the singular-address register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of permanently deleting a secret before it is viewed. 'whakawareware' as the action label/verb; 'kua whakawarekia' for the resulting burned state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    mi_NZ:
+      action:
+        target: whakawareware
+        rule_ref: rule.terminology-consistency
+      state:
+        target: whakawarekia
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Whakawareware i tēnei karere huna i mua i te pānuitanga."
+        verdict: good
+        note: "Verbatim-grounded in live 'Whakawareware i tēnei karere huna'; action term 'whakawareware' in head position."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.burn-bad#4228df6b
+        source: "Burn this secret before it is read."
+        target: "Tahuna tēnei karere huna mā koutou i mua i te pānuitanga."
+        verdict: bad
+        note: "Uses the literal 'tahuna' (set fire to) instead of the glossary term 'whakawareware' (terminology drift), AND the plural 'koutou' for the single user."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Render as 'hononga'."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    mi_NZ:
+      noun:
+        target: hononga
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the secret link to share it."
+        target: "Hononga huna hei tohatoha mā koe — tāruatia ki te papatopenga."
+        verdict: good
+        note: "Grounded in live 'Tohatoha he hononga huna'; term 'hononga' in head position; singular 'koe'; imperative 'tāruatia'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.link-bad#748809c5
+        source: "Copy the secret link to share it."
+        target: "Tārua i te hokonga huna kia tohatoha ai koutou."
+        verdict: bad
+        note: "Uses 'hokonga' (a transaction/purchase mishearing) instead of the glossary term 'hononga' (terminology drift), AND the plural 'koutou' for the single user."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data. 'whakamuhumuhu' for the action/verb; 'muhumuhu' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    mi_NZ:
+      action:
+        target: whakamuhumuhu
+        rule_ref: rule.terminology-consistency
+      state:
+        target: muhumuhu
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This information is encrypted; it can be viewed only once."
+        target: "Whakamuhumuhu tēnei mōhiohio; kotahi noa te wā e taea ai te tiro e koe."
+        verdict: good
+        note: "Verbatim-grounded in live 'Ka whakamuhumuhu tēnei mōhiohio, kotahi noa te wā e taea ai te tiro'; action term 'whakamuhumuhu' in head position; singular 'koe'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "This information is encrypted; it can be viewed only once."
+        target: "Kua kāpuitia tēnei mōhiohio mā koutou; kotahi noa te wā e taea ai te tiro."
+        verdict: bad
+        note: "Uses 'kāpuitia' (locked/closed) instead of the glossary term 'whakamuhumuhu' / 'muhumuhu' (terminology drift), AND the plural 'koutou' for the single user."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Render as 'īmēra' (with macrons)."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    mi_NZ:
+      noun:
+        target: īmēra
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Check your email."
+        target: "Tirohia tō īmēra."
+        verdict: good
+        note: "Verbatim from live content ('Tirohia tō īmēra'); term 'īmēra' (macronned) with singular possessive 'tō'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.email-bad#5c29e476
+        source: "Check your email."
+        target: "Tirohia ā koutou īmera."
+        verdict: bad
+        note: "Plural 'koutou' for the single user (should be singular 'tō') AND 'īmera' missing the macrons of correct 'īmēra' orthography."

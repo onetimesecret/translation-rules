@@ -1,0 +1,55 @@
+id: register.tr
+source: onetimesecret/locales/guides/for-translators/tr.md
+# Turkish is locked to the FORMAL `siz` register. Grounded in the live app content
+# (onetimesecret/locales/content/tr/*.json) and the prose guide (tr.md §5 "Formal
+# Address": use formal "siz", not informal "sen").
+#
+# How the T/V distinction surfaces in Turkish: it is carried MAINLY by verb-suffix
+# and possessive-suffix agreement, not by standalone subject pronouns (which
+# Turkish normally drops). The live content is uniformly formal 2nd-person-plural:
+#   - formal 2pl verb suffixes everywhere: gönderebilirsiniz, başlıyorsunuz,
+#     görmezden gelebilirsiniz, hoş geldiniz, göreceksiniz, kapatabilirsiniz;
+#   - formal 2pl possessive suffix -ınız/-iniz: parolanız, hesabınız, mesajınız,
+#     e-posta adresiniz, güvenlik ifadeniz;
+#   - the standalone formal subject pronoun `siz` appears 10x (e.g. "Bu gizli
+#     mesajı siz oluşturdunuz", "Bu değişikliği siz yapmadıysanız").
+# The informal register is entirely absent: zero standalone occurrences of the
+# informal pronoun `sen` or its case forms (senin / seni / sana / sende / senden)
+# across all 20 content files. So the FORBIDDEN register is the informal `sen`
+# register.
+#
+# WHY forbidden_tokens are only the standalone informal PRONOUN forms (and not the
+# informal verb/possessive suffixes): Turkish is agglutinative with vowel harmony,
+# and the informal-2sg markers are suffixes, not free words. The informal verb
+# suffix -sın/-sin and possessive -ın/-in are substrings of countless valid formal
+# and 3rd-person words (e.g. -sınız/-iniz themselves contain them), so a substring
+# token would mass-false-positive on legitimate formal content. They cannot be
+# expressed as a safe standalone_word token either. The suffix-level distinction is
+# therefore captured as a prose rule in rules.yaml (rule.tr-register-formal), not
+# here. forbidden_tokens below are limited to the unambiguous standalone informal
+# pronoun/possessive WORDS, matched as standalone_word so Turkish suffixed words
+# that merely contain "sen"/"siz" as a substring (e.g. "gönderen", "sizin",
+# "size") never trip the check.
+#
+# Deliberately NOT forbidden:
+#   - `siz` and its suffixed forms (sizin, size, sizi, sizden, ...): these ARE the
+#     chosen formal register and must be allowed.
+#   - the bare imperative stem (e.g. "gönder"): Turkish formal imperatives use the
+#     -ın/-iniz ending (gönderin), but the bare 2sg stem doubles as the dictionary
+#     citation/button-label form in some UIs; flagging it lexically is unsafe, so
+#     it is left to the prose rule and native review (see judgment notes).
+# Left-free token note: `seni`/`sana`/`sende`/`senden` (informal oblique case
+# forms) are NOT listed because they do not occur in the live content and adding
+# rarely-needed forms risks brittleness; `sen` + `senin` cover the address core. A
+# native reviewer may extend this list.
+#
+# AGENT-AUTHORED; requires native-speaker (TR) sign-off — see PR label.
+form: formal
+pronoun: siz
+possessive: [sizin]
+forbidden_tokens:
+  - { token: sen,   context: standalone_word, severity: error, note: "informal 2sg subject pronoun (the V/T form this locale forbids); standalone_word so it does not match substrings inside formal words like 'gönderen' or 'sona'" }
+  - { token: senin, context: standalone_word, severity: error, note: "informal 2sg possessive pronoun ('your'); standalone_word avoids matching unrelated agglutinated words" }
+exceptions: []
+rule_ref: rule.tr-register-formal
+baseline_ref: baselines.tr

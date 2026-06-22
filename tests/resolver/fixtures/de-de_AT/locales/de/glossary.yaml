@@ -1,0 +1,29 @@
+id: glossary.de
+source: SPEC.md
+# Fixture parent glossary. Exercises ADR-001 glossary inheritance: the `link`
+# term defined here flows through to de_AT untouched, while `secret_object`
+# (also declared here) is overridden by de_AT's own term-key entry. The
+# de-only term proves a child without a key inherits the parent's term; the
+# overlapping key proves child-wins.
+terms:
+  - id: term.link#11223344
+    key: link
+    en: link
+    de:
+      noun:
+        target: Link
+        rule_ref: rule.register-lock
+    rule_refs: [rule.de-sie]
+    examples:
+      - id: ex.link-de-good#aabbccdd
+        source: Open the link to view your secret.
+        target: Öffnen Sie den Link, um Ihr Geheimnis anzuzeigen.
+        verdict: good
+  - id: term.secret_object#55667788
+    key: secret_object
+    en: secret
+    de:
+      noun:
+        target: Geheimnis
+        rule_ref: rule.register-lock
+    rule_refs: [rule.de-sie]

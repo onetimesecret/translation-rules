@@ -1,0 +1,20 @@
+id: rules.fr_CA
+source: onetimesecret/locales/guides/for-translators/fr_CA.md
+inherits: rules.fr
+merge_strategy: append
+# Canadian French layer. Inherits every French-wide rule from rules.fr (formal
+# vous register, non-breaking-space punctuation, infinitive buttons, mot de passe
+# vs phrase secrète) and adds ONLY the fr_CA delta: the email term is locked to
+# "courriel", not the European "e-mail". Grounded in the live app content
+# (onetimesecret/locales/content/fr_CA/*.json uses "courriel" throughout, vs
+# fr_FR/*.json which uses "e-mail"). AGENT-AUTHORED; requires native-speaker (CA)
+# sign-off before merge — see PR label.
+rules:
+  - id: rule.fr_CA-courriel
+    modality: MUST
+    statement: Canadian French uses "courriel" for email throughout UI and email content; the European "e-mail" form is not used in fr_CA.
+    severity: error
+    rule_ref: rule.terminology-consistency
+register_ref: register.fr_CA
+glossary_ref: glossary.fr_CA
+baseline_ref: baselines.fr_CA

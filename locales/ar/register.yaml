@@ -1,0 +1,99 @@
+id: register.ar
+source: onetimesecret/locales/guides/for-translators/ar.md
+# Arabic is NOT a T/V (pronoun politeness) split. The two register dimensions the
+# app actually locks are: (a) variety — Modern Standard Arabic (الفصحى / MSA),
+# never a regional dialect; and (b) the grammatical GENDER of 2nd-person address.
+# Both are grounded in the live app content (onetimesecret/locales/content/ar/*.json,
+# 2022 strings) and agree with the prose guide (§3 Cultural Adaptation, §5 Voice
+# and Tone, §"Modern Standard Arabic"): "Use Modern Standard Arabic (MSA) for
+# professional and technical content" and "Use formal second person with
+# appropriate verb forms".
+#
+# GENDER DECISION (AGENT-AUTHORED — needs native AR sign-off). The live UI
+# addresses the user with MASCULINE 2nd-person verb morphology as the default,
+# and uses undiacritized pronoun suffixes that read for either gender. Evidence:
+#   - Imperatives are unambiguously masculine across the corpus: أدخل (×22),
+#     اختر (×19), تأكد (×17), شارك (×36), أرسل (×13), انسخ (×6), سجّل/سجل,
+#     تحقق (×65). The FEMININE imperative would add a ـي suffix (أدخلي, اختاري,
+#     شاركي …) — there are ZERO feminine imperatives anywhere in the 2022 strings.
+#   - Pronoun suffixes use the bare ـك form (بريدك "your email", حسابك "your
+#     account", بياناتك). In undiacritized Arabic ـك is written identically for
+#     masculine (ـكَ) and feminine (ـكِ), so the suffixed forms are effectively
+#     gender-neutral in writing; only the verb morphology disambiguates, and it
+#     is masculine.
+# => gender_policy: masculine_default (with gender-neutral undiacritized suffixes).
+# This is the common convention for Arabic software UIs; a reviewer may instead
+# prefer fully gender-neutral phrasing (nominal style, e.g. "الرجاء إدخال…"
+# instead of "أدخل…") — flagged for sign-off.
+#
+# form: other — MSA-vs-dialect + address-gender is not formal|informal|mixed in
+#               the European T/V sense; it is closest to the ja keigo pilot's
+#               non-binary `register_spec` shape, so we use `other` + register_spec.
+# pronoun:    — short descriptive string; address is carried by masculine verb
+#               morphology, not a standalone pronoun (Arabic usually omits أنتَ).
+#
+# forbidden_tokens — DELIBERATELY EMPTY. The natural register violations are
+# dialectal/colloquial markers (مش، شو، وين، عايز، ليش، هلق، دلوقتي …) and
+# feminine-address verb forms, but NONE of them can be tokenized without false
+# positives, the hard lesson from the ja/es pilots:
+#   - مش (47 raw hits) is only ever a substring of valid MSA words: المشاركة,
+#     مشفر, مشكلة, مشاهدات …; شو (5) inside عشوائي/منشورات; وين (12) inside
+#     تكوين/عناوين; هاد (3) inside شهادة; كدا (1) inside متأكداً. As substrings
+#     they false-positive massively; even as standalone_word they are one
+#     diacritic/space away from valid text and risk future regressions.
+#   - feminine address can only be detected by verb morphology (the ـي suffix),
+#     not by a fixed token, and a ـي suffix collides with countless valid words.
+# So the dialect/gender ban lives in `register_spec.forbidden` + the rules
+# (rule.ar-register-msa, rule.ar-address-masculine) instead of forbidden_tokens.
+# SPEC §2.3 lint scans only `good` examples; all good examples here are MSA and
+# masculine-address and were verified clean.
+#
+# AGENT-AUTHORED; requires native-speaker (AR) sign-off — see PR label.
+form: other
+pronoun: "(2nd-person address omitted as a standalone pronoun; carried by MSA masculine verb morphology — masculine default أنتَ, gender-neutral ـك suffixes)"
+forbidden_tokens: []
+exceptions: []
+rule_ref: rule.ar-register-msa
+# register_spec — the FREE-FORM extension where the real MSA + gender policy
+# lives (the part that cannot be reduced to safe tokens). Mirrors the ja keigo
+# pilot's shape: variety/level, the affirmed target forms, the forbidden dialect
+# forms (not tokenizable), and a voice_by_context map from the prose guide.
+register_spec:
+  variety: MSA
+  variety_native: الفصحى
+  description: "Modern Standard Arabic (الفصحى) throughout product UI and email content; regional dialects are forbidden. Not a pronoun T/V split."
+  gender_policy: masculine_default
+  gender_notes: >-
+    2nd-person address uses masculine verb morphology as the default (أدخل,
+    اختر, تأكد — never the feminine ـي forms أدخلي/اختاري). Pronoun suffixes use
+    the undiacritized ـك form (بريدك, حسابك), which reads for either gender in
+    writing. Confirmed by the live content: masculine imperatives are pervasive,
+    feminine imperatives have zero occurrences across 2022 strings.
+  forbidden:
+    dialect_markers: [مش, شو, وين, عايز, عاوز, بدك, ليش, هلق, دلوقتي, علشان, عشان, بتاع, فين, كده, إيه]
+    feminine_address_forms: ["feminine imperatives (verb + ـي): أدخلي, اختاري, شاركي, أرسلي, تحققي …", "explicit feminine suffix ـكِ"]
+    note: >-
+      These are register violations but are NOT in forbidden_tokens because each
+      is a substring of valid MSA words (مش⊂المشاركة/مشفر, شو⊂عشوائي, وين⊂تكوين,
+      كده/إيه fragments) or detectable only by morphology (feminine ـي suffix);
+      tokenizing them would false-positive on valid content. Enforced by
+      rule.ar-register-msa and rule.ar-address-masculine.
+  voice_by_context:
+    buttons_and_actions: "Masculine imperative verbs (أدخل, أرسل, انسخ) or action verbal-nouns (مشاركة, إرسال, إلغاء) — concise MSA label form."
+    status_and_notifications: "Passive / completed-action MSA forms (تم الإنشاء, تم الحذف نهائياً, مشفّر) — declarative, not colloquial."
+    explanatory_text: "Declarative MSA sentences, formal and professional yet clear."
+  rtl_notes: >-
+    Arabic is RTL but the resolver matches on character boundaries (isalnum), and
+    Arabic words are space-separated, so word_prefix works. The clitic article
+    ال and prepositional clitics (و، ب، ل، ك) attach as prefixes with NO space,
+    so a bare citation form (سر) does NOT match inside السر under word_prefix
+    (ل is a word char). Glossary sense targets are chosen as the form that begins
+    a word in the good example (e.g. الرابط / البريد الإلكتروني with ال-, or سر
+    indefinite at a word boundary).
+  notes: >-
+    MSA + masculine-default address is the locked register. Dialect and
+    feminine-address forms are forbidden via the rules + this spec rather than
+    forbidden_tokens, because none can be safely matched as a token. The
+    masculine-default decision is AGENT-AUTHORED and the main item for AR
+    native-speaker sign-off.
+baseline_ref: baselines.ar

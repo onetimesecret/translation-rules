@@ -1,0 +1,47 @@
+id: rules.ar
+source: onetimesecret/locales/guides/for-translators/ar.md
+inherits: base
+merge_strategy: append
+# Arabic locale layer, inheriting base directly (standalone language, no regional
+# parent). Carries the Arabic-wide conventions transcribed from the translator
+# guide (onetimesecret/locales/guides/for-translators/ar.md) and grounded in the
+# live ar content: the MSA (الفصحى) register lock, the masculine-default 2nd-person
+# address, the عبارة المرور (passphrase) vs كلمة المرور (password) distinction,
+# the burn -> حذف نهائياً terminology choice, and the سر core-concept term.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live ar content;
+# requires native-speaker (AR) sign-off before merge — see PR label.
+rules:
+  - id: rule.ar-register-msa
+    modality: MUST
+    statement: "Arabic content uses Modern Standard Arabic (الفصحى / MSA) throughout product UI and email content; regional dialects are forbidden. Dialectal markers (e.g. مش، شو، وين، عايز، ليش، دلوقتي، علشان) must not appear as colloquial vocabulary. They are not register forbidden_tokens because each is a substring of valid MSA words (مش⊂المشاركة/مشفر, شو⊂عشوائي, وين⊂تكوين) and cannot be tokenized without false positives."
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.ar-address-masculine
+    modality: MUST
+    statement: "2nd-person direct address uses masculine verb morphology as the default (أدخل، اختر، تأكد، شارك), consistent with the live UI; the feminine imperative forms (verb + ـي: أدخلي، اختاري، شاركي) are not used. Pronoun suffixes use the undiacritized ـك form (بريدك، حسابك), which reads for either gender. AGENT-AUTHORED default; a reviewer may instead choose fully gender-neutral nominal phrasing."
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.ar-passphrase-password
+    modality: MUST
+    statement: "Keep كلمة المرور (account login / authentication credential) distinct from عبارة المرور (protection of an individual secret); never use one where the other is meant."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ar-burn-final-deletion
+    modality: MUST
+    statement: "Translate burn / burned as حذف نهائياً (final deletion), not a literal 'burn' (حرق), per the agreed Arabic terminology; the burned status is تم الحذف نهائياً. Do not vary across strings."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ar-secret-sirr
+    modality: MUST
+    statement: "Render the core product concept 'secret' (the noun) consistently as سر; use the adjective sense سري / آمن for 'secret/secure' as a descriptor. Do not vary the core term across strings."
+    severity: warning
+    rule_ref: rule.terminology-consistency
+  - id: rule.ar-acronyms-latin
+    modality: SHOULD
+    statement: "Keep DNS, URL, CNAME and similar technical acronyms in Latin script as universally used; surrounding Arabic grammar adapts around them (per guide §4 Technical Accuracy)."
+    severity: info
+    rule_ref: rule.message-voice
+register_ref: register.ar
+glossary_ref: glossary.ar
+baseline_ref: baselines.ar

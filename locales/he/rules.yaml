@@ -1,0 +1,49 @@
+id: rules.he
+source: onetimesecret/locales/guides/for-translators/he.md
+inherits: base
+merge_strategy: append
+# Hebrew locale layer, inheriting base directly (standalone language, no regional
+# parent). Carries the Hebrew-wide conventions transcribed from the translator guide
+# (onetimesecret/locales/guides/for-translators/he.md), grounded against the live app
+# content (onetimesecret/locales/content/he/*.json): the masculine-default 2nd-person
+# GENDER register lock (Hebrew has no T/V split — gender is the register dimension),
+# the סיסמה (password) vs ביטוי סיסמה (passphrase) distinction, the burn -> מחיקה
+# סופית choice, secret -> סוד, the no-niqqud rule, and the masculine-singular
+# imperative-for-buttons UI voice.
+#
+# AGENT-AUTHORED transcription; requires native-speaker (HE) sign-off — see PR label,
+# especially the gender decision.
+rules:
+  - id: rule.he-register-gender
+    modality: MUST
+    statement: "Hebrew has no T/V formality split (it is informal/direct by default); the register dimension is the grammatical GENDER of 2nd-person address. Address a single user in the MASCULINE singular throughout product UI and email content — pronoun אתה, masculine singular imperatives (הזן / לחץ / בחר / שלח / צור / מחק / שמור / אשר), masculine future תוכל. The feminine singular register (feminine pronoun את, feminine imperatives הזיני / לחצי / בחרי / העתיקי, feminine future תוכלי) is forbidden for direct address. Masculine-plural / impersonal phrasing (אבטחו / צרו / שלכם) used in marketing or multi-recipient copy is an accepted gender-spanning style, not a violation."
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.he-passphrase-password
+    modality: MUST
+    statement: "Keep סיסמה (account login / authentication credential, feminine) distinct from ביטוי סיסמה (protection of an individual secret); never use one where the other is meant."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.he-burn-permanent-deletion
+    modality: MUST
+    statement: "Translate burn / burned consistently as מחיקה סופית (permanent deletion) and נמחק סופית (the burned state), per the agreed Hebrew terminology; do not use a literal 'fire/burn' translation."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.he-secret-sod
+    modality: MUST
+    statement: "Render the product concept 'secret' as סוד (masculine), used consistently across the application; use the adjective סודי / מאובטח only for the descriptive 'secret/secure' sense."
+    severity: warning
+    rule_ref: rule.terminology-consistency
+  - id: rule.he-no-niqqud
+    modality: MUST
+    statement: "Write Modern Hebrew without niqqud (vowel points); e.g. סוד not סוֹד. Use gershayim ״ for acronyms (דוא״ל) and geresh ׳ for single-letter abbreviations, never ASCII quotes."
+    severity: warning
+    rule_ref: rule.terminology-consistency
+  - id: rule.he-button-imperative
+    modality: SHOULD
+    statement: "Use the masculine singular imperative for button and action labels (שלח / צור / מחק / העתק / שמור), the standard Hebrew UI convention; use passive voice or gender-agreeing past participles for status messages (הסוד נוצר, הסוד נמחק)."
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.he
+glossary_ref: glossary.he
+baseline_ref: baselines.he

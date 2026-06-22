@@ -1,0 +1,63 @@
+id: rules.cs
+source: onetimesecret/locales/guides/for-translators/cs.md
+inherits: base
+merge_strategy: append
+# Czech locale layer. cs is a standalone shipping language (no family parent),
+# so it inherits `base` directly — mirroring locales/pl/rules.yaml (the closest
+# Slavic pilot) with the SAME register decision: Czech is locked to the INFORMAL
+# "ty" register. That choice is grounded in the live app content
+# (onetimesecret/locales/content/cs/*.json), which uses informal 2nd-person
+# singular throughout (tvůj/tvoje/tvého possessives, "jsi" 41x vs "jste" 1x, and
+# singular imperatives Vytvoř/Zadej/Vyber/Klikni), and contains no standalone
+# formal vy/vám/vás address. The prose guide agrees ("Informal 'ty' for modern
+# UX"; Czech Translation Notes, Voice and Tone).
+#
+# rule.cs-pluralization captures the complex Czech plural system (1 / 2-4 / 5+,
+# e.g. den / dny / dnů), which the guide flags as critical (Special
+# Considerations, Plural Forms); it specialises the base rule.pluralization-syntax.
+# The heslo / přístupová fráze distinction is the single most critical
+# terminology rule in the guide (Special Considerations: Password vs. Passphrase).
+# Czech declines nouns across 7 cases and requires diacritics that change meaning
+# (být vs byt), both captured below.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live content;
+# requires native-speaker (CS) sign-off before merge — see PR label.
+rules:
+  - id: rule.cs-register-informal
+    modality: MUST
+    statement: Czech content uses the informal "ty" register (ty / tvůj / tvoje / tvé / tě / tebe) with 2nd-person singular verb forms and singular imperatives throughout product UI and email content; the formal/plural register (vy / váš / vaše / vám / vás) is forbidden for direct address.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.cs-pluralization
+    modality: MUST
+    statement: Express countable strings with the three Czech plural forms (1 / 2-4 / 5+, e.g. den / dny / dnů) via vue-i18n pipe syntax; choose the form by the count and never collapse to a single plural.
+    severity: error
+    rule_ref: rule.pluralization-syntax
+  - id: rule.cs-passphrase-password
+    modality: MUST
+    statement: Keep heslo (account login credential) distinct from přístupová fráze (the passphrase protecting an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.cs-secret-not-message
+    modality: MUST
+    statement: Translate the core "secret" concept as tajemství (neuter) consistently; do not substitute zpráva (message) unless the source specifically refers to a message.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.cs-burn-trvale-smazat
+    modality: MUST
+    statement: Translate burn / burned consistently as trvale smazat (verb) and trvale smazáno/smazán (state), per the agreed Czech terminology; do not vary across strings or use a literal "spálit".
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.cs-diacritics
+    modality: MUST
+    statement: Always use correct Czech diacritics (á č ď é ě í ň ó ř š ť ú ů ý ž); they are not optional and change meaning (být "to be" vs byt "apartment"). Never omit or substitute them.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.cs-imperative-buttons
+    modality: SHOULD
+    statement: Use the 2nd-person-singular imperative for button and action labels (Vytvoř, Zadej, Ulož, Sdílej); use passive voice or past participles with correct gender agreement for status and system messages.
+    severity: info
+    rule_ref: rule.message-voice
+register_ref: register.cs
+glossary_ref: glossary.cs
+baseline_ref: baselines.cs

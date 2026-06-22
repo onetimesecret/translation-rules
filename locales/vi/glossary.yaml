@@ -1,0 +1,254 @@
+id: glossary.vi
+source: onetimesecret/locales/guides/for-translators/vi.md
+# Sense-split of the core domain terminology from the Vietnamese translator
+# guide's terminology tables (onetimesecret/locales/guides/for-translators/vi.md
+# §"Thuật ngữ cơ bản", §"Thuật ngữ liên quan đến tài khoản"), grounded against
+# the live app content in onetimesecret/locales/content/vi/*.json. Targets and
+# worked examples are AGENT-AUTHORED and require native-speaker (VI) sign-off
+# before merge — see PR label.
+#
+# Vietnamese IS space-delimited, so the resolver's default word_prefix sense
+# match works normally. Each `good` example below: (a) uses `bạn` as the address
+# where direct address appears (the neutral register lock); (b) is verified clean
+# of register.vi forbidden_tokens; and (c) contains one of its term's sense
+# targets at a word boundary. Multi-syllable citation forms (cụm mật khẩu, xóa
+# vĩnh viễn) appear as a contiguous substring in head/word-boundary position so
+# word_prefix matches. Each `bad` example demonstrates a wrong form (a forbidden
+# kinship/intimate address pronoun, or terminology drift).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render as `bí mật`."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    vi:
+      noun:
+        target: bí mật
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created securely."
+        target: "Bí mật của bạn đã được tạo an toàn."
+        verdict: good
+        note: "Verbatim from live content; neutral address 'của bạn'; past-marker 'đã' for status; term 'bí mật' in head position."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-created-bad#93b6aa32
+        source: "Your secret has been created securely."
+        target: "Bí mật của em đã được tạo an toàn."
+        verdict: bad
+        note: "Uses kinship pronoun 'em' (younger person) as the generic address instead of 'bạn' — the forbidden register (rule.vi-register-ban)."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective/state sense — protection/safety of information. Render as `an toàn` (safe/secure); reserve `bí mật` for the product-noun sense."
+      key_patterns: ["*secure*", "*secured*", "*.protect*"]
+    vi:
+      adjective:
+        target: an toàn
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adjective-good#d1b19ed2
+        source: "Someone sent you a secure message."
+        target: "An toàn hơn khi bạn chia sẻ thông tin nhạy cảm qua liên kết này."
+        verdict: good
+        note: "Grounded in live 'giao tiếp an toàn'/'tin nhắn an toàn'; adjective 'an toàn' in head position; neutral address 'bạn'."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-adjective-bad#0ad15f16
+        source: "Someone sent you a secure message."
+        target: "An toàn hơn khi anh chia sẻ thông tin nhạy cảm qua liên kết này."
+        verdict: bad
+        note: "Uses kinship pronoun 'anh' (older male) as the generic address instead of 'bạn' — forbidden register (rule.vi-register-ban)."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). `cụm` = phrase/cluster. Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    vi:
+      noun:
+        target: cụm mật khẩu
+        rule_ref: rule.vi-passphrase-password
+    rule_refs: [rule.register-lock, rule.vi-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Cụm mật khẩu sẽ được người gửi cung cấp cho bạn riêng."
+        verdict: good
+        note: "Grounded in live 'Người gửi sẽ cung cấp cụm mật khẩu cho bạn riêng'; term 'cụm mật khẩu' (secret protection) in head position, not 'mật khẩu'; neutral address 'bạn'."
+        rule_refs: [rule.register-lock, rule.vi-passphrase-password]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Mật khẩu sẽ được người gửi cung cấp cho em riêng."
+        verdict: bad
+        note: "Uses 'mật khẩu' (account credential) where 'cụm mật khẩu' (secret protection) is meant AND kinship pronoun 'em' for the generic address — violates rule.vi-passphrase-password and the register lock."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    vi:
+      noun:
+        target: mật khẩu
+        rule_ref: rule.vi-passphrase-password
+    rule_refs: [rule.register-lock, rule.vi-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Mật khẩu của bạn dùng để đăng nhập vào tài khoản."
+        verdict: good
+        note: "Grounded in live 'Nhập mật khẩu của bạn'; account term 'mật khẩu' in head position; neutral possessive 'của bạn'."
+        rule_refs: [rule.register-lock]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Mật khẩu của ông dùng để đăng nhập vào tài khoản."
+        verdict: bad
+        note: "Uses kinship pronoun 'ông' (older male / sir) as the generic address instead of 'bạn' — the forbidden register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of permanently deleting a secret before it is viewed. Rendered as `xóa vĩnh viễn` (delete permanently), not the literal `đốt` (set on fire); same phrase for the action and the resulting state (with `đã` for past)."
+      key_patterns: ["*burn*", "*.destroy*"]
+    vi:
+      action:
+        target: xóa vĩnh viễn
+        rule_ref: rule.terminology-consistency
+      state:
+        target: đã xóa vĩnh viễn
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "A burned secret cannot be recovered."
+        target: "Xóa vĩnh viễn bí mật này thì bạn không thể khôi phục lại."
+        verdict: good
+        note: "Action term 'xóa vĩnh viễn' in head position (grounded in live 'bị xóa vĩnh viễn'); neutral address 'bạn'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.burn-bad#4228df6b
+        source: "A burned secret cannot be recovered."
+        target: "Đốt bí mật này thì em không thể khôi phục lại."
+        verdict: bad
+        note: "Uses literal 'đốt' (set on fire) instead of the glossary term 'xóa vĩnh viễn' (terminology drift) AND kinship pronoun 'em' as the generic address."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Rendered as `liên kết`."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    vi:
+      noun:
+        target: liên kết
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the link to share it."
+        target: "Liên kết bí mật của bạn sẽ hết hạn sau một ngày."
+        verdict: good
+        note: "Verbatim from live content; term 'liên kết' in head position; neutral possessive 'của bạn'."
+        rule_refs: [rule.register-lock]
+      - id: ex.link-bad#748809c5
+        source: "Copy the link to share it."
+        target: "Liên kết bí mật của cậu sẽ hết hạn sau một ngày."
+        verdict: bad
+        note: "Uses intimate pronoun 'cậu' (casual peer) as the generic address instead of 'bạn' — the forbidden register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data. `mã hóa` for the verb/action, `đã mã hóa` for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    vi:
+      verb:
+        target: mã hóa
+        rule_ref: rule.terminology-consistency
+      state:
+        target: đã mã hóa
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Mã hóa tin nhắn này bằng cụm mật khẩu của bạn."
+        verdict: good
+        note: "Grounded in live 'Tin nhắn này được mã hóa bằng cụm mật khẩu của bạn'; verb 'mã hóa' in head position; 'cụm mật khẩu' not 'mật khẩu'; neutral 'của bạn'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Mã hóa tin nhắn này bằng mật khẩu của ông."
+        verdict: bad
+        note: "Uses 'mật khẩu' (account credential) where 'cụm mật khẩu' (secret protection) is meant AND kinship pronoun 'ông' as the generic address — violates rule.vi-passphrase-password and the register lock."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Kept as `email` (loanword)."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    vi:
+      noun:
+        target: email
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Check your email."
+        target: "Kiểm tra email của bạn."
+        verdict: good
+        note: "Verbatim from live content; subject-less imperative 'Kiểm tra'; term 'email' present; neutral possessive 'của bạn'."
+        rule_refs: [rule.register-lock]
+      - id: ex.email-bad#5c29e476
+        source: "Check your email."
+        target: "Kiểm tra email của mày."
+        verdict: bad
+        note: "Uses the rude/intimate pronoun 'mày' (disrespectful 'you') as the generic address instead of 'bạn' — never appropriate for UI (rule.vi-register-ban)."
+  - id: term.account#3a541ed7
+    key: account
+    en: account
+    disambiguation:
+      heuristic: "The user's profile / login account. Sign-up, sign-in, settings, and billing contexts. Rendered as `tài khoản`."
+      key_patterns: ["*account*", "*.signup*", "*.profile*", "*.billing*"]
+    vi:
+      noun:
+        target: tài khoản
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.account-good#943273f4
+        source: "You requested a sign-in link for your account."
+        target: "Tài khoản của bạn đã yêu cầu một liên kết đăng nhập."
+        verdict: good
+        note: "Grounded in live 'Bạn đã yêu cầu liên kết đăng nhập cho tài khoản... của bạn'; term 'tài khoản' in head position; neutral 'của bạn'."
+        rule_refs: [rule.register-lock]
+      - id: ex.account-bad#e35ea31d
+        source: "You requested a sign-in link for your account."
+        target: "Tài khoản của bà đã yêu cầu một liên kết đăng nhập."
+        verdict: bad
+        note: "Uses kinship pronoun 'bà' (older female / madam) as the generic address instead of 'bạn' — the forbidden register."
+  - id: term.secure#952acf0e
+    key: secure
+    en: secure
+    disambiguation:
+      heuristic: "The state/quality of being protected — 'secure', 'safety'. Rendered as `an toàn` (also `bảo mật` for the security-feature noun); distinct from the product noun `bí mật`."
+      key_patterns: ["*secure*", "*safety*", "*.protect*"]
+    vi:
+      adjective:
+        target: an toàn
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secure-good#87313cf3
+        source: "A secure link will be sent to your inbox."
+        target: "An toàn nhất là khi bạn nhận liên kết qua hộp thư email của bạn."
+        verdict: good
+        note: "Grounded in live 'Một liên kết an toàn sẽ được gửi đến hộp thư email của bạn'; adjective 'an toàn' in head position; neutral address 'bạn'."
+        rule_refs: [rule.register-lock]
+      - id: ex.secure-bad#fc1e2db0
+        source: "A secure link will be sent to your inbox."
+        target: "An toàn nhất là khi ngài nhận liên kết qua hộp thư email của ngài."
+        verdict: bad
+        note: "Uses deferential pronoun 'ngài' (sir/lord) as the generic address instead of 'bạn' — over-formal/hierarchical, the forbidden register."

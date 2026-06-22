@@ -1,0 +1,34 @@
+id: glossary.fr_CA
+source: onetimesecret/locales/guides/for-translators/fr_CA.md
+# Canadian French glossary — delta-only. The resolver merges glossaries along
+# the rules inheritance chain (ADR-001), keying by term `key`, so this file
+# only needs to carry terms that differ from fr. Every inherited fr term
+# (secret_object, passphrase, password, burn, link, encrypt) flows through
+# unchanged; only `email` is overridden to "courriel" (grounded in the live
+# fr_CA app content — "Adresse courriel", "votre boîte de courriel" —
+# whereas fr uses the European "e-mail"). All inherited terms remain governed
+# by rules.fr / register.fr.formality.
+# AGENT-AUTHORED; requires native-speaker (CA) sign-off before merge — see PR label.
+terms:
+  - id: term.email_ca#287480a5
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. In Canadian French this is 'courriel', never the European 'e-mail'."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    fr_CA:
+      noun:
+        target: courriel
+        rule_ref: rule.fr_CA-courriel
+    rule_refs: [register.fr.formality, rule.fr_CA-courriel]
+    examples:
+      - id: ex.email-ca-good#75bba47a
+        source: "Enter your email address."
+        target: "Saisissez votre adresse courriel."
+        verdict: good
+        rule_refs: [register.fr.formality, rule.fr_CA-courriel]
+      - id: ex.email-ca-bad#b8f4c2e2
+        source: "Enter your email address."
+        target: "Saisissez votre adresse e-mail."
+        verdict: bad
+        note: "Uses the European 'e-mail' instead of the Canadian 'courriel' — violates rule.fr_CA-courriel."

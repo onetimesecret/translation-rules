@@ -1,0 +1,15 @@
+id: glossary.fr_FR
+source: onetimesecret/locales/guides/for-translators/fr_FR.md
+# France French glossary — intentionally empty (no regional term delta). The
+# resolver merges glossaries along the rules inheritance chain (ADR-001), keying
+# by term `key`, so an empty child inherits the full fr terminology unchanged:
+# secret_object, passphrase (phrase secrète), password (mot de passe), burn
+# (brûler), email (e-mail), link (lien), encrypt (chiffrer/chiffré) — 7 terms.
+# fr_FR is metropolitan French and the fr parent's defaults ARE the fr_FR forms
+# (the fr.md/fr_FR.md guides are identical and glossary.fr was grounded against
+# the live fr_FR content). In particular email stays "e-mail": the live
+# onetimesecret/locales/content/fr_FR/*.json uses "e-mail" 131 times and
+# "courriel" 0 times — so unlike fr_CA there is NO email override here.
+# All inherited terms remain governed by rules.fr / register.fr.formality.
+# AGENT-AUTHORED; requires native-speaker (FR) sign-off before merge — see PR label.
+terms: []

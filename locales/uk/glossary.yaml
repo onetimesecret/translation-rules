@@ -1,0 +1,182 @@
+id: glossary.uk
+source: onetimesecret/locales/guides/for-translators/uk.md
+# Sense-split of the core domain terminology from the Ukrainian translator guide's
+# terminology tables (Основна термінологія, Послідовність термінології, Функції
+# безпеки), grounded against the live app content in
+# onetimesecret/locales/content/uk/*.json. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (UK) sign-off before merge — see PR
+# label. Each `good` example uses the locked FORMAL "ви" register and contains
+# its term's sense target; each `bad` example demonstrates a forbidden form — the
+# informal "ти"/"твій" register, or the wrong term.
+#
+# Ukrainian nouns/verbs inflect heavily (7 cases, 3 genders, aspect). Sense
+# targets use a sensible citation stem (nominative noun / infinitive verb), and
+# each good example keeps a word that BEGINS with that stem so the word_prefix
+# sense-target lint check holds (e.g. target stem "таємниц" matches "таємницю").
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application. Noun таємниц(я); never секрет. Use the adjective таємн(ий/а/е) for 'secret link/message/content', never секретний. Never substitute повідомлення (message) for the entity sense."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    uk:
+      noun:
+        target: таємниц
+        rule_ref: rule.uk-secret-not-sekret
+      adjective:
+        target: таємн
+        rule_ref: rule.uk-secret-not-sekret
+    rule_refs: [rule.uk-register-formal, rule.uk-secret-not-sekret]
+    examples:
+      - id: ex.uk-secret-created-good#88891f6b
+        source: "Your secret has been created."
+        target: "Вашу таємницю створено."
+        verdict: good
+        rule_refs: [rule.uk-register-formal]
+      - id: ex.uk-secret-informal-bad#6c34a4bc
+        source: "Your secret has been created."
+        target: "Твій секрет створено."
+        verdict: bad
+        note: "Informal possessive 'Твій' (forbidden ти register; formal is Вашу/Ваш) AND 'секрет' instead of таємниця — violates rule.uk-secret-not-sekret."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login пароль). Compose/protect-a-secret contexts signal this sense. Citation form 'парольна фраза'."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    uk:
+      noun:
+        target: парольн
+        rule_ref: rule.uk-passphrase-password
+    rule_refs: [rule.uk-register-formal, rule.uk-passphrase-password]
+    examples:
+      - id: ex.uk-passphrase-good#d847753a
+        source: "Your passphrase is required to view this secret."
+        target: "Для перегляду цієї таємниці потрібна Ваша парольна фраза."
+        verdict: good
+        rule_refs: [rule.uk-register-formal]
+      - id: ex.uk-passphrase-bad#33953ae2
+        source: "Your passphrase is required to view this secret."
+        target: "Для перегляду цієї таємниці потрібен твій пароль."
+        verdict: bad
+        note: "Uses 'пароль' (account password) where парольна фраза is meant — violates rule.uk-passphrase-password; also informal possessive 'твій' (forbidden ти register)."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (distinct from a secret's парольна фраза). Sign-in, account, and reset-password contexts signal this sense. Citation form 'пароль'."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    uk:
+      noun:
+        target: парол
+        rule_ref: rule.uk-passphrase-password
+    rule_refs: [rule.uk-register-formal, rule.uk-passphrase-password]
+    examples:
+      - id: ex.uk-password-good#c33e0e3c
+        source: "Enter your password to sign in."
+        target: "Введіть Ваш пароль, щоб увійти."
+        verdict: good
+        rule_refs: [rule.uk-register-formal]
+      - id: ex.uk-password-bad#8c30c587
+        source: "Enter your password to sign in."
+        target: "Введи свій пароль, щоб увійти."
+        verdict: bad
+        note: "Informal singular imperative 'Введи' (forbidden ти register; formal is Введіть). The good form keeps the formal plural imperative."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of destroying a secret before it is viewed; emphasises permanence. Verb знищити for the action; знищено the resulting state; спалити is an accepted synonym per the guide."
+      key_patterns: ["*burn*", "*.destroy*"]
+    uk:
+      verb:
+        target: знищ
+        rule_ref: rule.terminology-consistency
+      state:
+        target: знищено
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.uk-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.uk-burn-good#2dd01fb1
+        source: "Are you sure you want to burn this secret?"
+        target: "Ви впевнені, що хочете знищити цю таємницю?"
+        verdict: good
+        rule_refs: [rule.uk-register-formal]
+        note: "Verbatim from live content (secret-manage.json) — formal 'Ви ... хочете'."
+      - id: ex.uk-burn-bad#beee21af
+        source: "Are you sure you want to burn this secret?"
+        target: "Ти впевнений, що хочеш знищити цю таємницю?"
+        verdict: bad
+        note: "Informal pronoun 'Ти' with 2nd-sg 'хочеш' (forbidden ти register); formal is 'Ви ... хочете'."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Citation form 'посилання' (neuter noun); pairs with the adjective таємн- ('таємне посилання', never секретне)."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    uk:
+      noun:
+        target: посилання
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.uk-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.uk-link-good#733cc71a
+        source: "Copy the secret link to share it."
+        target: "Скопіюйте таємне посилання, щоб поділитися ним."
+        verdict: good
+        rule_refs: [rule.uk-register-formal]
+      - id: ex.uk-link-bad#08560f54
+        source: "Copy the secret link to share it."
+        target: "Скопіюй своє секретне посилання, щоб поділитися ним."
+        verdict: bad
+        note: "Informal singular imperative 'Скопіюй' (forbidden ти register; formal is Скопіюйте) AND 'секретне' instead of таємне — violates rule.uk-secret-not-sekret."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data. Verb зашифрувати; past participle зашифрований/зашифровано for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    uk:
+      verb:
+        target: зашифр
+        rule_ref: rule.terminology-consistency
+      state:
+        target: зашифровано
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.uk-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.uk-encrypt-good#fe4b74cc
+        source: "Your message is encrypted with your passphrase."
+        target: "Це повідомлення зашифровано Вашою парольною фразою."
+        verdict: good
+        rule_refs: [rule.uk-register-formal]
+        note: "Verbatim from live content (secret-manage.json) — formal possessive 'Вашою'."
+      - id: ex.uk-encrypt-bad#d15fb7b2
+        source: "Your message is encrypted with your passphrase."
+        target: "Це повідомлення зашифровано твоєю парольною фразою."
+        verdict: bad
+        note: "Informal possessive 'твоєю' (forbidden ти register); formal is Вашою."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail (account identifier, notifications). Human-facing term is електронна пошта / електронна адреса; the bare English 'email' appears mainly in meta keys, not prose."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    uk:
+      noun:
+        target: електронн
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.uk-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.uk-email-good#a342d634
+        source: "Enter your email address."
+        target: "Введіть Вашу електронну адресу."
+        verdict: good
+        rule_refs: [rule.uk-register-formal]
+        note: "Verbatim-style from live content (session-auth-extended.json: 'Введіть Вашу електронну адресу') — formal imperative + possessive."
+      - id: ex.uk-email-bad#874d9899
+        source: "Enter your email address."
+        target: "Введи свою електронну адресу."
+        verdict: bad
+        note: "Informal singular imperative 'Введи' (forbidden ти register); formal is Введіть."

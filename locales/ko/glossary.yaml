@@ -1,0 +1,212 @@
+id: glossary.ko
+source: onetimesecret/locales/guides/for-translators/ko.md
+# Sense-split of the core domain terminology from the Korean translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/ko.md
+# §Core Terminology, §Account-Related Terms, §Security Features), grounded
+# against the live app content in onetimesecret/locales/content/ko/*.json.
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (KO)
+# sign-off before merge — see PR label.
+#
+# CJK TOKENIZATION NOTE (ja-pilot lesson, applies to Korean too): SPEC §2.3 lint
+# check 2 requires every `good` example's target to contain a sense target in
+# `word_prefix` mode. Korean uses spaces, but Hangul syllables are alphanumeric,
+# so a Hangul char immediately to the LEFT of the sense target blocks the
+# word_prefix match (left boundary must be start-of-string, a space, or
+# punctuation). Multi-eojeol sense targets (비밀 메시지, 접근 문구) must therefore
+# appear with that exact spacing AND in HEAD position (or right after a space /
+# punctuation). So each `good` example below leads with its sense target, e.g.
+# "비밀 메시지가 생성되었습니다." rather than "당신의 비밀 메시지가…". Each `good`
+# example uses the polite 합쇼체/해요체 register and is verified clean against
+# register.ko forbidden_tokens; each `bad` example demonstrates a forbidden form
+# (casual 반말 register, or the wrong term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The application's central concept. Render as 비밀 메시지 (secret message), never bare 비밀 or 보안 메시지."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    ko:
+      noun:
+        target: 비밀 메시지
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-good#d81de1d4
+        source: "Your secret has been created."
+        target: "비밀 메시지가 생성되었습니다."
+        verdict: good
+        note: "Sense target 비밀 메시지 in head position; polite passive/declarative 합쇼체 생성되었습니다 for a status message. Grounded in live 생성되었습니다 status form."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-bad#36c87b0a
+        source: "Your secret has been created."
+        target: "비밀 다 만들었어."
+        verdict: bad
+        note: "Bare 비밀 (not 비밀 메시지 — terminology drift) AND casual 반말 past 만들었어 (forbidden register); should be 비밀 메시지가 생성되었습니다."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective/state sense — secret/secure/protected. Render as 비밀의 (descriptive) or 안전한 (secure/protected state); reserve 비밀 메시지 for the product-noun sense."
+      key_patterns: ["*secure*", "*secured*", "*.protect*"]
+    ko:
+      adjective:
+        target: 안전한
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adjective-good#d1b19ed2
+        source: "Share confidential information securely."
+        target: "안전한 링크로 기밀 정보를 공유할 수 있습니다."
+        verdict: good
+        note: "Adjective sense 안전한 in head position; polite 합쇼체 -습니다. Grounded in guide 안전한 링크 (secure links)."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-adjective-bad#0ad15f16
+        source: "Share confidential information securely."
+        target: "비밀 메시지 링크로 기밀 정보를 공유해."
+        verdict: bad
+        note: "Uses product-noun 비밀 메시지 for the general adjective sense where 안전한 is meant (terminology drift) AND casual 반말 imperative 공유해 (forbidden register)."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense. Render as 접근 문구, never 비밀번호 or 암호."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    ko:
+      noun:
+        target: 접근 문구
+        rule_ref: rule.ko-passphrase-password
+    rule_refs: [rule.register-lock, rule.ko-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "접근 문구를 입력하세요."
+        verdict: good
+        note: "Verbatim from the guide; sense target 접근 문구 in head position; polite 해요체 imperative 입력하세요; 접근 문구 (secret protection), not 비밀번호."
+        rule_refs: [rule.register-lock, rule.ko-passphrase-password]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "비밀번호 입력해."
+        verdict: bad
+        note: "Uses 비밀번호 (account credential) where 접근 문구 (secret protection) is meant AND casual 반말 imperative 입력해 — violates rule.ko-passphrase-password and the register lock."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense. Render as 비밀번호, never 암호 or 접근 문구."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    ko:
+      noun:
+        target: 비밀번호
+        rule_ref: rule.ko-passphrase-password
+    rule_refs: [rule.register-lock, rule.ko-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "비밀번호를 입력하여 로그인하세요."
+        verdict: good
+        note: "Sense target 비밀번호 in head position; polite 해요체 imperative 로그인하세요. Grounded in live 비밀번호로 로그인 / 비밀번호를 입력하세요."
+        rule_refs: [rule.register-lock]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "비밀번호 입력하고 로그인할게."
+        verdict: bad
+        note: "Casual 반말 promise/intention 할게 (forbidden register) plus dropped politeness; should be polite 비밀번호를 입력하여 로그인하세요."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed; emphasises permanent deletion. Render as 소각 (action label/verbal-noun), 소각됨 / 소각되었습니다 for the resulting state. Not the literal 태우다."
+      key_patterns: ["*burn*", "*.destroy*"]
+    ko:
+      action:
+        target: 소각
+        rule_ref: rule.terminology-consistency
+      state:
+        target: 소각됨
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "A burned secret cannot be recovered."
+        target: "소각된 비밀 메시지는 복구할 수 없습니다."
+        verdict: good
+        note: "Action term 소각 in head position (소각된); polite negative 합쇼체 없습니다. Grounded in guide 소각 / 소각되었습니다."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.burn-bad#4228df6b
+        source: "A burned secret cannot be recovered."
+        target: "태운 비밀 메시지는 복구 못 해."
+        verdict: bad
+        note: "Uses literal 태우다 instead of the glossary term 소각 (terminology drift) AND casual 반말 imperative/declarative 해 (forbidden register)."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Render as the loanword 링크."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    ko:
+      noun:
+        target: 링크
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the link to share it."
+        target: "링크를 복사하여 공유하세요."
+        verdict: good
+        note: "Sense target 링크 in head position; polite 해요체 imperative 공유하세요. Grounded in guide 비밀 링크 / 안전한 링크."
+        rule_refs: [rule.register-lock]
+      - id: ex.link-bad#748809c5
+        source: "Copy the link to share it."
+        target: "링크 복사해서 공유해줘."
+        verdict: bad
+        note: "Casual 반말 request 해줘 (forbidden register); should be the polite 링크를 복사하여 공유하세요."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; 암호화 for the verbal-noun/action (암호화하다), 암호화됨 / 암호화된 for the encrypted state. Distinct from 암호 (avoid — ambiguous)."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    ko:
+      action:
+        target: 암호화
+        rule_ref: rule.terminology-consistency
+      state:
+        target: 암호화됨
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "The encrypted message is protected with your passphrase."
+        target: "암호화된 메시지는 접근 문구로 보호됩니다."
+        verdict: good
+        note: "State sense 암호화 in head position (암호화된); polite passive 합쇼체 보호됩니다; 접근 문구 (not 비밀번호). Grounded in guide 암호화/암호화됨."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "The encrypted message is protected with your passphrase."
+        target: "암호화된 메시지는 비밀번호로 지킬 거야."
+        verdict: bad
+        note: "Casual 반말 assertion 거야 (forbidden register) AND 비밀번호 (account credential) where 접근 문구 is meant — violates the register lock and rule.ko-passphrase-password."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Render as 이메일 (이메일 주소 for the address)."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    ko:
+      noun:
+        target: 이메일
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "이메일 주소를 입력하세요."
+        verdict: good
+        note: "Sense target 이메일 in head position (word_prefix of 이메일 주소); polite 해요체 imperative 입력하세요. Grounded in guide §Account-Related Terms 이메일."
+        rule_refs: [rule.register-lock]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "이메일 주소 입력해줘."
+        verdict: bad
+        note: "Casual 반말 request 해줘 (forbidden register); should be the polite 이메일 주소를 입력하세요."
