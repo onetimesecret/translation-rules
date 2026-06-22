@@ -1,0 +1,39 @@
+id: rules.ja
+source: onetimesecret/locales/guides/for-translators/ja.md
+inherits: base
+merge_strategy: append
+# Japanese locale layer, inheriting base directly (standalone language, no
+# regional parent). PILOT for the keigo / non-T/V register shape. Carries the
+# Japanese-wide conventions transcribed from the translator guide
+# (onetimesecret/locales/guides/for-translators/ja.md): the teineigo (です/ます)
+# register lock, the passphrase (パスフレーズ) vs password (パスワード)
+# distinction, the シークレット (not 秘密) terminology choice, and the
+# imperative-noun-form-for-buttons UI voice.
+#
+# AGENT-AUTHORED transcription; requires native-speaker (JA) sign-off — see PR
+# label.
+rules:
+  - id: rule.ja-register-teineigo
+    modality: MUST
+    statement: "Japanese content uses the polite teineigo register (です/ます form) throughout product UI and email content. The plain/casual 常体 forms — plain copula だ / である, casual imperatives しろ / するな, casual conjecture だろう, casual question かい, casual negation じゃない — are forbidden. Exception: action buttons use the concise imperative noun-form (保存, 削除, 送信), and status messages use polite passive/declarative (保存されました, 削除済み); neither is a register violation."
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.ja-passphrase-password
+    modality: MUST
+    statement: "Keep パスワード (account login / authentication credential) distinct from パスフレーズ (protection of an individual secret); never use one where the other is meant."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ja-secret-katakana
+    modality: MUST
+    statement: "Render the product concept 'secret' as the katakana シークレット, not 秘密 (himitsu, which connotes a personal/general secret). Use 機密 / 秘密 only for the general adjective sense (機密情報)."
+    severity: warning
+    rule_ref: rule.terminology-consistency
+  - id: rule.ja-button-imperative
+    modality: SHOULD
+    statement: "Use the concise imperative noun-form for button and action labels (保存 / 削除 / 送信 / コピー); use polite passive/declarative for status messages (保存されました / 削除済み)."
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.ja
+glossary_ref: glossary.ja
+# baseline_ref: baselines.ja intentionally omitted (no baselines.ja entry yet);
+# a reviewer adds the pin centrally — see note in register.yaml.
