@@ -28,6 +28,4 @@ rules:
     rule_ref: rule.terminology-consistency
 register_ref: register.es
 glossary_ref: glossary.es
-# baseline_ref: baselines.es is intentionally omitted until a human reviewer adds
-# the `baselines.es` entry to baselines.yaml centrally — a dangling reference
-# fails the resolver, and this task must not edit baselines.yaml.
+baseline_ref: baselines.es

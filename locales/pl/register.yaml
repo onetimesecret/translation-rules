@@ -36,6 +36,4 @@ forbidden_tokens:
   - { token: Państwa,  context: standalone_word, severity: error, note: "formal plural honorific / formal possessive 'your' (plural)" }
 exceptions: []
 rule_ref: register.pl.informality
-# baseline_ref intentionally omitted (optional per register.schema.json): no
-# baselines.pl entry exists yet and this backfill must not edit baselines.yaml,
-# while the resolver hard-fails on a dangling baseline_ref.
+baseline_ref: baselines.pl

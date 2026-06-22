@@ -23,6 +23,4 @@ forbidden_tokens:
   - { token: uzelf, context: standalone_word, severity: error, note: "formal reflexive pronoun" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref intentionally omitted: baselines.yaml has no `nl` entry yet and is
-# off-limits to this change. baseline_ref: baselines.nl would dangle and fail the
-# resolver; add it with the baselines.yaml `nl` block when that lands centrally.
+baseline_ref: baselines.nl

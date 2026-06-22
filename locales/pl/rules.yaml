@@ -46,7 +46,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.pl
 glossary_ref: glossary.pl
-# baseline_ref intentionally omitted: no baselines.pl entry exists yet and this
-# backfill must not edit the shared baselines.yaml. The resolver hard-fails on a
-# dangling baseline_ref, and the field is optional per rules.schema.json, so it
-# is left out until a reviewer adds the central baselines.pl pin.
+baseline_ref: baselines.pl

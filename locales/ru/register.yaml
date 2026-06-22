@@ -60,8 +60,4 @@ forbidden_tokens:
   - { token: твоем,  context: standalone_word, severity: error, note: "informal possessive 'your' (prep. masc./neut., е-for-ё spelling) — formal is Вашем" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref intentionally omitted (optional per register.schema.json): no
-# `baselines.ru` entry exists yet, this backfill must not edit the shared
-# baselines.yaml, and the resolver hard-fails on a dangling baseline_ref. A
-# reviewer adds the central baselines.ru pin at commit time (mirroring es/cs/pl),
-# after which this file can carry baseline_ref: baselines.ru.
+baseline_ref: baselines.ru

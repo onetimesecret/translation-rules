@@ -34,9 +34,6 @@ rules:
     statement: Use the active imperative for buttons and user actions (Opslaan, Verwijderen, Aanmaken) and the passive/declarative voice for status and informational messages (Opgeslagen, Verwijderd, Link aangemaakt).
     severity: warning
     rule_ref: rule.message-voice
-# baseline_ref intentionally omitted: baselines.yaml has no `nl` entry yet and is
-# off-limits to this change (a human reviewer pins the baseline centrally). A
-# baseline_ref: baselines.nl here would be a dangling reference and fail the
-# resolver. Add it together with the baselines.yaml `nl` block when that lands.
 register_ref: register.nl
 glossary_ref: glossary.nl
+baseline_ref: baselines.nl

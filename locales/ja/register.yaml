@@ -79,8 +79,4 @@ register_spec:
     である必要があります). It is enforced via rule.ja-register-teineigo and this
     spec rather than forbidden_tokens. Imperative noun-forms on buttons (保存,
     削除) are the prescribed UI voice, NOT a register violation.
-# baseline_ref: baselines.ja is intentionally omitted — no `baselines.ja` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
-# pin is for a human reviewer to add to baselines.yaml centrally at commit time
-# (mirroring the fr / de_AT baselines entries); this and rules.yaml can then
-# carry `baseline_ref: baselines.ja`.
+baseline_ref: baselines.ja

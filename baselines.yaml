@@ -29,3 +29,48 @@ baselines:
       - glossary.email=courriel
     justification_doc: onetimesecret/locales/guides/for-translators/fr_CA.md
     note: "Backfill pin for the fr_CA structured-rules layer (inherits rules.fr). Delta from fr is glossary.email=courriel. No retro exists; source of truth is the app-repo Canadian French translator guide. AGENT-AUTHORED content pending native-speaker (CA) sign-off. Commit is the current branch tip at authoring time, not a curated content commit."
+  nl:
+    commit: c9308720b09f80c49a6361ebb7f982b465398e0e
+    pinned_on: 2026-06-22
+    invariants:
+      - register.form=informal (je)
+      - glossary.secret_object=bericht
+      - glossary.secret_adjective=beveiligd
+    justification_doc: onetimesecret/locales/guides/for-translators/nl.md
+    note: "Backfill pin for the nl structured-rules layer. No retro exists; source of truth is the app-repo translator guide. AGENT-AUTHORED content pending native-speaker sign-off. Commit is the branch tip at authoring time, not a curated content commit."
+  es:
+    commit: c9308720b09f80c49a6361ebb7f982b465398e0e
+    pinned_on: 2026-06-22
+    invariants:
+      - register.form=informal (tú)
+      - glossary.secret_object=secreto
+      - glossary.passphrase=frase de contraseña
+    justification_doc: onetimesecret/locales/guides/for-translators/es.md
+    note: "Backfill pin for the es structured-rules layer. No retro exists; source of truth is the app-repo translator guide. AGENT-AUTHORED content pending native-speaker sign-off. Commit is the branch tip at authoring time, not a curated content commit."
+  pl:
+    commit: c9308720b09f80c49a6361ebb7f982b465398e0e
+    pinned_on: 2026-06-22
+    invariants:
+      - register.form=informal (ty)
+      - glossary.secret_object=sekret
+      - glossary.passphrase=fraza dostępowa
+    justification_doc: onetimesecret/locales/guides/for-translators/pl.md
+    note: "Backfill pin for the pl structured-rules layer. No retro exists; source of truth is the app-repo translator guide. AGENT-AUTHORED content pending native-speaker sign-off. Commit is the branch tip at authoring time, not a curated content commit."
+  ru:
+    commit: c9308720b09f80c49a6361ebb7f982b465398e0e
+    pinned_on: 2026-06-22
+    invariants:
+      - register.form=formal (вы)
+      - glossary.secret_object=секрет
+      - glossary.passphrase=кодов
+    justification_doc: onetimesecret/locales/guides/for-translators/ru.md
+    note: "Backfill pin for the ru structured-rules layer. No retro exists; source of truth is the app-repo translator guide. AGENT-AUTHORED content pending native-speaker sign-off. Commit is the branch tip at authoring time, not a curated content commit."
+  ja:
+    commit: c9308720b09f80c49a6361ebb7f982b465398e0e
+    pinned_on: 2026-06-22
+    invariants:
+      - register.form=other ((omitted; keigo politeness carried by sentence endings — teineigo です/ます))
+      - glossary.secret_object=シークレット
+      - glossary.secret_adjective=機密
+    justification_doc: onetimesecret/locales/guides/for-translators/ja.md
+    note: "Backfill pin for the ja structured-rules layer. No retro exists; source of truth is the app-repo translator guide. AGENT-AUTHORED content pending native-speaker sign-off. Commit is the branch tip at authoring time, not a curated content commit."

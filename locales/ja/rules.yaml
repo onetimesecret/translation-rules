@@ -35,5 +35,5 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.ja
 glossary_ref: glossary.ja
-# baseline_ref: baselines.ja intentionally omitted (no baselines.ja entry yet);
 # a reviewer adds the pin centrally — see note in register.yaml.
+baseline_ref: baselines.ja
