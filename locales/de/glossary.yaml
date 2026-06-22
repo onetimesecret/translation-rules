@@ -12,9 +12,21 @@ source: onetimesecret/locales/guides/for-translators/de.md
 # The remaining terms (passphrase, password, burn, link, encrypt, email) are NOT
 # in de_AT's glossary, so de_AT INHERITS them from here unchanged.
 #
-# All `good` examples use the formal Sie register (Sie / Ihr / Ihre) so the merged
-# de_AT glossary also lints clean under the de_AT Sie-lock; `bad` examples show a
-# forbidden form (informal du register) or the wrong term.
+# All `good` examples use the INFORMAL du register — the Germany-German shipping
+# register (see register.de / rule.de-du); `bad` examples show the forbidden
+# FORMAL Sie register (Sie / Ihr / Ihre) or the wrong term.
+#
+# de_AT COUPLING (important): de_AT pins its own FORMAL Sie register but INHERITS
+# every term it does not override. de_AT overrides only secret_object and
+# secret_payload (glossary.de_AT) — so for THOSE two terms the good examples
+# below carry full du possessives (Dein/deine) freely, since de_AT never sees
+# them. The other six terms (passphrase, password, burn, link, encrypt, email)
+# are inherited by de_AT and ARE linted under its Sie register, which forbids the
+# du pronouns (du/dein/deine/…/dich/dir). Their good examples therefore express
+# du via the unambiguous du IMPERATIVE verb form (Gib / Kopiere — not "Geben
+# Sie" / "Kopieren Sie") and avoid the forbidden du pronouns, so they read as du
+# for de yet stay token-clean under the de_AT Sie-lock. This is the same
+# inherit-safe discipline used for rules.de.
 #
 # AGENT-AUTHORED; requires native-speaker (DE) sign-off — see PR label.
 terms:
@@ -28,19 +40,19 @@ terms:
       noun:
         target: Geheimnis
         rule_ref: rule.terminology-consistency
-    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
     examples:
       - id: ex.secret-good#d81de1d4
         source: "Your secret has been created."
-        target: "Ihr Geheimnis wurde erstellt."
+        target: "Dein Geheimnis wurde erstellt."
         verdict: good
-        note: "Formal possessive 'Ihr' per the Sie register; declarative voice for status."
-        rule_refs: [rule.de-sie]
+        note: "Informal possessive 'Dein' per the du register; declarative voice for status."
+        rule_refs: [rule.register-lock]
       - id: ex.secret-bad#36c87b0a
         source: "Your secret has been created."
-        target: "Dein Geheimnis wurde erstellt."
+        target: "Ihr Geheimnis wurde erstellt."
         verdict: bad
-        note: "Informal possessive 'Dein' — the forbidden du register. (This is the live-content form the Sie-lock closes.)"
+        note: "Formal possessive 'Ihr' — the forbidden Sie register (used only by de_AT, not de)."
   - id: term.secret_payload#1687a617
     key: secret_payload
     en: secret message
@@ -51,19 +63,19 @@ terms:
       noun:
         target: Nachricht
         rule_ref: rule.terminology-consistency
-    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
     examples:
       - id: ex.payload-good#b71c6282
         source: "Enter your secret message"
-        target: "Geben Sie Ihre Nachricht ein"
+        target: "Gib deine Nachricht ein"
         verdict: good
-        note: "Formal imperative 'Geben Sie' plus possessive 'Ihre'; 'Nachricht' per the DE UI term."
-        rule_refs: [rule.de-sie]
+        note: "Informal imperative 'Gib' plus possessive 'deine'; 'Nachricht' per the DE UI term."
+        rule_refs: [rule.register-lock]
       - id: ex.payload-bad#cb733e1d
         source: "Enter your secret message"
-        target: "Gib deine Nachricht ein"
+        target: "Geben Sie Ihre Nachricht ein"
         verdict: bad
-        note: "Informal imperative 'Gib' plus 'deine' — the forbidden du register."
+        note: "Formal imperative 'Geben Sie' plus 'Ihre' — the forbidden Sie register (de_AT only)."
   - id: term.passphrase#44591635
     key: passphrase
     en: passphrase
@@ -74,17 +86,17 @@ terms:
       noun:
         target: Passphrase
         rule_ref: rule.terminology-consistency
-    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
     examples:
       - id: ex.passphrase-good#c9b8d63f
         source: "Enter the passphrase to view this secret."
-        target: "Geben Sie die Passphrase ein, um dieses Geheimnis anzusehen."
+        target: "Gib die Passphrase ein, um dieses Geheimnis anzusehen."
         verdict: good
-        note: "Formal imperative 'Geben Sie'; uses 'Passphrase' (DE term), not 'Passwort'."
-        rule_refs: [rule.de-sie, rule.terminology-consistency]
+        note: "Informal du imperative 'Gib' (vs. formal 'Geben Sie'); uses 'Passphrase' (DE term), not 'Passwort'. Inherited by de_AT, so it carries no forbidden du pronoun — the verb form alone marks du."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
       - id: ex.passphrase-bad#b2e929e0
         source: "Enter the passphrase to view this secret."
-        target: "Geben Sie das Passwort ein, um dieses Geheimnis anzusehen."
+        target: "Gib das Passwort ein, um dieses Geheimnis anzusehen."
         verdict: bad
         note: "Uses 'Passwort' (account credential) where 'Passphrase' (secret protection) is meant — violates rule.de-passphrase-password."
   - id: term.password#3e4e76cc
@@ -97,19 +109,19 @@ terms:
       noun:
         target: Passwort
         rule_ref: rule.terminology-consistency
-    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
     examples:
       - id: ex.password-good#ed4d76e5
         source: "Enter your password to sign in."
-        target: "Geben Sie Ihr Passwort ein, um sich anzumelden."
+        target: "Gib das Passwort zum Anmelden ein."
         verdict: good
-        note: "Formal imperative 'Geben Sie' plus possessive 'Ihr'; 'Passwort' for the account credential, 'anmelden' per the DE UI glossary."
-        rule_refs: [rule.de-sie]
+        note: "Informal du imperative 'Gib' (vs. formal 'Geben Sie'); 'Passwort' for the account credential, 'Anmelden' per the DE UI glossary. Inherited by de_AT, so it avoids the forbidden du pronouns 'dein'/'dich' — the du verb form marks the register."
+        rule_refs: [rule.register-lock]
       - id: ex.password-bad#83a8f72f
         source: "Enter your password to sign in."
-        target: "Gib dein Passwort ein, um dich anzumelden."
+        target: "Geben Sie Ihr Passwort ein, um sich anzumelden."
         verdict: bad
-        note: "Informal imperative 'Gib' plus 'dein'/'dich' — the forbidden du register."
+        note: "Formal imperative 'Geben Sie' plus 'Ihr'/'sich' — the forbidden Sie register (de_AT only)."
   - id: term.burn#8a886c8d
     key: burn
     en: burn
@@ -123,14 +135,14 @@ terms:
       state:
         target: gelöscht
         rule_ref: rule.terminology-consistency
-    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
     examples:
       - id: ex.burn-good#4bf35a91
-        source: "Burn this secret before it is read."
-        target: "Löschen Sie dieses Geheimnis, bevor es gelesen wird."
+        source: "The secret was deleted before it was read."
+        target: "Das Geheimnis wurde gelöscht, bevor es gelesen wurde."
         verdict: good
-        note: "Formal imperative 'Löschen Sie' per the DE burn -> löschen choice."
-        rule_refs: [rule.de-sie, rule.terminology-consistency]
+        note: "Declarative status using the DE burn-state 'gelöscht' (vs. de_AT 'verbrannt'). Register-neutral on pronouns (no Sie/du form), so it reads clean for de's du and for de_AT's Sie alike; the 'word_prefix' sense check needs the lemma 'gelöscht' present, which the du imperative 'Lösche' would not contain."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
       - id: ex.burn-bad#4228df6b
         source: "The secret was burned."
         target: "Das Geheimnis wurde verbrannt."
@@ -146,19 +158,19 @@ terms:
       noun:
         target: Link
         rule_ref: rule.terminology-consistency
-    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
     examples:
       - id: ex.link-good#77be696f
         source: "Copy the secret link to share it."
-        target: "Kopieren Sie den geheimen Link, um ihn zu teilen."
+        target: "Kopiere den geheimen Link, um ihn zu teilen."
         verdict: good
-        note: "Formal imperative 'Kopieren Sie'; uses 'Link' per the glossary."
-        rule_refs: [rule.de-sie]
+        note: "Informal du imperative 'Kopiere' (vs. formal 'Kopieren Sie'); uses 'Link' per the glossary. Inherited by de_AT, so it avoids the forbidden du pronoun 'deinen' — the du verb form marks the register."
+        rule_refs: [rule.register-lock]
       - id: ex.link-bad#748809c5
         source: "Copy the secret link to share it."
-        target: "Kopiere deinen geheimen Link, um ihn zu teilen."
+        target: "Kopieren Sie Ihren geheimen Link, um ihn zu teilen."
         verdict: bad
-        note: "Informal imperative 'Kopiere' plus possessive 'deinen' — the forbidden du register."
+        note: "Formal imperative 'Kopieren Sie' plus possessive 'Ihren' — the forbidden Sie register (de_AT only)."
   - id: term.encrypt#a4d3564b
     key: encrypt
     en: encrypt
@@ -172,19 +184,19 @@ terms:
       state:
         target: verschlüsselt
         rule_ref: rule.terminology-consistency
-    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
     examples:
       - id: ex.encrypt-good#791f7805
-        source: "This message is encrypted with your passphrase."
-        target: "Ihre Nachricht wird mit Ihrer Passphrase verschlüsselt."
+        source: "The message is encrypted with the passphrase."
+        target: "Die Nachricht wird mit der Passphrase verschlüsselt."
         verdict: good
-        note: "Grounded in live content ('verschlüsselt'); formal possessive 'Ihre' for the encrypted state."
-        rule_refs: [rule.de-sie, rule.terminology-consistency]
+        note: "Grounded in live content ('verschlüsselt'). Declarative status, register-neutral on pronouns (no possessive), so it reads clean for de's du and for the de_AT Sie-lock that inherits this term; a du possessive ('deiner') would be forbidden under de_AT."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
       - id: ex.encrypt-bad#450020c5
         source: "This message is encrypted with your passphrase."
-        target: "Deine Nachricht wird mit deiner Passphrase verschlüsselt."
+        target: "Ihre Nachricht wird mit Ihrer Passphrase verschlüsselt."
         verdict: bad
-        note: "Informal possessives 'Deine'/'deiner' — the forbidden du register."
+        note: "Formal possessives 'Ihre'/'Ihrer' — the forbidden Sie register (de_AT only)."
   - id: term.email#8c4fb076
     key: email
     en: email
@@ -195,16 +207,16 @@ terms:
       noun:
         target: E-Mail
         rule_ref: rule.terminology-consistency
-    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
     examples:
       - id: ex.email-good#9138348f
         source: "Enter your email address."
-        target: "Geben Sie Ihre E-Mail-Adresse ein."
+        target: "Gib die E-Mail-Adresse ein."
         verdict: good
-        note: "Grounded in live content; formal imperative 'Geben Sie' plus possessive 'Ihre'; 'E-Mail' per the DE term."
-        rule_refs: [rule.de-sie]
+        note: "Grounded in live content; informal du imperative 'Gib' (vs. formal 'Geben Sie'); 'E-Mail' per the DE term. Inherited by de_AT, so it avoids the forbidden du pronoun 'deine' — the du verb form marks the register."
+        rule_refs: [rule.register-lock]
       - id: ex.email-bad#5c29e476
         source: "Enter your email address."
-        target: "Gib deine E-Mail-Adresse ein."
+        target: "Geben Sie Ihre E-Mail-Adresse ein."
         verdict: bad
-        note: "Informal imperative 'Gib' plus possessive 'deine' — the forbidden du register."
+        note: "Formal imperative 'Geben Sie' plus possessive 'Ihre' — the forbidden Sie register (de_AT only)."

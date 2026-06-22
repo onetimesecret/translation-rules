@@ -3,16 +3,20 @@ source: local-guides/UX-TRANSLATION-GUIDE.md
 inherits: base
 merge_strategy: append
 # Inheritance parent for the de family AND the Germany-German shipping locale.
-# Carries the German formal-register rule (rule.de-sie, inherited by de_AT and
-# future de_* locales) plus de's own register/glossary refs so de is
-# resolved-only-ready. Per ADR-001, de_AT's glossary now merges over glossary.de.
+# Germany-German (de) ships the INFORMAL du register (rule.de-du), grounded in the
+# live de content. The Austrian sibling de_AT pins its own FORMAL Sie register
+# (register.de_AT / register.de_AT.formality) and inherits these rules, so the du
+# choice here does not change de_AT — rule.de-du's statement explicitly carves out
+# de_AT=Sie so it reads correctly under inheritance. Plus de's own
+# register/glossary refs so de is resolved-only-ready. Per ADR-001, de_AT's
+# glossary now merges over glossary.de.
 #
 # AGENT-AUTHORED transcription of the DE translator guide, grounded in live de
 # content; requires native-speaker (DE) sign-off before merge — see PR label.
 rules:
-  - id: rule.de-sie
+  - id: rule.de-du
     modality: MUST
-    statement: German content uses the formal Sie form (Sie / Ihr / Ihre), not the informal du.
+    statement: Germany-German (de) content uses the informal du form (du/dein/deine); the formal Sie is used only by de_AT (Austrian).
     severity: error
     rule_ref: rule.register-lock
   - id: rule.de-passphrase-password

@@ -1,40 +1,36 @@
 id: register.de
 source: onetimesecret/locales/guides/for-translators/de.md
-# Germany-German BASELINE register, locked to the FORMAL Sie form (Sie / Ihr /
-# Ihre / Ihren / Ihrem / Ihrer / Ihres), mirroring the established de_AT Sie-lock
-# (locales/de_AT/register.yaml). The existing rules.de carries rule.de-sie, and
-# de_AT inherits it; this register makes that lock binding for the de family
-# parent.
+# Germany-German shipping register, locked to the INFORMAL du form (du / dein /
+# deine / deinen / deinem / deiner / deines). This reflects a maintainer-approved
+# register decision: the *live* de content
+# (onetimesecret/locales/content/de/*.json) is written in informal du
+# (du/dein/deine appear ~270x; "Du hast deine eigene Nachricht angesehen."), and
+# the prose guide's "Direct Address (Du vs. Sie)" section calls DE informal-du.
+# So de ships du. The Austrian sibling de_AT remains FORMAL Sie
+# (locales/de_AT/register.yaml) — a normal Germany-informal / Austria-formal
+# regional split. de_AT inherits rules.de but pins its own register.de_AT, so
+# this flip does not affect de_AT.
 #
-# JUDGMENT CALL FOR THE NATIVE (DE) REVIEWER: the *live* de content
-# (onetimesecret/locales/content/de/*.json) is currently written in the INFORMAL
-# du register (du/dein/deine appear ~270x; "Du hast deine eigene Nachricht
-# angesehen.") and the prose guide's "Direct Address (Du vs. Sie)" section calls
-# DE informal-du. This register deliberately encodes the FORMAL Sie governance
-# decision instead (matching rule.de-sie + the de_AT family Sie-lock), i.e. it
-# treats the live du-content as the register-regression class the backfill exists
-# to close, not as the target. If the DE locale is meant to ship informal du, the
-# fix is a centrally-agreed register flip (form: informal, forbid the Sie tokens)
-# — NOT a quiet edit here. Forbidden tokens below are the informal du-paradigm,
-# mirroring de_AT.
+# forbidden_tokens is DELIBERATELY EMPTY (mirroring da_DK). The opposite-form
+# markers here are the German FORMAL pronouns Sie / Ihnen / Ihr / Ihre, and they
+# CANNOT be safely token-matched: lint matches casefolded (resolver/matching.py
+# `_casefold` = NFC + .casefold()), which erases the capital-only distinction
+# that separates the formal forms from ordinary words. Forbidding `Sie` would
+# also match `sie` (= she / they), `Ihnen` would match `ihnen` (= to them), and
+# `Ihr` / `Ihre` would match `ihr` / `ihre` (= her / you-plural / their) — all of
+# which occur in huge amounts of valid prose, producing massive false positives.
+# Per the da_DK / es.md / sv_SE precedent (never forbid a token that collides
+# with valid content), the safest list is empty. The du-lock is carried
+# structurally by `form: informal` + `pronoun: du` + rule.de-du (rules.de) /
+# rule.register-lock, plus native review and content normalization.
 #
 # AGENT-AUTHORED; requires native-speaker (DE) sign-off — see PR label.
-form: formal
-pronoun: Sie
-possessive: [Ihr, Ihre, Ihren, Ihrem, Ihrer, Ihres]
-forbidden_tokens:
-  - { token: du,     context: standalone_word, severity: error }
-  - { token: dein,   context: standalone_word, severity: error }
-  - { token: deine,  context: standalone_word, severity: error }
-  - { token: deinen, context: standalone_word, severity: error }
-  - { token: deinem, context: standalone_word, severity: error }
-  - { token: deiner, context: standalone_word, severity: error }
-  - { token: dich,   context: standalone_word, severity: error }
-  - { token: dir,    context: standalone_word, severity: error }
-  - { token: euch,   context: standalone_word, severity: error }
-  - { token: euer,   context: standalone_word, severity: error }
+form: informal
+pronoun: du
+possessive: [dein, deine, deinen, deinem, deiner, deines]
+forbidden_tokens: []
 exceptions: []
-rule_ref: rule.de-sie
+rule_ref: rule.register-lock
 # baseline_ref: baselines.de is intentionally omitted — no `baselines.de` entry
 # exists in baselines.yaml yet, and a dangling reference fails the resolver. The
 # pin is for a human reviewer to add to baselines.yaml centrally at commit time
