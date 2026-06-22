@@ -528,10 +528,6 @@ def _accumulate_records(idx_out: IdIndex, records: list[IdRecord]) -> None:
         idx_out.add(rec)
 
 
-def _dump_index(idx_out: IdIndex, inputs: ResolverInputs) -> None:
-    idx_out.dump(inputs.index_path)
-
-
 def _resolve_source_commit(repo_root: Path, override: str | None) -> str:
     """The translation-rules commit pinned into emitted artifacts. Explicit
     override wins (tests pass a stub); else the rules repo HEAD; else UNPINNED
@@ -818,7 +814,7 @@ def main(argv: list[str]) -> int:
     # now carries every locale's ids, not just the final one. --validate-only
     # writes nothing; --index-path is honored via inputs.index_path.
     if not args.validate_only:
-        _dump_index(union_index, inputs)
+        union_index.dump(inputs.index_path)
         print(f"wrote {inputs.index_path}")
 
     if lint_failures:

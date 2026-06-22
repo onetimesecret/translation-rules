@@ -44,5 +44,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.ar
 glossary_ref: glossary.ar
-# a reviewer adds the pin centrally — see note in register.yaml.
 baseline_ref: baselines.ar

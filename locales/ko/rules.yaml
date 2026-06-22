@@ -36,5 +36,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.ko
 glossary_ref: glossary.ko
-# a reviewer adds the pin centrally — see note in register.yaml.
 baseline_ref: baselines.ko

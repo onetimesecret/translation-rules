@@ -200,75 +200,84 @@ def _write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8")
 
 
+# Shared fixtures for the --all index tests: two independent locales (no
+# inheritance between them), each with its own rules.yaml whose top id and rule
+# id are locale-specific, plus a base rule every locale shares.
+_BASE_YAML = (
+    "id: base\n"
+    "source: SPEC.md\n"
+    "rules:\n"
+    "  - id: rule.shared-base\n"
+    "    modality: MUST\n"
+    "    statement: A base rule shared by every locale.\n"
+    "    severity: error\n"
+)
+_AA_RULES = (
+    "id: rules.aa\n"
+    "source: test\n"
+    "inherits: base\n"
+    "merge_strategy: append\n"
+    "rules:\n"
+    "  - id: rule.aa-only\n"
+    "    modality: MUST\n"
+    "    statement: An aa-only rule.\n"
+    "    severity: error\n"
+)
+_ZZ_RULES = (
+    "id: rules.zz\n"
+    "source: test\n"
+    "inherits: base\n"
+    "merge_strategy: append\n"
+    "rules:\n"
+    "  - id: rule.zz-only\n"
+    "    modality: MUST\n"
+    "    statement: A zz-only rule.\n"
+    "    severity: error\n"
+)
+
+
+def _two_locale_project(root: Path) -> None:
+    """Write the minimal two-locale (aa, zz) project the --all tests run against."""
+    _write(root / "base.yaml", _BASE_YAML)
+    _write(root / "locales" / "aa" / "rules.yaml", _AA_RULES)
+    _write(root / "locales" / "zz" / "rules.yaml", _ZZ_RULES)
+
+
+def _project_args(root: Path) -> list[str]:
+    """Common path args for resolve_mod.main against a temp project."""
+    return [
+        "--base-file",
+        str(root / "base.yaml"),
+        "--locales-dir",
+        str(root / "locales"),
+        "--retrospectives-dir",
+        str(root / "retrospectives"),  # absent; resolver tolerates
+        "--schema-dir",
+        str(SCHEMA_DIR),
+        "--project-root",
+        str(root),
+    ]
+
+
 def _all_union_test() -> tuple[bool, str]:
     """Regression for the --all global-union index bug.
 
-    Builds a temp project with TWO locales, each defining a uniquely
-    identifiable rule id, then runs `resolve.py --all` to a temp index path.
-    The committed index must be the UNION of every locale's ids. The old code
-    dumped resolver/index.json INSIDE the per-locale loop (last-write-wins), so
-    the emitted index carried only the final locale and this assertion failed.
+    Runs `resolve.py --all` over two locales to a temp index path; the emitted
+    index must be the UNION of every locale's ids. The old code dumped
+    resolver/index.json INSIDE the per-locale loop (last-write-wins), so the
+    index carried only the final locale and this assertion failed. Also asserts
+    a single-locale run still writes only that locale's ids.
     """
-    base_yaml = (
-        "id: base\n"
-        "source: SPEC.md\n"
-        "rules:\n"
-        "  - id: rule.shared-base\n"
-        "    modality: MUST\n"
-        "    statement: A base rule shared by every locale.\n"
-        "    severity: error\n"
-    )
-    # Two independent locales (no inheritance between them), each with its own
-    # rules.yaml whose top id and rule id are locale-specific.
-    aa_rules = (
-        "id: rules.aa\n"
-        "source: test\n"
-        "inherits: base\n"
-        "merge_strategy: append\n"
-        "rules:\n"
-        "  - id: rule.aa-only\n"
-        "    modality: MUST\n"
-        "    statement: An aa-only rule.\n"
-        "    severity: error\n"
-    )
-    zz_rules = (
-        "id: rules.zz\n"
-        "source: test\n"
-        "inherits: base\n"
-        "merge_strategy: append\n"
-        "rules:\n"
-        "  - id: rule.zz-only\n"
-        "    modality: MUST\n"
-        "    statement: A zz-only rule.\n"
-        "    severity: error\n"
-    )
-
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
-        _write(root / "base.yaml", base_yaml)
-        _write(root / "locales" / "aa" / "rules.yaml", aa_rules)
-        _write(root / "locales" / "zz" / "rules.yaml", zz_rules)
+        _two_locale_project(root)
         index_path = root / "out" / "index.json"
 
-        # Silence the resolver's own progress chatter so it does not interleave
-        # with the harness's pass/FAIL lines.
+        # Silence the resolver's progress chatter so it does not interleave with
+        # the harness's pass/FAIL lines.
         with contextlib.redirect_stdout(io.StringIO()):
             rc = resolve_mod.main(
-                [
-                    "--all",
-                    "--base-file",
-                    str(root / "base.yaml"),
-                    "--locales-dir",
-                    str(root / "locales"),
-                    "--retrospectives-dir",
-                    str(root / "retrospectives"),  # absent; resolver tolerates
-                    "--schema-dir",
-                    str(SCHEMA_DIR),
-                    "--index-path",
-                    str(index_path),
-                    "--project-root",
-                    str(root),
-                ]
+                ["--all", *_project_args(root), "--index-path", str(index_path)]
             )
         if rc != 0:
             return False, f"--all exited {rc} (expected 0)"
@@ -284,23 +293,12 @@ def _all_union_test() -> tuple[bool, str]:
                 f"--all index is not a union: missing {sorted(missing)} "
                 f"(got {sorted(ids)}) — last-write-wins regression",
             )
+
         # Single-locale must still write only that locale's index.
         single_path = root / "out" / "single.json"
         with contextlib.redirect_stdout(io.StringIO()):
             rc = resolve_mod.main(
-                [
-                    "aa",
-                    "--base-file",
-                    str(root / "base.yaml"),
-                    "--locales-dir",
-                    str(root / "locales"),
-                    "--schema-dir",
-                    str(SCHEMA_DIR),
-                    "--index-path",
-                    str(single_path),
-                    "--project-root",
-                    str(root),
-                ]
+                ["aa", *_project_args(root), "--index-path", str(single_path)]
             )
         if rc != 0:
             return False, f"single-locale exited {rc} (expected 0)"
@@ -312,6 +310,72 @@ def _all_union_test() -> tuple[bool, str]:
             )
         if "rule.aa-only" not in single_ids:
             return False, "single-locale index missing its own id (rule.aa-only)"
+    return True, "ok"
+
+
+def _all_validate_only_no_write_test() -> tuple[bool, str]:
+    """`--all --validate-only` must resolve cleanly but write NO index file."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _two_locale_project(root)
+        index_path = root / "out" / "index.json"
+        # validate-only dumps the merged tree to stdout and the summary to
+        # stderr, so silence both to keep the harness output clean.
+        with (
+            contextlib.redirect_stdout(io.StringIO()),
+            contextlib.redirect_stderr(io.StringIO()),
+        ):
+            rc = resolve_mod.main(
+                [
+                    "--all",
+                    "--validate-only",
+                    *_project_args(root),
+                    "--index-path",
+                    str(index_path),
+                ]
+            )
+        if rc != 0:
+            return False, f"--all --validate-only exited {rc} (expected 0)"
+        if index_path.exists():
+            return False, "index was written under --validate-only (expected none)"
+    return True, "ok"
+
+
+def _all_collision_test() -> tuple[bool, str]:
+    """A genuine cross-locale id collision while building the --all union must
+    exit 1 cleanly and write NO (partial) index.
+
+    A natural collision is hard to author — a record's (kind, key) derives from
+    its id — so we inject one by monkeypatching _accumulate_records to raise the
+    same IdError the union build raises on a true clash, and assert main()
+    surfaces it as a clean failure rather than a traceback or a corrupt index.
+    """
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _two_locale_project(root)
+        index_path = root / "out" / "index.json"
+
+        original = resolve_mod._accumulate_records
+
+        def _boom(idx_out, records):  # noqa: ANN001
+            raise resolve_mod.IdError("id collision: injected by _all_collision_test")
+
+        resolve_mod._accumulate_records = _boom
+        try:
+            with (
+                contextlib.redirect_stdout(io.StringIO()),
+                contextlib.redirect_stderr(io.StringIO()),
+            ):
+                rc = resolve_mod.main(
+                    ["--all", *_project_args(root), "--index-path", str(index_path)]
+                )
+        finally:
+            resolve_mod._accumulate_records = original
+
+        if rc != 1:
+            return False, f"--all with id collision exited {rc} (expected 1)"
+        if index_path.exists():
+            return False, "index written despite a collision (should be absent)"
     return True, "ok"
 
 
@@ -333,15 +397,21 @@ def main(argv: list[str]) -> int:
         print(f"  {'pass' if ok else 'FAIL'} {fixture_dir.name}: {msg}")
         passed, failed = (passed + 1, failed) if ok else (passed, failed + 1)
 
-    # Programmatic (non-fixture) checks. The --all union test builds its own
-    # temp tree, so it has no fixtures/ entry. Run unless a target filter that
-    # excludes it was given.
-    if not targets or "all-union" in targets:
+    # Programmatic (non-fixture) checks. Each builds its own temp tree, so they
+    # have no fixtures/ entry. Run unless a target filter excludes them by name.
+    programmatic = [
+        ("all-union", _all_union_test),
+        ("all-validate-only-no-write", _all_validate_only_no_write_test),
+        ("all-collision-clean-exit", _all_collision_test),
+    ]
+    for name, fn in programmatic:
+        if targets and name not in targets:
+            continue
         try:
-            ok, msg = _all_union_test()
+            ok, msg = fn()
         except Exception as exc:  # noqa: BLE001
             ok, msg = False, f"unexpected error: {type(exc).__name__}: {exc}"
-        print(f"  {'pass' if ok else 'FAIL'} all-union: {msg}")
+        print(f"  {'pass' if ok else 'FAIL'} {name}: {msg}")
         passed, failed = (passed + 1, failed) if ok else (passed, failed + 1)
 
     print()
