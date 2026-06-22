@@ -1,0 +1,42 @@
+id: register.de
+source: onetimesecret/locales/guides/for-translators/de.md
+# Germany-German BASELINE register, locked to the FORMAL Sie form (Sie / Ihr /
+# Ihre / Ihren / Ihrem / Ihrer / Ihres), mirroring the established de_AT Sie-lock
+# (locales/de_AT/register.yaml). The existing rules.de carries rule.de-sie, and
+# de_AT inherits it; this register makes that lock binding for the de family
+# parent.
+#
+# JUDGMENT CALL FOR THE NATIVE (DE) REVIEWER: the *live* de content
+# (onetimesecret/locales/content/de/*.json) is currently written in the INFORMAL
+# du register (du/dein/deine appear ~270x; "Du hast deine eigene Nachricht
+# angesehen.") and the prose guide's "Direct Address (Du vs. Sie)" section calls
+# DE informal-du. This register deliberately encodes the FORMAL Sie governance
+# decision instead (matching rule.de-sie + the de_AT family Sie-lock), i.e. it
+# treats the live du-content as the register-regression class the backfill exists
+# to close, not as the target. If the DE locale is meant to ship informal du, the
+# fix is a centrally-agreed register flip (form: informal, forbid the Sie tokens)
+# — NOT a quiet edit here. Forbidden tokens below are the informal du-paradigm,
+# mirroring de_AT.
+#
+# AGENT-AUTHORED; requires native-speaker (DE) sign-off — see PR label.
+form: formal
+pronoun: Sie
+possessive: [Ihr, Ihre, Ihren, Ihrem, Ihrer, Ihres]
+forbidden_tokens:
+  - { token: du,     context: standalone_word, severity: error }
+  - { token: dein,   context: standalone_word, severity: error }
+  - { token: deine,  context: standalone_word, severity: error }
+  - { token: deinen, context: standalone_word, severity: error }
+  - { token: deinem, context: standalone_word, severity: error }
+  - { token: deiner, context: standalone_word, severity: error }
+  - { token: dich,   context: standalone_word, severity: error }
+  - { token: dir,    context: standalone_word, severity: error }
+  - { token: euch,   context: standalone_word, severity: error }
+  - { token: euer,   context: standalone_word, severity: error }
+exceptions: []
+rule_ref: rule.de-sie
+# baseline_ref: baselines.de is intentionally omitted — no `baselines.de` entry
+# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
+# pin is for a human reviewer to add to baselines.yaml centrally at commit time
+# (mirroring the `de_AT`/`fr` baselines entries), after which this and rules.yaml
+# can carry `baseline_ref: baselines.de`.

@@ -1,0 +1,210 @@
+id: glossary.de
+source: onetimesecret/locales/guides/for-translators/de.md
+# Germany-German BASELINE glossary: the core domain terminology from the German
+# translator guide's "German (DE)" columns
+# (onetimesecret/locales/guides/for-translators/de.md), grounded against the live
+# app content (onetimesecret/locales/content/de/*.json). de is the family parent;
+# per ADR-001 de_AT's resolved glossary = merge(glossary.de, glossary.de_AT) with
+# de_AT overriding by term `key`. Keys here are deliberately kept consistent with
+# locales/de_AT/glossary.yaml so its overrides land cleanly:
+#   - secret_object  -> de: Geheimnis  (de_AT overrides, also Geheimnis)
+#   - secret_payload -> de: Nachricht  (de_AT overrides, also Nachricht)
+# The remaining terms (passphrase, password, burn, link, encrypt, email) are NOT
+# in de_AT's glossary, so de_AT INHERITS them from here unchanged.
+#
+# All `good` examples use the formal Sie register (Sie / Ihr / Ihre) so the merged
+# de_AT glossary also lints clean under the de_AT Sie-lock; `bad` examples show a
+# forbidden form (informal du register) or the wrong term.
+#
+# AGENT-AUTHORED; requires native-speaker (DE) sign-off — see PR label.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, or expired. Lifecycle verbs signal the object sense. Guide: Geheimnis in technical/security contexts."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.expire*"]
+    de:
+      noun:
+        target: Geheimnis
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-good#d81de1d4
+        source: "Your secret has been created."
+        target: "Ihr Geheimnis wurde erstellt."
+        verdict: good
+        note: "Formal possessive 'Ihr' per the Sie register; declarative voice for status."
+        rule_refs: [rule.de-sie]
+      - id: ex.secret-bad#36c87b0a
+        source: "Your secret has been created."
+        target: "Dein Geheimnis wurde erstellt."
+        verdict: bad
+        note: "Informal possessive 'Dein' — the forbidden du register. (This is the live-content form the Sie-lock closes.)"
+  - id: term.secret_payload#1687a617
+    key: secret_payload
+    en: secret message
+    disambiguation:
+      heuristic: "The user-entered message content being protected, distinct from the secret object. Per the DE guide, 'Nachricht' is the neutral UI term for the generated secret content; input/compose/display contexts signal the payload sense."
+      key_patterns: ["*.message*", "*.content*", "*.body*"]
+    de:
+      noun:
+        target: Nachricht
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    examples:
+      - id: ex.payload-good#b71c6282
+        source: "Enter your secret message"
+        target: "Geben Sie Ihre Nachricht ein"
+        verdict: good
+        note: "Formal imperative 'Geben Sie' plus possessive 'Ihre'; 'Nachricht' per the DE UI term."
+        rule_refs: [rule.de-sie]
+      - id: ex.payload-bad#cb733e1d
+        source: "Enter your secret message"
+        target: "Gib deine Nachricht ein"
+        verdict: bad
+        note: "Informal imperative 'Gib' plus 'deine' — the forbidden du register."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret, distinct from the account login Passwort. Compose/protect-a-secret and view-this-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    de:
+      noun:
+        target: Passphrase
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Geben Sie die Passphrase ein, um dieses Geheimnis anzusehen."
+        verdict: good
+        note: "Formal imperative 'Geben Sie'; uses 'Passphrase' (DE term), not 'Passwort'."
+        rule_refs: [rule.de-sie, rule.terminology-consistency]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Geben Sie das Passwort ein, um dieses Geheimnis anzusehen."
+        verdict: bad
+        note: "Uses 'Passwort' (account credential) where 'Passphrase' (secret protection) is meant — violates rule.de-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential, distinct from a secret's Passphrase. Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    de:
+      noun:
+        target: Passwort
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Geben Sie Ihr Passwort ein, um sich anzumelden."
+        verdict: good
+        note: "Formal imperative 'Geben Sie' plus possessive 'Ihr'; 'Passwort' for the account credential, 'anmelden' per the DE UI glossary."
+        rule_refs: [rule.de-sie]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Gib dein Passwort ein, um dich anzumelden."
+        verdict: bad
+        note: "Informal imperative 'Gib' plus 'dein'/'dich' — the forbidden du register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed; verb form for the action label, past participle for the resulting state. Per the German guide's DE column: löschen / gelöscht."
+      key_patterns: ["*burn*", "*.destroy*"]
+    de:
+      verb:
+        target: löschen
+        rule_ref: rule.terminology-consistency
+      state:
+        target: gelöscht
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Löschen Sie dieses Geheimnis, bevor es gelesen wird."
+        verdict: good
+        note: "Formal imperative 'Löschen Sie' per the DE burn -> löschen choice."
+        rule_refs: [rule.de-sie, rule.terminology-consistency]
+      - id: ex.burn-bad#4228df6b
+        source: "The secret was burned."
+        target: "Das Geheimnis wurde verbrannt."
+        verdict: bad
+        note: "Uses 'verbrannt' (literal burn) instead of the DE glossary state 'gelöscht' — terminology drift (verbrennen is the de_AT term, not DE)."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Per the DE column: Link (anglicism, established)."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    de:
+      noun:
+        target: Link
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the secret link to share it."
+        target: "Kopieren Sie den geheimen Link, um ihn zu teilen."
+        verdict: good
+        note: "Formal imperative 'Kopieren Sie'; uses 'Link' per the glossary."
+        rule_refs: [rule.de-sie]
+      - id: ex.link-bad#748809c5
+        source: "Copy the secret link to share it."
+        target: "Kopiere deinen geheimen Link, um ihn zu teilen."
+        verdict: bad
+        note: "Informal imperative 'Kopiere' plus possessive 'deinen' — the forbidden du register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'verschlüsseln', past participle 'verschlüsselt' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    de:
+      verb:
+        target: verschlüsseln
+        rule_ref: rule.terminology-consistency
+      state:
+        target: verschlüsselt
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Ihre Nachricht wird mit Ihrer Passphrase verschlüsselt."
+        verdict: good
+        note: "Grounded in live content ('verschlüsselt'); formal possessive 'Ihre' for the encrypted state."
+        rule_refs: [rule.de-sie, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Deine Nachricht wird mit deiner Passphrase verschlüsselt."
+        verdict: bad
+        note: "Informal possessives 'Deine'/'deiner' — the forbidden du register."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account-identifier and notification contexts. Per the DE column: E-Mail (hyphenated, capitalised)."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    de:
+      noun:
+        target: E-Mail
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.de-sie, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Geben Sie Ihre E-Mail-Adresse ein."
+        verdict: good
+        note: "Grounded in live content; formal imperative 'Geben Sie' plus possessive 'Ihre'; 'E-Mail' per the DE term."
+        rule_refs: [rule.de-sie]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Gib deine E-Mail-Adresse ein."
+        verdict: bad
+        note: "Informal imperative 'Gib' plus possessive 'deine' — the forbidden du register."

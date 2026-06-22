@@ -2,11 +2,26 @@ id: rules.de
 source: local-guides/UX-TRANSLATION-GUIDE.md
 inherits: base
 merge_strategy: append
-# Minimal inheritance parent for the de family. Carries only what de_AT (and
-# future de_* locales) need to inherit: the German formal-register rule.
+# Inheritance parent for the de family AND the Germany-German shipping locale.
+# Carries the German formal-register rule (rule.de-sie, inherited by de_AT and
+# future de_* locales) plus de's own register/glossary refs so de is
+# resolved-only-ready. Per ADR-001, de_AT's glossary now merges over glossary.de.
+#
+# AGENT-AUTHORED transcription of the DE translator guide, grounded in live de
+# content; requires native-speaker (DE) sign-off before merge — see PR label.
 rules:
   - id: rule.de-sie
     modality: MUST
     statement: German content uses the formal Sie form (Sie / Ihr / Ihre), not the informal du.
     severity: error
     rule_ref: rule.register-lock
+  - id: rule.de-passphrase-password
+    modality: MUST
+    statement: Keep Passwort (account login / authentication credential) distinct from Passphrase (protection of an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+register_ref: register.de
+glossary_ref: glossary.de
+# baseline_ref: baselines.de is intentionally omitted until a human reviewer adds
+# the `baselines.de` entry to baselines.yaml centrally — a dangling reference
+# fails the resolver, and this task must not edit baselines.yaml.
