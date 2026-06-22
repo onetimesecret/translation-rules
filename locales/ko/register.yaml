@@ -1,0 +1,102 @@
+id: register.ko
+source: onetimesecret/locales/guides/for-translators/ko.md
+# Korean register is a POLITENESS LEVEL (높임법 / speech level), not a binary
+# T/V pronoun split — Korean drops the 2nd-person pronoun and carries deference
+# in the verb/sentence-ending morphology. This file follows the ja keigo PILOT
+# shape (register_spec extension; form: other). Grounded in the live app content
+# (onetimesecret/locales/content/ko/*.json): the formal-polite forms dominate —
+# the 합쇼체 (hapsyo-che) declarative ending -습니다/-ㅂ니다 is pervasive
+# (~347 hits, e.g. "계정이 성공적으로 인증되었습니다", "이 로그인 링크가
+# 만료되었습니다.") and 해요체 (haeyo-che) polite imperatives in -세요 / 해 주세요
+# are used for instructions/requests (~223 -세요, ~128 하세요, e.g.
+# "자격 증명을 입력하세요", "다시 시도해 주세요."). Casual/plain 반말 (해체:
+# -아/-어 casual, -다 plain declarative, 해라 commands) is ABSENT from live
+# content. The prose guide agrees: §"Voice and Tone" prescribes imperative voice
+# for buttons ("복사", "비밀 메시지 소각") and passive/declarative polite for
+# status ("생성되었습니다", "소각되었습니다"), and §"Translation Principles" #6
+# records "appropriate politeness levels for a business application". So the
+# FORBIDDEN register is 반말 / the plain-casual speech level.
+#
+# form: other  — Korean speech levels are not formal|informal|mixed in the T/V
+#                sense; the politeness is morphological, so we use `other` and
+#                the register_spec extension (mirroring register.ja).
+# pronoun:      — Korean normally omits the 2nd-person pronoun; deference is in
+#                verb endings, so the required `pronoun` field records that.
+#
+# forbidden_tokens — TOKENIZATION NOTE (the CJK lint lesson from the ja pilot):
+# Korean DOES use spaces between eojeol (words), but particles and endings attach
+# directly to the stem with no space, so a casual ending sits mid-eojeol with a
+# Hangul (= alphanumeric) char on its left — `standalone_word`/`word_prefix`
+# boundaries won't segment it. We therefore use `context: substring`, but ONLY
+# for unambiguous 반말 markers verified to have ZERO occurrences across the full
+# live ko content (no false positives, including against polite -습니다/-세요
+# text):
+#   해라 (casual command), 해줘 (casual request), 해봐 (casual "try"),
+#   하지마 (casual prohibition), 했어 (casual past), 이야 (casual copula),
+#   거야 (casual future/assertion), 할게 (casual promise), 할래 (casual volition),
+#   하자 (casual proposal), 잖아 (casual softener), 거든 (casual explanation).
+# DELIBERATELY LEFT OUT (cannot be safely substring-matched — would false-positive
+# on valid polite text): the bare plain-form declarative endings -ㄴ다/-는다/-다.
+# (한다/된다/있다) — 있다 appears mid-sentence in polite prose, and 하라/라고
+# occur inside polite indirect quotation (완료하라는, 오류라고 생각되시면); and
+# -지 마 — which is the polite prohibition 하지 마세요 (걱정하지 마세요). Those
+# plain forms are locked via register_spec.forbidden_endings + the rule
+# rule.ko-register-politeness instead (this is exactly what the ja pilot did with
+# the plain copula だ). SPEC §2.3 lint only scans `good` examples, and every
+# `good` example here is verified clean against this token list.
+#
+# AGENT-AUTHORED; requires native-speaker (KO) sign-off — see PR label.
+form: other
+pronoun: "(omitted; politeness carried by verb endings — 합쇼체 -습니다 / 해요체 -세요)"
+forbidden_tokens:
+  - { token: 해라,   context: substring, severity: error, note: "casual/plain imperative (해라체 command); polite UI uses -세요 / 해 주세요 or noun-form labels — zero live hits" }
+  - { token: 해줘,   context: substring, severity: error, note: "casual request (do ~ for me); polite form is 해 주세요 — zero live hits" }
+  - { token: 해봐,   context: substring, severity: error, note: "casual 'try ~' imperative; polite form is 해 보세요 — zero live hits" }
+  - { token: 하지마, context: substring, severity: error, note: "casual prohibition (don't ~); polite form is 하지 마세요 — zero live hits" }
+  - { token: 했어,   context: substring, severity: error, note: "casual past/declarative (해체); polite form is 했습니다 / 했어요 — zero live hits" }
+  - { token: 이야,   context: substring, severity: error, note: "casual copula (it is ~); polite form is 입니다 / 이에요 — zero live hits" }
+  - { token: 거야,   context: substring, severity: error, note: "casual future/assertion (~할 거야); polite form is ~할 것입니다 / ~거예요 — zero live hits" }
+  - { token: 할게,   context: substring, severity: error, note: "casual promise/intention (I'll ~); polite form is 하겠습니다 — zero live hits" }
+  - { token: 할래,   context: substring, severity: error, note: "casual volition/offer (want to ~?); polite form is 하시겠습니까 — zero live hits" }
+  - { token: 하자,   context: substring, severity: error, note: "casual proposal (let's ~); polite form is 합시다 / 하시죠 — zero live hits" }
+  - { token: 잖아,   context: substring, severity: error, note: "casual softener (~you know); not used in polite UI — zero live hits" }
+  - { token: 거든,   context: substring, severity: error, note: "casual explanatory ending (~because/you see); not used in polite UI — zero live hits" }
+exceptions: []
+rule_ref: rule.ko-register-politeness
+# register_spec — the FREE-FORM extension where the real politeness policy lives
+# (the part that cannot be reduced to safe substring tokens). Follows the ja
+# pilot shape: system + level, the affirmed target_endings, the forbidden_endings
+# (including the bare plain-form -다 declaratives that are not safely tokenizable),
+# and a voice_by_context map mirroring the guide.
+register_spec:
+  system: korean_speech_levels
+  level: 합쇼체 (hapsyo-che, formal-polite) with 해요체 (haeyo-che) for requests
+  description: "Korean honorific politeness (높임법): formal-polite 합쇼체 (-습니다/-ㅂ니다) for declaratives/status and 해요체 (-세요 / 해 주세요) for instructions/requests, throughout product UI and email. Not a pronoun T/V split — the 2nd-person pronoun is dropped and deference is morphological."
+  target_endings:
+    declarative_formal: [-습니다, -ㅂ니다, -습니까, -ㅂ니까]      # 합쇼체 statements/questions (인증되었습니다, 만료되었습니다)
+    polite_imperative: [-세요, -으세요, 해 주세요, -십시오]        # 해요체 / 합쇼체 requests (입력하세요, 다시 시도해 주세요)
+    polite_haeyo: [-요, -에요, -예요]                            # 해요체 polite (used for softer requests/questions)
+  forbidden_endings:
+    plain_declarative: [-ㄴ다, -는다, -다]      # 해체/plain 반말 declaratives (한다/된다/있다) — see note: NOT in forbidden_tokens (-다 false-positives mid-sentence); locked here + by rule.
+    casual_imperative: [해라, 해, 해줘, 해봐]    # 반말 commands/requests (해라/해줘/해봐 also tokenized; bare 해 unsafe to tokenize)
+    casual_prohibition: [하지마, -지 마]         # 반말 prohibition (하지마 tokenized; -지 마 unsafe — collides with polite 하지 마세요)
+    casual_copula_future: [이야, 거야]           # 반말 copula/assertion (also tokenized)
+    casual_past: [했어, -았어, -었어]            # 반말 past (했어 tokenized)
+    casual_endings: [할게, 할래, 하자, 잖아, 거든]  # 반말 promise/volition/proposal/softeners (also tokenized)
+  voice_by_context:
+    buttons_and_actions: "imperative noun-form / verbal-noun labels (예: 복사, 비밀 메시지 소각, 비밀 링크 생성, 제출하기) — concise label form, not casual 반말 speech."
+    status_and_notifications: "passive/declarative 합쇼체 (예: 생성되었습니다, 소각되었습니다, 복사됨) — polite, not casual."
+    explanatory_and_instructions: "합쇼체 -습니다 for statements and 해요체 -세요 / 해 주세요 for instructions — polite and professional yet approachable."
+  notes: >-
+    The bare plain-form declarative endings -ㄴ다/-는다/-다 are the primary 반말
+    markers but are unsafe to substring-match against polite Korean (있다 appears
+    mid-sentence; 하라/라고 occur inside polite indirect quotation 완료하라는 /
+    오류라고; -다 is also inside many polite words). They are enforced via
+    rule.ko-register-politeness and this spec rather than forbidden_tokens.
+    Concise verbal-noun labels on buttons (복사, 소각, 공유) are the prescribed UI
+    voice, NOT a register violation.
+# baseline_ref: baselines.ko is intentionally omitted — no `baselines.ko` entry
+# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
+# pin is for a human reviewer to add to baselines.yaml centrally at commit time
+# (mirroring the fr / de_AT baselines entries); this and rules.yaml can then
+# carry `baseline_ref: baselines.ko`.

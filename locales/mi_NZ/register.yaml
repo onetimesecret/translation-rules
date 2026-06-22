@@ -1,0 +1,60 @@
+id: register.mi_NZ
+source: onetimesecret/locales/guides/for-translators/mi_NZ.md
+# Te reo Māori has NO T/V formality split — there is no informal/formal pair to
+# lock (unlike es tú/usted or de du/Sie). The 2nd-person pronoun distinguishes
+# NUMBER, not politeness: koe (singular), kōrua (dual, exactly two), koutou
+# (plural, three or more). Product UI addresses ONE user, so the correct address
+# is the singular koe. Grounded in the live app content
+# (onetimesecret/locales/content/mi_NZ/*.json): direct address is uniformly
+# singular — koe appears ~125 times, while the dual kōrua and plural koutou have
+# ZERO occurrences anywhere. Singular possessives tō / ō are used likewise
+# (e.g. "Whakauru tō kupuhipa", "ō īmēra"). The prose guide agrees: §"Voice and
+# Tone" records "Addresses users in second person ('koe')".
+#
+# form: other — number-based 2nd person is not formal|informal|mixed in the T/V
+#   sense; there is no register to forbid, only a NUMBER agreement to keep.
+# pronoun: koe — the singular UI address (descriptive; the required field records
+#   it). The real number system lives in register_spec below.
+#
+# forbidden_tokens — the register dimension here is "correct pronoun NUMBER +
+# consistent terminology", not a forbidden politeness form. The one token that is
+# unambiguously wrong for singular UI address is the PLURAL koutou (addressing the
+# single user as 3+ people). It is safely tokenizable: Māori is space-delimited,
+# so standalone_word boundaries segment it cleanly, and koutou has ZERO live hits
+# (no false positives). The dual kōrua is NOT forbidden as a token — it could in
+# principle appear in legitimate quoted/relational prose, and it likewise has zero
+# live hits, so flagging it would add risk without benefit; it is documented in
+# register_spec instead. There is no informal/formal form to forbid.
+form: other
+pronoun: koe
+possessive: [tō, ō, tāu, āu]
+forbidden_tokens:
+  - { token: koutou, context: standalone_word, severity: warning, note: "plural 2nd-person pronoun (3+ people); singular UI address must use koe — zero live hits, so flagging it catches accidental plural address without false positives" }
+exceptions: []
+rule_ref: rule.mi_NZ-register-number
+# register_spec — FREE-FORM extension capturing the number-based (non-T/V) system.
+# This is the shape a native te reo reviewer should check: the pronoun system is
+# NUMBER, the UI default is the singular koe, and there is explicitly no T/V
+# politeness lock to enforce.
+register_spec:
+  pronoun_system: number_based
+  description: "Te reo Māori distinguishes 2nd person by NUMBER, not by politeness. There is no T/V (informal/formal) split; the register dimension is correct pronoun number plus consistent terminology."
+  singular: koe
+  dual: kōrua
+  plural: koutou
+  ui_default: koe
+  possessive_singular: [tō, ō, tāu, āu]
+  notes: >-
+    Product UI addresses a single user, so the singular koe (and singular
+    possessives tō / ō / tāu / āu) is the default and correct address. The dual
+    kōrua (exactly two) and plural koutou (three or more) are wrong for singular
+    UI address. There is NO informal/formal lock to enforce — Māori has no T/V
+    split, so this register is descriptive of number agreement, not a politeness
+    register like es or de.
+# baseline_ref: baselines.mi_NZ is intentionally omitted — no `baselines.mi_NZ`
+# entry exists in baselines.yaml yet, and a dangling reference fails the resolver.
+# The pin is for a human reviewer to add to baselines.yaml centrally at commit
+# time (mirroring the fr / de_AT baselines entries), after which this and
+# rules.yaml can carry `baseline_ref: baselines.mi_NZ`.
+#
+# AGENT-AUTHORED; requires native-speaker (te reo Māori) sign-off — see PR label.

@@ -1,0 +1,52 @@
+id: rules.vi
+source: onetimesecret/locales/guides/for-translators/vi.md
+inherits: base
+merge_strategy: append
+# Vietnamese locale layer, inheriting base directly (standalone language, no
+# regional parent). Carries the Vietnamese-wide conventions transcribed from the
+# translator guide (onetimesecret/locales/guides/for-translators/vi.md) and
+# grounded in the live app content (onetimesecret/locales/content/vi/*.json):
+# the "bạn" neutral-address register lock, the "cụm mật khẩu" (passphrase) vs
+# "mật khẩu" (password) distinction, the "bí mật" terminology, the
+# burn -> "xóa vĩnh viễn" choice, and the mandatory tone/diacritic preservation.
+#
+# Rule-item ids are BARE dotted (no #hex). Every rule_ref points at an existing
+# base rule id.
+#
+# AGENT-AUTHORED transcription; requires native-speaker (VI) sign-off — see PR
+# label.
+rules:
+  - id: rule.vi-register-ban
+    modality: MUST
+    statement: "Vietnamese content addresses the user with the neutral, age/status-neutral 2nd-person pronoun `bạn` (friendly-neutral 'you') throughout product UI and email content; imperatives drop the subject (the understood `bạn`). Vietnamese has no T/V split, so the lock is a pronoun-class choice, not a formality level. The hierarchical/intimate kinship pronouns (`anh`/`chị`/`em`/`ông`/`bà`/`cô`/`chú`/`bác`/`ngài`) and rude/intimate pronouns (`mày`/`tao`/`tớ`/`cậu`) are forbidden as the generic UI address. `quý khách` (deferential 'valued customer') is acceptable in customer-facing marketing/billing prose."
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.vi-passphrase-password
+    modality: MUST
+    statement: "Keep `mật khẩu` (account login / authentication credential) distinct from `cụm mật khẩu` (the credential protecting an individual secret; `cụm` = phrase/cluster); never use one where the other is meant."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.vi-secret-bi-mat
+    modality: MUST
+    statement: "Render the product concept 'secret' (the protected entity) as `bí mật`. Use `an toàn` for the 'secure' state/adjective and `mã hóa` / `đã mã hóa` for encrypt/encrypted; do not conflate these senses."
+    severity: warning
+    rule_ref: rule.terminology-consistency
+  - id: rule.vi-burn-xoa-vinh-vien
+    modality: MUST
+    statement: "Render 'burn' (permanently delete a secret before it is viewed) as `xóa vĩnh viễn` (delete permanently), the natural digital-Vietnamese phrasing, not a literal 'đốt' (set on fire)."
+    severity: warning
+    rule_ref: rule.terminology-consistency
+  - id: rule.vi-diacritics-tones
+    modality: MUST
+    statement: "Preserve all Vietnamese tone marks and diacritics (vowel modifications ă â ê ô ơ ư and the six tones). They are essential to meaning (e.g. ma/má/mà/mả/mã/mạ); never substitute unaccented Latin letters. Maintain syllable spacing — compounds are written with spaces (mã hóa, bảo mật, tài khoản), never joined like German compounds."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.vi-message-voice
+    modality: SHOULD
+    statement: "Use subject-less imperatives for actions/buttons (Nhập…, Chia sẻ…, Sao chép…, Xác nhận…) and the past-tense marker `đã` for completed-state status messages (đã tạo, đã xem, đã xóa vĩnh viễn, đã hết hạn). Keep a professional but direct, friendly tone."
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.vi
+glossary_ref: glossary.vi
+# baseline_ref: baselines.vi intentionally omitted (no baselines.vi entry yet);
+# a reviewer adds the pin centrally — see note in register.yaml.
