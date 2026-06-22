@@ -1,0 +1,215 @@
+id: glossary.ar
+source: onetimesecret/locales/guides/for-translators/ar.md
+# Sense-split of the core domain terminology from the Arabic translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/ar.md §Core
+# Terminology, §Account-Related Terms, §Special Considerations), grounded against
+# the live app content in onetimesecret/locales/content/ar/*.json. Targets and
+# worked examples are AGENT-AUTHORED and require native-speaker (AR) sign-off
+# before merge — see PR label.
+#
+# RTL / CLITIC TOKENIZATION NOTE: SPEC §2.3 lint check 2 requires every `good`
+# example's target to contain a sense target in `word_prefix` mode (left word
+# boundary, any suffix). Arabic words are space-separated so word_prefix works,
+# BUT the definite article ال and the clitics و/ب/ل/ك attach as prefixes with no
+# space, and Arabic letters are word chars (isalnum). So a bare citation form
+# (سر) does NOT match inside السر (the ل left-neighbour blocks the prefix). Each
+# `good` example below therefore places its sense target at a word boundary: the
+# bare form where the example uses the indefinite (سر, سري, تشفير, مشفر), or the
+# ال-prefixed form as the sense target where the natural phrase is definite
+# (الرابط, البريد الإلكتروني). Every good example uses MSA + masculine-default
+# address and is verified clean; each bad example demonstrates a wrong form
+# (dialect/colloquial register, feminine address, or the wrong term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render consistently as سر (state-secret to business usage), never a literal alternative."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    ar:
+      noun:
+        target: سر
+        rule_ref: rule.ar-secret-sirr
+    rule_refs: [rule.register-lock, rule.terminology-consistency, rule.ar-secret-sirr]
+    examples:
+      - id: ex.secret-ar-good#8b8e9f9a
+        source: "Create a secret and share it securely."
+        target: "أنشئ سراً جديداً وشاركه بأمان."
+        verdict: good
+        note: "MSA masculine imperative أنشئ; core term سر in head position (سراً = سر + indefinite suffix, word_prefix match). Grounded in live إنشاء السر / مشاركة سر."
+        rule_refs: [rule.register-lock, rule.ar-secret-sirr]
+      - id: ex.secret-ar-bad#15c07d9e
+        source: "Create a secret and share it securely."
+        target: "اعمل سيكريت وشاركه."
+        verdict: bad
+        note: "Colloquial اعمل ('do/make', dialectal) plus the transliteration سيكريت instead of the glossary term سر — violates rule.ar-register-msa and rule.ar-secret-sirr."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secret
+    disambiguation:
+      heuristic: "The adjective / state sense — 'secret' or 'secure' as a descriptor of a link, message, or storage. Render as سري (secret) or آمن (secure); reserve the noun سر for the product entity."
+      key_patterns: ["*secure*", "*secured*", "*.protect*", "*secret_link*"]
+    ar:
+      adjective:
+        target: سري
+        rule_ref: rule.ar-secret-sirr
+      secure:
+        target: آمن
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adj-ar-good#79cfea86
+        source: "Share a secure, secret link that works once."
+        target: "شارك رابطاً سرياً آمناً مرة واحدة فقط."
+        verdict: good
+        note: "Adjective سري (سرياً) and آمن (آمناً) both in word-boundary position; MSA masculine imperative شارك. Grounded in live روابط آمنة / الرابط السري."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.secret-adj-ar-bad#a3b42fcc
+        source: "Share a secure, secret link that works once."
+        target: "شاركي رابط سري آمن."
+        verdict: bad
+        note: "Feminine imperative شاركي (verb + ـي) — the non-default feminine address forbidden by rule.ar-address-masculine."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose / protect-a-secret and view-a-secret contexts signal this sense. Compound term عبارة المرور."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    ar:
+      noun:
+        target: عبارة المرور
+        rule_ref: rule.ar-passphrase-password
+    rule_refs: [rule.register-lock, rule.ar-passphrase-password]
+    examples:
+      - id: ex.passphrase-ar-good#d05796a6
+        source: "Enter the passphrase to view this secret."
+        target: "أدخل عبارة المرور لعرض هذا السر."
+        verdict: good
+        note: "Grounded in live أدخل عبارة المرور هنا; MSA masculine imperative أدخل; عبارة المرور (secret protection), not كلمة المرور, in head position."
+        rule_refs: [rule.register-lock, rule.ar-passphrase-password]
+      - id: ex.passphrase-ar-bad#d2a8ac1a
+        source: "Enter the passphrase to view this secret."
+        target: "أدخل كلمة المرور لعرض هذا السر."
+        verdict: bad
+        note: "Uses كلمة المرور (account credential) where عبارة المرور (secret protection) is meant — violates rule.ar-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense. Standard term كلمة المرور."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    ar:
+      noun:
+        target: كلمة المرور
+        rule_ref: rule.ar-passphrase-password
+    rule_refs: [rule.register-lock, rule.ar-passphrase-password]
+    examples:
+      - id: ex.password-ar-good#a2b33525
+        source: "Enter your password to sign in."
+        target: "أدخل كلمة المرور لتسجيل الدخول."
+        verdict: good
+        note: "Grounded in live تسجيل الدخول بكلمة المرور; MSA masculine imperative أدخل; account term كلمة المرور in head position."
+        rule_refs: [rule.register-lock, rule.ar-passphrase-password]
+      - id: ex.password-ar-bad#8bb34a0b
+        source: "Enter your password to sign in."
+        target: "دخّل الباسوورد عشان تسجل."
+        verdict: bad
+        note: "Colloquial دخّل + عشان (dialectal 'so that') and the transliteration الباسوورد instead of كلمة المرور — violates rule.ar-register-msa and rule.ar-passphrase-password."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of permanently deleting a secret before it is viewed. Rendered as حذف نهائياً (final deletion), not a literal 'burn' (حرق). تم الحذف نهائياً for the resulting burned state."
+      key_patterns: ["*burn*", "*.destroy*", "*permanently_deleted*"]
+    ar:
+      action:
+        target: حذف نهائياً
+        rule_ref: rule.ar-burn-final-deletion
+      state:
+        target: تم الحذف نهائياً
+        rule_ref: rule.ar-burn-final-deletion
+    rule_refs: [rule.register-lock, rule.ar-burn-final-deletion]
+    examples:
+      - id: ex.burn-ar-good#e7a88b0a
+        source: "A burned secret cannot be recovered."
+        target: "تم الحذف نهائياً ولا يمكن استعادة السر."
+        verdict: good
+        note: "State form تم الحذف نهائياً in head position (grounded in live web.secrets.permanently_deleted = تم الحذف نهائياً); MSA declarative status voice."
+        rule_refs: [rule.register-lock, rule.ar-burn-final-deletion]
+      - id: ex.burn-ar-bad#32a14a8e
+        source: "A burned secret cannot be recovered."
+        target: "السر اللي اتحرق مش هترجعه."
+        verdict: bad
+        note: "Egyptian-dialect اللي / اتحرق / مش / هترجعه (literal 'burned' حرق, not حذف نهائياً) — violates rule.ar-register-msa and rule.ar-burn-final-deletion."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Rendered as رابط (الرابط with the definite article); keep DNS/URL acronyms in Latin script."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    ar:
+      noun:
+        target: الرابط
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-ar-good#039b97e8
+        source: "Copy the link to share it securely."
+        target: "انسخ الرابط لمشاركته بأمان."
+        verdict: good
+        note: "Sense target الرابط (definite, with ال-) at a word boundary — bare رابط would NOT match inside الرابط (the ل clitic blocks word_prefix). MSA masculine imperative انسخ. Grounded in live الرابط السري."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.link-ar-bad#e924b748
+        source: "Copy the link to share it securely."
+        target: "انسخي اللينك عشان تشاركيه."
+        verdict: bad
+        note: "Feminine imperatives انسخي/تشاركيه (forbidden non-default address) + dialectal عشان + transliteration اللينك instead of الرابط — violates rule.ar-address-masculine and rule.ar-register-msa."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; تشفير for the verbal-noun / action, مشفّر / مشفر for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    ar:
+      action:
+        target: تشفير
+        rule_ref: rule.terminology-consistency
+      state:
+        target: مشفر
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-ar-good#809cd2fe
+        source: "This message is encrypted with your passphrase."
+        target: "هذه الرسالة مشفرة بعبارة المرور الخاصة بك."
+        verdict: good
+        note: "State مشفر (مشفرة) at a word boundary; MSA declarative voice; عبارة المرور (secret protection). Verbatim-grounded in live web.receipt.this_msg_is_encrypted."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.encrypt-ar-bad#733c7a4c
+        source: "This message is encrypted with your passphrase."
+        target: "الرسالة دي متشفرة بكلمة المرور بتاعتك."
+        verdict: bad
+        note: "Egyptian-dialect دي / بتاعتك (forbidden register) AND كلمة المرور (account credential) where عبارة المرور is meant — violates rule.ar-register-msa and rule.ar-passphrase-password."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Rendered as البريد الإلكتروني (with the definite article)."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    ar:
+      noun:
+        target: البريد الإلكتروني
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-ar-good#a223699d
+        source: "Enter the email address to send the secret."
+        target: "أدخل البريد الإلكتروني لإرسال السر."
+        verdict: good
+        note: "Sense target البريد الإلكتروني (definite) at a word boundary — the suffixed بريدك would not match the citation form. MSA masculine imperative أدخل. Grounded in live البريد الإلكتروني (×58)."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.email-ar-bad#502767b7
+        source: "Enter the email address to send the secret."
+        target: "أدخلي الإيميل بتاعك عشان تبعتي السر."
+        verdict: bad
+        note: "Feminine imperatives أدخلي/تبعتي (forbidden non-default address) + dialectal بتاعك/عشان + transliteration الإيميل instead of البريد الإلكتروني — violates rule.ar-address-masculine and rule.ar-register-msa."

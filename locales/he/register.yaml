@@ -1,0 +1,91 @@
+id: register.he
+source: onetimesecret/locales/guides/for-translators/he.md
+# Hebrew has essentially NO T/V formality split — it is informal/direct by default,
+# so form: other (not formal|informal|mixed in the T/V sense). The DEFINING register
+# dimension for Hebrew is the GRAMMATICAL GENDER of 2nd-person address: masculine
+# (אתה, verbs like הזן/לחץ/בחר, possessive -ך realised in masc agreement) vs feminine
+# (את, verbs like הזיני/לחצי/בחרי). The app must pick a policy; this is the core
+# deliverable. PILOT shape borrowed from locales/ja (form: other + register_spec).
+#
+# GENDER POLICY: masculine_default. Determined from the LIVE app content
+# (onetimesecret/locales/content/he/*.json), not invented:
+#   - 2nd-person SINGULAR IMPERATIVES are masculine across every common UI verb:
+#     הזן (enter) ×25, לחץ (click) ×10, בחר (choose) ×18, העתק (copy) ×12,
+#     שלח (send) ×57, צור (create) ×16 as a bare button label, התחבר (sign in) ×64,
+#     מחק (delete) ×33, שמור (save) ×12, אשר (confirm) ×18, נסה (try) ×25, ודא ×8.
+#   - The masculine 2nd-person pronoun אתה appears ×18 standalone (e.g. "האם אתה
+#     בטוח שברצונך למחוק סוד זה"); masc future תוכל appears for "you can".
+#   - There are ZERO genuine feminine 2nd-person SINGULAR forms in the live content.
+#     Apparent matches (צרי, נסי, שלחי, ערכי) are ALL false positives — substrings of
+#     unrelated words: צרי⊂צריך/צריכה (need), נסי⊂נכנסים (enter,pl)/נסיבות,
+#     שלחי⊂ונשלחים (are sent), ערכי⊂ערכים (values). Verified by inspecting the
+#     surrounding word for every hit.
+#   - The prose guide agrees explicitly: §"Voice and Tone" / §"Common Translation
+#     Patterns" record "Use masculine singular imperative for buttons (standard in
+#     Hebrew UI)" and gender-agreement examples keyed to masculine address.
+#   NOTE: the live content also uses some masculine-PLURAL / impersonal phrasing
+#   (e.g. אבטחו, צרו, שלחו, שלכם) in marketing/multi-recipient copy. That is a softer,
+#   gender-spanning style, not the feminine SINGULAR register — it is NOT forbidden;
+#   the lock is specifically: do not address a single user in the FEMININE singular.
+#
+# forbidden_tokens — the non-chosen gender (feminine 2nd-sg) forms, but ONLY the ones
+# that tokenize with ZERO false positives in the live content. Each token below was
+# verified to have zero occurrences anywhere in he/*.json (neither standalone nor as a
+# substring of any other word), so flagging them cannot misfire:
+#   הזיני / הקלידי / לחצי / בחרי / העתיקי / התחברי / הירשמי / תוכלי.
+# DELIBERATELY LEFT OUT (cannot be safely tokenized — would false-positive):
+#   - את  — feminine "you", but identical spelling to the ubiquitous direct-OBJECT
+#     marker את (×222, e.g. "למחוק את הסוד"); even standalone_word would flag every
+#     valid object marker. Locked via register_spec + rule.he-register-gender instead.
+#   - -ך (2nd-sg possessive suffix) and שלך ("your") are written IDENTICALLY for
+#     masculine and feminine in unvocalized Modern Hebrew, so they carry no gender
+#     signal and cannot be forbidden.
+# RTL / prefixed-particle note: Hebrew is RTL but the resolver matches in logical
+# (memory) order on alnum word boundaries; Hebrew letters ARE alnum, so prefixed
+# particles ה/ו/ב/ל/מ/ש attach to the following word and defeat word/standalone
+# boundaries. The feminine tokens above are full inflected imperatives that never
+# take those proclitics in this corpus, so standalone_word is safe for them.
+#
+# AGENT-AUTHORED; requires native-speaker (HE) sign-off — esp. the gender decision.
+form: other
+pronoun: "את/אתה (masculine default — single user addressed in masculine singular)"
+forbidden_tokens:
+  - { token: הזיני,   context: standalone_word, severity: error, note: "feminine sg imperative 'enter'; masculine default is הזן — zero live hits" }
+  - { token: הקלידי,  context: standalone_word, severity: error, note: "feminine sg imperative 'type'; masculine default is הקלד — zero live hits" }
+  - { token: לחצי,    context: standalone_word, severity: error, note: "feminine sg imperative 'click'; masculine default is לחץ — zero live hits" }
+  - { token: בחרי,    context: standalone_word, severity: error, note: "feminine sg imperative 'choose'; masculine default is בחר — zero live hits" }
+  - { token: העתיקי,  context: standalone_word, severity: error, note: "feminine sg imperative 'copy'; masculine default is העתק — zero live hits" }
+  - { token: התחברי,  context: standalone_word, severity: error, note: "feminine sg imperative 'sign in'; masculine default is התחבר — zero live hits" }
+  - { token: הירשמי,  context: standalone_word, severity: error, note: "feminine sg imperative 'register'; masculine default is הירשם — zero live hits" }
+  - { token: תוכלי,   context: standalone_word, severity: error, note: "feminine sg future 'you can'; masculine default is תוכל — zero live hits" }
+exceptions: []
+rule_ref: rule.he-register-gender
+# register_spec — FREE-FORM extension where the real gender policy lives (the part
+# that cannot be reduced to safe standalone tokens, e.g. the feminine pronoun את that
+# collides with the object marker). Pilot shape mirrors locales/ja register_spec.
+register_spec:
+  gender_policy: masculine_default
+  dimension: "grammatical gender of 2nd-person address (not T/V formality — Hebrew has no T/V split; it is informal/direct by default)"
+  notes: >-
+    Address a single user in the MASCULINE singular: pronoun אתה, masculine
+    singular imperatives for buttons/instructions (הזן, לחץ, בחר, שלח, צור, מחק,
+    שמור, אשר), masculine future תוכל for "you can". The feminine singular register
+    (pronoun את as 2nd person, feminine imperatives הזיני/לחצי/בחרי…, feminine
+    future תוכלי) is forbidden for direct address. Masculine-plural / impersonal
+    phrasing (אבטחו, צרו, שלכם) used in marketing/multi-recipient copy is an
+    accepted gender-spanning style, NOT a violation. Write Modern Hebrew without
+    niqqud; use gershayim ״ for acronyms (דוא״ל). RTL layout; numbers/Latin stay LTR.
+  target_forms:
+    pronoun: [אתה]
+    imperative_examples: [הזן, הקלד, לחץ, בחר, העתק, שלח, צור, מחק, שמור, אשר, נסה, ודא]
+    future_you_can: [תוכל]
+  forbidden:
+    feminine_pronoun: [את]          # 2nd-person feminine; NOT tokenized — collides with the object marker את. Locked here + by rule.he-register-gender.
+    feminine_imperative: [הזיני, הקלידי, לחצי, בחרי, העתיקי, התחברי, הירשמי]  # also in forbidden_tokens (zero false positives)
+    feminine_future: [תוכלי]        # also tokenized
+  allowed_non_violations:
+    masculine_plural_impersonal: [אבטחו, צרו, שלחו, שלכם, שלכן]   # gender-spanning marketing/multi-recipient style — not a singular-feminine violation
+# baseline_ref: baselines.he is intentionally omitted — no `baselines.he` entry exists
+# in baselines.yaml yet, and a dangling reference fails the resolver. A reviewer adds
+# the pin to baselines.yaml centrally at commit time (mirroring fr / de_AT), after
+# which this and rules.yaml can carry `baseline_ref: baselines.he`.
