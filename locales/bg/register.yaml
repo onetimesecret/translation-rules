@@ -1,0 +1,71 @@
+id: register.bg
+source: onetimesecret/locales/guides/for-translators/bg.md
+# Bulgarian is locked to the FORMAL "Вие" register (2nd-person plural polite
+# address). Grounded in the live app content
+# (onetimesecret/locales/content/bg/*.json), direct address is formal throughout:
+#   - formal possessive "ваш" family — вашия (30), вашата (22), вашият (14),
+#     вашето (7), вашите (7), ваши (2) ≈ 82 occurrences (e.g. "за вашия акаунт",
+#     "Вашето защитено съобщение е доставено.", "перфектния план за вашата
+#     организация");
+#   - formal address pronoun — ви (95), вие (5), вас (6) ≈ 106 occurrences;
+#   - formal 2nd-PLURAL verb forms — можете (24), имате (17), изберете (16),
+#     въведете (27), натиснете (11), споделете (8), създайте (9).
+#   The informal "твой" possessive family appears ZERO times (твой/твоя/твое/
+#   твоят/твоята/твоето/твоите/твои all 0, standalone AND substring), the informal
+#   oblique pronoun теб/тебе is absent, and the informal 2nd-SINGULAR verb forms
+#   можеш/имаш/искаш are all 0. The prose guide concurs indirectly: §3 "Предпочитайте
+#   яснотата пред неформалния език" (prefer clarity over informal language) and §5
+#   sets a "professional, but direct" tone.
+#
+# Because the locked register is formal, the FORBIDDEN register is the informal
+# one: the informal-singular possessives (твой family) and the informal oblique
+# address pronoun (теб/тебе), plus the unambiguous informal 2nd-singular verb
+# auxiliaries (можеш/имаш/искаш). These are matched as standalone_word (NOT
+# word_prefix/substring): every token is a whole Cyrillic word with zero
+# substring collisions in the corpus (verified: substring count 0 for the твой
+# family and теб/тебе), so standalone_word is both safe and tight. Matching is
+# casefolded, so each lowercase token also catches its sentence-initial
+# capitalized form (Твоя, Твоята, …).
+#
+# Deliberately NOT forbidden (judgment calls for the native reviewer):
+#   - "ти" — the informal 2nd-sg subject pronoun and the name of the locked-OUT
+#     register, BUT it is also the high-frequency dative clitic "to you" and a
+#     common verb/adjective ending; it occurs 0× standalone yet 284× as a
+#     substring, so forbidding even standalone_word risks confusion. The твой
+#     possessives + теб/тебе are the unambiguous standalone markers that carry
+#     the lock.
+#   - "те" (3rd-pl pronoun "they/them" + definite-article suffix, 1114× as
+#     substring) and "си" (reflexive/dative clitic "oneself/one's own", 95×
+#     standalone) — both are legitimate, register-neutral forms, not informal
+#     direct address, so listing them would flag valid prose.
+#   - the singular imperatives Създай / Сподели / Изтрий / Копирай — these LOOK
+#     like the informal-singular imperative but are the STANDARD Bulgarian form
+#     for button/action labels even in a formal-Вие interface (live: web.COMMON.
+#     button_create_secret "Създай тайна връзка", web.LABELS.share "Сподели",
+#     web.COMMON.burn "Изтрий"). Forbidding them would break every button, so the
+#     lock targets possessives/pronouns/auxiliaries, not imperatives.
+#
+# AGENT-AUTHORED; requires native-speaker (BG) sign-off — see PR label.
+form: formal
+pronoun: Вие
+possessive: [ваш, ваша, ваше, ваши, вашия, вашият, вашата, вашето, вашите, вашему]
+forbidden_tokens:
+  - { token: твой,   context: standalone_word, severity: error, note: "informal possessive 'your' (masc. nom.) — the register bg does NOT use; formal is ваш/вашия" }
+  - { token: твоя,   context: standalone_word, severity: error, note: "informal possessive 'your' (fem. / masc. obl.) — formal is вашата/вашия" }
+  - { token: твое,   context: standalone_word, severity: error, note: "informal possessive 'your' (neut.) — formal is вашето" }
+  - { token: твоят,  context: standalone_word, severity: error, note: "informal possessive 'your' (masc. def.) — formal is вашият" }
+  - { token: твоята, context: standalone_word, severity: error, note: "informal possessive 'your' (fem. def.) — formal is вашата" }
+  - { token: твоето, context: standalone_word, severity: error, note: "informal possessive 'your' (neut. def.) — formal is вашето" }
+  - { token: твоите, context: standalone_word, severity: error, note: "informal possessive 'your' (plural def.) — formal is вашите" }
+  - { token: твои,   context: standalone_word, severity: error, note: "informal possessive 'your' (plural indef.) — formal is ваши" }
+  - { token: теб,    context: standalone_word, severity: error, note: "informal oblique address pronoun 'you' (acc./after prep.) — formal is вас/Вас" }
+  - { token: тебе,   context: standalone_word, severity: error, note: "informal oblique address pronoun 'you' (full form) — formal is вас/Вас" }
+  - { token: можеш,  context: standalone_word, severity: error, note: "informal 2nd-singular verb 'you can' — formal is можете" }
+  - { token: имаш,   context: standalone_word, severity: error, note: "informal 2nd-singular verb 'you have' — formal is имате" }
+  - { token: искаш,  context: standalone_word, severity: error, note: "informal 2nd-singular verb 'you want' — formal is искате" }
+exceptions: []
+rule_ref: rule.register-lock
+# baseline_ref intentionally omitted (optional per register.schema.json): no
+# `baselines.bg` entry exists yet, this backfill must not edit baselines.yaml,
+# and the resolver hard-fails on a dangling baseline_ref. A reviewer adds the
+# central baselines.bg pin at commit time, after which this file can carry it.
