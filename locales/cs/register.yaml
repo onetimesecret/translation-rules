@@ -1,0 +1,66 @@
+id: register.cs
+source: onetimesecret/locales/guides/for-translators/cs.md
+# Czech is locked to the INFORMAL "ty" register (2nd-person singular). Grounded
+# in the live app content (onetimesecret/locales/content/cs/*.json), direct
+# address overwhelmingly uses the informal "ty" form:
+#   - informal possessives tvůj / tvoje / tvého / tvému / tvou / tvých (124
+#     occurrences) vs the formal váš family (~11) — e.g. "Tvůj tajný odkaz brzy
+#     vyprší", "Tvoje tajemství bylo zobrazeno", "tvojí přístupovou frází";
+#   - informal 2nd-sg "jsi" (41) vs formal 2nd-pl "jste" (1) — e.g.
+#     "Obdržel jsi tajnou zprávu", "Zapomněl jsi heslo?", "Byl jsi pozván";
+#   - informal singular imperatives throughout (Vytvoř, Zadej, Vyber, Ulož,
+#     Klikni, Přihlas, Sdílej, Použij, Zkus — 170+) vs the formal plural -te
+#     imperative, which is essentially absent. Even the email content (the most
+#     formal surface) is informal: "Požádal jsi o přihlašovací odkaz pro tvůj
+#     účet". The prose guide concurs: "Informal 'ty' for modern UX" /
+#     "Use informal 'ty' form for modern UX experience" (Czech Translation Notes,
+#     Voice and Tone).
+#
+# Because the locked register is informal, the FORBIDDEN register is the formal
+# one: the formal/plural-honorific possessive "váš" family and the formal
+# address pronoun forms vy / vám / vás / vámi. In Czech these are 2nd-person
+# formal/plural ONLY — the 3rd-person possessive is jeho/její/jejich, so unlike
+# Spanish su/sus there is no 3rd-person ambiguity to spare them. They DO appear
+# as residual register inconsistencies in the otherwise-informal live content
+# (e.g. "Tvoje data ... ve vámi zvoleném regionu", "s vašimi osobními údaji ...
+# tvojí země"), which is precisely the register-regression this lock catches.
+#
+# Tokens are matched as standalone_word (NOT word_prefix/substring) on purpose:
+# every formal marker here is a substring of valid Czech words present in the
+# content — "vy" begins the productive verbal prefix vy- (Vytvoř, vyprší, Vyber,
+# vyžaduje), "vám"/"vás" sit inside zprávám / dívám / nás, "váš"/"vaš" inside no
+# common word but kept tight for parity — so a looser context would
+# false-positive. As standalone words the formal forms have zero legitimate use
+# in this informal corpus. Matching is casefolded, so each lowercase token also
+# catches its sentence-initial capitalized form (Vám, Vaše, …).
+#
+# Deliberately NOT forbidden: the bare prefix "vy"/"Vy". Although standalone
+# "vy"/"Vy" is the formal subject pronoun, it never appears as a standalone word
+# in the live content, and listing it risks confusion with the ubiquitous vy-
+# verbal prefix; the formal possessives + oblique pronoun forms (vám/vás/vámi)
+# are the unambiguous standalone markers actually present, so they carry the lock.
+#
+# AGENT-AUTHORED; requires native-speaker (CS) sign-off — see PR label.
+form: informal
+pronoun: ty
+possessive: [tvůj, tvoje, tvá, tvé, tvého, tvému, tvém, tvým, tvou, tvých, tvými, svůj, své, svou]
+forbidden_tokens:
+  - { token: váš,     context: standalone_word, severity: error, note: "formal/plural possessive 'your' (nom. masc.) — the register cs does NOT use; informal is tvůj" }
+  - { token: vaše,    context: standalone_word, severity: error, note: "formal/plural possessive 'your' (nom. neut./fem.) — informal is tvoje/tvá" }
+  - { token: vaši,    context: standalone_word, severity: error, note: "formal/plural possessive 'your' (acc. fem. / nom. masc. pl.) — appears as a residual inconsistency in live content" }
+  - { token: vašeho,  context: standalone_word, severity: error, note: "formal/plural possessive 'your' (gen. masc./neut.) — informal is tvého" }
+  - { token: vašemu,  context: standalone_word, severity: error, note: "formal/plural possessive 'your' (dat. masc./neut.) — informal is tvému" }
+  - { token: vašem,   context: standalone_word, severity: error, note: "formal/plural possessive 'your' (loc. masc./neut.) — appears as a residual inconsistency in live content" }
+  - { token: vaším,   context: standalone_word, severity: error, note: "formal/plural possessive 'your' (instr. masc./neut.) — informal is tvým" }
+  - { token: vaší,    context: standalone_word, severity: error, note: "formal/plural possessive 'your' (gen./dat./loc./instr. fem.) — informal is tvé/tvou" }
+  - { token: vašich,  context: standalone_word, severity: error, note: "formal/plural possessive 'your' (gen./loc. pl.) — informal is tvých" }
+  - { token: vašimi,  context: standalone_word, severity: error, note: "formal/plural possessive 'your' (instr. pl.) — appears as a residual inconsistency in live content" }
+  - { token: vám,     context: standalone_word, severity: error, note: "formal/plural address pronoun 'you' (dat.) — substring of zprávám/dívám, so standalone_word only" }
+  - { token: vás,     context: standalone_word, severity: error, note: "formal/plural address pronoun 'you' (gen./acc.) — informal is tě/tebe" }
+  - { token: vámi,    context: standalone_word, severity: error, note: "formal/plural address pronoun 'you' (instr.) — appears as a residual inconsistency in live content; informal is tebou" }
+exceptions: []
+rule_ref: rule.register-lock
+# baseline_ref intentionally omitted (optional per register.schema.json): no
+# `baselines.cs` entry exists yet, this backfill must not edit baselines.yaml,
+# and the resolver hard-fails on a dangling baseline_ref. A reviewer adds the
+# central baselines.cs pin at commit time, after which this file can carry it.
