@@ -1,0 +1,39 @@
+id: rules.ca_ES
+source: onetimesecret/locales/guides/for-translators/ca_ES.md
+inherits: base
+merge_strategy: append
+# Catalan locale layer. ca_ES is a standalone shipping language, so it inherits
+# `base` directly (no family parent). Carries the Catalan conventions transcribed
+# from onetimesecret/locales/guides/for-translators/ca_ES.md: the informal tu
+# register lock, the contrasenya / frase de contrasenya distinction, the
+# burn -> destruir terminology choice, and the standard-Catalan encryption
+# spelling xifrar (with x, never cifrar).
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live ca_ES content;
+# requires native-speaker (CA) sign-off before merge — see PR label.
+rules:
+  - id: rule.ca_ES-register-informal
+    modality: MUST
+    statement: Catalan content uses the informal tu register (tu / el teu / la teva / els teus / les teves) throughout product UI and email content; the formal vostè register (vostè / vostès / vós) is forbidden for direct address.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.ca_ES-passphrase-password
+    modality: MUST
+    statement: Keep contrasenya (account login / authentication credential) distinct from frase de contrasenya (protection of an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ca_ES-burn-destruir
+    modality: MUST
+    statement: Translate burn / burned consistently as destruir (verb) and destruït (state / past participle), per the agreed Catalan terminology; do not vary across strings.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ca_ES-encrypt-xifrar
+    modality: MUST
+    statement: Translate encrypt / encrypted with the standard Catalan spelling xifrar (verb) and xifrat (state), always with x; never use the Spanish form cifrar / cifrado.
+    severity: error
+    rule_ref: rule.terminology-consistency
+register_ref: register.ca_ES
+glossary_ref: glossary.ca_ES
+# baseline_ref: baselines.ca_ES is intentionally omitted until a human reviewer
+# adds the `baselines.ca_ES` entry to baselines.yaml centrally — a dangling
+# reference fails the resolver, and this task must not edit baselines.yaml.
