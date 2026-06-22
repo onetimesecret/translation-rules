@@ -51,10 +51,878 @@
     },
     {
       "file": "baselines.yaml",
+      "id": "baselines.ar",
+      "json_pointer": "/baselines/ar",
+      "key": "ar",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.bg",
+      "json_pointer": "/baselines/bg",
+      "key": "bg",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.ca_ES",
+      "json_pointer": "/baselines/ca_ES",
+      "key": "ca_ES",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.cs",
+      "json_pointer": "/baselines/cs",
+      "key": "cs",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.da_DK",
+      "json_pointer": "/baselines/da_DK",
+      "key": "da_DK",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.de",
+      "json_pointer": "/baselines/de",
+      "key": "de",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
       "id": "baselines.de_AT",
       "json_pointer": "/baselines/de_AT",
       "key": "de_AT",
       "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.el_GR",
+      "json_pointer": "/baselines/el_GR",
+      "key": "el_GR",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.eo",
+      "json_pointer": "/baselines/eo",
+      "key": "eo",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.es",
+      "json_pointer": "/baselines/es",
+      "key": "es",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.fr",
+      "json_pointer": "/baselines/fr",
+      "key": "fr",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.fr_CA",
+      "json_pointer": "/baselines/fr_CA",
+      "key": "fr_CA",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.fr_FR",
+      "json_pointer": "/baselines/fr_FR",
+      "key": "fr_FR",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.he",
+      "json_pointer": "/baselines/he",
+      "key": "he",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.hu",
+      "json_pointer": "/baselines/hu",
+      "key": "hu",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.it_IT",
+      "json_pointer": "/baselines/it_IT",
+      "key": "it_IT",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.ja",
+      "json_pointer": "/baselines/ja",
+      "key": "ja",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.ko",
+      "json_pointer": "/baselines/ko",
+      "key": "ko",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.mi_NZ",
+      "json_pointer": "/baselines/mi_NZ",
+      "key": "mi_NZ",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.nl",
+      "json_pointer": "/baselines/nl",
+      "key": "nl",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.pl",
+      "json_pointer": "/baselines/pl",
+      "key": "pl",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.pt",
+      "json_pointer": "/baselines/pt",
+      "key": "pt",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.pt_BR",
+      "json_pointer": "/baselines/pt_BR",
+      "key": "pt_BR",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.pt_PT",
+      "json_pointer": "/baselines/pt_PT",
+      "key": "pt_PT",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.ru",
+      "json_pointer": "/baselines/ru",
+      "key": "ru",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.sl_SI",
+      "json_pointer": "/baselines/sl_SI",
+      "key": "sl_SI",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.sv_SE",
+      "json_pointer": "/baselines/sv_SE",
+      "key": "sv_SE",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.tr",
+      "json_pointer": "/baselines/tr",
+      "key": "tr",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.uk",
+      "json_pointer": "/baselines/uk",
+      "key": "uk",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.vi",
+      "json_pointer": "/baselines/vi",
+      "key": "vi",
+      "kind": "baselines"
+    },
+    {
+      "file": "baselines.yaml",
+      "id": "baselines.zh",
+      "json_pointer": "/baselines/zh",
+      "key": "zh",
+      "kind": "baselines"
+    },
+    {
+      "file": "locales/vi/glossary.yaml",
+      "id": "ex.account-bad#e35ea31d",
+      "json_pointer": "/terms/8/examples/1/id",
+      "key": "account-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/vi/glossary.yaml",
+      "id": "ex.account-good#943273f4",
+      "json_pointer": "/terms/8/examples/0/id",
+      "key": "account-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-burn-bad#9c05c3f5",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "bg-burn-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-burn-good#ea986f21",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "bg-burn-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-email-bad#6b702dc7",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "bg-email-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-email-good#e42808a9",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "bg-email-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-encrypt-bad#57e988e1",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "bg-encrypt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-encrypt-good#d508bd58",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "bg-encrypt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-link-bad#2757d4ea",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "bg-link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-link-good#1ef8fbbd",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "bg-link-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-passphrase-bad#cc9cda26",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "bg-passphrase-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-passphrase-good#55aacc0b",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "bg-passphrase-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-password-bad#cdaff119",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "bg-password-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-password-good#8b52a40e",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "bg-password-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-secret-created-good#c6051398",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "bg-secret-created-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-secret-informal-bad#bd906d47",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "bg-secret-informal-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-view-bad#ec589de3",
+      "json_pointer": "/terms/7/examples/1/id",
+      "key": "bg-view-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "ex.bg-view-good#3c1c5e01",
+      "json_pointer": "/terms/7/examples/0/id",
+      "key": "bg-view-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.burn-ar-bad#32a14a8e",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "burn-ar-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.burn-ar-good#e7a88b0a",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "burn-ar-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.burn-bad#4228df6b",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "burn-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.burn-eo-bad#15b49cf4",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "burn-eo-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.burn-eo-good#089f5752",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "burn-eo-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.burn-good#4bf35a91",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "burn-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-burn-bad#2c40cacc",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "cs-burn-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-burn-good#f26982cb",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "cs-burn-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-email-bad#b3bdd885",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "cs-email-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-email-good#8107ddbe",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "cs-email-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-encrypt-bad#1cd2cd00",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "cs-encrypt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-encrypt-good#432c330c",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "cs-encrypt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-link-bad#e5456c40",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "cs-link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-link-good#05120873",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "cs-link-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-passphrase-bad#5a0d845f",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "cs-passphrase-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-passphrase-good#b85c7e37",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "cs-passphrase-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-password-bad#22813f4b",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "cs-password-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-password-good#cf3d9571",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "cs-password-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-secret-bad#b2dacf1e",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "cs-secret-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "ex.cs-secret-good#8934f759",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "cs-secret-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-account-bad#ce635187",
+      "json_pointer": "/terms/9/examples/1/id",
+      "key": "da-account-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-account-good#62139390",
+      "json_pointer": "/terms/9/examples/0/id",
+      "key": "da-account-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-burn-bad#58783aa9",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "da-burn-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-burn-good#c7a6deb6",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "da-burn-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-email-bad#77a68ca7",
+      "json_pointer": "/terms/7/examples/1/id",
+      "key": "da-email-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-email-good#0172a3eb",
+      "json_pointer": "/terms/7/examples/0/id",
+      "key": "da-email-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-encrypt-bad#13a754db",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "da-encrypt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-encrypt-good#c301792d",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "da-encrypt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-link-bad#2406b826",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "da-link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-link-good#8b060627",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "da-link-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-passphrase-bad#8fe56e31",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "da-passphrase-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-passphrase-good#334a5d30",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "da-passphrase-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-password-bad#79fc26f9",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "da-password-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-password-good#5e33fc2b",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "da-password-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-secret-adj-bad#5cd4b493",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "da-secret-adj-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-secret-adj-good#adfffec4",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "da-secret-adj-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-secret-besked-good#c88621fd",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "da-secret-besked-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-secret-hemmelighed-bad#15bc854c",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "da-secret-hemmelighed-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-secure-bad#e89c8df6",
+      "json_pointer": "/terms/8/examples/1/id",
+      "key": "da-secure-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "ex.da-secure-good#aae1ab1e",
+      "json_pointer": "/terms/8/examples/0/id",
+      "key": "da-secure-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-burn-bad#8809bfb6",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "el-burn-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-burn-good#d1ccd8e5",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "el-burn-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-email-bad#d9ad35fe",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "el-email-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-email-good#140a569e",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "el-email-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-encrypt-bad#8de90e86",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "el-encrypt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-encrypt-good#007c98bc",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "el-encrypt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-link-bad#0c6efdb8",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "el-link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-link-good#7826a9ed",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "el-link-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-passphrase-bad#41b2bf7d",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "el-passphrase-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-passphrase-good#85ccc80c",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "el-passphrase-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-password-bad#af9d3f0e",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "el-password-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-password-good#7767d48d",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "el-password-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-secret-bad#f9b09970",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "el-secret-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "ex.el-secret-good#7e44f10e",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "el-secret-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.email-ar-bad#502767b7",
+      "json_pointer": "/terms/7/examples/1/id",
+      "key": "email-ar-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.email-ar-good#a223699d",
+      "json_pointer": "/terms/7/examples/0/id",
+      "key": "email-ar-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.email-bad#5c29e476",
+      "json_pointer": "/terms/8/examples/1/id",
+      "key": "email-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/fr_CA/glossary.yaml",
+      "id": "ex.email-ca-bad#b8f4c2e2",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "email-ca-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/fr_CA/glossary.yaml",
+      "id": "ex.email-ca-good#75bba47a",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "email-ca-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.email-eo-bad#f14d7622",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "email-eo-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.email-eo-good#f833f9a1",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "email-eo-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.email-good#9138348f",
+      "json_pointer": "/terms/8/examples/0/id",
+      "key": "email-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.encrypt-ar-bad#733c7a4c",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "encrypt-ar-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.encrypt-ar-good#809cd2fe",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "encrypt-ar-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.encrypt-bad#450020c5",
+      "json_pointer": "/terms/7/examples/1/id",
+      "key": "encrypt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.encrypt-eo-bad#4c030a54",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "encrypt-eo-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.encrypt-eo-good#3b2e4546",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "encrypt-eo-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.encrypt-good#791f7805",
+      "json_pointer": "/terms/7/examples/0/id",
+      "key": "encrypt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "ex.encrypt-pt-bad#3739406f",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "encrypt-pt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "ex.encrypt-pt-good#ef5eaa94",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "encrypt-pt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.link-ar-bad#e924b748",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "link-ar-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.link-ar-good#039b97e8",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "link-ar-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.link-bad#748809c5",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.link-eo-bad#d7e18628",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "link-eo-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.link-eo-good#6d172607",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "link-eo-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.link-good#77be696f",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "link-good",
+      "kind": "ex"
     },
     {
       "file": "locales/de_AT/glossary.yaml",
@@ -71,10 +939,346 @@
       "kind": "ex"
     },
     {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.passphrase-ar-bad#d2a8ac1a",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "passphrase-ar-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.passphrase-ar-good#d05796a6",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "passphrase-ar-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.passphrase-bad#b2e929e0",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "passphrase-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.passphrase-eo-bad#77a18aea",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "passphrase-eo-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.passphrase-eo-good#5de3e893",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "passphrase-eo-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.passphrase-good#c9b8d63f",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "passphrase-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.password-ar-bad#8bb34a0b",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "password-ar-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.password-ar-good#a2b33525",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "password-ar-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.password-bad#83a8f72f",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "password-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.password-eo-bad#173fed0d",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "password-eo-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.password-eo-good#251da90f",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "password-eo-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.password-good#ed4d76e5",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "password-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "ex.password-pt-bad#07c9b67f",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "password-pt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "ex.password-pt-good#1d706f6e",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "password-pt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/de/glossary.yaml",
+      "id": "ex.payload-bad#cb733e1d",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "payload-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/de/glossary.yaml",
+      "id": "ex.payload-good#b71c6282",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "payload-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-burn-bad#781d4f89",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "ru-burn-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-burn-good#5d56c53f",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "ru-burn-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-email-bad#7231f692",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "ru-email-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-email-good#83ba8072",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "ru-email-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-encrypt-bad#af1753f8",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "ru-encrypt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-encrypt-good#218e9a77",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "ru-encrypt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-link-bad#4cc26fc6",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "ru-link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-link-good#f5170486",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "ru-link-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-passphrase-bad#cbb5b0f4",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "ru-passphrase-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-passphrase-good#72bc3670",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "ru-passphrase-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-password-bad#f638c4fb",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "ru-password-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-password-good#666f89a8",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "ru-password-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-secret-bad#bd4ed190",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "ru-secret-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "ex.ru-secret-good#cfa43bd9",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "ru-secret-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.secret-adj-ar-bad#a3b42fcc",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "secret-adj-ar-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.secret-adj-ar-good#79cfea86",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "secret-adj-ar-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/mi_NZ/glossary.yaml",
+      "id": "ex.secret-adj-bad#ccab3c56",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "secret-adj-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/mi_NZ/glossary.yaml",
+      "id": "ex.secret-adj-good#10b14bad",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "secret-adj-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.secret-adjective-bad#0ad15f16",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "secret-adjective-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/nl/glossary.yaml",
+      "id": "ex.secret-adjective-bad#9e2f01b7",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "secret-adjective-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/nl/glossary.yaml",
+      "id": "ex.secret-adjective-good#7c1d5a40",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "secret-adjective-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.secret-adjective-good#d1b19ed2",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "secret-adjective-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.secret-ar-bad#15c07d9e",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-ar-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "ex.secret-ar-good#8b8e9f9a",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "secret-ar-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/mi_NZ/glossary.yaml",
+      "id": "ex.secret-bad#36c87b0a",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ja/glossary.yaml",
+      "id": "ex.secret-casual-bad#297307d4",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-casual-bad",
+      "kind": "ex"
+    },
+    {
       "file": "locales/de_AT/glossary.yaml",
       "id": "ex.secret-created#e4355c4f",
       "json_pointer": "/terms/0/examples/0/id",
       "key": "secret-created",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/vi/glossary.yaml",
+      "id": "ex.secret-created-bad#93b6aa32",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-created-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.secret-created-good#0492a4bc",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "secret-created-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.secret-eo-bad#eba80e66",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-eo-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "ex.secret-eo-good#c24bc788",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "secret-eo-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/pl/glossary.yaml",
+      "id": "ex.secret-formal-bad#c6306bcd",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-formal-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/nl/glossary.yaml",
+      "id": "ex.secret-geheim-bad#250567fe",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-geheim-bad",
       "kind": "ex"
     },
     {
@@ -85,6 +1289,13 @@
       "kind": "ex"
     },
     {
+      "file": "locales/mi_NZ/glossary.yaml",
+      "id": "ex.secret-good#d81de1d4",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "secret-good",
+      "kind": "ex"
+    },
+    {
       "file": "locales/de_AT/glossary.yaml",
       "id": "ex.secret-informal#40c23f2d",
       "json_pointer": "/terms/0/examples/2/id",
@@ -92,11 +1303,522 @@
       "kind": "ex"
     },
     {
+      "file": "locales/sl_SI/glossary.yaml",
+      "id": "ex.secret-informal-bad#250567fe",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-informal-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.secret-link-bad#ce81861f",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "secret-link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.secret-link-good#48e437df",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "secret-link-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.secret-mimi-bad#8ae96971",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-mimi-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/tr/glossary.yaml",
+      "id": "ex.secret-sir-bad#250567fe",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "secret-sir-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/vi/glossary.yaml",
+      "id": "ex.secure-bad#fc1e2db0",
+      "json_pointer": "/terms/9/examples/1/id",
+      "key": "secure-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/vi/glossary.yaml",
+      "id": "ex.secure-good#87313cf3",
+      "json_pointer": "/terms/9/examples/0/id",
+      "key": "secure-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "ex.share-pt-bad#20dbcd2c",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "share-pt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "ex.share-pt-good#450b0bf8",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "share-pt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-burn-bad#f9b1e46b",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "sv-burn-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-burn-good#b453b5dd",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "sv-burn-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-email-bad#7f46f2c6",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "sv-email-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-email-good#3126ee9c",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "sv-email-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-encrypt-bad#b0971de5",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "sv-encrypt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-encrypt-good#d6dbd00b",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "sv-encrypt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-link-bad#fc48f282",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "sv-link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-link-good#d7117069",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "sv-link-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-passphrase-bad#06928aa2",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "sv-passphrase-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-passphrase-good#48571f1f",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "sv-passphrase-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-password-bad#3480118c",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "sv-password-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-password-good#1a96853b",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "sv-password-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-secret-created-good#5e95e373",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "sv-secret-created-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "ex.sv-secret-formal-bad#7c64675d",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "sv-secret-formal-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-burn-bad#beee21af",
+      "json_pointer": "/terms/3/examples/1/id",
+      "key": "uk-burn-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-burn-good#2dd01fb1",
+      "json_pointer": "/terms/3/examples/0/id",
+      "key": "uk-burn-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-email-bad#874d9899",
+      "json_pointer": "/terms/6/examples/1/id",
+      "key": "uk-email-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-email-good#a342d634",
+      "json_pointer": "/terms/6/examples/0/id",
+      "key": "uk-email-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-encrypt-bad#d15fb7b2",
+      "json_pointer": "/terms/5/examples/1/id",
+      "key": "uk-encrypt-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-encrypt-good#fe4b74cc",
+      "json_pointer": "/terms/5/examples/0/id",
+      "key": "uk-encrypt-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-link-bad#08560f54",
+      "json_pointer": "/terms/4/examples/1/id",
+      "key": "uk-link-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-link-good#733cc71a",
+      "json_pointer": "/terms/4/examples/0/id",
+      "key": "uk-link-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-passphrase-bad#33953ae2",
+      "json_pointer": "/terms/1/examples/1/id",
+      "key": "uk-passphrase-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-passphrase-good#d847753a",
+      "json_pointer": "/terms/1/examples/0/id",
+      "key": "uk-passphrase-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-password-bad#8c30c587",
+      "json_pointer": "/terms/2/examples/1/id",
+      "key": "uk-password-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-password-good#c33e0e3c",
+      "json_pointer": "/terms/2/examples/0/id",
+      "key": "uk-password-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-secret-created-good#88891f6b",
+      "json_pointer": "/terms/0/examples/0/id",
+      "key": "uk-secret-created-good",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "ex.uk-secret-informal-bad#6c34a4bc",
+      "json_pointer": "/terms/0/examples/1/id",
+      "key": "uk-secret-informal-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/ar/glossary.yaml",
+      "id": "glossary.ar",
+      "json_pointer": "/id",
+      "key": "glossary.ar",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "glossary.bg",
+      "json_pointer": "/id",
+      "key": "glossary.bg",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/ca_ES/glossary.yaml",
+      "id": "glossary.ca_ES",
+      "json_pointer": "/id",
+      "key": "glossary.ca_ES",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/cs/glossary.yaml",
+      "id": "glossary.cs",
+      "json_pointer": "/id",
+      "key": "glossary.cs",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/da_DK/glossary.yaml",
+      "id": "glossary.da_DK",
+      "json_pointer": "/id",
+      "key": "glossary.da_DK",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/de/glossary.yaml",
+      "id": "glossary.de",
+      "json_pointer": "/id",
+      "key": "glossary.de",
+      "kind": "glossary"
+    },
+    {
       "file": "locales/de_AT/glossary.yaml",
       "id": "glossary.de_AT",
       "json_pointer": "/id",
       "key": "glossary.de_AT",
       "kind": "glossary"
+    },
+    {
+      "file": "locales/el_GR/glossary.yaml",
+      "id": "glossary.el_GR",
+      "json_pointer": "/id",
+      "key": "glossary.el_GR",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/eo/glossary.yaml",
+      "id": "glossary.eo",
+      "json_pointer": "/id",
+      "key": "glossary.eo",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/es/glossary.yaml",
+      "id": "glossary.es",
+      "json_pointer": "/id",
+      "key": "glossary.es",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/fr/glossary.yaml",
+      "id": "glossary.fr",
+      "json_pointer": "/id",
+      "key": "glossary.fr",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/fr_CA/glossary.yaml",
+      "id": "glossary.fr_CA",
+      "json_pointer": "/id",
+      "key": "glossary.fr_CA",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/fr_FR/glossary.yaml",
+      "id": "glossary.fr_FR",
+      "json_pointer": "/id",
+      "key": "glossary.fr_FR",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/he/glossary.yaml",
+      "id": "glossary.he",
+      "json_pointer": "/id",
+      "key": "glossary.he",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/hu/glossary.yaml",
+      "id": "glossary.hu",
+      "json_pointer": "/id",
+      "key": "glossary.hu",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/it_IT/glossary.yaml",
+      "id": "glossary.it_IT",
+      "json_pointer": "/id",
+      "key": "glossary.it_IT",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/ja/glossary.yaml",
+      "id": "glossary.ja",
+      "json_pointer": "/id",
+      "key": "glossary.ja",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/ko/glossary.yaml",
+      "id": "glossary.ko",
+      "json_pointer": "/id",
+      "key": "glossary.ko",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/mi_NZ/glossary.yaml",
+      "id": "glossary.mi_NZ",
+      "json_pointer": "/id",
+      "key": "glossary.mi_NZ",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/nl/glossary.yaml",
+      "id": "glossary.nl",
+      "json_pointer": "/id",
+      "key": "glossary.nl",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/pl/glossary.yaml",
+      "id": "glossary.pl",
+      "json_pointer": "/id",
+      "key": "glossary.pl",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/pt/glossary.yaml",
+      "id": "glossary.pt",
+      "json_pointer": "/id",
+      "key": "glossary.pt",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/pt_BR/glossary.yaml",
+      "id": "glossary.pt_BR",
+      "json_pointer": "/id",
+      "key": "glossary.pt_BR",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "glossary.pt_PT",
+      "json_pointer": "/id",
+      "key": "glossary.pt_PT",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/ru/glossary.yaml",
+      "id": "glossary.ru",
+      "json_pointer": "/id",
+      "key": "glossary.ru",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/sl_SI/glossary.yaml",
+      "id": "glossary.sl_SI",
+      "json_pointer": "/id",
+      "key": "glossary.sl_SI",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/sv_SE/glossary.yaml",
+      "id": "glossary.sv_SE",
+      "json_pointer": "/id",
+      "key": "glossary.sv_SE",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/tr/glossary.yaml",
+      "id": "glossary.tr",
+      "json_pointer": "/id",
+      "key": "glossary.tr",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/uk/glossary.yaml",
+      "id": "glossary.uk",
+      "json_pointer": "/id",
+      "key": "glossary.uk",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/vi/glossary.yaml",
+      "id": "glossary.vi",
+      "json_pointer": "/id",
+      "key": "glossary.vi",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "glossary.zh",
+      "json_pointer": "/id",
+      "key": "glossary.zh",
+      "kind": "glossary"
+    },
+    {
+      "file": "locales/ar/register.yaml",
+      "id": "register.ar",
+      "json_pointer": "/id",
+      "key": "register.ar",
+      "kind": "register"
+    },
+    {
+      "file": "locales/bg/register.yaml",
+      "id": "register.bg",
+      "json_pointer": "/id",
+      "key": "register.bg",
+      "kind": "register"
+    },
+    {
+      "file": "locales/ca_ES/register.yaml",
+      "id": "register.ca_ES",
+      "json_pointer": "/id",
+      "key": "register.ca_ES",
+      "kind": "register"
+    },
+    {
+      "file": "locales/cs/register.yaml",
+      "id": "register.cs",
+      "json_pointer": "/id",
+      "key": "register.cs",
+      "kind": "register"
+    },
+    {
+      "file": "locales/da_DK/register.yaml",
+      "id": "register.da_DK",
+      "json_pointer": "/id",
+      "key": "register.da_DK",
+      "kind": "register"
+    },
+    {
+      "file": "locales/de/register.yaml",
+      "id": "register.de",
+      "json_pointer": "/id",
+      "key": "register.de",
+      "kind": "register"
     },
     {
       "file": "locales/de_AT/register.yaml",
@@ -110,6 +1832,300 @@
       "id": "register.de_AT.formality",
       "json_pointer": "/rules/0/id",
       "key": "register.de_AT.formality",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/el_GR/register.yaml",
+      "id": "register.el_GR",
+      "json_pointer": "/id",
+      "key": "register.el_GR",
+      "kind": "register"
+    },
+    {
+      "file": "locales/el_GR/rules.yaml",
+      "id": "register.el_GR.formality",
+      "json_pointer": "/rules/0/id",
+      "key": "register.el_GR.formality",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/eo/register.yaml",
+      "id": "register.eo",
+      "json_pointer": "/id",
+      "key": "register.eo",
+      "kind": "register"
+    },
+    {
+      "file": "locales/es/register.yaml",
+      "id": "register.es",
+      "json_pointer": "/id",
+      "key": "register.es",
+      "kind": "register"
+    },
+    {
+      "file": "locales/fr/register.yaml",
+      "id": "register.fr",
+      "json_pointer": "/id",
+      "key": "register.fr",
+      "kind": "register"
+    },
+    {
+      "file": "locales/fr/rules.yaml",
+      "id": "register.fr.formality",
+      "json_pointer": "/rules/0/id",
+      "key": "register.fr.formality",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/fr_CA/register.yaml",
+      "id": "register.fr_CA",
+      "json_pointer": "/id",
+      "key": "register.fr_CA",
+      "kind": "register"
+    },
+    {
+      "file": "locales/fr_FR/register.yaml",
+      "id": "register.fr_FR",
+      "json_pointer": "/id",
+      "key": "register.fr_FR",
+      "kind": "register"
+    },
+    {
+      "file": "locales/he/register.yaml",
+      "id": "register.he",
+      "json_pointer": "/id",
+      "key": "register.he",
+      "kind": "register"
+    },
+    {
+      "file": "locales/hu/register.yaml",
+      "id": "register.hu",
+      "json_pointer": "/id",
+      "key": "register.hu",
+      "kind": "register"
+    },
+    {
+      "file": "locales/it_IT/register.yaml",
+      "id": "register.it_IT",
+      "json_pointer": "/id",
+      "key": "register.it_IT",
+      "kind": "register"
+    },
+    {
+      "file": "locales/ja/register.yaml",
+      "id": "register.ja",
+      "json_pointer": "/id",
+      "key": "register.ja",
+      "kind": "register"
+    },
+    {
+      "file": "locales/ko/register.yaml",
+      "id": "register.ko",
+      "json_pointer": "/id",
+      "key": "register.ko",
+      "kind": "register"
+    },
+    {
+      "file": "locales/mi_NZ/register.yaml",
+      "id": "register.mi_NZ",
+      "json_pointer": "/id",
+      "key": "register.mi_NZ",
+      "kind": "register"
+    },
+    {
+      "file": "locales/nl/register.yaml",
+      "id": "register.nl",
+      "json_pointer": "/id",
+      "key": "register.nl",
+      "kind": "register"
+    },
+    {
+      "file": "locales/nl/rules.yaml",
+      "id": "register.nl.formality",
+      "json_pointer": "/rules/0/id",
+      "key": "register.nl.formality",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pl/register.yaml",
+      "id": "register.pl",
+      "json_pointer": "/id",
+      "key": "register.pl",
+      "kind": "register"
+    },
+    {
+      "file": "locales/pl/rules.yaml",
+      "id": "register.pl.informality",
+      "json_pointer": "/rules/0/id",
+      "key": "register.pl.informality",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt/register.yaml",
+      "id": "register.pt",
+      "json_pointer": "/id",
+      "key": "register.pt",
+      "kind": "register"
+    },
+    {
+      "file": "locales/pt/rules.yaml",
+      "id": "register.pt.formality",
+      "json_pointer": "/rules/0/id",
+      "key": "register.pt.formality",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt_BR/register.yaml",
+      "id": "register.pt_BR",
+      "json_pointer": "/id",
+      "key": "register.pt_BR",
+      "kind": "register"
+    },
+    {
+      "file": "locales/pt_PT/register.yaml",
+      "id": "register.pt_PT",
+      "json_pointer": "/id",
+      "key": "register.pt_PT",
+      "kind": "register"
+    },
+    {
+      "file": "locales/ru/register.yaml",
+      "id": "register.ru",
+      "json_pointer": "/id",
+      "key": "register.ru",
+      "kind": "register"
+    },
+    {
+      "file": "locales/sl_SI/register.yaml",
+      "id": "register.sl_SI",
+      "json_pointer": "/id",
+      "key": "register.sl_SI",
+      "kind": "register"
+    },
+    {
+      "file": "locales/sl_SI/rules.yaml",
+      "id": "register.sl_SI.formality",
+      "json_pointer": "/rules/0/id",
+      "key": "register.sl_SI.formality",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sv_SE/register.yaml",
+      "id": "register.sv_SE",
+      "json_pointer": "/id",
+      "key": "register.sv_SE",
+      "kind": "register"
+    },
+    {
+      "file": "locales/tr/register.yaml",
+      "id": "register.tr",
+      "json_pointer": "/id",
+      "key": "register.tr",
+      "kind": "register"
+    },
+    {
+      "file": "locales/uk/register.yaml",
+      "id": "register.uk",
+      "json_pointer": "/id",
+      "key": "register.uk",
+      "kind": "register"
+    },
+    {
+      "file": "locales/vi/register.yaml",
+      "id": "register.vi",
+      "json_pointer": "/id",
+      "key": "register.vi",
+      "kind": "register"
+    },
+    {
+      "file": "locales/zh/register.yaml",
+      "id": "register.zh",
+      "json_pointer": "/id",
+      "key": "register.zh",
+      "kind": "register"
+    },
+    {
+      "file": "locales/ar/rules.yaml",
+      "id": "rule.ar-acronyms-latin",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.ar-acronyms-latin",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ar/rules.yaml",
+      "id": "rule.ar-address-masculine",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.ar-address-masculine",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ar/rules.yaml",
+      "id": "rule.ar-burn-final-deletion",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.ar-burn-final-deletion",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ar/rules.yaml",
+      "id": "rule.ar-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.ar-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ar/rules.yaml",
+      "id": "rule.ar-register-msa",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.ar-register-msa",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ar/rules.yaml",
+      "id": "rule.ar-secret-sirr",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.ar-secret-sirr",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/bg/rules.yaml",
+      "id": "rule.bg-burn-deletion-clarity",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.bg-burn-deletion-clarity",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/bg/rules.yaml",
+      "id": "rule.bg-imperative-buttons",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.bg-imperative-buttons",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/bg/rules.yaml",
+      "id": "rule.bg-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.bg-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/bg/rules.yaml",
+      "id": "rule.bg-pluralization",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.bg-pluralization",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/bg/rules.yaml",
+      "id": "rule.bg-register-formal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.bg-register-formal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/bg/rules.yaml",
+      "id": "rule.bg-secret-tayna-not-sekret",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.bg-secret-tayna-not-sekret",
       "kind": "rules"
     },
     {
@@ -127,10 +2143,136 @@
       "kind": "rules"
     },
     {
-      "file": "locales/de/rules.yaml",
-      "id": "rule.de-sie",
+      "file": "locales/ca_ES/rules.yaml",
+      "id": "rule.ca_ES-burn-destruir",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.ca_ES-burn-destruir",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ca_ES/rules.yaml",
+      "id": "rule.ca_ES-encrypt-xifrar",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.ca_ES-encrypt-xifrar",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ca_ES/rules.yaml",
+      "id": "rule.ca_ES-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.ca_ES-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ca_ES/rules.yaml",
+      "id": "rule.ca_ES-register-informal",
       "json_pointer": "/rules/0/id",
-      "key": "rule.de-sie",
+      "key": "rule.ca_ES-register-informal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/cs/rules.yaml",
+      "id": "rule.cs-burn-trvale-smazat",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.cs-burn-trvale-smazat",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/cs/rules.yaml",
+      "id": "rule.cs-diacritics",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.cs-diacritics",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/cs/rules.yaml",
+      "id": "rule.cs-imperative-buttons",
+      "json_pointer": "/rules/6/id",
+      "key": "rule.cs-imperative-buttons",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/cs/rules.yaml",
+      "id": "rule.cs-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.cs-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/cs/rules.yaml",
+      "id": "rule.cs-pluralization",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.cs-pluralization",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/cs/rules.yaml",
+      "id": "rule.cs-register-informal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.cs-register-informal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/cs/rules.yaml",
+      "id": "rule.cs-secret-not-message",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.cs-secret-not-message",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/da_DK/rules.yaml",
+      "id": "rule.da-burn-oedelaeg",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.da-burn-oedelaeg",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/da_DK/rules.yaml",
+      "id": "rule.da-compound-hyphen",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.da-compound-hyphen",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/da_DK/rules.yaml",
+      "id": "rule.da-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.da-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/da_DK/rules.yaml",
+      "id": "rule.da-register-informal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.da-register-informal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/da_DK/rules.yaml",
+      "id": "rule.da-secret-besked",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.da-secret-besked",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/da_DK/rules.yaml",
+      "id": "rule.da-voice-imperative-status",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.da-voice-imperative-status",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/de/rules.yaml",
+      "id": "rule.de-du",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.de-du",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/de/rules.yaml",
+      "id": "rule.de-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.de-passphrase-password",
       "kind": "rules"
     },
     {
@@ -138,6 +2280,272 @@
       "id": "rule.destructive-action-object",
       "json_pointer": "/rules/7/id",
       "key": "rule.destructive-action-object",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/el_GR/rules.yaml",
+      "id": "rule.el-burn-oristiki-diagrafi",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.el-burn-oristiki-diagrafi",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/el_GR/rules.yaml",
+      "id": "rule.el-monotonic-accents",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.el-monotonic-accents",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/el_GR/rules.yaml",
+      "id": "rule.el-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.el-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/eo/rules.yaml",
+      "id": "rule.eo-accusative",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.eo-accusative",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/eo/rules.yaml",
+      "id": "rule.eo-address-vi",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.eo-address-vi",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/eo/rules.yaml",
+      "id": "rule.eo-burn-forbruligi",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.eo-burn-forbruligi",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/eo/rules.yaml",
+      "id": "rule.eo-diacritics",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.eo-diacritics",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/eo/rules.yaml",
+      "id": "rule.eo-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.eo-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/eo/rules.yaml",
+      "id": "rule.eo-verb-forms",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.eo-verb-forms",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/es/rules.yaml",
+      "id": "rule.es-burn-destruir",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.es-burn-destruir",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/es/rules.yaml",
+      "id": "rule.es-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.es-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/es/rules.yaml",
+      "id": "rule.es-register-informal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.es-register-informal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/fr/rules.yaml",
+      "id": "rule.fr-infinitive-buttons",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.fr-infinitive-buttons",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/fr/rules.yaml",
+      "id": "rule.fr-passphrase-password",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.fr-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/fr/rules.yaml",
+      "id": "rule.fr-punctuation-nbsp",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.fr-punctuation-nbsp",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/fr_CA/rules.yaml",
+      "id": "rule.fr_CA-courriel",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.fr_CA-courriel",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/he/rules.yaml",
+      "id": "rule.he-burn-permanent-deletion",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.he-burn-permanent-deletion",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/he/rules.yaml",
+      "id": "rule.he-button-imperative",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.he-button-imperative",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/he/rules.yaml",
+      "id": "rule.he-no-niqqud",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.he-no-niqqud",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/he/rules.yaml",
+      "id": "rule.he-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.he-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/he/rules.yaml",
+      "id": "rule.he-register-gender",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.he-register-gender",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/he/rules.yaml",
+      "id": "rule.he-secret-sod",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.he-secret-sod",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/hu/rules.yaml",
+      "id": "rule.hu-burn-permanent-deletion",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.hu-burn-permanent-deletion",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/hu/rules.yaml",
+      "id": "rule.hu-diacritics-vowel-harmony",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.hu-diacritics-vowel-harmony",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/hu/rules.yaml",
+      "id": "rule.hu-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.hu-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/hu/rules.yaml",
+      "id": "rule.hu-register-formal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.hu-register-formal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/it_IT/rules.yaml",
+      "id": "rule.it-active-passive-voice",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.it-active-passive-voice",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/it_IT/rules.yaml",
+      "id": "rule.it-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.it-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/it_IT/rules.yaml",
+      "id": "rule.it-register-informal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.it-register-informal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/it_IT/rules.yaml",
+      "id": "rule.it-secret-noun",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.it-secret-noun",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ja/rules.yaml",
+      "id": "rule.ja-button-imperative",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.ja-button-imperative",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ja/rules.yaml",
+      "id": "rule.ja-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.ja-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ja/rules.yaml",
+      "id": "rule.ja-register-teineigo",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.ja-register-teineigo",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ja/rules.yaml",
+      "id": "rule.ja-secret-katakana",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.ja-secret-katakana",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ko/rules.yaml",
+      "id": "rule.ko-button-imperative",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.ko-button-imperative",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ko/rules.yaml",
+      "id": "rule.ko-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.ko-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ko/rules.yaml",
+      "id": "rule.ko-register-politeness",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.ko-register-politeness",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ko/rules.yaml",
+      "id": "rule.ko-secret-message",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.ko-secret-message",
       "kind": "rules"
     },
     {
@@ -155,6 +2563,83 @@
       "kind": "rules"
     },
     {
+      "file": "locales/mi_NZ/rules.yaml",
+      "id": "rule.mi_NZ-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.mi_NZ-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/mi_NZ/rules.yaml",
+      "id": "rule.mi_NZ-register-number",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.mi_NZ-register-number",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/mi_NZ/rules.yaml",
+      "id": "rule.mi_NZ-secret-karere-huna",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.mi_NZ-secret-karere-huna",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/mi_NZ/rules.yaml",
+      "id": "rule.mi_NZ-voice-imperative-status",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.mi_NZ-voice-imperative-status",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/nl/rules.yaml",
+      "id": "rule.nl-active-passive-voice",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.nl-active-passive-voice",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/nl/rules.yaml",
+      "id": "rule.nl-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.nl-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/nl/rules.yaml",
+      "id": "rule.nl-secret-noun",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.nl-secret-noun",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pl/rules.yaml",
+      "id": "rule.pl-imperative-buttons",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.pl-imperative-buttons",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pl/rules.yaml",
+      "id": "rule.pl-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.pl-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pl/rules.yaml",
+      "id": "rule.pl-pluralization",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.pl-pluralization",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pl/rules.yaml",
+      "id": "rule.pl-secret-not-message",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.pl-secret-not-message",
+      "kind": "rules"
+    },
+    {
       "file": "base.yaml",
       "id": "rule.pluralization-syntax",
       "json_pointer": "/rules/3/id",
@@ -169,10 +2654,108 @@
       "kind": "rules"
     },
     {
+      "file": "locales/pt/rules.yaml",
+      "id": "rule.pt-imperative-buttons",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.pt-imperative-buttons",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt/rules.yaml",
+      "id": "rule.pt-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.pt-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt/rules.yaml",
+      "id": "rule.pt-secret-confidencial",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.pt-secret-confidencial",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt_PT/rules.yaml",
+      "id": "rule.pt_PT-encriptar",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.pt_PT-encriptar",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt_PT/rules.yaml",
+      "id": "rule.pt_PT-palavra-passe",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.pt_PT-palavra-passe",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt_PT/rules.yaml",
+      "id": "rule.pt_PT-partilhar",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.pt_PT-partilhar",
+      "kind": "rules"
+    },
+    {
       "file": "base.yaml",
       "id": "rule.register-lock",
       "json_pointer": "/rules/0/id",
       "key": "rule.register-lock",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rule.ru-burn-unichtozhit",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.ru-burn-unichtozhit",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rule.ru-gender-agreement",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.ru-gender-agreement",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rule.ru-imperative-buttons",
+      "json_pointer": "/rules/7/id",
+      "key": "rule.ru-imperative-buttons",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rule.ru-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.ru-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rule.ru-pluralization",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.ru-pluralization",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rule.ru-register-formal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.ru-register-formal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rule.ru-secret-not-taina",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.ru-secret-not-taina",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rule.ru-yo-letter",
+      "json_pointer": "/rules/6/id",
+      "key": "rule.ru-yo-letter",
       "kind": "rules"
     },
     {
@@ -183,10 +2766,269 @@
       "kind": "rules"
     },
     {
+      "file": "locales/sl_SI/rules.yaml",
+      "id": "rule.sl_SI-imperative-buttons",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.sl_SI-imperative-buttons",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sl_SI/rules.yaml",
+      "id": "rule.sl_SI-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.sl_SI-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sl_SI/rules.yaml",
+      "id": "rule.sl_SI-pluralization",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.sl_SI-pluralization",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sl_SI/rules.yaml",
+      "id": "rule.sl_SI-secret-not-message",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.sl_SI-secret-not-message",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sv_SE/rules.yaml",
+      "id": "rule.sv-active-imperative-voice",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.sv-active-imperative-voice",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sv_SE/rules.yaml",
+      "id": "rule.sv-burn-radera-permanent",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.sv-burn-radera-permanent",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sv_SE/rules.yaml",
+      "id": "rule.sv-compound-words",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.sv-compound-words",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sv_SE/rules.yaml",
+      "id": "rule.sv-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.sv-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sv_SE/rules.yaml",
+      "id": "rule.sv-register-informal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.sv-register-informal",
+      "kind": "rules"
+    },
+    {
       "file": "base.yaml",
       "id": "rule.terminology-consistency",
       "json_pointer": "/rules/6/id",
       "key": "rule.terminology-consistency",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/tr/rules.yaml",
+      "id": "rule.tr-active-passive-voice",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.tr-active-passive-voice",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/tr/rules.yaml",
+      "id": "rule.tr-burn-yak",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.tr-burn-yak",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/tr/rules.yaml",
+      "id": "rule.tr-passphrase-password",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.tr-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/tr/rules.yaml",
+      "id": "rule.tr-register-formal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.tr-register-formal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/tr/rules.yaml",
+      "id": "rule.tr-secret-noun",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.tr-secret-noun",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/uk/rules.yaml",
+      "id": "rule.uk-gender-case-agreement",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.uk-gender-case-agreement",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/uk/rules.yaml",
+      "id": "rule.uk-imperative-buttons",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.uk-imperative-buttons",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/uk/rules.yaml",
+      "id": "rule.uk-passphrase-password",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.uk-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/uk/rules.yaml",
+      "id": "rule.uk-pluralization",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.uk-pluralization",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/uk/rules.yaml",
+      "id": "rule.uk-register-formal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.uk-register-formal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/uk/rules.yaml",
+      "id": "rule.uk-secret-not-sekret",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.uk-secret-not-sekret",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/vi/rules.yaml",
+      "id": "rule.vi-burn-xoa-vinh-vien",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.vi-burn-xoa-vinh-vien",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/vi/rules.yaml",
+      "id": "rule.vi-diacritics-tones",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.vi-diacritics-tones",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/vi/rules.yaml",
+      "id": "rule.vi-message-voice",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.vi-message-voice",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/vi/rules.yaml",
+      "id": "rule.vi-passphrase-password",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.vi-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/vi/rules.yaml",
+      "id": "rule.vi-register-ban",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.vi-register-ban",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/vi/rules.yaml",
+      "id": "rule.vi-secret-bi-mat",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.vi-secret-bi-mat",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/zh/rules.yaml",
+      "id": "rule.zh-burn-xiaohui",
+      "json_pointer": "/rules/4/id",
+      "key": "rule.zh-burn-xiaohui",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/zh/rules.yaml",
+      "id": "rule.zh-passphrase-password",
+      "json_pointer": "/rules/3/id",
+      "key": "rule.zh-passphrase-password",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/zh/rules.yaml",
+      "id": "rule.zh-punctuation-no-exclamation",
+      "json_pointer": "/rules/5/id",
+      "key": "rule.zh-punctuation-no-exclamation",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/zh/rules.yaml",
+      "id": "rule.zh-register-formal",
+      "json_pointer": "/rules/0/id",
+      "key": "rule.zh-register-formal",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/zh/rules.yaml",
+      "id": "rule.zh-secret-link",
+      "json_pointer": "/rules/2/id",
+      "key": "rule.zh-secret-link",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/zh/rules.yaml",
+      "id": "rule.zh-secret-no-mimi",
+      "json_pointer": "/rules/1/id",
+      "key": "rule.zh-secret-no-mimi",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ar/rules.yaml",
+      "id": "rules.ar",
+      "json_pointer": "/id",
+      "key": "rules.ar",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/bg/rules.yaml",
+      "id": "rules.bg",
+      "json_pointer": "/id",
+      "key": "rules.bg",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ca_ES/rules.yaml",
+      "id": "rules.ca_ES",
+      "json_pointer": "/id",
+      "key": "rules.ca_ES",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/cs/rules.yaml",
+      "id": "rules.cs",
+      "json_pointer": "/id",
+      "key": "rules.cs",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/da_DK/rules.yaml",
+      "id": "rules.da_DK",
+      "json_pointer": "/id",
+      "key": "rules.da_DK",
       "kind": "rules"
     },
     {
@@ -204,7 +3046,259 @@
       "kind": "rules"
     },
     {
-      "file": "locales/de_AT/glossary.yaml",
+      "file": "locales/el_GR/rules.yaml",
+      "id": "rules.el_GR",
+      "json_pointer": "/id",
+      "key": "rules.el_GR",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/eo/rules.yaml",
+      "id": "rules.eo",
+      "json_pointer": "/id",
+      "key": "rules.eo",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/es/rules.yaml",
+      "id": "rules.es",
+      "json_pointer": "/id",
+      "key": "rules.es",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/fr/rules.yaml",
+      "id": "rules.fr",
+      "json_pointer": "/id",
+      "key": "rules.fr",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/fr_CA/rules.yaml",
+      "id": "rules.fr_CA",
+      "json_pointer": "/id",
+      "key": "rules.fr_CA",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/fr_FR/rules.yaml",
+      "id": "rules.fr_FR",
+      "json_pointer": "/id",
+      "key": "rules.fr_FR",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/he/rules.yaml",
+      "id": "rules.he",
+      "json_pointer": "/id",
+      "key": "rules.he",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/hu/rules.yaml",
+      "id": "rules.hu",
+      "json_pointer": "/id",
+      "key": "rules.hu",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/it_IT/rules.yaml",
+      "id": "rules.it_IT",
+      "json_pointer": "/id",
+      "key": "rules.it_IT",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ja/rules.yaml",
+      "id": "rules.ja",
+      "json_pointer": "/id",
+      "key": "rules.ja",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ko/rules.yaml",
+      "id": "rules.ko",
+      "json_pointer": "/id",
+      "key": "rules.ko",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/mi_NZ/rules.yaml",
+      "id": "rules.mi_NZ",
+      "json_pointer": "/id",
+      "key": "rules.mi_NZ",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/nl/rules.yaml",
+      "id": "rules.nl",
+      "json_pointer": "/id",
+      "key": "rules.nl",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pl/rules.yaml",
+      "id": "rules.pl",
+      "json_pointer": "/id",
+      "key": "rules.pl",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt/rules.yaml",
+      "id": "rules.pt",
+      "json_pointer": "/id",
+      "key": "rules.pt",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt_BR/rules.yaml",
+      "id": "rules.pt_BR",
+      "json_pointer": "/id",
+      "key": "rules.pt_BR",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/pt_PT/rules.yaml",
+      "id": "rules.pt_PT",
+      "json_pointer": "/id",
+      "key": "rules.pt_PT",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/ru/rules.yaml",
+      "id": "rules.ru",
+      "json_pointer": "/id",
+      "key": "rules.ru",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sl_SI/rules.yaml",
+      "id": "rules.sl_SI",
+      "json_pointer": "/id",
+      "key": "rules.sl_SI",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/sv_SE/rules.yaml",
+      "id": "rules.sv_SE",
+      "json_pointer": "/id",
+      "key": "rules.sv_SE",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/tr/rules.yaml",
+      "id": "rules.tr",
+      "json_pointer": "/id",
+      "key": "rules.tr",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/uk/rules.yaml",
+      "id": "rules.uk",
+      "json_pointer": "/id",
+      "key": "rules.uk",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/vi/rules.yaml",
+      "id": "rules.vi",
+      "json_pointer": "/id",
+      "key": "rules.vi",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/zh/rules.yaml",
+      "id": "rules.zh",
+      "json_pointer": "/id",
+      "key": "rules.zh",
+      "kind": "rules"
+    },
+    {
+      "file": "locales/vi/glossary.yaml",
+      "id": "term.account#3a541ed7",
+      "json_pointer": "/terms/8/id",
+      "key": "account",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.burn#8a886c8d",
+      "json_pointer": "/terms/5/id",
+      "key": "burn",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.email#8c4fb076",
+      "json_pointer": "/terms/8/id",
+      "key": "email",
+      "kind": "term"
+    },
+    {
+      "file": "locales/fr_CA/glossary.yaml",
+      "id": "term.email_ca#287480a5",
+      "json_pointer": "/terms/0/id",
+      "key": "email_ca",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.encrypt#a4d3564b",
+      "json_pointer": "/terms/7/id",
+      "key": "encrypt",
+      "kind": "term"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "term.encrypt_pt#4c804385",
+      "json_pointer": "/terms/1/id",
+      "key": "encrypt_pt",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.link#b48578dd",
+      "json_pointer": "/terms/6/id",
+      "key": "link",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.passphrase#44591635",
+      "json_pointer": "/terms/3/id",
+      "key": "passphrase",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.password#3e4e76cc",
+      "json_pointer": "/terms/4/id",
+      "key": "password",
+      "kind": "term"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "term.password_pt#01adcfc9",
+      "json_pointer": "/terms/0/id",
+      "key": "password_pt",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.secret_adjective#a3a1d7c9",
+      "json_pointer": "/terms/1/id",
+      "key": "secret_adjective",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.secret_link#6d74a4a6",
+      "json_pointer": "/terms/2/id",
+      "key": "secret_link",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
       "id": "term.secret_object#c0902808",
       "json_pointer": "/terms/0/id",
       "key": "secret_object",
@@ -215,6 +3309,27 @@
       "id": "term.secret_payload#1687a617",
       "json_pointer": "/terms/1/id",
       "key": "secret_payload",
+      "kind": "term"
+    },
+    {
+      "file": "locales/vi/glossary.yaml",
+      "id": "term.secure#952acf0e",
+      "json_pointer": "/terms/9/id",
+      "key": "secure",
+      "kind": "term"
+    },
+    {
+      "file": "locales/pt_PT/glossary.yaml",
+      "id": "term.share_pt#043c3d4f",
+      "json_pointer": "/terms/2/id",
+      "key": "share_pt",
+      "kind": "term"
+    },
+    {
+      "file": "locales/bg/glossary.yaml",
+      "id": "term.view#7ef567df",
+      "json_pointer": "/terms/7/id",
+      "key": "view",
       "kind": "term"
     }
   ],
