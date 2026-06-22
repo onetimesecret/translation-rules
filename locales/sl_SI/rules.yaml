@@ -1,0 +1,55 @@
+id: rules.sl_SI
+source: onetimesecret/locales/guides/for-translators/sl_SI.md
+inherits: base
+merge_strategy: append
+# Slovenian locale layer. sl_SI is a standalone shipping language (no family
+# parent), so it inherits `base` directly — mirroring locales/pl/rules.yaml and
+# locales/es/rules.yaml. Unlike those informal-locked pilots, Slovenian is locked
+# to the FORMAL "vi" register. That choice is grounded in the live app content
+# (onetimesecret/locales/content/sl_SI/*.json), which uses formal 2nd-person
+# plural throughout (vaš/vaša/vaše possessives, the subject pronoun vi, and
+# vi-imperatives Vnesite/Preverite/Izberite) and contains zero informal "ti"
+# possessive (tvoj*) or object pronouns (tebe/tebi). The prose guide agrees
+# (Posebne ugotovitve: "Vljiva oblika 'vi' ... namesto neformalne 'ti'"; Voice
+# and Tone §"Polite Address Forms").
+#
+# rule.sl_SI-pluralization captures Slovenian's rare DUAL number (dvojina): three
+# count forms 1 / 2 / 3+ (dan / dni / dni), which the guide flags as critical;
+# it specialises the base rule.pluralization-syntax. The geslo / pristopna fraza
+# distinction is the single most critical terminology rule in the guide
+# (Posebne ugotovitve; Core Terminology §"Password vs Passphrase").
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live content;
+# requires native-speaker (SL) sign-off before merge — see PR label.
+rules:
+  - id: register.sl_SI.formality
+    modality: MUST
+    statement: Slovenian content uses the formal "vi" register (polite 2nd-person plural — vi / vaš / vaša / vaše, vi-imperatives) throughout product UI and email content; the informal "ti" address (tvoj* possessives, tebe/tebi object pronouns, 2nd-singular verb forms) is forbidden.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.sl_SI-pluralization
+    modality: MUST
+    statement: Express countable strings with Slovenian's three number forms — singular (1), DUAL/dvojina (2), and plural (3+) — never collapsing the dual into the plural, via vue-i18n pipe syntax.
+    severity: error
+    rule_ref: rule.pluralization-syntax
+  - id: rule.sl_SI-passphrase-password
+    modality: MUST
+    statement: Keep geslo (account login credential, neuter) distinct from pristopna fraza (the passphrase protecting an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.sl_SI-secret-not-message
+    modality: MUST
+    statement: Translate the core "secret" concept as skrivnost (feminine) consistently; do not substitute sporočilo (message) unless the source specifically refers to a message format.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.sl_SI-imperative-buttons
+    modality: SHOULD
+    statement: Use the formal vi-imperative for button and action labels (Pošljite, Izberite, Preverite); use past participles with correct gender agreement for status and system messages (skrivnost ustvarjena, geslo spremenjeno).
+    severity: info
+    rule_ref: rule.message-voice
+register_ref: register.sl_SI
+glossary_ref: glossary.sl_SI
+# baseline_ref intentionally omitted: no baselines.sl_SI entry exists yet and this
+# backfill must not edit the shared baselines.yaml. The resolver hard-fails on a
+# dangling baseline_ref, and the field is optional per rules.schema.json, so it is
+# left out until a reviewer adds the central baselines.sl_SI pin.
