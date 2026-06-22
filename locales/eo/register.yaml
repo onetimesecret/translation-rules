@@ -1,0 +1,41 @@
+id: register.eo
+source: onetimesecret/locales/guides/for-translators/eo.md
+# Esperanto has effectively NO T/V (formal/informal) split to enforce. The 2nd-
+# person pronoun `vi` is universal: it serves singular, plural, formal, and
+# informal address alike. The archaic intimate `ci`/`cia` exists historically but
+# is essentially unused in modern Esperanto and appears NOWHERE in the live app
+# content (onetimesecret/locales/content/eo/*.json — 0 occurrences), while `vi`/
+# `via`/`vian`/`vin` appear pervasively (e.g. "Enigu vian pasvorton", "Via
+# sekreto estis sekure kreita", "Via privateco estas protektata"). The guide's
+# "Voice and Tone" section confirms this: "Use the formal 'vi' ... Esperanto does
+# not have a separate formal/informal distinction."
+#
+# Modelling the absent split: rather than `form: other` + a `register_spec`
+# extension (which suits graded systems like ja keigo / ko politeness, not a flat
+# single-pronoun language), this register uses `form: informal` — `vi` reads as
+# the warm, inclusive default the guide calls for — with `pronoun: vi` and
+# `possessive: [via]`. There is no register lock to enforce between two competing
+# 2nd-person forms because there is only one.
+#
+# forbidden_tokens is therefore not a T/V guard. Its single entry forbids the
+# archaic intimate `ci` so that no one regresses the content by introducing it.
+# It is scoped `standalone_word` deliberately: `ci` occurs as a substring inside
+# many valid Esperanto words, and even the demonstrative particle `ĉi` (with the
+# essential circumflex, per the guide's diacritics rule) is a distinct token, so
+# only the bare standalone pronoun is flagged. `cia` (the possessive) is added for
+# the same reason. severity: warning, not error — this is drift-prevention, not a
+# register violation between live alternatives.
+#
+# AGENT-AUTHORED; requires native/fluent-speaker (EO) sign-off — see PR label.
+form: informal
+pronoun: vi
+possessive: [via]
+forbidden_tokens:
+  - { token: ci,  context: standalone_word, severity: warning, note: "archaic intimate 2nd-person pronoun; never used in modern Esperanto — `vi` is universal. Guards against regression, not a live T/V alternative." }
+  - { token: cia, context: standalone_word, severity: warning, note: "archaic intimate possessive (companion to `ci`); use `via`." }
+exceptions: []
+rule_ref: rule.register-lock
+# baseline_ref: baselines.eo is intentionally omitted — no `baselines.eo` entry
+# exists in baselines.yaml yet, and a dangling reference fails the resolver. A
+# human reviewer adds the pin to baselines.yaml centrally at commit time (as for
+# the es/nl pilots); after that this and rules.yaml can carry baseline_ref.
