@@ -537,11 +537,15 @@ def _resolve_source_commit(repo_root: Path, override: str | None) -> str:
 
 
 def _discover_locales(locales_dir: Path) -> list[str]:
+    # A locale dir is one that actually carries leaf YAML (rules/register/
+    # glossary). Skip helper dirs that live under locales/ but hold tooling
+    # rather than translations (e.g. locales/scripts/) — otherwise --all would
+    # try to resolve them and trip the "no YAML files found" guard with exit 2.
     return (
         sorted(
             p.name
             for p in locales_dir.iterdir()
-            if p.is_dir() and not p.name.startswith(".")
+            if p.is_dir() and not p.name.startswith(".") and any(p.glob("*.yaml"))
         )
         if locales_dir.exists()
         else []

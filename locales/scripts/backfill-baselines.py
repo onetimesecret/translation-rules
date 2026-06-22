@@ -18,6 +18,7 @@ Usage (from the translation-rules repo root):
 
 Verify after:  uv run resolver/resolve.py <L> --lint --validate-only
 """
+
 from __future__ import annotations
 
 import subprocess
