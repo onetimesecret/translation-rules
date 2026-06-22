@@ -60,7 +60,4 @@ forbidden_tokens:
   - { token: vámi,    context: standalone_word, severity: error, note: "formal/plural address pronoun 'you' (instr.) — appears as a residual inconsistency in live content; informal is tebou" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref intentionally omitted (optional per register.schema.json): no
-# `baselines.cs` entry exists yet, this backfill must not edit baselines.yaml,
-# and the resolver hard-fails on a dangling baseline_ref. A reviewer adds the
-# central baselines.cs pin at commit time, after which this file can carry it.
+baseline_ref: baselines.cs

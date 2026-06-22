@@ -39,8 +39,4 @@ forbidden_tokens:
   - { token: Lei, context: standalone_word, severity: error, note: "formal singular address pronoun (the V-form this locale forbids); lowercase 'lei' (=she) and any 3rd-person 'she' reference are absent from the live content, so capitalised Lei is unambiguous here" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref: baselines.it_IT is intentionally omitted — no `baselines.it_IT`
-# entry exists in baselines.yaml yet, and a dangling reference fails the resolver.
-# The pin is for a human reviewer to add to baselines.yaml centrally at commit
-# time (mirroring the `fr`/`de_AT` baselines entries), after which this and
-# rules.yaml can carry `baseline_ref: baselines.it_IT`.
+baseline_ref: baselines.it_IT

@@ -24,5 +24,4 @@ forbidden_tokens:
   - { token: "t’", context: word_prefix, severity: error, note: "elided informal pronoun, curly apostrophe (U+2019)" }
 exceptions: []
 rule_ref: register.fr.formality
-# baseline_ref deferred: baselines.fr_FR is pinned centrally by the reviewer
-# (mirrors locales/fr_CA/register.yaml's deferred-baseline handling).
+baseline_ref: baselines.fr_FR

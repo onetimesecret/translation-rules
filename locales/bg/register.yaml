@@ -65,7 +65,4 @@ forbidden_tokens:
   - { token: искаш,  context: standalone_word, severity: error, note: "informal 2nd-singular verb 'you want' — formal is искате" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref intentionally omitted (optional per register.schema.json): no
-# `baselines.bg` entry exists yet, this backfill must not edit baselines.yaml,
-# and the resolver hard-fails on a dangling baseline_ref. A reviewer adds the
-# central baselines.bg pin at commit time, after which this file can carry it.
+baseline_ref: baselines.bg

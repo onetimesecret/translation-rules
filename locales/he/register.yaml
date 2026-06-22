@@ -85,7 +85,4 @@ register_spec:
     feminine_future: [תוכלי]        # also tokenized
   allowed_non_violations:
     masculine_plural_impersonal: [אבטחו, צרו, שלחו, שלכם, שלכן]   # gender-spanning marketing/multi-recipient style — not a singular-feminine violation
-# baseline_ref: baselines.he is intentionally omitted — no `baselines.he` entry exists
-# in baselines.yaml yet, and a dangling reference fails the resolver. A reviewer adds
-# the pin to baselines.yaml centrally at commit time (mirroring fr / de_AT), after
-# which this and rules.yaml can carry `baseline_ref: baselines.he`.
+baseline_ref: baselines.he

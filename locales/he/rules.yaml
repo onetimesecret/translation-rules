@@ -46,5 +46,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.he
 glossary_ref: glossary.he
-# baseline_ref: baselines.he intentionally omitted (no baselines.he entry yet); a
-# reviewer adds the pin centrally — see note in register.yaml.
+baseline_ref: baselines.he

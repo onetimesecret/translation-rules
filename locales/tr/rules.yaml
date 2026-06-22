@@ -68,8 +68,5 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.tr
 glossary_ref: glossary.tr
-# baseline_ref: baselines.tr is intentionally omitted until a human reviewer adds
-# the `baselines.tr` entry to baselines.yaml centrally — a dangling reference
-# fails the resolver, and this task must not edit baselines.yaml. Add it together
-# with the baselines.yaml `tr` block when that lands. (Deferred, cf.
 # locales/es/rules.yaml.)
+baseline_ref: baselines.tr

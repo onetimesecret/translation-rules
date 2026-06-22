@@ -51,10 +51,6 @@ register_spec:
     UI address. There is NO informal/formal lock to enforce — Māori has no T/V
     split, so this register is descriptive of number agreement, not a politeness
     register like es or de.
-# baseline_ref: baselines.mi_NZ is intentionally omitted — no `baselines.mi_NZ`
-# entry exists in baselines.yaml yet, and a dangling reference fails the resolver.
-# The pin is for a human reviewer to add to baselines.yaml centrally at commit
-# time (mirroring the fr / de_AT baselines entries), after which this and
-# rules.yaml can carry `baseline_ref: baselines.mi_NZ`.
 #
 # AGENT-AUTHORED; requires native-speaker (te reo Māori) sign-off — see PR label.
+baseline_ref: baselines.mi_NZ

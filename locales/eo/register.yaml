@@ -35,7 +35,4 @@ forbidden_tokens:
   - { token: cia, context: standalone_word, severity: warning, note: "archaic intimate possessive (companion to `ci`); use `via`." }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref: baselines.eo is intentionally omitted — no `baselines.eo` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. A
-# human reviewer adds the pin to baselines.yaml centrally at commit time (as for
-# the es/nl pilots); after that this and rules.yaml can carry baseline_ref.
+baseline_ref: baselines.eo

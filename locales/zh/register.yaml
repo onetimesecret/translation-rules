@@ -56,8 +56,4 @@ register_spec:
     binary formal lock unambiguous. The guide's UI voice (imperative buttons,
     declarative status, no exclamation marks) is the prescribed style, not a
     register violation.
-# baseline_ref: baselines.zh is intentionally omitted — no `baselines.zh` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
-# pin is for a human reviewer to add to baselines.yaml centrally at commit time
-# (mirroring the fr / de_AT baselines entries); this and rules.yaml can then
-# carry `baseline_ref: baselines.zh`.
+baseline_ref: baselines.zh

@@ -49,7 +49,5 @@ forbidden_tokens:
   - { token: teboj,   context: standalone_word, severity: error, note: "informal object pronoun 'you' (instr. sg., 's teboj') — informal 'ti' register" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref intentionally omitted (optional per register.schema.json): no
-# baselines.sl_SI entry exists yet, and a dangling baseline_ref hard-fails the
-# resolver. The pin is for a reviewer to add to baselines.yaml centrally at commit
 # time (mirroring fr/de_AT), after which this and rules.yaml can carry it.
+baseline_ref: baselines.sl_SI

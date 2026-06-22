@@ -31,8 +31,4 @@ forbidden_tokens:
   - { token: vós,     context: standalone_word, severity: error, note: "archaic/formal address pronoun — the register ca_ES does NOT use" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref: baselines.ca_ES is intentionally omitted — no `baselines.ca_ES`
-# entry exists in baselines.yaml yet, and a dangling reference fails the resolver.
-# The pin is for a human reviewer to add to baselines.yaml centrally at commit time
-# (mirroring the `fr`/`de_AT` baselines entries), after which this and rules.yaml
-# can carry `baseline_ref: baselines.ca_ES`.
+baseline_ref: baselines.ca_ES

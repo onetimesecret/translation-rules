@@ -36,5 +36,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.ko
 glossary_ref: glossary.ko
-# baseline_ref: baselines.ko intentionally omitted (no baselines.ko entry yet);
-# a reviewer adds the pin centrally — see note in register.yaml.
+baseline_ref: baselines.ko

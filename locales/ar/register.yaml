@@ -96,8 +96,4 @@ register_spec:
     forbidden_tokens, because none can be safely matched as a token. The
     masculine-default decision is AGENT-AUTHORED and the main item for AR
     native-speaker sign-off.
-# baseline_ref: baselines.ar is intentionally omitted — no `baselines.ar` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
-# pin is for a human reviewer to add to baselines.yaml centrally at commit time
-# (mirroring the fr / de_AT baselines entries); this and rules.yaml can then
-# carry `baseline_ref: baselines.ar`.
+baseline_ref: baselines.ar

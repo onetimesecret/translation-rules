@@ -65,7 +65,4 @@ forbidden_tokens:
   - { token: твоїми, context: standalone_word, severity: error, note: "informal possessive 'your' (instr. pl.) — formal is Вашими" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref intentionally omitted (optional per register.schema.json): no
-# `baselines.uk` entry exists yet, this backfill must not edit baselines.yaml,
-# and the resolver hard-fails on a dangling baseline_ref. A reviewer adds the
-# central baselines.uk pin at commit time, after which this file can carry it.
+baseline_ref: baselines.uk

@@ -33,5 +33,4 @@ rules:
     rule_ref: rule.terminology-consistency
 register_ref: register.pt_PT
 glossary_ref: glossary.pt_PT
-# baseline_ref deferred: baselines.pt_PT is pinned centrally by the reviewer
-# (mirrors locales/fr_FR/rules.yaml's deferred-baseline handling).
+baseline_ref: baselines.pt_PT

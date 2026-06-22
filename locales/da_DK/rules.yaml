@@ -48,6 +48,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.da_DK
 glossary_ref: glossary.da_DK
-# baseline_ref: baselines.da_DK is intentionally omitted until a human reviewer
-# adds the baselines.da_DK entry to baselines.yaml centrally — a dangling
-# reference fails the resolver, and this task must not edit baselines.yaml.
+baseline_ref: baselines.da_DK

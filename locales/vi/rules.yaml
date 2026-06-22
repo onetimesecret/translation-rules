@@ -48,5 +48,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.vi
 glossary_ref: glossary.vi
-# baseline_ref: baselines.vi intentionally omitted (no baselines.vi entry yet);
-# a reviewer adds the pin centrally — see note in register.yaml.
+baseline_ref: baselines.vi

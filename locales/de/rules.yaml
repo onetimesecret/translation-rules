@@ -26,6 +26,4 @@ rules:
     rule_ref: rule.terminology-consistency
 register_ref: register.de
 glossary_ref: glossary.de
-# baseline_ref: baselines.de is intentionally omitted until a human reviewer adds
-# the `baselines.de` entry to baselines.yaml centrally — a dangling reference
-# fails the resolver, and this task must not edit baselines.yaml.
+baseline_ref: baselines.de

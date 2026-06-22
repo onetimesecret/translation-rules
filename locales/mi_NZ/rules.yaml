@@ -38,5 +38,4 @@ rules:
     rule_ref: rule.message-voice
 register_ref: register.mi_NZ
 glossary_ref: glossary.mi_NZ
-# baseline_ref: baselines.mi_NZ intentionally omitted (no baselines.mi_NZ entry
-# yet); a reviewer adds the pin centrally — see note in register.yaml.
+baseline_ref: baselines.mi_NZ

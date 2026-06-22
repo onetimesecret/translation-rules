@@ -36,7 +36,4 @@ forbidden_tokens:
   - { token: Ni, context: standalone_word, severity: error, note: "formal 2nd-person pronoun, capitalized/polite form; standalone_word only for the same false-positive reason" }
 exceptions: []
 rule_ref: rule.register-lock
-# baseline_ref: baselines.sv_SE is intentionally omitted — baselines.yaml has no
-# sv_SE entry yet and is off-limits to this change. A dangling baseline_ref would
-# fail the resolver; a human reviewer pins the baseline centrally (mirroring the
-# fr/de_AT baselines entries), after which this and rules.yaml can carry it.
+baseline_ref: baselines.sv_SE

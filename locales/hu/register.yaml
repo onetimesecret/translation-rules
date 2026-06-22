@@ -53,8 +53,4 @@ forbidden_tokens:
   - { token: hozzád, context: standalone_word, severity: error, note: "informal 2sg allative pronoun (to/towards you); contrast formal Önhöz" }
 exceptions: []
 rule_ref: rule.hu-register-formal
-# baseline_ref: baselines.hu is intentionally omitted — no `baselines.hu` entry
-# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
-# pin is for a human reviewer to add to baselines.yaml centrally at commit time
-# (mirroring the fr / de_AT baselines entries), after which this and rules.yaml
-# can carry `baseline_ref: baselines.hu`.
+baseline_ref: baselines.hu
