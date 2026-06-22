@@ -68,7 +68,7 @@ from resolver.validate import (
     build_registry,
 )
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 DEFAULT_SCHEMA_DIR = REPO_ROOT / "schema"
 
 # Reference field names by shape.
@@ -573,7 +573,7 @@ def load_lint_docs(
     step-4 ID resolution, so existence is enforced at lint time)."""
     root = inputs.project_root
     docs: dict[str, str] = {}
-    for docs_dir in (root / "base" / "docs", inputs.locales_dir / locale / "docs"):
+    for docs_dir in (root / "docs", inputs.locales_dir / locale / "docs"):
         if not docs_dir.is_dir():
             continue
         for path in sorted(docs_dir.rglob("*.md")):
@@ -668,8 +668,8 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument(
         "--emit-dir",
-        default=".",
-        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/guides/for-translators/ (default: .).",
+        default="generated",
+        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/guides/for-translators/ (default: generated).",
     )
     parser.add_argument(
         "--source-commit",
@@ -683,17 +683,17 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument(
         "--locales-dir",
-        default="locales",
+        default="rules/locales",
         help="Directory containing per-locale YAML files (default: locales).",
     )
     parser.add_argument(
         "--base-file",
-        default="base.yaml",
+        default="rules/base.yaml",
         help="Path to universal rules YAML (default: base.yaml).",
     )
     parser.add_argument(
         "--retrospectives-dir",
-        default="retrospectives",
+        default="rules/retrospectives",
         help="Directory containing retrospective .md files (default: retrospectives).",
     )
     parser.add_argument(
@@ -703,7 +703,7 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument(
         "--index-path",
-        default="resolver/index.json",
+        default="lib/resolver/index.json",
         help="Path to write resolver index (default: resolver/index.json).",
     )
     parser.add_argument(

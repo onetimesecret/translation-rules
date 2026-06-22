@@ -33,3 +33,9 @@ Format per entry:
 - Type: content
 - Defer until: knowledge-base population phase, after P1-1 schema lands
 - Detail: The Phase 0 forbidden-token list for de_AT (per `SPEC.md` §1) carries `euch` and `euer` but not the inflected possessive paradigm `eure / euren / eurem / eurer / eures`. The asymmetry is inherited verbatim from the SPEC; the `dein` paradigm gets all 5 forms enumerated, the `euer` paradigm only gets the citation form. A single `\beur` word_prefix entry would close the gap, but mixing prefix-matching with the explicit-enumeration scheme requires the P1-1 schema to settle context semantics first. Revisit during knowledge-base population with native-speaker confirmation. Native-speaker priority note (2026-04-26): `eure` is the highest-frequency missing form in UI strings (catches `eure E-Mail`, `eure Anmeldedaten`); `euren` is second.
+
+## 2026-06-22 — stale repo-relative paths in immutable records after rules-root reorg
+- Surfaced in: rules-root layout migration (ADR-002)
+- Type: provenance
+- Defer until: triaged opportunistically when each record is next touched
+- Detail: The rules-root reorg moved `reviews/` → `_references/reviews/`, `locales/` → `rules/locales/`, `retrospectives/` → `rules/retrospectives/`, and `resolver/` → `lib/resolver/`. Immutable/append-only records still carry pre-move paths — e.g. this file's 2026-04-23 entries cite `reviews/2026-04-12/cross-locale-audit.md`, and retrospective bodies / `source:` fields may pin `reviews/2026-04-12/...`. Per the append-only rule these are not rewritten in place; new records use post-move paths, old ones are corrected only if a record is otherwise re-touched.

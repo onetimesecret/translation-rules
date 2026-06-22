@@ -70,7 +70,7 @@ LOCALE="${ARGS[0]}"
 GLOB="${ARGS[1]}"
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-REGISTER_FILE="${REPO_ROOT}/locales/${LOCALE}/register.yaml"
+REGISTER_FILE="${REPO_ROOT}/rules/locales/${LOCALE}/register.yaml"
 
 if [ ! -f "$REGISTER_FILE" ]; then
   echo "error: register file not found: $REGISTER_FILE" >&2

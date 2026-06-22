@@ -7,7 +7,7 @@
 > agent sessions (`agent-authored-rules.md` and `enforcement-model.md`). It is
 > descriptive: it argues for a direction. It is **not** direct human input, and it
 > binds nothing — no translation, no rule, no task. Per this repository's own firewall
-> (`SPEC.md` §2.1), only schema-validated YAML under `locales/` binds; prose like this
+> (`SPEC.md` §2.1), only schema-validated YAML under `rules/locales/` binds; prose like this
 > never does, regardless of who or what wrote it.
 
 ## Thesis
@@ -60,7 +60,7 @@ points — not by being a detached lint that runs afterward.
                   ▼
    ╔═══════════════════════════════════════════════════════╗
    ║                   RULES AUTHORITY                       ║
-   ║   locales/de_AT/*.yaml           (schema-validated)     ║
+   ║   rules/locales/de_AT/*.yaml     (schema-validated)     ║
    ║          │  resolve                                     ║
    ║          ▼                                              ║
    ║   .resolved/de_AT.json     →   pinned as ruleset@<hash> ║
@@ -114,7 +114,7 @@ The original firewall conflated two separable ideas. Only one is load-bearing.
                             channel
 
    ┌─ BINDS ───────────────────────┐   ┌─ NEVER BINDS (explanatory only) ──────────┐
-   │ locales/**/*.yaml             │   │ retrospectives/**   _archive/**           │
+   │ rules/locales/**/*.yaml       │   │ rules/retrospectives/**  rules/_archive/** │
    │   → resolve → ruleset@hash    │   │ chat · changelog · PR descriptions        │
    │                               │   │ THIS document                             │
    └───────────────────────────────┘   └───────────────────────────────────────────┘
@@ -125,7 +125,7 @@ The original firewall conflated two separable ideas. Only one is load-bearing.
 
 - **Keep:** *prose never binds.* Retrospectives, archives, changelogs, chat, PR
   descriptions — and this document — are explanatory. They never compile into a ruleset.
-  This is the structured-vs-prose line, and it is exactly what the `_archive/` firewall
+  This is the structured-vs-prose line, and it is exactly what the `rules/_archive/` firewall
   (`SPEC.md` §2.1) enforces.
 - **Delete:** *human-authored-only.* Authorship is not the boundary. An agent may author
   a binding rule, provided it enters through the structured channel (schema-valid YAML →

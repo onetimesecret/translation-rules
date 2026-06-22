@@ -14,10 +14,10 @@ The single smallest implementation that would have blocked the 2026-04-12 de_AT 
 
 **Artifacts (≈70 lines total):**
 
-- `locales/de_AT/register.yaml` with `forbidden_tokens: [du, dein, deine, deinen, deinem, deiner, dich, dir, euch, euer]` and `form: formal`
+- `rules/locales/de_AT/register.yaml` with `forbidden_tokens: [du, dein, deine, deinen, deinem, deiner, dich, dir, euch, euer]` and `form: formal`
 - Same file for the three other contaminated locales: `pt_PT`, `uk`, `hu`
 - `bin/lint-register` — shell script that greps forbidden tokens against locale content files given a path
-- `retrospectives/2026-04-12-de_AT-register-flip.md` with `affected_rules: [register.de_AT.formality]` and `status: applied`
+- `rules/retrospectives/2026-04-12-de_AT-register-flip.md` with `affected_rules: [register.de_AT.formality]` and `status: applied`
 - One-line anti-pattern in the existing UX guide: "harmonize = keys only; never text rewrites"
 
 **Gate (live since 2026-06; see §2.4 Status).** App repo CI (`validate-register.yml`, landed via onetimesecret/onetimesecret#3432) invokes `bin/lint-register` from a read-only pinned checkout of this repo against `locales/content/<locale>/*.json` for every PR that touches locale content, covering every locale that has a `register.yaml` here. Zero tolerance. PR blocked if any forbidden token appears. This is the load-bearing gate; the fuller P1-4b form (submodule + resolved-artifact checks) is still planned.
@@ -28,39 +28,108 @@ The single smallest implementation that would have blocked the 2026-04-12 de_AT 
 
 ## 2. Target Architecture
 
+**The loop, end to end.** Rules are authored here, compiled to enforceable artifacts, and consumed by translation agents in the app repo; the human role is audit, not authorship. These three diagrams are the conceptual model — §2.1–§2.4 specify each stage.
+
+```
+  SOURCES — already decided, frozen            ROLES
+  ─────────────────────────────────           ──────────────────────────────────
+  _references/local-guides/*.md  ┐  provenance
+  shipped JSON @ baseline commit ┘──────────►  ① agents author rules · this repo
+                                                  rules/base.yaml · rules · register · glossary
+                                                  every value cites a source
+                                                       │
+                              resolve.py — closure + schema; dangling ref → REJECTED
+                                                       │  green
+                                                       ▼
+                                               ② artifacts
+                                                  .resolved/<loc>.json     (agent context)
+                                                  for-translators/<loc>.md (human guide)
+                                                       │  vendored as submodule, pinned by SHA
+                                                       ▼
+                                               ③ agents translate · app repo
+                                                  consume .resolved → write content/<loc>/*.json
+                                                       │  every content PR
+                                                       ▼
+                                               ④ bin/lint-register gate (live)
+                                                  forbidden token → FAIL · clean → merge
+
+  Humans don't author ①–④. The human role is QC: review the agent's reasoning,
+  ask it to explain, triangulate the provenance — then accept, probe, or reject.
+```
+
+**Inside ① — what makes agent-authoring safe.** The schema gate (§2.2) checks *structure*, not *sourcing*: a well-formed `du` rule passes schema. The barrier against a well-formed-but-wrongly-sourced rule is the authoring discipline — mandatory provenance plus maintainer audit — not the author's humanity.
+
+```
+  agent drafts a rule
+       │
+       ▼
+  [ cites accepted provenance? ]──no─► reject   (no source = no rule;
+       │ yes                                      never from running prose)
+       ▼
+  [ closes? — resolve.py ]──────no─► reject   (dangling ref / bad schema)
+       │ yes
+       ▼
+  [ survives maintainer QC? ]───no─► back to agent   (can't defend it → no ship)
+       │ yes
+       ▼
+  minted · committed ──────────────────────────────────────────────► ②
+```
+
+**Decide once, enforce forever.** A rule authored once binds every later translation task through the register gate (§2.4); the decision is not re-litigated per task.
+
+```
+  one rule, authored once (provenance: de.md's du/Sie success row):
+     register.de_AT.formality  →  lock Sie / Ihr,  forbid du-form
+
+  …then applied to every later translation task automatically, no one re-asked:
+     "Your secret has been created."  (de_AT)
+        ├─ agent writes  "Dein Geheimnis…"  ─► lint ─► ✗  du-form 'Dein' forbidden
+        └─ agent writes  "Ihr Geheimnis…"   ─► lint ─► ✓  merges
+```
+
 ### 2.1 Directory layout
 
 ```
 translation-rules/
 ├── SPEC.md                              # this file
-├── schema/                              # JSON Schema — authoritative contract
+├── README.md  SPEC-cross-property.md  BACKLOG.md   # meta docs
+├── schema/                              # JSON Schema — authoritative contract (STAYS at root: $id URLs)
 │   ├── base.schema.json
 │   ├── rules.schema.json
 │   ├── register.schema.json
 │   ├── glossary.schema.json
 │   ├── baselines.schema.json
 │   └── retrospective.schema.json
-├── base.yaml                            # universal rules
-├── base/docs/                           # rationale prose, embedded by resolver
-├── baselines.yaml                       # {locale: {commit, invariants, retro_id}}
-├── locales/<locale>/
-│   ├── rules.yaml
-│   ├── register.yaml                    # hard enums (forbidden tokens, formality)
-│   ├── glossary.yaml                    # senses + worked examples
-│   └── docs/                            # locale rationale prose
-├── retrospectives/
-│   ├── README.md                        # frontmatter spec + template
-│   ├── <date>-<slug>.md                 # YAML frontmatter + prose
-│   └── _archive/                        # superseded retros
-├── reviews/                             # existing raw QA reviews; preserved as-is
-├── _archive/                            # prescriptive/descriptive firewall
-├── resolver/
-│   ├── resolve.py                       # CLI entry: merge + lint + emit
-│   ├── merge.py
-│   ├── lint.py
-│   ├── emit_markdown.py
-│   ├── emit_json.py
-│   └── ids.py                           # UUID index + lookup
+├── rules/                               # governing content (the binding set)
+│   ├── base.yaml                        # universal rules
+│   ├── baselines.yaml                   # {locale: {commit, invariants, retro_id}}
+│   ├── locales/<locale>/
+│   │   ├── rules.yaml
+│   │   ├── register.yaml                # hard enums (forbidden tokens, formality)
+│   │   ├── glossary.yaml                # senses + worked examples
+│   │   └── docs/                        # locale rationale prose
+│   ├── retrospectives/
+│   │   ├── README.md                    # frontmatter spec + template
+│   │   ├── <date>-<slug>.md             # YAML frontmatter + prose
+│   │   └── _archive/                    # superseded retros
+│   └── _archive/                        # prescriptive/descriptive firewall
+├── docs/                                # rationale prose embedded by resolver, + design/ADR docs
+│   ├── harmonize.md  register-lock.md  security-messages.md  terminology.md
+│   └── architecture/decision-records/
+├── lib/
+│   └── resolver/
+│       ├── resolve.py                   # CLI entry: merge + lint + emit
+│       ├── merge.py
+│       ├── lint.py
+│       ├── emit_markdown.py
+│       ├── emit_json.py
+│       └── ids.py                       # UUID index + lookup
+├── generated/                           # resolver output (gitignored; was .resolved/)
+├── _references/                         # non-governing material (excluded from build)
+│   ├── reviews/                         # existing raw QA reviews; preserved as-is
+│   ├── local-guides/  en-translation-docs/  authoring/
+│   ├── recommended-next-25-languages.md
+│   └── RECOVERY-PLAN.md
 ├── tests/
 ├── bin/
 │   ├── generate-for-translators         # legacy, retired after resolver parity
@@ -70,11 +139,11 @@ translation-rules/
 └── .github/workflows/
 ```
 
-Two `_archive/` directories with distinct purposes. `retrospectives/_archive/` holds superseded retros. Top-level `_archive/` is the prescriptive-vs-descriptive firewall: anything inside is never compiled into output. Moving a file out of `_archive/` is a reviewable diff requiring explicit label approval.
+Two `_archive/` directories with distinct purposes. `rules/retrospectives/_archive/` holds superseded retros. The `rules/_archive/` directory is the prescriptive-vs-descriptive firewall: anything inside is never compiled into output. Moving a file out of `rules/_archive/` is a reviewable diff requiring explicit label approval.
 
 ### 2.2 File formats
 
-**YAML as source, JSON Schema as contract.** Schema is authoritative; YAML is the human-authored surface validated at resolver entry. Alternatives rejected: JSON-as-source (too noisy for prose fields), YAML-without-schema (implicit coercion is exactly the drift vector the system exists to prevent).
+**YAML as source, JSON Schema as contract.** Schema is authoritative; YAML is the authored surface validated at resolver entry. Alternatives rejected: JSON-as-source (too noisy for prose fields), YAML-without-schema (implicit coercion is exactly the drift vector the system exists to prevent).
 
 Minimal `register.yaml`:
 
@@ -122,7 +191,7 @@ Schemas forbid `null` where an empty list or explicit absence field is required.
 
 **Output commit policy:** Generated artifacts (`for-translators/<locale>.md` and `.resolved/<locale>.json`) are committed to the app repo, not CI-generated-only. This is required for the file-hash CI check in §2.4 to have a baseline to compare against, and so translators and external reviewers can browse the current guide without running the resolver.
 
-`resolver/resolve.py <locale> [--lint] [--emit=md,json] [--all]` drives everything:
+`lib/resolver/resolve.py <locale> [--lint] [--emit=md,json] [--all]` drives everything:
 
 1. **Load + schema-validate.** Reject malformed input at this boundary.
 2. **Compute inheritance chain.** `de_AT → de → base`. Cycle-detected.
@@ -144,7 +213,7 @@ glossary:
     en: <source>
     senses: { <sense>: { target, rule_ref } }
     examples: [...]   # term-level (not sense-nested); each annotated with the
-                      # senses its target matches. See resolver/model.py header.
+                      # senses its target matches. See lib/resolver/model.py header.
 rules: [...]        # MUST/MUST NOT items, severity, rule_ref
 context: [...]      # project-specific info, not binding
 rationale_index: { rule_id: [doc_paths] }   # fetch on demand
@@ -152,18 +221,18 @@ declined_index: [...]                        # per-locale decline summaries
 anti_patterns_ref: [...]
 ```
 
-The `rules`/`context`/`rationale` partition is the surface-level cue that prevents the change-log-as-guidance failure. Only `rules` and `register` bind behavior. Conversational prose cannot reach the `rules` partition without passing through a human-authored YAML file with a schema.
+The `rules`/`context`/`rationale` partition is the surface-level cue that prevents the change-log-as-guidance failure. Only `rules` and `register` bind behavior. Conversational prose cannot reach the `rules` partition without passing through a schema-validated, provenance-citing YAML file, audited at merge.
 
 ### 2.4 CI gates
 
-**Status (2026-06-12).** Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests; retro lifecycle, review findings-manifest, and real-tree resolver lint gates), `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`), `python-qc.yml` (ruff lint/format, pyright), the §3 retrospective lifecycle gates (`resolver/retro_lifecycle.py`: 7-day orphan timeout, applied-transition diff check), the §3 review findings-manifest check (`resolver/review_manifest.py`; pre-existing reviews grandfathered — see `reviews/README.md`), the forbidden-token lint over embedded examples and rationale docs (`resolver/lint.py`, run against the repo tree by `schema-validation.yml`; backtick-quoted token mentions in docs are allowed, bare-prose uses fail), and the `_archive/` firewall (`resolver/archive_firewall.py` + `archive-firewall.yml`: moving or copying a file out of `_archive/` or `retrospectives/_archive/` — or deleting one — requires the `prescriptive-promotion` label).
+**Status (2026-06-12).** Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests; retro lifecycle, review findings-manifest, and real-tree resolver lint gates), `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`), `python-qc.yml` (ruff lint/format, pyright), the §3 retrospective lifecycle gates (`lib/resolver/retro_lifecycle.py`: 7-day orphan timeout, applied-transition diff check), the §3 review findings-manifest check (`lib/resolver/review_manifest.py`; pre-existing reviews grandfathered — see `_references/reviews/README.md`), the forbidden-token lint over embedded examples and rationale docs (`lib/resolver/lint.py`, run against the repo tree by `schema-validation.yml`; backtick-quoted token mentions in docs are allowed, bare-prose uses fail), and the `rules/_archive/` firewall (`lib/resolver/archive_firewall.py` + `archive-firewall.yml`: moving or copying a file out of `rules/_archive/` or `rules/retrospectives/_archive/` — or deleting one — requires the `prescriptive-promotion` label).
 
 **App repo:** the `forbidden_tokens` grep against `locales/content/<locale>/*.json` is **live** (`validate-register.yml` via onetimesecret/onetimesecret#3432 — `bin/lint-register` from a read-only pinned checkout of this repo, every governed locale). Still planned: submodule pointer freshness on locale-content PRs; `.resolved/<locale>.json`'s `_meta.source_commit` equals submodule SHA; `for-translators/*.md` hash matches resolver output — hand edits rejected.
 
 **Cross-repo pipeline gate (planned).** A locale content PR is blocked unless the submodule is current, resolved JSON was regenerated in the same PR, and lint passes. This is what mechanically prevents the next class of "bypass by direct edit."
 
 **How the 2026-04 failure mode is mechanically prevented (by design — see Status above for what is wired today):**
-1. Change-log-style prose physically lives in `_archive/` or `retrospectives/` — neither is compiled into output.
+1. Change-log-style prose physically lives in `rules/_archive/` or `rules/retrospectives/` — neither is compiled into output.
 2. `for-translators/*.md` is generated and hash-locked. A report cannot be pasted in.
 3. Rules are YAML with schema. Prose cannot reach the `rules` partition without authoring a schema-valid file.
 
@@ -173,14 +242,14 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
 
-**Status (2026-06-12).** The 7-day orphan timeout and the applied-transition PR check are wired (`resolver/retro_lifecycle.py`, run by `schema-validation.yml`; one pre-existing pending retro carries an explicit, per-id grace in the workflow until its cross-repo closure lands). The review findings-manifest check is wired (`resolver/review_manifest.py`; documents existing before the gate are grandfathered by path — see `reviews/README.md`). Still not wired: retro→applied automation on merge, and the cross-repo hash gates — see §2.4 Status. Read the remaining `[CI-ENFORCED: ...]` annotations accordingly.
+**Status (2026-06-12).** The 7-day orphan timeout and the applied-transition PR check are wired (`lib/resolver/retro_lifecycle.py`, run by `schema-validation.yml`; one pre-existing pending retro carries an explicit, per-id grace in the workflow until its cross-repo closure lands). The review findings-manifest check is wired (`lib/resolver/review_manifest.py`; documents existing before the gate are grandfathered by path — see `_references/reviews/README.md`). Still not wired: retro→applied automation on merge, and the cross-repo hash gates — see §2.4 Status. Read the remaining `[CI-ENFORCED: ...]` annotations accordingly.
 
 ```
             (incident signal OR scheduled audit)
                         │ [HUMAN]
                         ▼
                 ┌────────────────┐
-                │ raw QA review  │  stored as-is in reviews/<date>/
+                │ raw QA review  │  stored as-is in _references/reviews/<date>/
                 │ (prose)        │  [HUMAN writes; no schema]
                 └────────────────┘
                         │ [HUMAN files retro; review document must
@@ -226,7 +295,7 @@ The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
 
 **Declined retros stay as active guardrails** (not archived). Resolver emits per-locale decline index surfacing summaries to agents. Before an agent proposes changing a locale's register or glossary, it checks the decline index — if covered, the agent must either match a `would_change_decision_if` condition or escalate.
 
-**Existing `reviews/` directories remain as-is.** Historical QA reviews are preserved as raw input; no backfill into retrospective format. New incidents file retrospectives in `retrospectives/`. Unactioned findings in existing reviews are triaged opportunistically into new retrospectives when touched.
+**Existing `_references/reviews/` directories remain as-is.** Historical QA reviews are preserved as raw input; no backfill into retrospective format. New incidents file retrospectives in `rules/retrospectives/`. Unactioned findings in existing reviews are triaged opportunistically into new retrospectives when touched.
 
 **Every new review document must end with a findings manifest** — a bulleted list where each item maps to a retrospective id or `wont_fix` tag with reasoning. CI checks: for each review doc, every finding has a tracking tag. Prevents the "insights die in prose" failure that produced the current unactioned state.
 
@@ -236,7 +305,7 @@ The critical ask. Every edge labeled machine-enforced or human-in-the-loop.
 
 `translation-pluribus-util` is not replaced by the resolver. Two integration points:
 
-**UUID pattern for stable IDs.** Adopt pluribus's 8-char-UUID scheme for rename-survivable identity. Every rule, term, example, and retrospective carries a stable ID of the form `<kind>.<key>#<8char>` (e.g., `term.secret_object#7f3a91c2`, `ex.burn#a12b45ef`, `rule.register-lock#c81d44e0`). The human-readable key is the grep target; the 8-char suffix survives renames, file moves, and reorganizations. `bin/mint-id` generates them on first authoring. The resolver emits `resolver/index.json` committed to the repo so both grep-by-key and grep-by-id remain fast.
+**UUID pattern for stable IDs.** Adopt pluribus's 8-char-UUID scheme for rename-survivable identity. Every rule, term, example, and retrospective carries a stable ID of the form `<kind>.<key>#<8char>` (e.g., `term.secret_object#7f3a91c2`, `ex.burn#a12b45ef`, `rule.register-lock#c81d44e0`). The human-readable key is the grep target; the 8-char suffix survives renames, file moves, and reorganizations. `bin/mint-id` generates them on first authoring. The resolver emits `lib/resolver/index.json` committed to the repo so both grep-by-key and grep-by-id remain fast.
 
 **Bundle/split for cross-locale operations.** Pluribus's prepare → combine → split → restore pipeline maps onto cross-locale review workflows:
 
@@ -255,9 +324,9 @@ The skill lives in `~/.claude/skills/saas-translator/` — out of this repo's re
 
 - Skill reads `onetimesecret/locales/.resolved/<locale>.json` for binding rules.
 - Skill reads `onetimesecret/locales/guides/for-translators/<locale>.md` only as human-readable reference. Never parses it as rule source.
-- Skill never writes into `onetimesecret/locales/.resolved/` or `translation-rules/`. Findings are filed by a human as retrospectives or as agent proposals at `retrospectives/<date>-proposed-<slug>.md` with `status: pending` — the status transition to `applied` is always human-gated.
+- Skill never writes into `onetimesecret/locales/.resolved/` or `translation-rules/`. Findings are filed by a human as retrospectives or as agent proposals at `rules/retrospectives/<date>-proposed-<slug>.md` with `status: pending` — the status transition to `applied` is always human-gated.
 
-The eight diagnosed gaps in `reviews/2026-04-12/advice-for-saas-translator-skill.md` are addressed either by this system (gaps 1, 2, 5, 6) or by skill changes tracked outside this repo (gaps 3, 4, 7, 8). The skill's own updates are tracked in a separate retrospective per gap.
+The eight diagnosed gaps in `_references/reviews/2026-04-12/advice-for-saas-translator-skill.md` are addressed either by this system (gaps 1, 2, 5, 6) or by skill changes tracked outside this repo (gaps 3, 4, 7, 8). The skill's own updates are tracked in a separate retrospective per gap.
 
 ---
 
@@ -305,12 +374,12 @@ Neither is part of this repo's design. Both are execution substrate. No cross-re
 
 **Phase 1 (MVP end-to-end for de_AT).**
 
-1. Land `schema/` and `resolver/` skeletons.
-2. Write `base.yaml` by absorbing mechanical rules from existing UX and security guides. Leave rationale in `base/docs/`.
-3. Hand-convert `locales/de_AT/{rules,register,glossary}.yaml`. Draft `locales/de/rules.yaml` as inheritance parent.
+1. Land `schema/` and `lib/resolver/` skeletons.
+2. Write `base.yaml` by absorbing mechanical rules from existing UX and security guides. Leave rationale in `docs/`.
+3. Hand-convert `rules/locales/de_AT/{rules,register,glossary}.yaml`. Draft `rules/locales/de/rules.yaml` as inheritance parent.
 4. Implement merge + lint + emit. Test fixtures for de → de_AT.
-5. Move existing `reviews/2026-04-12/` retrospective content into new `retrospectives/` format with validated frontmatter. Preserve raw reviews/.
-6. Move `de-translation-notes.txt` into `_archive/`. Reversibility checkpoint: no app repo change yet.
+5. Move existing `_references/reviews/2026-04-12/` retrospective content into new `rules/retrospectives/` format with validated frontmatter. Preserve raw `_references/reviews/`.
+6. Move `de-translation-notes.txt` into `rules/_archive/`. Reversibility checkpoint: no app repo change yet.
 7. Add the submodule in the app repo. Run resolver. Regenerate de_AT artifacts. Observe lint flags known violations.
 8. Fix content or log exceptions. Lint goes green.
 
@@ -322,7 +391,7 @@ Neither is part of this repo's design. Both are execution substrate. No cross-re
 10. Remaining 28 locales. Mostly mechanical — `locale → base` without intermediate tier.
 11. Retire `bin/generate-for-translators`. Keep `translation-pluribus-util`.
 
-**Phase 2 note on existing `local-guides/for-translators/*.md`.** The 35 frozen files contain prose glossary tables and language notes not yet in YAML. One-way conversion prose → YAML schema is significant per-locale work. It happens per-locale as part of each locale's Phase 2 migration — not bundled, not automated.
+**Phase 2 note on existing `_references/local-guides/for-translators/*.md`.** The 35 frozen files contain prose glossary tables and language notes not yet in YAML. One-way conversion prose → YAML schema is significant per-locale work. It happens per-locale as part of each locale's Phase 2 migration — not bundled, not automated.
 
 ---
 
