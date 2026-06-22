@@ -1,0 +1,240 @@
+id: glossary.zh
+source: onetimesecret/locales/guides/for-translators/zh.md
+# Sense-split of the core domain terminology from the Simplified Chinese
+# translator guide's terminology tables (onetimesecret/locales/guides/for-
+# translators/zh.md §Standard Terminology Reference, §Core Translation
+# Principles), grounded against the live app content in
+# onetimesecret/locales/content/zh/*.json. Targets and worked examples are
+# AGENT-AUTHORED and require native-speaker (ZH) sign-off before merge — see PR
+# label.
+#
+# CJK TOKENIZATION NOTE (ja pilot lesson): SPEC §2.3 lint check 2 requires every
+# `good` example's target to contain a sense target in `word_prefix` mode. With
+# no spaces in Chinese, "word boundary" = start-of-string or a non-word char
+# (Chinese punctuation 。，、 / ASCII space / interpolation %{} braces) — a Han
+# left-neighbour is a word char and blocks the match. So each `good` example
+# below places its sense target in HEAD position (or right after punctuation),
+# e.g. 内容已被截断 rather than 您的内容已被截断. Each `good` example uses the polite
+# 您 register and is verified clean against register.zh forbidden_tokens (no 你);
+# each `bad` example demonstrates a forbidden form (informal 你 register, the
+# banned 秘密 term, or the wrong term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Three-tier by context: 内容 (UI/functional — buttons, labels, status, API), 机密内容 (descriptive/docs), 机密信息 (marketing). NEVER 秘密."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    zh:
+      ui:
+        target: 内容
+        rule_ref: rule.zh-secret-no-mimi
+      docs:
+        target: 机密内容
+        rule_ref: rule.zh-secret-no-mimi
+      marketing:
+        target: 机密信息
+        rule_ref: rule.zh-secret-no-mimi
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your content has been truncated."
+        target: "内容已被截断。"
+        verdict: good
+        note: "Verbatim from live content (内容已被截断); UI tier 内容 in head position; declarative status voice. (No 您 needed — status string with no direct address; clean against forbidden 你.)"
+        rule_refs: [rule.register-lock, rule.zh-secret-no-mimi]
+      - id: ex.secret-mimi-bad#8ae96971
+        source: "Your secret has been created."
+        target: "你的秘密已创建。"
+        verdict: bad
+        note: "Uses banned 秘密 instead of the tiered 内容/机密内容/机密信息 AND informal 你的 (forbidden register) — violates both rule.zh-secret-no-mimi and rule.zh-register-formal."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective/state sense of secret/secure — protection of information. Render as 加密的 (encrypted) or 安全的 (secure); reserve the tiered 内容/机密内容/机密信息 for the product-noun sense."
+      key_patterns: ["*secure*", "*secured*", "*.protect*"]
+    zh:
+      adjective:
+        target: 加密的
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adjective-good#d1b19ed2
+        source: "The encrypted message is protected; your privacy is safe."
+        target: "加密的信息受到保护，您的隐私是安全的。"
+        verdict: good
+        note: "Adjective sense 加密的 in head position; polite 您的; declarative voice."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.secret-adjective-bad#0ad15f16
+        source: "The encrypted message is protected; your privacy is safe."
+        target: "你的机密信息受到保护。"
+        verdict: bad
+        note: "Uses the marketing product-noun tier 机密信息 for the general adjective sense where 加密的 is meant (terminology drift) AND informal 你的 (forbidden register)."
+  - id: term.secret_link#6d74a4a6
+    key: secret_link
+    en: secret link
+    disambiguation:
+      heuristic: "The product feature: a one-time-access URL. Render as 一次性链接 (one-time link) to emphasize single-use, NEVER 秘密链接. Plain 'link' (the bare URL) is the separate term 链接."
+      key_patterns: ["*secretLink*", "*.share*", "*.url*"]
+    zh:
+      noun:
+        target: 一次性链接
+        rule_ref: rule.zh-secret-link
+    rule_refs: [rule.register-lock, rule.zh-secret-link]
+    examples:
+      - id: ex.secret-link-good#48e437df
+        source: "A one-time link can only be used once, then disappears forever."
+        target: "一次性链接只能使用一次，然后永久消失。"
+        verdict: good
+        note: "Verbatim from live content; feature term 一次性链接 in head position. (Status/description, no direct address; clean against forbidden 你.)"
+        rule_refs: [rule.register-lock, rule.zh-secret-link]
+      - id: ex.secret-link-bad#ce81861f
+        source: "Share your one-time link."
+        target: "分享你的秘密链接。"
+        verdict: bad
+        note: "Uses 秘密链接 instead of 一次性链接 (violates rule.zh-secret-link, also leans on the banned 秘密) AND informal 你的 (forbidden register)."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual piece of content (distinct from the account login password). Compose/protect-content contexts signal this sense. Render as 口令."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    zh:
+      noun:
+        target: 口令
+        rule_ref: rule.zh-passphrase-password
+    rule_refs: [rule.register-lock, rule.zh-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Please check your passphrase."
+        target: "口令有误，请检查您的口令。"
+        verdict: good
+        note: "Grounded in live content (请检查您的口令); 口令 (content protection), not 密码, in head position; polite 您的."
+        rule_refs: [rule.register-lock, rule.zh-passphrase-password]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this content."
+        target: "输入你的密码以查看此内容。"
+        verdict: bad
+        note: "Uses 密码 (account credential) where 口令 (content protection) is meant (violates rule.zh-passphrase-password) AND informal 你的 (forbidden register)."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a content's passphrase). Sign-in, account, and reset contexts signal this sense. Render as 密码."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    zh:
+      noun:
+        target: 密码
+        rule_ref: rule.zh-passphrase-password
+    rule_refs: [rule.register-lock, rule.zh-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to confirm."
+        target: "密码更改后，请使用您的新密码登录。"
+        verdict: good
+        note: "Grounded in live content (您的密码已成功更改); account term 密码 in head position; polite 您的."
+        rule_refs: [rule.register-lock, rule.zh-passphrase-password]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "输入你的口令以登录。"
+        verdict: bad
+        note: "Uses 口令 (content protection) where 密码 (account credential) is meant (violates rule.zh-passphrase-password) AND informal 你的 (forbidden register)."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting content before it is viewed. Rendered as 销毁 (action, emphasizing permanence), 已销毁 for the resulting state. Not a literal 燃烧."
+      key_patterns: ["*burn*", "*.destroy*"]
+    zh:
+      action:
+        target: 销毁
+        rule_ref: rule.zh-burn-xiaohui
+      state:
+        target: 已销毁
+        rule_ref: rule.zh-burn-xiaohui
+    rule_refs: [rule.register-lock, rule.zh-burn-xiaohui]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burning this content deletes it before viewing."
+        target: "销毁内容将在查看前将其删除，您将无法恢复。"
+        verdict: good
+        note: "Grounded in live content (销毁内容将在查看前将其删除); action term 销毁 in head position; polite 您将."
+        rule_refs: [rule.register-lock, rule.zh-burn-xiaohui]
+      - id: ex.burn-bad#4228df6b
+        source: "A burned secret cannot be recovered."
+        target: "你燃烧的秘密无法恢复。"
+        verdict: bad
+        note: "Uses literal 燃烧 instead of 销毁 (terminology drift, rule.zh-burn-xiaohui), banned 秘密, AND informal 你 (forbidden register)."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The bare URL that provides access to content. Rendered as 链接. (The product feature 'secret link' is the separate term 一次性链接.)"
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    zh:
+      noun:
+        target: 链接
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "The link has been created and not yet viewed."
+        target: "链接已创建，尚未被查看。"
+        verdict: good
+        note: "Verbatim from live content; term 链接 in head position; declarative status voice. (No direct address; clean against forbidden 你.)"
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.link-bad#748809c5
+        source: "A secure link will be sent to your email."
+        target: "安全链接将发送到你的邮箱。"
+        verdict: bad
+        note: "Informal 你的 (forbidden register) — should be the polite 您的 (live content: 安全链接将发送到您的邮箱。). Term 链接 is correct, register is not."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; 加密 for the verb/action, 已加密 for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    zh:
+      action:
+        target: 加密
+        rule_ref: rule.terminology-consistency
+      state:
+        target: 已加密
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "加密保护此消息时，使用了您的口令。"
+        verdict: good
+        note: "Grounded in live 此消息已使用您的口令加密。; action 加密 in head position; polite 您的; 口令 (not 密码)."
+        rule_refs: [rule.register-lock, rule.terminology-consistency, rule.zh-passphrase-password]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "此消息已使用你的密码加密。"
+        verdict: bad
+        note: "Informal 你的 (forbidden register) AND 密码 (account credential) where 口令 is meant — violates rule.zh-register-formal and rule.zh-passphrase-password."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Rendered as 邮箱 (or 电子邮件); 邮箱地址 for the address."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    zh:
+      noun:
+        target: 邮箱
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address below."
+        target: "邮箱地址请填写在下方，我们将向您发送验证链接。"
+        verdict: good
+        note: "Grounded in live 在下方输入您的邮箱地址…; term 邮箱 in head position (word_prefix of 邮箱地址); polite 您."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "请输入你的邮箱地址。"
+        verdict: bad
+        note: "Informal 你的 (forbidden register) — should be the polite 您的 (live content: 您的邮箱地址). Term 邮箱 is correct, register is not."

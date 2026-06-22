@@ -1,0 +1,63 @@
+id: register.zh
+source: onetimesecret/locales/guides/for-translators/zh.md
+# Simplified Chinese is locked to the FORMAL/polite second-person register: 您
+# (polite "you") and its possessive 您的, never the neutral/informal 你 / 你的.
+# Chinese DOES have a politeness pronoun distinction (您 polite vs 你 neutral),
+# unlike Japanese keigo — so this is modelled as a true binary register lock
+# (form: formal), not the ja register_spec-only shape.
+#
+# Grounded in the live app content (onetimesecret/locales/content/zh/*.json):
+# direct address is overwhelmingly the polite 您 — 398 occurrences across 19
+# files (e.g. "您的密码已成功更改", "请检查您的口令", "安全链接将发送到您的邮箱。",
+# "此消息已使用您的口令加密。") with the possessive 您的 alone appearing 236 times.
+# The informal 你 has ZERO occurrences anywhere in the live content (and 你们 /
+# 您们 are likewise absent). So the FORBIDDEN register is the informal 你 form.
+#
+# TOKENIZATION NOTE (CJK, per the ja pilot's lesson): Chinese has no spaces, so
+# `standalone_word` / `word_prefix` word boundaries (which key off alnum chars —
+# and CJK characters ARE alnum to Python's str.isalnum) do NOT segment Chinese;
+# every Han character is a "word char". The casual marker 你 must therefore be
+# matched as `substring`. This is SAFE here: 你 was verified to have ZERO
+# occurrences of any kind in the full live zh content (it is not a substring of
+# any character actually used — 您, 其他, 他, 她 etc. do not contain 你), so the
+# substring match carries no false-positive risk. (Contrast 您, which IS a real
+# substring of valid possessives like 您的 / 您们 and so must NOT be forbidden.)
+# Every `good` glossary example uses 您 and is verified clean against this token.
+#
+# AGENT-AUTHORED; requires native-speaker (ZH) sign-off — see PR label.
+form: formal
+pronoun: 您
+possessive: [您的]
+forbidden_tokens:
+  - { token: 你, context: substring, severity: error, note: "informal/neutral 2nd-person pronoun; the app uses the polite 您 exclusively (zero 你 in live content). substring is safe — 你 has zero occurrences of any kind in live zh content (no false positives)." }
+exceptions: []
+rule_ref: rule.zh-register-formal
+# register_spec — documents the 您/你 politeness policy (free-form extension).
+# The lock IS expressible as a binary form: formal / forbidden_tokens above; this
+# block records the policy prose and the deliberately-not-forbidden tokens so a
+# reviewer can see the reasoning, mirroring the ja pilot's register_spec.
+register_spec:
+  system: politeness_pronoun
+  level: polite
+  description: "Formal/polite address: 您 (and possessive 您的) throughout product UI and email content. The neutral/informal 你 is forbidden for direct address."
+  target_forms:
+    pronoun: [您]
+    possessive: [您的]
+  forbidden_forms:
+    informal_pronoun: [你, 你的]   # 你 is also tokenized above (zero false positives in live content)
+  not_forbidden:
+    polite_substring: "您 is NOT forbidden — it is the affirmed register and is also a substring of valid possessives (您的, 236 live hits)."
+  voice_by_context:
+    buttons_and_actions: "Imperative/direct verb form (例: 保存更改, 删除文件, 发送消息) — concise label form."
+    status_and_notifications: "Passive/declarative (例: 已保存更改, 已销毁, 已复制) — no exclamation marks."
+    explanatory_text: "Polite 您-address, professional yet concise."
+  notes: >-
+    Live content uses 您 exclusively (398 hits) and 你 never (0 hits), making the
+    binary formal lock unambiguous. The guide's UI voice (imperative buttons,
+    declarative status, no exclamation marks) is the prescribed style, not a
+    register violation.
+# baseline_ref: baselines.zh is intentionally omitted — no `baselines.zh` entry
+# exists in baselines.yaml yet, and a dangling reference fails the resolver. The
+# pin is for a human reviewer to add to baselines.yaml centrally at commit time
+# (mirroring the fr / de_AT baselines entries); this and rules.yaml can then
+# carry `baseline_ref: baselines.zh`.
