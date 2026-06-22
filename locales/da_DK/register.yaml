@@ -1,0 +1,43 @@
+id: register.da_DK
+source: onetimesecret/locales/guides/for-translators/da.md
+# Danish is locked to the INFORMAL `du` register. This is grounded in the live
+# app content (onetimesecret/locales/content/da_DK/*.json): direct address is
+# overwhelmingly informal — the subject pronoun `du` appears as a standalone word
+# 127 times plus sentence-initial `Du` 44 times (e.g. "Har du allerede en
+# konto?", "Er du sikker?", "Når du sender feedback..."), and the informal
+# possessives din/dit/dine appear 294 times (e.g. "Indtast din adgangskode",
+# "Tjek din e-mail", "Log ind på din konto"). The translator guide agrees
+# explicitly: §6 "Direkte tiltale" — "Brug uformel tiltale konsekvent når du
+# henvender dig til brugere" with examples "Indtast din adgangskode" / "Din
+# sikre besked", and "Dansk flyder naturligt med direkte tiltale" (da.md). Like
+# Scandinavian neighbours (cf. the sv_SE du-reform pilot), modern Danish has no
+# enforced T/V split: the formal De/Dem/Deres is archaic and reads as stilted.
+#
+# forbidden_tokens is DELIBERATELY EMPTY. The formal Danish address forms are
+# De (subject), Dem (object) and Deres (possessive) — capitalised. The register
+# is enforced here by `form: informal` + `pronoun: du` + rule.da-register-informal,
+# NOT by a forbidden-token list, for two independent reasons:
+#   1. CASEFOLD AMBIGUITY. Lint matches casefolded (resolver/matching.py
+#      `_casefold` = NFC + .casefold()), so the capital-only distinction that
+#      separates the formal pronoun from an ordinary word is ERASED. Forbidding
+#      `De` would also match the everyday word `de` (= "they"/"the"), which
+#      occurs 29+ times in valid content, and `Deres` would match `deres`
+#      (= "their"), 6+ valid uses. The single capitalised `De` in the live
+#      content — "De vises her, når du har delt dem." — is in fact sentence-
+#      initial `de` (= "they") AND uses informal `du` in the same string, the
+#      exact false positive a forbidden token would produce.
+#   2. ABSENT FROM CONTENT. The genuine formal forms Dem and Deres appear ZERO
+#      times; there is no V-register to police. Per the es.md / sv_SE precedent
+#      (never forbid a token that collides with valid content), the safest list
+#      is empty. The informal lock is expressed structurally + via the rule.
+# AGENT-AUTHORED; requires native-speaker (DA) sign-off — see PR label.
+form: informal
+pronoun: du
+possessive: [din, dit, dine]
+forbidden_tokens: []
+exceptions: []
+rule_ref: rule.register-lock
+# baseline_ref: baselines.da_DK is intentionally omitted — baselines.yaml has no
+# da_DK entry yet and is off-limits to this change. A dangling baseline_ref would
+# fail the resolver; a human reviewer pins the baseline centrally (mirroring the
+# fr/de_AT baselines entries), after which this and rules.yaml can carry it.

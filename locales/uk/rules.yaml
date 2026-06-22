@@ -1,0 +1,62 @@
+id: rules.uk
+source: onetimesecret/locales/guides/for-translators/uk.md
+inherits: base
+merge_strategy: append
+# Ukrainian locale layer. uk is a standalone shipping language (no family
+# parent), so it inherits `base` directly — mirroring the Slavic pilots
+# locales/pl/ and locales/cs/, but with the OPPOSITE register decision: Ukrainian
+# is locked to the FORMAL "ви" register. That choice is grounded in the live app
+# content (onetimesecret/locales/content/uk/*.json), which uses the formal "Ваш"
+# possessive family (~280x) and the formal "ви/вам/вас" address pronoun (126x)
+# throughout, formal -іть imperatives (Введіть/Виберіть/Натисніть), and contains
+# ZERO informal "ти"/"твій" forms. The prose guide agrees (Contextual Rules:
+# "ввічлива форма 'ви' ... неформальне 'ти' уникати"; Quality Checklist item 8).
+#
+# rule.uk-pluralization captures the complex Ukrainian plural system (1 / 2-4 /
+# 5+, e.g. день / дні / днів), which the guide flags as critical (Узгодження за
+# числом); it specialises the base rule.pluralization-syntax. The single most
+# critical terminology rules in the guide are секрет→таємниця (avoid "секрет",
+# which still appears as a register-regression in the live secret-manage.json)
+# and password vs passphrase (пароль for account login vs парольна фраза for the
+# credential protecting a secret). Ukrainian declines nouns across 7 cases and
+# requires gender agreement on adjectives (таємний/таємна/таємне), both flagged.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live content;
+# requires native-speaker (UK) sign-off before merge — see PR label.
+rules:
+  - id: rule.uk-register-formal
+    modality: MUST
+    statement: Ukrainian content uses the formal "ви" register (ви / вам / вас / вами) with the formal possessive "Ваш" family and formal -іть/-те plural imperatives throughout product UI and email content; the informal "ти" register (ти / тебе / тобі, твій / твоя / твоє) is forbidden for direct address.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.uk-pluralization
+    modality: MUST
+    statement: Express countable strings with the three Ukrainian plural forms (1 / 2-4 / 5+, e.g. день / дні / днів), choosing the form by the count's final digit (numbers ending 2-4 except 12-14 take the 2-4 form), via vue-i18n pipe syntax; never collapse to a single plural.
+    severity: error
+    rule_ref: rule.pluralization-syntax
+  - id: rule.uk-secret-not-sekret
+    modality: MUST
+    statement: Translate the core "secret" concept as the noun таємниця and the adjective таємний/таємна/таємне (gender-agreeing); never use секрет/секретний (too personal a connotation), and never substitute повідомлення (message) unless the source specifically refers to a message.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.uk-passphrase-password
+    modality: MUST
+    statement: Keep пароль (account login credential) distinct from парольна фраза (the passphrase protecting an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.uk-gender-case-agreement
+    modality: MUST
+    statement: Agree adjectives and participles with their noun in gender (masc./fem./neut.) and inflect through all seven cases as the syntax requires (таємне повідомлення, таємного посилання, таємним посиланням); do not leave a single fixed form as a calque from English.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.uk-imperative-buttons
+    modality: SHOULD
+    statement: Use the formal plural imperative for button and action labels (Створіть, Введіть, Збережіть, Поділіться); use passive voice or past-tense impersonal forms with correct gender agreement for status and system messages (Таємницю створено, Зміни збережено).
+    severity: info
+    rule_ref: rule.message-voice
+register_ref: register.uk
+glossary_ref: glossary.uk
+# baseline_ref intentionally omitted: no baselines.uk entry exists yet and this
+# backfill must not edit the shared baselines.yaml. The resolver hard-fails on a
+# dangling baseline_ref, and the field is optional per rules.schema.json, so it
+# is left out until a reviewer adds the central baselines.uk pin.

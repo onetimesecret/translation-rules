@@ -1,0 +1,75 @@
+id: rules.tr
+source: onetimesecret/locales/guides/for-translators/tr.md
+inherits: base
+merge_strategy: append
+# Turkish locale layer. tr is a standalone shipping language (no family parent),
+# so it inherits `base` directly — mirroring locales/fr/rules.yaml and
+# locales/es/rules.yaml. Carries the Turkish conventions transcribed from
+# onetimesecret/locales/guides/for-translators/tr.md and grounded in the live app
+# content under onetimesecret/locales/content/tr/:
+#   - the formal `siz` register lock (the T/V distinction is carried mainly by
+#     verb-suffix and possessive-suffix agreement, not standalone pronouns — see
+#     rule.tr-register-formal and the comment in register.yaml);
+#   - the secret -> "gizli mesaj" (NOT "sır") noun choice;
+#   - the parola/şifre vs güvenlik ifadesi (password vs passphrase) distinction;
+#   - the burn -> "yak/yakmak" metaphor (NOT "sil");
+#   - the active-imperative / passive-status voice split.
+# Every rule_ref points at an existing base rule id.
+#
+# AGENT-AUTHORED transcription; requires native-speaker (TR) sign-off before merge
+# — see PR label.
+rules:
+  - id: rule.tr-register-formal
+    modality: MUST
+    statement: >-
+      Turkish content uses the formal `siz` register throughout product UI and
+      email content. Because the Turkish T/V distinction is carried mainly by
+      agreement suffixes rather than standalone pronouns, this means: use the
+      formal 2nd-person-plural verb suffixes (-sınız/-siniz/-sunuz, imperatives
+      in -ın/-in/-ınız/-iniz, e.g. "girin", "gönderebilirsiniz") and the formal
+      2pl possessive suffix (-ınız/-iniz, e.g. "parolanız", "hesabınız"). The
+      informal 2sg register is forbidden — no informal pronouns (sen / senin) and
+      no informal 2sg agreement suffixes (-sın/-sin verb, bare-stem imperatives,
+      -ın/-in 2sg possessive used for direct address).
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.tr-secret-noun
+    modality: MUST
+    statement: >-
+      Translate the noun "secret" as "gizli mesaj" (confidential message), never
+      "sır". "Sır" carries personal/intimate connotations in Turkish that are
+      unfit for a neutral security product; use "gizli" for the adjective sense.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.tr-passphrase-password
+    modality: MUST
+    statement: >-
+      Keep "parola" / "şifre" (account login / authentication credential)
+      distinct from "güvenlik ifadesi" (protection of an individual secret);
+      never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.tr-burn-yak
+    modality: MUST
+    statement: >-
+      Translate burn / burned consistently with the "yak" metaphor — verb
+      "yakmak" / imperative "yak..." and past participle/state "yakıldı" — not
+      the generic "sil" (delete); do not vary across strings.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.tr-active-passive-voice
+    modality: SHOULD
+    statement: >-
+      Use the active imperative for buttons and user actions (Gizli mesaj
+      oluştur, Değişiklikleri kaydet, Mesajı gönder) and the passive/declarative
+      voice for status and informational messages (Gizli mesaj oluşturuldu,
+      Değişiklikler kaydedildi, Gizli mesaj yakıldı).
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.tr
+glossary_ref: glossary.tr
+# baseline_ref: baselines.tr is intentionally omitted until a human reviewer adds
+# the `baselines.tr` entry to baselines.yaml centrally — a dangling reference
+# fails the resolver, and this task must not edit baselines.yaml. Add it together
+# with the baselines.yaml `tr` block when that lands. (Deferred, cf.
+# locales/es/rules.yaml.)

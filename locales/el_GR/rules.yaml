@@ -1,0 +1,39 @@
+id: rules.el_GR
+source: onetimesecret/locales/guides/for-translators/el_GR.md
+inherits: base
+merge_strategy: append
+# Greek locale layer. el_GR is a standalone shipping language, so it inherits
+# `base` directly (no family parent). Carries the Greek conventions transcribed
+# from onetimesecret/locales/guides/for-translators/el_GR.md and grounded in the
+# live el_GR content: the formal εσείς register lock, the
+# κωδικός πρόσβασης / φράση πρόσβασης distinction the guide calls critical, and
+# the burn -> οριστική διαγραφή terminology the guide standardised on.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live el_GR content;
+# requires native-speaker (EL) sign-off before merge — see PR label.
+rules:
+  - id: register.el_GR.formality
+    modality: MUST
+    statement: Greek content uses the formal εσείς register (2nd-person plural verb forms and the possessive/genitive clitic σας) throughout product UI and email content; the informal εσύ register (εσύ / εσένα / σου) is forbidden for direct address.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.el-passphrase-password
+    modality: MUST
+    statement: Keep κωδικός πρόσβασης (account login / authentication credential) distinct from φράση πρόσβασης (protection of an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.el-burn-oristiki-diagrafi
+    modality: MUST
+    statement: Translate burn / burned consistently as οριστική διαγραφή (the action, "permanent deletion") and διαγράφηκε οριστικά / διαγράφεται οριστικά (the resulting state), per the agreed Greek terminology; do not use a literal "καίω" rendering and do not vary across strings.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.el-monotonic-accents
+    modality: MUST
+    statement: Use the monotonic system (single acute accent only, in force since 1982); never use polytonic marks (grave, circumflex, breathings). Use final sigma ς at word end and σ elsewhere.
+    severity: warning
+    rule_ref: rule.terminology-consistency
+register_ref: register.el_GR
+glossary_ref: glossary.el_GR
+# baseline_ref: baselines.el_GR is intentionally omitted until a human reviewer
+# adds the `baselines.el_GR` entry to baselines.yaml centrally — a dangling
+# reference fails the resolver, and this task must not edit baselines.yaml.

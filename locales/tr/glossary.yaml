@@ -1,0 +1,188 @@
+id: glossary.tr
+source: onetimesecret/locales/guides/for-translators/tr.md
+# Sense-split of the core domain terminology from the Turkish translator guide's
+# terminology tables (tr.md §Sözlük, §Özel Hususlar, §Key Terminology Reference),
+# grounded against the live app content in onetimesecret/locales/content/tr/.
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (TR)
+# sign-off before merge — see PR label.
+#
+# Each `good` example uses the chosen formal `siz` register (formal 2pl agreement
+# suffixes -sınız/-siniz, -ınız/-iniz; standalone `siz` where natural) and
+# contains the term's target; each `bad` example demonstrates a forbidden form —
+# the informal `sen` register (standalone `sen`/`senin` pronouns or informal 2sg
+# agreement) or the wrong/forbidden term (e.g. "sır", "sil", "şifre" for
+# passphrase).
+#
+# Turkish citation-form note: Turkish suffixes attach to the noun stem, so every
+# target below is given in its bare citation form and every good example places
+# the term in head position, so the lint word_prefix check (sense target must
+# appear, any suffix allowed) is satisfied by suffixed forms like "gizli
+# mesajınız", "bağlantıyı", "parolanızı", "e-postanızı".
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render as 'gizli mesaj', never 'sır'."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    tr:
+      noun:
+        target: gizli mesaj
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created."
+        target: "Gizli mesajınız oluşturuldu."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal 2pl possessive suffix '-ınız' on the term 'gizli mesaj'; passive/declarative voice 'oluşturuldu' for a status message."
+      - id: ex.secret-sir-bad#250567fe
+        source: "Your secret has been created."
+        target: "Sırrın oluşturuldu."
+        verdict: bad
+        note: "Uses 'sır' (personal/intimate connotation) instead of 'gizli mesaj', AND the informal 2sg possessive '-ın' ('sırrın') instead of the formal '-ınız' — violates both rule.tr-secret-noun and the register lock."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    tr:
+      noun:
+        target: güvenlik ifadesi
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Bu gizli mesajı görüntülemek için güvenlik ifadesini girin."
+        verdict: good
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+        note: "Formal imperative 'girin' (-in); uses 'güvenlik ifadesi' (secret protection), distinct from the account 'parola'. Grounded in live content (00-common.json: 'Güvenlik ifadesini buraya girin')."
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Bu gizli mesajı görüntülemek için şifreyi gir."
+        verdict: bad
+        note: "Uses 'şifre' (account credential) where 'güvenlik ifadesi' (secret protection) is meant, AND the informal bare-stem imperative 'gir' instead of formal 'girin' — violates rule.tr-passphrase-password and the register lock."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    tr:
+      noun:
+        target: parola
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Reset your password."
+        target: "Parolanızı sıfırlayın."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal 2pl possessive '-ınız' plus formal imperative 'sıfırlayın'; 'parola' is the account credential. Grounded in live content (email.json: 'Parolanızı Sıfırlayın')."
+      - id: ex.password-bad#83a8f72f
+        source: "Reset your password."
+        target: "Parolanı sıfırla."
+        verdict: bad
+        note: "Informal 2sg possessive '-ın' ('parolanı') plus informal bare-stem imperative 'sıfırla' — the forbidden informal register; should be 'Parolanızı sıfırlayın'."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. Verb 'yakmak' / imperative 'yak...' for the action; past participle 'yakıldı' for the resulting status. Not 'sil' (delete)."
+      key_patterns: ["*burn*", "*.destroy*"]
+    tr:
+      verb:
+        target: yak
+        rule_ref: rule.terminology-consistency
+      state:
+        target: yakıldı
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "The secret was burned."
+        target: "Gizli mesaj yakıldı."
+        verdict: good
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+        note: "State 'yakıldı' (passive/declarative for a status message) plus the noun 'gizli mesaj'. Grounded in live content (secret-manage.json: 'Yakıldı', 'gizli mesaj yakıldı')."
+      - id: ex.burn-bad#4228df6b
+        source: "The secret was burned."
+        target: "Sırrın silindi."
+        verdict: bad
+        note: "Uses 'sil' (generic delete) instead of the 'yak' metaphor and 'sır' instead of 'gizli mesaj', plus informal 2sg '-ın' — terminology drift and register violation."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. 'bağlantı' (native, preferred) — 'link' is also attested in the guide but stay consistent on 'bağlantı'."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    tr:
+      noun:
+        target: bağlantı
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy this link."
+        target: "Bu bağlantıyı kopyalayıp yapıştırın."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal imperative 'yapıştırın' (-ın); 'bağlantı' with accusative suffix '-yı'. Grounded in live content (email.json: 'Veya bu bağlantıyı kopyalayıp yapıştırın')."
+      - id: ex.link-bad#748809c5
+        source: "Copy this link."
+        target: "Bu bağlantıyı kopyala."
+        verdict: bad
+        note: "Informal bare-stem imperative 'kopyala' instead of the formal 'kopyalayın' — the forbidden informal register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'şifrele' (process 'şifreleme'), past participle 'şifrelenmiş' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    tr:
+      verb:
+        target: şifrele
+        rule_ref: rule.terminology-consistency
+      state:
+        target: şifrelenmiş
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Bu mesaj güvenlik ifadenizle şifrelenmiştir."
+        verdict: good
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+        note: "State 'şifrelenmiş' (word_prefix of the target) plus formal 2pl possessive '-iniz' on 'güvenlik ifadesi'. Grounded in live content (secret-manage.json: 'Bu mesaj güvenlik ifadenizle şifrelenmiştir.')."
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Bu mesaj senin şifrenle şifrelenmiştir."
+        verdict: bad
+        note: "Informal possessive pronoun 'senin' (forbidden register) plus 'şifre' (account credential) where 'güvenlik ifadesi' (passphrase) is meant."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Written with a hyphen: e-posta."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    tr:
+      noun:
+        target: e-posta
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Verify your email address."
+        target: "E-posta adresinizi doğrulayın."
+        verdict: good
+        rule_refs: [rule.register-lock]
+        note: "Formal 2pl possessive '-iniz' ('adresiniz') plus formal imperative 'doğrulayın'; 'e-posta' (word_prefix). Grounded in live content (email.json: 'Lütfen aşağıdaki bağlantıya tıklayarak e-posta adresinizi doğrulayın')."
+      - id: ex.email-bad#5c29e476
+        source: "Verify your email address."
+        target: "E-posta adresini doğrula."
+        verdict: bad
+        note: "Informal 2sg possessive '-in' ('adresini') plus informal bare-stem imperative 'doğrula' — the forbidden informal register; should be 'E-posta adresinizi doğrulayın'."

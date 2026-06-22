@@ -1,0 +1,53 @@
+id: rules.da_DK
+source: onetimesecret/locales/guides/for-translators/da.md
+inherits: base
+merge_strategy: append
+# Danish locale layer. da_DK is the only Danish variant in the repo, so it
+# inherits `base` directly (no family `da` parent), mirroring how
+# locales/sv_SE/rules.yaml and locales/es/rules.yaml inherit base. Carries the
+# Danish conventions transcribed from
+# onetimesecret/locales/guides/for-translators/da.md and grounded in the live
+# app content under onetimesecret/locales/content/da_DK/: the informal `du`
+# register lock, the defining "secret -> besked (NOT hemmelighed)" terminology
+# rule, the adgangskode / adgangssætning distinction, the burn -> "ødelæg"
+# choice, the imperative-vs-status voice split, and the loanword-compound hyphen
+# orthography rule. Every rule_ref points at an existing base rule id.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live da_DK
+# content; requires native-speaker (DA) sign-off before merge — see PR label.
+rules:
+  - id: rule.da-register-informal
+    modality: MUST
+    statement: Danish content uses the informal du register (du / din / dit / dine) throughout product UI and email content; the formal De / Dem / Deres address form is archaic and is not used.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.da-secret-besked
+    modality: MUST
+    statement: Translate the product noun "secret" as "besked" (message), never "hemmelighed"; in Danish "hemmelighed" carries childish/personal-gossip connotations that undermine the professional security context. Use besked / beskeden / beskeder consistently.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.da-passphrase-password
+    modality: MUST
+    statement: Keep adgangskode (account login / authentication credential) distinct from adgangssætning (protection of an individual besked); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.da-burn-oedelaeg
+    modality: MUST
+    statement: Translate burn / burned consistently as "ødelæg" (action, imperative) and "ødelagt" (state, past participle), conveying the permanent irreversible deletion; do not vary across strings.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.da-compound-hyphen
+    modality: MUST
+    statement: When forming compounds with English loanwords, join them with a hyphen (besked-apps, API-nøgle), never as separate words (NOT "besked apps", "API nøgle"); the split form is a Danish orthography error.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.da-voice-imperative-status
+    modality: SHOULD
+    statement: Use the imperative for buttons, links and user actions (Opret, Del, Gem, Kopier) and passive/past-participle forms for status messages and information (Oprettet, Gemt, Ødelagt, "Besked oprettet").
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.da_DK
+glossary_ref: glossary.da_DK
+# baseline_ref: baselines.da_DK is intentionally omitted until a human reviewer
+# adds the baselines.da_DK entry to baselines.yaml centrally — a dangling
+# reference fails the resolver, and this task must not edit baselines.yaml.

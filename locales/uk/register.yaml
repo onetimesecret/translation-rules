@@ -1,0 +1,71 @@
+id: register.uk
+source: onetimesecret/locales/guides/for-translators/uk.md
+# Ukrainian is locked to the FORMAL "ви" register (polite 2nd-person plural used
+# as singular address). Grounded in the live app content
+# (onetimesecret/locales/content/uk/*.json):
+#   - the formal possessive "Ваш" family is pervasive — Ваш / Ваша / Ваше / Ваші
+#     and case forms Вашого / Вашої / Вашому / Вашій / Вашу / Вашим / Ваших /
+#     Вашою / Вашими appear ~280 times across all 17 files (e.g.
+#     "Введіть Вашу електронну адресу", "Це повідомлення зашифровано Вашою
+#     парольною фразою.", "Ваш секрет залишатиметься доступним");
+#   - the formal address pronoun "ви / вам / вас / вами" appears 126 times
+#     (e.g. "Ви впевнені, що хочете знищити цю таємницю?", "Ми показуємо вам
+#     значення, щоб ви могли його перевірити");
+#   - imperatives are the formal -іть/-те plural form throughout — Введіть,
+#     Виберіть, Натисніть, Створіть, Поділіться — never the informal singular
+#     (Введи, Вибери, Натисни);
+#   - the informal "ти" register is ENTIRELY ABSENT: zero standalone "ти" and
+#     zero informal possessives (твій / твоя / твоє / твої / твого / тобі /
+#     тебе) anywhere in the live content.
+# The prose guide concurs: the Contextual Rules table ("Звернення до користувача
+# | Друга особа ... 'ви' (неформальне 'ти' уникати)") and Quality Checklist
+# item 8 ("Використовується ввічлива форма 'ви' ... не неформальне 'ти'").
+#
+# Because the locked register is formal, the FORBIDDEN register is the INFORMAL
+# "ти" one: the informal address pronoun (ти / тебе / тобі / тобою) and the
+# informal possessive "твій" family. These have zero legitimate use in this
+# formal corpus — the formal counterparts are ви/вас/вам and Ваш respectively.
+#
+# Tokens are matched as standalone_word (NOT word_prefix/substring) on purpose:
+# "ти" is a 2-letter substring of countless valid Ukrainian words (читати,
+# платити, налаштування, активний, ...), so a looser context would massively
+# false-positive; the informal possessives likewise share stems with unrelated
+# words. As standalone words the informal forms are unambiguous register markers
+# that never occur in the live content. Matching is casefolded, so each lowercase
+# token also catches its sentence-initial capitalized form (Ти, Твій, ...).
+#
+# Deliberately NOT forbidden: the informal 2nd-person-singular VERB and IMPERATIVE
+# endings (e.g. -еш/-иш finite forms, the -и/-й singular imperative Введи/Натисни).
+# Ukrainian verb endings are not separable standalone words and overlap with valid
+# vocabulary and with 3rd-person/plural forms the formal register legitimately
+# uses, so forbidding them would false-positive. The informal pronouns and
+# possessives above are the unambiguous standalone markers and carry the lock.
+#
+# AGENT-AUTHORED; requires native-speaker (UK) sign-off — see PR label.
+form: formal
+pronoun: ви
+possessive: [Ваш, Ваша, Ваше, Ваші, Вашого, Вашої, Вашому, Вашій, Вашу, Вашим, Ваших, Вашою, Вашими]
+forbidden_tokens:
+  - { token: ти,     context: standalone_word, severity: error, note: "informal address pronoun 'you' (nom.) — the register uk does NOT use; formal is ви. Substring of many words (читати, платити), so standalone_word only" }
+  - { token: тебе,   context: standalone_word, severity: error, note: "informal address pronoun 'you' (gen./acc.) — formal is вас" }
+  - { token: тобі,   context: standalone_word, severity: error, note: "informal address pronoun 'you' (dat./loc.) — formal is вам" }
+  - { token: тобою,  context: standalone_word, severity: error, note: "informal address pronoun 'you' (instr.) — formal is вами" }
+  - { token: твій,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. masc.) — formal is Ваш" }
+  - { token: твоя,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. fem.) — formal is Ваша" }
+  - { token: твоє,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. neut.) — formal is Ваше" }
+  - { token: твої,   context: standalone_word, severity: error, note: "informal possessive 'your' (nom. pl.) — formal is Ваші" }
+  - { token: твого,  context: standalone_word, severity: error, note: "informal possessive 'your' (gen./acc. masc./neut.) — formal is Вашого" }
+  - { token: твоєї,  context: standalone_word, severity: error, note: "informal possessive 'your' (gen. fem.) — formal is Вашої" }
+  - { token: твоєму, context: standalone_word, severity: error, note: "informal possessive 'your' (dat./loc. masc./neut.) — formal is Вашому" }
+  - { token: твоїй,  context: standalone_word, severity: error, note: "informal possessive 'your' (dat./loc. fem.) — formal is Вашій" }
+  - { token: твою,   context: standalone_word, severity: error, note: "informal possessive 'your' (acc. fem.) — formal is Вашу" }
+  - { token: твоїм,  context: standalone_word, severity: error, note: "informal possessive 'your' (instr. masc./neut. / dat. pl.) — formal is Вашим" }
+  - { token: твоєю,  context: standalone_word, severity: error, note: "informal possessive 'your' (instr. fem.) — formal is Вашою" }
+  - { token: твоїх,  context: standalone_word, severity: error, note: "informal possessive 'your' (gen./loc. pl.) — formal is Ваших" }
+  - { token: твоїми, context: standalone_word, severity: error, note: "informal possessive 'your' (instr. pl.) — formal is Вашими" }
+exceptions: []
+rule_ref: rule.register-lock
+# baseline_ref intentionally omitted (optional per register.schema.json): no
+# `baselines.uk` entry exists yet, this backfill must not edit baselines.yaml,
+# and the resolver hard-fails on a dangling baseline_ref. A reviewer adds the
+# central baselines.uk pin at commit time, after which this file can carry it.
