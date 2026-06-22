@@ -19,6 +19,8 @@ forbidden_tokens:
   - { token: toi, context: standalone_word, severity: error, note: "informal stressed pronoun" }
   - { token: te,  context: standalone_word, severity: error, note: "informal object pronoun (non-contracted)" }
   - { token: toi-même, context: standalone_word, severity: error, note: "informal reflexive" }
+  - { token: "t'", context: word_prefix, severity: error, note: "elided informal object/reflexive pronoun (t'envoie, t'inscrire)" }
+  - { token: "t’", context: word_prefix, severity: error, note: "elided informal pronoun, curly apostrophe (U+2019)" }
 exceptions: []
 rule_ref: register.fr.formality
 baseline_ref: baselines.fr_CA

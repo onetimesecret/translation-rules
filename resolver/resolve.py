@@ -628,7 +628,7 @@ def main(argv: list[str]) -> int:
     parser.add_argument(
         "--emit-dir",
         default=".",
-        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/for-translators/ (default: .).",
+        help="Root for emitted artifacts: <dir>/.resolved/ and <dir>/guides/for-translators/ (default: .).",
     )
     parser.add_argument(
         "--source-commit",
