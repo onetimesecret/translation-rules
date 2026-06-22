@@ -53,14 +53,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 PROMOTION_LABEL = "prescriptive-promotion"
 
 # Exactly the two trees SPEC §2.1 names: the top-level firewall and the
 # superseded-retros archive. Prefix lookalikes (`_archived/x`, `foo/_archive/x`)
 # are NOT gated.
-ARCHIVE_TREES = ("_archive/", "retrospectives/_archive/")
+ARCHIVE_TREES = ("rules/_archive/", "rules/retrospectives/_archive/")
 
 FATAL = {"error"}
 

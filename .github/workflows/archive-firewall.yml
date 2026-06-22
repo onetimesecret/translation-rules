@@ -34,6 +34,6 @@ jobs:
         env:
           LABELS_JSON: ${{ toJSON(github.event.pull_request.labels.*.name) }}
         run: |
-          python resolver/archive_firewall.py \
+          python lib/resolver/archive_firewall.py \
             --diff-base "origin/${{ github.base_ref }}" \
             --labels-env LABELS_JSON

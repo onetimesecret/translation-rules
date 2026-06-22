@@ -51,8 +51,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO_ROOT))
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(REPO_ROOT / "lib"))
 
 import yaml  # noqa: E402
 
@@ -280,7 +280,9 @@ def load_retros(retros_dir: Path) -> list[dict[str, Any]]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--retros-dir", default=str(REPO_ROOT / "retrospectives"))
+    parser.add_argument(
+        "--retros-dir", default=str(REPO_ROOT / "rules" / "retrospectives")
+    )
     parser.add_argument("--today", default=None, help="ISO date; defaults to today")
     parser.add_argument("--max-pending-days", type=int, default=7)
     parser.add_argument(

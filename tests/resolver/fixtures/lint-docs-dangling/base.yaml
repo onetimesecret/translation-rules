@@ -6,4 +6,4 @@ rules:
     statement: Use the locale's locked register form.
     severity: error
     docs:
-      - base/docs/never-written.md
+      - docs/never-written.md
