@@ -187,3 +187,38 @@ def _copy_value(v: Any) -> Any:
 
 def _copy_list(v: list) -> list:
     return [_copy_value(sub) for sub in v]
+
+
+def merge_glossary_terms(glossaries_child_first: list[dict]) -> dict | None:
+    """Union glossary `terms` along the inheritance chain by term `key`.
+
+    Child glossaries replace parent terms of the same `key` wholesale (no
+    sense-level merge — the term is the smallest unit of override). The
+    resulting glossary takes the child's `id` and `source`, since downstream
+    consumers attribute the artifact to the locale being resolved. Terms
+    contributed by parents are emitted in parent-declaration order after the
+    child's own terms, so the locale's local terms read first.
+
+    `merge_chain`'s generic policy (lists default to `replace`) would otherwise
+    drop inherited terms wholesale; this helper is purpose-built so an fr_CA
+    delta-only glossary inherits the rest of fr's terminology.
+    """
+    if not glossaries_child_first:
+        return None
+    child = glossaries_child_first[0]
+    seen_keys: set[str] = set()
+    merged_terms: list[Any] = []
+    for glossary in glossaries_child_first:
+        for term in glossary.get("terms") or []:
+            key = term.get("key") if isinstance(term, dict) else None
+            if not isinstance(key, str) or key in seen_keys:
+                continue
+            seen_keys.add(key)
+            merged_terms.append(_copy_value(term))
+    out: dict[str, Any] = {}
+    if "id" in child:
+        out["id"] = child["id"]
+    if "source" in child:
+        out["source"] = child["source"]
+    out["terms"] = merged_terms
+    return out

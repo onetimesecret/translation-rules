@@ -14,6 +14,9 @@ Locale: `de_AT` · schema v1
 
 ## Glossary
 
+### link (en: link)
+- _noun_: **Link**
+  - ✓ Open the link to view your secret. → Öffnen Sie den Link, um Ihr Geheimnis anzuzeigen.
 ### secret_object (en: secret)
 - _noun_: **Geheimnis**
   - ✓ Your secret has been created. → Ihr Geheimnis wurde erstellt.

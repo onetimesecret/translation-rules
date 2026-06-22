@@ -57,7 +57,7 @@ from resolver.loader import (
     load_retro_frontmatter,
     load_yaml_file,
 )
-from resolver.merge import MergeError, merge_chain
+from resolver.merge import MergeError, merge_chain, merge_glossary_terms
 from resolver.model import ModelError, build_model
 from resolver.lint import lint_model
 from resolver.emit_json import emit_json
@@ -413,6 +413,29 @@ def resolve_locale(
         merged_rules = base_data
         provenance = {}
 
+    # Glossary inheritance: merge along the same chain as rules, child-first.
+    # ADR-001: a child glossary that omits a term inherits the parent's term
+    # (term-key override). Without this, an fr_CA delta-only glossary would
+    # emit a `.resolved` missing inherited `fr` terminology — exactly the
+    # failure mode #29 surfaced. Register is intentionally NOT merged: registers
+    # are per-locale by design (see ADR-001 §Decision).
+    leaf_glossary = next(
+        (f.data for f in locale_files if f.schema_name == "glossary"), None
+    )
+    glossaries_child_first: list[dict] = []
+    if leaf_glossary is not None:
+        glossaries_child_first.append(leaf_glossary)
+    for node in chain_nodes:
+        if node.path == inputs.base_path or node.locale == locale:
+            continue
+        parent_glossary_path = inputs.locales_dir / node.locale / "glossary.yaml"
+        if not parent_glossary_path.exists():
+            continue
+        parent_glossary = load_yaml_file(parent_glossary_path)
+        validate_file(parent_glossary_path, parent_glossary, "glossary", bundle)
+        glossaries_child_first.append(parent_glossary)
+    merged_glossary = merge_glossary_terms(glossaries_child_first)
+
     # Step 1d: baselines + retrospectives (project-wide, locale-agnostic).
     baselines = _load_baselines(inputs, bundle)
     retros = _load_retros(inputs, bundle)
@@ -437,11 +460,17 @@ def resolve_locale(
         _index_retro(retro.data, retro.path, index, root)
 
     # Step 4: walk merged rules + per-locale leaves + baselines + retros for refs.
+    # The glossary is checked from the inheritance-merged view so inherited
+    # terms' refs are validated against the same combined index — leaf-only
+    # checking would silently skip parent terms.
     errors: list[str] = []
     _check_refs(f"rules ({locale})", merged_rules, index, errors)
     for f in locale_files:
-        if f.schema_name != "rules":
-            _check_refs(f"{f.schema_name} ({locale})", f.data, index, errors)
+        if f.schema_name in ("rules", "glossary"):
+            continue
+        _check_refs(f"{f.schema_name} ({locale})", f.data, index, errors)
+    if merged_glossary is not None:
+        _check_refs(f"glossary ({locale})", merged_glossary, index, errors)
     if baselines is not None:
         _check_refs("baselines", baselines.data, index, errors)
     for retro in retros:
@@ -480,9 +509,7 @@ def resolve_locale(
         "register": next(
             (f.data for f in locale_files if f.schema_name == "register"), None
         ),
-        "glossary": next(
-            (f.data for f in locale_files if f.schema_name == "glossary"), None
-        ),
+        "glossary": merged_glossary,
         "retros": [r.data for r in retros],
     }
 
