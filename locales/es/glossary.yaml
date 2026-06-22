@@ -1,0 +1,177 @@
+id: glossary.es
+source: onetimesecret/locales/guides/for-translators/es.md
+# Sense-split of the core domain terminology from the Spanish translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/es.md),
+# grounded against the live app content in onetimesecret/locales/content/es/*.json.
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (ES)
+# sign-off before merge — see PR label. Each `good` example uses the informal tú
+# register; each `bad` example demonstrates a forbidden form (the formal usted
+# register, or the wrong term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    es:
+      noun:
+        target: secreto
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-good#d81de1d4
+        source: "Your secret has been created."
+        target: "Tu secreto ha sido creado."
+        verdict: good
+        note: "Informal possessive 'Tu' per the tú register; declarative voice for status."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-bad#36c87b0a
+        source: "Your secret has been created."
+        target: "Su secreto ha sido creado."
+        verdict: bad
+        note: "Formal possessive 'Su' (usted register) used for direct address — the forbidden formal register."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    es:
+      noun:
+        target: frase de contraseña
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Introduce la frase de contraseña para ver este secreto."
+        verdict: good
+        note: "Informal imperative 'Introduce'; uses 'frase de contraseña', not 'contraseña'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Introduce la contraseña para ver este secreto."
+        verdict: bad
+        note: "Uses 'contraseña' (account credential) where 'frase de contraseña' (secret protection) is meant — violates rule.es-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    es:
+      noun:
+        target: contraseña
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Introduce tu contraseña para iniciar sesión."
+        verdict: good
+        note: "Informal imperative 'Introduce' plus informal possessive 'tu'; 'iniciar sesión' per the UI glossary."
+        rule_refs: [rule.register-lock]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Introduzca su contraseña para iniciar sesión."
+        verdict: bad
+        note: "Formal imperative 'Introduzca' plus formal possessive 'su' — the forbidden usted register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. Verb form for the action label, past participle for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    es:
+      verb:
+        target: destruir
+        rule_ref: rule.terminology-consistency
+      state:
+        target: destruido
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Destruir este secreto antes de que sea leído."
+        verdict: good
+        note: "Infinitive 'Destruir' for the button label, per the guide's burn -> destruir choice."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.burn-bad#4228df6b
+        source: "Burn this secret before it is read."
+        target: "Quemar este secreto antes de que sea leído."
+        verdict: bad
+        note: "Uses 'Quemar' instead of the glossary term 'destruir' — terminology drift."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    es:
+      noun:
+        target: enlace
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the secret link to share it."
+        target: "Copia el enlace secreto para compartirlo."
+        verdict: good
+        note: "Informal imperative 'Copia'; uses 'enlace' per the glossary."
+        rule_refs: [rule.register-lock]
+      - id: ex.link-bad#748809c5
+        source: "Copy the secret link to share it."
+        target: "Copie el enlace secreto para compartirlo."
+        verdict: bad
+        note: "Formal imperative 'Copie' (usted register) instead of informal 'Copia' — the forbidden formal register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'cifrar', past participle 'cifrado' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    es:
+      verb:
+        target: cifrar
+        rule_ref: rule.terminology-consistency
+      state:
+        target: cifrado
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Este mensaje está cifrado con tu frase de contraseña."
+        verdict: good
+        note: "Grounded in live content; informal possessive 'tu', 'cifrado' for the encrypted state."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Este mensaje está encriptado con su frase de contraseña."
+        verdict: bad
+        note: "Uses 'encriptado' instead of the established security term 'cifrado', plus formal possessive 'su' (usted register)."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    es:
+      noun:
+        target: correo electrónico
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Introduce tu dirección de correo electrónico."
+        verdict: good
+        note: "Grounded in live content; informal imperative 'Introduce' plus informal possessive 'tu'."
+        rule_refs: [rule.register-lock]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Introduzca su dirección de correo electrónico."
+        verdict: bad
+        note: "Formal imperative 'Introduzca' plus formal possessive 'su' — the forbidden usted register."

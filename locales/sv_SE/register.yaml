@@ -1,0 +1,39 @@
+id: register.sv_SE
+source: onetimesecret/locales/guides/for-translators/sv_SE.md
+# Swedish is locked to the INFORMAL `du` register. This is grounded in the live
+# app content (onetimesecret/locales/content/sv_SE/*.json): direct address is
+# overwhelmingly informal — the subject pronoun `du` appears as a standalone
+# word 131 times (e.g. "Behöver du ett konto?", "Glömt ditt lösenord?", "När du
+# är inloggad...") and the informal possessives din/ditt/dina appear 295 times
+# (e.g. "Skapa ditt konto", "Ange dina uppgifter", "Kontrollera din e-post").
+# The translator guide agrees explicitly: "Informell 'du'-form används
+# universellt sedan du-reformen (1960-talet)" and "Use informal du universally"
+# (sv_SE.md). This is the du-reform: modern Swedish has effectively no enforced
+# T/V distinction; the formal `ni`/`Ni` is rare and can read as stilted or even
+# impolite, so it is the FORBIDDEN form here.
+#
+# Forbidden tokens are kept deliberately SMALL because Swedish has no enforced
+# T/V split to police, and most candidate formal tokens are ambiguous as
+# substrings:
+#   * `ni`/`Ni` (formal 2nd-person pronoun) — forbidden as standalone_word. This
+#     is the one unambiguous, zero-false-positive choice: standalone `ni`/`Ni`
+#     occurs ZERO times in the live content, while the bigram "ni" is extremely
+#     common INSIDE valid words (Inställningar, Organisation, Användning, NIST,
+#     verifiering, autentisering — the productive -ning suffix). standalone_word
+#     context confines the rule to the bare pronoun and avoids every such word.
+#   * The formal possessive/object `er`/`Er`/`ert`/`era` is deliberately NOT
+#     forbidden. Even as standalone_word it false-positives: the live content
+#     uses the plural-suffix notation "session(er)" / "nivå(er)" where `(er)` is
+#     a bare token, and `era` collides with unrelated words. Following the es.md
+#     precedent (do not forbid a token that appears in valid content), it is
+#     left to the glossary/voice rules rather than a register token.
+# AGENT-AUTHORED; requires native-speaker (SV) sign-off — see PR label.
+form: informal
+pronoun: du
+possessive: [din, ditt, dina]
+forbidden_tokens:
+  - { token: ni, context: standalone_word, severity: error, note: "formal 2nd-person pronoun (the V-form du-reform Swedish does not use); standalone_word only — the bigram 'ni' is ubiquitous inside valid words (Inställningar, Organisation, verifiering)" }
+  - { token: Ni, context: standalone_word, severity: error, note: "formal 2nd-person pronoun, capitalized/polite form; standalone_word only for the same false-positive reason" }
+exceptions: []
+rule_ref: rule.register-lock
+baseline_ref: baselines.sv_SE

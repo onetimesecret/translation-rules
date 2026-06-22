@@ -1,0 +1,39 @@
+id: rules.ko
+source: onetimesecret/locales/guides/for-translators/ko.md
+inherits: base
+merge_strategy: append
+# Korean locale layer, inheriting base directly (standalone language, no regional
+# parent). Follows the ja keigo PILOT for the non-T/V register shape. Carries the
+# Korean-wide conventions transcribed from the translator guide
+# (onetimesecret/locales/guides/for-translators/ko.md): the formal-polite
+# 합쇼체/해요체 register lock, the 접근 문구 (passphrase) vs 비밀번호 (password)
+# distinction, the 비밀 메시지 (not bare 비밀 / 보안 메시지) terminology choice,
+# the 소각 / 암호화 security terms, and the imperative-noun-form-for-buttons UI
+# voice. Politeness in Korean is a speech level (높임법), not a pronoun T/V split.
+#
+# AGENT-AUTHORED transcription, grounded in live ko content; requires
+# native-speaker (KO) sign-off — see PR label.
+rules:
+  - id: rule.ko-register-politeness
+    modality: MUST
+    statement: "Korean content uses the formal-polite speech levels throughout product UI and email content: 합쇼체 (-습니다/-ㅂ니다) for declaratives and status, and 해요체 (-세요 / 해 주세요) for instructions and requests. The casual/plain 반말 (해체) forms — bare plain-form declaratives -ㄴ다/-는다/-다 (한다/된다/있다), casual imperatives/requests 해라/해/해줘/해봐, casual prohibition 하지마, casual copula/assertion 이야/거야, casual past 했어, and casual endings 할게/할래/하자/잖아/거든 — are forbidden. Exception: action buttons use concise verbal-noun / imperative noun-form labels (복사, 소각, 공유, 제출하기), and status messages use polite passive/declarative 합쇼체 (생성되었습니다, 소각되었습니다, 복사됨); neither is a register violation."
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.ko-passphrase-password
+    modality: MUST
+    statement: "Keep 비밀번호 (account login / authentication credential) distinct from 접근 문구 (protection of an individual secret); never use one where the other is meant, and never use the ambiguous 암호 for either."
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.ko-secret-message
+    modality: MUST
+    statement: "Render the product concept 'secret' as 비밀 메시지 (secret message), not bare 비밀 (only acceptable in short UI where context is absolutely clear) and never 보안 메시지. Use 비밀의 / 안전한 for the general adjective/secure sense."
+    severity: warning
+    rule_ref: rule.terminology-consistency
+  - id: rule.ko-button-imperative
+    modality: SHOULD
+    statement: "Use concise verbal-noun / imperative noun-form labels for buttons and actions (복사 / 소각 / 비밀 메시지 공유 / 비밀 링크 생성 / 제출하기); use polite passive/declarative 합쇼체 for status messages (생성되었습니다 / 소각되었습니다 / 복사됨)."
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.ko
+glossary_ref: glossary.ko
+baseline_ref: baselines.ko

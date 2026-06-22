@@ -1,0 +1,181 @@
+id: glossary.el_GR
+source: onetimesecret/locales/guides/for-translators/el_GR.md
+# Sense-split of the core domain terminology from the Greek translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/el_GR.md),
+# grounded against the live app content in onetimesecret/locales/content/el_GR/*.json.
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (EL)
+# sign-off before merge — see PR label. Each `good` example uses the formal εσείς
+# register (2pl verbs + σας); each `bad` example demonstrates a forbidden form
+# (the informal εσύ register, or the wrong term).
+#
+# Greek inflects across 4 cases and 3 genders, so the sense `target` is a sensible
+# citation form (usually nominative singular) that also appears verbatim as a
+# word in the chosen good example, satisfying the lint's word_prefix target check.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application. Neuter noun (το μυστικό)."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    el_GR:
+      noun:
+        target: μυστικό
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.el-secret-good#7e44f10e
+        source: "Your secret has been created."
+        target: "Το μυστικό σας δημιουργήθηκε."
+        verdict: good
+        note: "Formal possessive σας per the εσείς register; passive past for status. Grounded in live el_GR phrasing (cf. 'Όλα τα μυστικά σας')."
+        rule_refs: [rule.register-lock]
+      - id: ex.el-secret-bad#f9b09970
+        source: "Your secret has been created."
+        target: "Το μυστικό σου δημιουργήθηκε."
+        verdict: bad
+        note: "Informal 2sg possessive σου — the forbidden εσύ register; formal is σας."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense. Feminine (η φράση πρόσβασης)."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    el_GR:
+      noun:
+        target: φράση πρόσβασης
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.el-passphrase-password]
+    examples:
+      - id: ex.el-passphrase-good#85ccc80c
+        source: "Enter the passphrase to view this secret."
+        target: "Εισάγετε τη φράση πρόσβασης για να προβάλετε αυτό το μυστικό."
+        verdict: good
+        note: "Formal 2pl imperative Εισάγετε; uses φράση πρόσβασης (secret protection), not κωδικός πρόσβασης. Grounded in live 'Εισάγετε τη φράση πρόσβασης εδώ'."
+        rule_refs: [rule.register-lock, rule.el-passphrase-password]
+      - id: ex.el-passphrase-bad#41b2bf7d
+        source: "Enter the passphrase to view this secret."
+        target: "Εισάγετε τον κωδικό πρόσβασης για να προβάλετε αυτό το μυστικό."
+        verdict: bad
+        note: "Uses κωδικός πρόσβασης (account credential) where φράση πρόσβασης (secret protection) is meant — violates rule.el-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense. Masculine (ο κωδικός πρόσβασης)."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    el_GR:
+      noun:
+        target: κωδικός πρόσβασης
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.el-passphrase-password]
+    examples:
+      - id: ex.el-password-good#7767d48d
+        source: "The password you enter protects your account."
+        target: "Ο κωδικός πρόσβασης που εισάγετε προστατεύει τον λογαριασμό σας."
+        verdict: good
+        note: "Formal 2pl verb εισάγετε plus formal possessive σας; uses κωδικός πρόσβασης (account credential). Nominative citation form per the live UI 'Νέος κωδικός πρόσβασης'."
+        rule_refs: [rule.register-lock]
+      - id: ex.el-password-bad#af9d3f0e
+        source: "The password you enter protects your account."
+        target: "Ο κωδικός πρόσβασης που εισάγεις προστατεύει τον λογαριασμό σου."
+        verdict: bad
+        note: "Informal 2sg verb εισάγεις plus informal possessive σου — the forbidden εσύ register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "Permanent deletion of a secret before it is viewed. Action label uses the noun phrase οριστική διαγραφή; the resulting state uses διαγράφηκε/διαγράφεται οριστικά. The guide forbids a literal 'καίω' rendering."
+      key_patterns: ["*burn*", "*.destroy*"]
+    el_GR:
+      action:
+        target: οριστική διαγραφή
+        rule_ref: rule.el-burn-oristiki-diagrafi
+      state:
+        target: διαγράφηκε οριστικά
+        rule_ref: rule.el-burn-oristiki-diagrafi
+    rule_refs: [rule.register-lock, rule.el-burn-oristiki-diagrafi]
+    examples:
+      - id: ex.el-burn-good#d1ccd8e5
+        source: "This secret has been burned."
+        target: "Αυτό το μυστικό διαγράφηκε οριστικά."
+        verdict: good
+        note: "State sense: διαγράφηκε οριστικά, grounded in live 'το περιεχόμενο θα διαγραφεί οριστικά' / 'διαγράφηκε οριστικά'."
+        rule_refs: [rule.register-lock, rule.el-burn-oristiki-diagrafi]
+      - id: ex.el-burn-bad#8809bfb6
+        source: "This secret has been burned."
+        target: "Αυτό το μυστικό κάηκε."
+        verdict: bad
+        note: "Uses a literal 'κάηκε' (was burned/scorched) instead of the agreed οριστική διαγραφή / διαγράφηκε οριστικά terminology — terminology drift."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Masculine (ο σύνδεσμος); final sigma ς in the nominative."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    el_GR:
+      noun:
+        target: σύνδεσμος
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.el-link-good#7826a9ed
+        source: "A secure link will be sent to your email."
+        target: "Ένας ασφαλής σύνδεσμος θα σταλεί στο email σας."
+        verdict: good
+        note: "Nominative σύνδεσμος; formal possessive σας. Grounded in live 'Θα σταλεί ασφαλής σύνδεσμος στο email σας.'"
+        rule_refs: [rule.register-lock]
+      - id: ex.el-link-bad#0c6efdb8
+        source: "A secure link will be sent to your email."
+        target: "Ένας ασφαλής σύνδεσμος θα σταλεί στο email σου."
+        verdict: bad
+        note: "Informal 2sg possessive σου — the forbidden εσύ register; formal is σας."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data. Verb/noun κρυπτογράφηση (from Greek κρυπτός); past participle κρυπτογραφημένο for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    el_GR:
+      noun:
+        target: κρυπτογράφηση
+        rule_ref: rule.terminology-consistency
+      state:
+        target: κρυπτογραφημένο
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.el-encrypt-good#007c98bc
+        source: "This message is encrypted with your passphrase."
+        target: "Αυτό το μήνυμα είναι κρυπτογραφημένο με τη φράση πρόσβασής σας."
+        verdict: good
+        note: "State sense κρυπτογραφημένο; formal possessive σας. Grounded in live 'Αυτό το μήνυμα είναι κρυπτογραφημένο με τη φράση πρόσβασής σας.'"
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.el-encrypt-bad#8de90e86
+        source: "This message is encrypted with your passphrase."
+        target: "Αυτό το μήνυμα είναι κρυπτογραφημένο με τη φράση πρόσβασής σου."
+        verdict: bad
+        note: "Informal 2sg possessive σου — the forbidden εσύ register; formal is σας."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. The guide lists the formal term ηλεκτρονικό ταχυδρομείο, but the live UI uses the loanword 'email' throughout — follow live usage."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    el_GR:
+      noun:
+        target: email
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.el-email-good#140a569e
+        source: "Please check your email for a verification link."
+        target: "Παρακαλώ ελέγξτε το email σας για σύνδεσμο επαλήθευσης."
+        verdict: good
+        note: "Formal 2pl imperative ελέγξτε plus formal possessive σας. Verbatim live string from session-auth content."
+        rule_refs: [rule.register-lock]
+      - id: ex.el-email-bad#d9ad35fe
+        source: "Please check your email for a verification link."
+        target: "Παρακαλώ έλεγξε το email σου για σύνδεσμο επαλήθευσης."
+        verdict: bad
+        note: "Informal 2sg imperative έλεγξε plus informal possessive σου — the forbidden εσύ register."

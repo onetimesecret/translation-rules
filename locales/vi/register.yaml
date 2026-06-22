@@ -1,0 +1,76 @@
+id: register.vi
+source: onetimesecret/locales/guides/for-translators/vi.md
+# Vietnamese has NO T/V (informal/formal) split. Address is carried by a
+# kinship-pronoun system (anh/chị/em/ông/bà/cô/chú/bác/cậu… chosen by the
+# relative age/sex/status of speaker and addressee), plus intimate/rude pronouns
+# (mày/tao/tớ). For neutral software UI the standard, age- and status-neutral
+# 2nd-person address is "bạn" ("you", friendly-neutral) — it sidesteps the
+# kinship hierarchy entirely. Grounded in the live app content
+# (onetimesecret/locales/content/vi/*.json): "bạn" is the pervasive address
+# (~265 occurrences: "Nhập mật khẩu của bạn", "Kiểm tra email của bạn", "Bí mật
+# của bạn đã được tạo an toàn", "Bạn có chắc chắn muốn xóa..."), and zero
+# kinship/intimate 2nd-person address pronouns appear as the generic UI "you".
+# The prose guide agrees (§"Hướng dẫn dịch thuật" #5, §"UI Element Conventions",
+# §"Key Points"): use "bạn" for neutral, respectful-but-friendly address;
+# imperatives drop the subject (the understood "bạn"). So the register is locked
+# to "bạn"; the FORBIDDEN register is the hierarchical/intimate kinship address.
+#
+# form: other — "bạn" is neutral-friendly and Vietnamese has no T/V axis, so
+# none of formal|informal|mixed fits; this mirrors the ja keigo precedent of
+# form:other + a register_spec extension. (One could argue "informal" since
+# "bạn" is warmer than "quý khách"; "other" is chosen because the real policy is
+# pronoun-class selection, not a T/V level — documented in register_spec.)
+#
+# forbidden_tokens — TOKENIZATION NOTE: Vietnamese IS space-delimited (syllables
+# separated by spaces), so the resolver's `standalone_word` mode (needle bounded
+# by non-word chars) segments correctly here, UNLIKE Japanese. Each token below
+# was verified with resolver.matching.find_spans(..., "standalone_word") against
+# every string value in the full live vi content to have ZERO false positives:
+#   chị, em, ông, bà, mày, tao, ngài, cậu, tớ  -> 0 standalone hits each.
+# DELIBERATELY LEFT OUT (would false-positive as standalone words, verified):
+#   - "anh"  : appears in "tiếng Anh" (the English language) — 2 standalone hits;
+#   - "cô"   : 0 live hits now, but it is a frequent syllable (cô lập, cô đọng)
+#              and too collision-prone to lock as a generic standalone token;
+#   - "chú"  : appears in "ghi chú" (note) / "chú ý" (attention) — 5 hits;
+#   - "bác"  : 0 live hits but is the syllable in "bác bỏ" (to reject) etc.
+# These intimate/kinship pronouns are still part of the forbidden register and
+# are recorded in register_spec.forbidden_pronouns (free-form, not lint-scanned)
+# so the policy is complete even though they cannot be safely auto-flagged.
+#
+# AGENT-AUTHORED; requires native-speaker (VI) sign-off — see PR label.
+form: other
+pronoun: bạn
+forbidden_tokens:
+  - { token: chị,  context: standalone_word, severity: error, note: "kinship 2nd-person (older female); not the neutral generic UI address — use bạn. Zero live hits." }
+  - { token: em,   context: standalone_word, severity: error, note: "kinship 2nd-person (younger person); intimate/hierarchical, not generic UI address — use bạn. Zero live hits." }
+  - { token: ông,  context: standalone_word, severity: error, note: "kinship 2nd-person (older male / sir); hierarchical, not generic UI address — use bạn. Zero standalone hits (note: the syllable in 'không' is NOT a standalone_word match)." }
+  - { token: bà,   context: standalone_word, severity: error, note: "kinship 2nd-person (older female / madam); hierarchical, not generic UI address — use bạn. Zero standalone hits." }
+  - { token: ngài, context: standalone_word, severity: error, note: "deferential 2nd-person (sir/lord); over-formal/hierarchical, not the neutral UI address — use bạn. Zero live hits." }
+  - { token: cậu,  context: standalone_word, severity: error, note: "intimate 2nd-person (peer/young male, casual); too familiar for UI — use bạn. Zero live hits." }
+  - { token: tớ,   context: standalone_word, severity: error, note: "intimate 1st/2nd-person (close-friend register); too familiar for UI — use bạn. Zero live hits." }
+  - { token: mày,  context: standalone_word, severity: error, note: "rude/intimate 2nd-person (disrespectful); never appropriate for UI — use bạn. Zero live hits." }
+  - { token: tao,  context: standalone_word, severity: error, note: "rude/intimate 1st-person paired with mày; never appropriate for UI. Zero live hits." }
+exceptions: []
+rule_ref: rule.register-lock
+# register_spec — the FREE-FORM extension where the full address policy lives,
+# including the kinship/intimate pronouns that cannot be safely tokenized
+# (anh/cô/chú/bác) but are still forbidden as the generic UI "you".
+register_spec:
+  system: kinship_pronoun
+  address_pronoun: bạn
+  description: >-
+    Vietnamese has no T/V split; 2nd-person address is a kinship-pronoun system.
+    Product UI is locked to the neutral, age/status-neutral "bạn" ("you"),
+    friendly-neutral. Imperatives drop the subject (understood "bạn"). "quý
+    khách" (deferential "valued customer") is acceptable in marketing/billing
+    prose per the prose guide but "bạn" is the default; both avoid the kinship
+    hierarchy.
+  forbidden_pronouns:
+    tokenized:    [chị, em, ông, bà, ngài, cậu, tớ, mày, tao]   # also in forbidden_tokens (zero false positives)
+    not_tokenized: [anh, cô, chú, bác]                           # forbidden as generic address but unsafe to substring/word-match (collide with tiếng Anh, ghi chú, cô lập, bác bỏ); enforced by this spec + rule.register-lock, not forbidden_tokens
+  notes: >-
+    Use "bạn" (or "quý khách" in customer-facing marketing/billing). Do NOT use
+    hierarchical/intimate kinship pronouns (anh/chị/em/ông/bà/cô/chú/bác/ngài)
+    or rude/intimate pronouns (mày/tao/tớ/cậu) as the generic 2nd-person UI
+    address. All tone marks and diacritics must be preserved.
+baseline_ref: baselines.vi

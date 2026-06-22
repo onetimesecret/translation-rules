@@ -1,0 +1,31 @@
+id: rules.es
+source: onetimesecret/locales/guides/for-translators/es.md
+inherits: base
+merge_strategy: append
+# Spanish locale layer. es is a standalone shipping language, so it inherits
+# `base` directly (no family parent). Carries the Spanish conventions transcribed
+# from onetimesecret/locales/guides/for-translators/es.md: the informal tú
+# register lock, the contraseña / frase de contraseña distinction, and the
+# burn -> destruir terminology choice the guide standardised on.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live es content;
+# requires native-speaker (ES) sign-off before merge — see PR label.
+rules:
+  - id: rule.es-register-informal
+    modality: MUST
+    statement: Spanish content uses the informal tú register (tú / tu / tus / te / ti) throughout product UI and email content; the formal usted register (usted / ustedes) is forbidden for direct address.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.es-passphrase-password
+    modality: MUST
+    statement: Keep contraseña (account login / authentication credential) distinct from frase de contraseña (protection of an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.es-burn-destruir
+    modality: MUST
+    statement: Translate burn / burned consistently as destruir (verb) and destruido (state / past participle), per the agreed Spanish terminology; do not vary across strings.
+    severity: error
+    rule_ref: rule.terminology-consistency
+register_ref: register.es
+glossary_ref: glossary.es
+baseline_ref: baselines.es

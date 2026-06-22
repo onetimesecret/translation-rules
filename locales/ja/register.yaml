@@ -1,0 +1,82 @@
+id: register.ja
+source: onetimesecret/locales/guides/for-translators/ja.md
+# PILOT for the non-T/V "register_spec" shape (CJK/keigo). Japanese has no binary
+# T/V split: register is keigo (politeness level), not a pronoun choice. The app
+# is locked to 丁寧語 / teineigo — the polite です/ます form. Grounded in the live
+# app content (onetimesecret/locales/content/ja/*.json): polite sentence endings
+# are pervasive (~185 ます, ~68 です, ~107 ません) while casual/plain enders are
+# absent (zero だ。 sentence-final copula, zero しろ / するな / だろ / かい). The
+# prose guide agrees: §"Voice and Tone" records 基本方針: です/ます調を使用
+# (base policy: use the です/ます form), imperative (命令形) for buttons, and
+# passive/declarative for status. So the FORBIDDEN register is the casual/plain
+# (常体) form; the lock is documented below and in `register_spec`.
+#
+# form: other  — keigo is not formal|informal|mixed in the T/V sense.
+# pronoun:      — Japanese normally omits 2nd-person pronouns; the register is
+#                 carried by sentence-ending verb/copula morphology, not a
+#                 pronoun. The required field records that, plus the marker.
+#
+# forbidden_tokens — TOKENIZATION NOTE (the pilot's hard lesson for CJK agents):
+# Japanese has no spaces, so `standalone_word`/`word_prefix` word boundaries
+# (which key off alphanumeric chars) do NOT segment Japanese — every kana/kanji
+# is a "word char", so a casual marker mid-sentence has no left boundary. We
+# therefore use `substring` for the casual markers, but ONLY for ones that do
+# NOT collide with polite text. Each token below was verified against the full
+# live ja content to have ZERO occurrences (no false positives):
+#   しろ / するな (casual imperative & prohibition), だろう / だろ (casual
+#   conjecture), かい (casual question particle), ぞ / ぜ (casual emphatics),
+#   じゃない (casual negation), してくれ (casual request).
+# DELIBERATELY LEFT OUT (cannot be safely tokenized — would false-positive on
+# polite text): the plain copula だ — it is a substring of the very common polite
+# request form ください (100+ hits) plus いただく / 一度だけ / まだ; and である —
+# it appears mid-sentence in the polite construction である必要があります. Those
+# two plain forms are locked via `register_spec.forbidden_forms` + the rule
+# rule.ja-register-teineigo instead. SPEC §2.3 lint only scans `good` examples,
+# and all `good` examples here are verified clean against this token list.
+#
+# AGENT-AUTHORED; requires native-speaker (JA) sign-off — see PR label.
+form: other
+pronoun: "(omitted; keigo politeness carried by sentence endings — teineigo です/ます)"
+forbidden_tokens:
+  - { token: しろ,     context: substring, severity: error, note: "casual imperative (する command form); polite UI uses 命令形 noun 削除/保存 or してください — zero live hits" }
+  - { token: するな,   context: substring, severity: error, note: "casual prohibition (do not ~); polite form is しないでください — zero live hits" }
+  - { token: だろう,   context: substring, severity: error, note: "casual conjecture (probably); polite form is でしょう — zero live hits" }
+  - { token: だろ,     context: substring, severity: error, note: "casual conjecture/tag, shortened; — zero live hits" }
+  - { token: かい,     context: substring, severity: error, note: "casual yes/no question particle; polite form is ですか — zero live hits" }
+  - { token: じゃない, context: substring, severity: error, note: "casual negation; polite form is ではありません / ではない(です) — zero live hits" }
+  - { token: してくれ, context: substring, severity: error, note: "casual request (do ~ for me); polite form is してください — zero live hits" }
+  - { token: ぞ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle — zero live hits" }
+  - { token: ぜ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle — zero live hits" }
+exceptions: []
+rule_ref: rule.ja-register-teineigo
+# register_spec — the FREE-FORM extension where the real keigo policy lives (the
+# part that cannot be reduced to safe substring tokens). This is the pilot shape
+# later CJK/keigo (ko) agents should follow: a `system` + `level`, the affirmed
+# `target_forms`, the `forbidden_forms` (including the plain copula that is not
+# safely tokenizable), and a `voice_by_context` map mirroring the guide.
+register_spec:
+  system: keigo
+  level: teineigo
+  description: "Polite form (丁寧語): です/ます sentence endings throughout product UI and email content. Not a pronoun T/V split."
+  target_forms:
+    copula: [です, でした, でしょう]
+    verb_endings: [ます, ません, ました, ましょう]
+    negative_polite: [ません, ありません, ではありません]
+  forbidden_forms:
+    plain_copula: [だ, である]            # plain/常体 copula — see note: NOT in forbidden_tokens (false-positives on ください/必要); locked here + by rule.
+    casual_imperative: [しろ, するな]      # also tokenized (zero false positives)
+    casual_conjecture: [だろう, だろ]      # also tokenized
+    casual_question: [かい]               # also tokenized
+    casual_negation: [じゃない]            # also tokenized
+    casual_emphatic: [ぞ, ぜ]             # also tokenized
+  voice_by_context:
+    buttons_and_actions: "命令形 / imperative noun-form (例: 保存, 削除, 送信) — concise label form, not casual speech."
+    status_and_notifications: "受動態/完了形 — passive/declarative polite (例: 保存されました, 削除済み)."
+    explanatory_text: "丁寧語 です/ます — polite, professional yet approachable."
+  notes: >-
+    The plain copula だ / である is the primary casual marker but is unsafe to
+    substring-match against polite Japanese (だ is inside ください, である inside
+    である必要があります). It is enforced via rule.ja-register-teineigo and this
+    spec rather than forbidden_tokens. Imperative noun-forms on buttons (保存,
+    削除) are the prescribed UI voice, NOT a register violation.
+baseline_ref: baselines.ja

@@ -1,0 +1,51 @@
+id: rules.eo
+source: onetimesecret/locales/guides/for-translators/eo.md
+inherits: base
+merge_strategy: append
+# Esperanto locale layer. eo is a standalone shipping language, so it inherits
+# `base` directly (no family parent). Transcribed from
+# onetimesecret/locales/guides/for-translators/eo.md and grounded against the live
+# app content in onetimesecret/locales/content/eo/*.json. Carries the Esperanto
+# conventions the guide standardised on: the universal `vi` address (no T/V
+# split), the pasvorto / sekreta frazo distinction, the essential circumflex
+# diacritics (never the x-system), the accusative -n on direct objects, and the
+# imperative-for-buttons / infinitive-for-labels verb-form convention.
+#
+# Every rule's rule_ref points at an existing base rule id.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live eo content;
+# requires native/fluent-speaker (EO) sign-off before merge — see PR label.
+rules:
+  - id: rule.eo-address-vi
+    modality: MUST
+    statement: Esperanto uses the single universal 2nd-person pronoun vi (via / vian / vin) for all address — singular, plural, formal, and informal alike; the archaic intimate ci / cia must not be introduced. Esperanto has no formal/informal split to enforce.
+    severity: warning
+    rule_ref: rule.register-lock
+  - id: rule.eo-passphrase-password
+    modality: MUST
+    statement: Keep pasvorto (account login / authentication credential) distinct from sekreta frazo (protection of an individual secret); never use one where the other is meant, and never coin "pasfrazo".
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.eo-burn-forbruligi
+    modality: MUST
+    statement: Translate burn / burned consistently as forbruligi (verb) and forbruligita (state / past participle), per the agreed Esperanto terminology; do not vary across strings.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.eo-diacritics
+    modality: MUST
+    statement: Use the essential Esperanto circumflex letters ĉ ĝ ĥ ĵ ŝ ŭ literally; never substitute the x-system surrogates cx gx hx jx sx ux in production content.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.eo-accusative
+    modality: SHOULD
+    statement: Apply the accusative ending -n to direct objects (e.g. "Krei sekreton", "Enigu vian pasvorton"), but not after prepositions (e.g. "Kopii al tondujo").
+    severity: warning
+    rule_ref: rule.message-voice
+  - id: rule.eo-verb-forms
+    modality: SHOULD
+    statement: Use the imperative -u for buttons and actions (Ensalutu, Konservu, Konfirmu) and the infinitive -i for labels and descriptions (Kopii al tondujo, Forbruligi ĉi tiun sekreton).
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.eo
+glossary_ref: glossary.eo
+baseline_ref: baselines.eo

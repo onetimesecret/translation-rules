@@ -1,0 +1,173 @@
+id: glossary.pl
+source: onetimesecret/locales/guides/for-translators/pl.md
+# Sense-split of the core domain terminology from the Polish translator guide's
+# terminology tables (§ Core Terminology, § Special Considerations), grounded
+# against the live app content in onetimesecret/locales/content/pl/*.json.
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (PL)
+# sign-off before merge — see PR label. Each `good` example uses the locked
+# informal "ty" register and contains its term's sense target; each `bad`
+# example demonstrates a forbidden form — the formal Pan/Pani honorific address.
+# Polish nouns/verbs inflect heavily; sense targets use a sensible citation form
+# (nominative noun / infinitive verb) and good examples keep that form so the
+# word_prefix sense-target check holds.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application. Never substitute wiadomość (message) for this sense."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    pl:
+      noun:
+        target: sekret
+        rule_ref: rule.pl-secret-not-message
+    rule_refs: [register.pl.informality, rule.pl-secret-not-message]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been created."
+        target: "Twój sekret został utworzony."
+        verdict: good
+        rule_refs: [register.pl.informality]
+      - id: ex.secret-formal-bad#c6306bcd
+        source: "Your secret has been created."
+        target: "Pani sekret został utworzony."
+        verdict: bad
+        note: "Formal possessive 'Pani' (formal 'your') — the forbidden formal register; informal would be 'Twój'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    pl:
+      noun:
+        target: fraza dostępowa
+        rule_ref: rule.pl-passphrase-password
+    rule_refs: [register.pl.informality, rule.pl-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Your passphrase is required to view this secret."
+        target: "Twoja fraza dostępowa jest wymagana, aby wyświetlić ten sekret."
+        verdict: good
+        rule_refs: [register.pl.informality]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Your passphrase is required to view this secret."
+        target: "Hasło Pani jest wymagane, aby wyświetlić ten sekret."
+        verdict: bad
+        note: "Uses 'Hasło' (account password) where 'fraza dostępowa' is meant — violates rule.pl-passphrase-password; also formal 'Pani'."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset-password contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    pl:
+      noun:
+        target: hasło
+        rule_ref: rule.pl-passphrase-password
+    rule_refs: [register.pl.informality, rule.pl-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Wprowadź swoje hasło, aby się zalogować."
+        verdict: good
+        rule_refs: [register.pl.informality]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Proszę wprowadzić hasło Pana, aby się zalogować."
+        verdict: bad
+        note: "Formal honorific 'Pana' plus the deferential 'Proszę wprowadzić' construction — the forbidden formal register; informal is the imperative 'Wprowadź ... swoje'."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of destroying a secret before it is viewed. Verb form (zniszczyć) for the action label; spalić is an accepted synonym, zniszczony the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    pl:
+      verb:
+        target: zniszczyć
+        rule_ref: rule.terminology-consistency
+      state:
+        target: zniszczony
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.pl.informality, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Are you sure you want to burn this secret?"
+        target: "Czy na pewno chcesz zniszczyć ten sekret?"
+        verdict: good
+        rule_refs: [register.pl.informality]
+      - id: ex.burn-bad#4228df6b
+        source: "Are you sure you want to burn this secret?"
+        target: "Czy na pewno Pani chce zniszczyć ten sekret?"
+        verdict: bad
+        note: "Formal honorific 'Pani' with 3rd-person 'chce' — the forbidden formal register; informal is 2nd-sg 'chcesz'."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. 'link' is the commonly used Polish term; 'łącze' is an accepted alternative."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    pl:
+      noun:
+        target: link
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.pl.informality, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy the secret link to share it."
+        target: "Skopiuj link do sekretu, aby go udostępnić."
+        verdict: good
+        rule_refs: [register.pl.informality]
+      - id: ex.link-bad#748809c5
+        source: "Copy the secret link to share it."
+        target: "Proszę skopiować link Pana do sekretu."
+        verdict: bad
+        note: "Formal honorific 'Pana' plus deferential infinitive 'Proszę skopiować' — the forbidden formal register; informal is the imperative 'Skopiuj'."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'szyfrować', past participle 'zaszyfrowany' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    pl:
+      verb:
+        target: szyfrować
+        rule_ref: rule.terminology-consistency
+      state:
+        target: zaszyfrowany
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.pl.informality, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "Your secret is encrypted with your passphrase."
+        target: "Twój sekret jest zaszyfrowany Twoją frazą dostępową."
+        verdict: good
+        rule_refs: [register.pl.informality]
+      - id: ex.encrypt-bad#450020c5
+        source: "Your secret is encrypted with your passphrase."
+        target: "Sekret Pana jest zaszyfrowany frazą dostępową."
+        verdict: bad
+        note: "Formal possessive 'Pana' (formal 'your') — the forbidden formal register; informal would be 'Twój'."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Kept hyphenated as 'e-mail' in Polish."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    pl:
+      noun:
+        target: e-mail
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.pl.informality, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Wprowadź swój adres e-mail."
+        verdict: good
+        rule_refs: [register.pl.informality]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Proszę podać adres e-mail Pana."
+        verdict: bad
+        note: "Formal honorific 'Pana' plus deferential 'Proszę podać' — the forbidden formal register; informal is the imperative 'Wprowadź ... swój'."

@@ -1,0 +1,201 @@
+id: glossary.ca_ES
+source: onetimesecret/locales/guides/for-translators/ca_ES.md
+# Sense-split of the core domain terminology from the Catalan translator guide's
+# terminology tables (onetimesecret/locales/guides/for-translators/ca_ES.md:
+# Terminologia bàsica, Termes relacionats amb el compte, Funcions de seguretat),
+# grounded against the live app content in onetimesecret/locales/content/ca_ES/.
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (CA)
+# sign-off before merge — see PR label. Each `good` example uses the informal tu
+# register and contains the term's target; each `bad` example demonstrates a
+# forbidden form (the formal vostè register, or the wrong/forbidden term).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself (the noun) — created, shared, burned, viewed, or expired. The central concept of the application. Render as secret."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    ca_ES:
+      noun:
+        target: secret
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-good#d81de1d4
+        source: "Your secret has been created."
+        target: "El teu secret s'ha creat."
+        verdict: good
+        note: "Informal possessive 'El teu' per the tu register; declarative voice for status; uses the noun 'secret'."
+        rule_refs: [rule.register-lock]
+      - id: ex.secret-bad#36c87b0a
+        source: "Your secret has been created."
+        target: "El secret de vostè s'ha creat."
+        verdict: bad
+        note: "Formal address 'de vostè' used for direct address — the forbidden formal vostè register."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secure
+    disambiguation:
+      heuristic: "The adjective/state sense of secret/secure — protection. Render as segur (m.) / segura (f.); the guide also allows 'secret' as an adjective."
+      key_patterns: ["*secure*", "*secured*", "*.protect*"]
+    ca_ES:
+      adjective:
+        target: segur
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.secret-adj-good#10b14bad
+        source: "Share secure links with anyone."
+        target: "Comparteix enllaços segurs amb qualsevol persona."
+        verdict: good
+        note: "Adjective sense 'segurs' (word_prefix of 'segur'); informal imperative 'Comparteix'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.secret-adj-bad#ccab3c56
+        source: "Share secure links with anyone."
+        target: "Comparteixi enllaços segurs amb qualsevol persona."
+        verdict: bad
+        note: "Formal imperative 'Comparteixi' (vostè register) instead of informal 'Comparteix' — the forbidden formal register."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login password). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    ca_ES:
+      noun:
+        target: frase de contrasenya
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Enter the passphrase to view this secret."
+        target: "Introdueix la frase de contrasenya per veure aquest secret."
+        verdict: good
+        note: "Informal imperative 'Introdueix'; uses 'frase de contrasenya', not 'contrasenya'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Enter the passphrase to view this secret."
+        target: "Introdueix la contrasenya per veure aquest secret."
+        verdict: bad
+        note: "Uses 'contrasenya' (account credential) where 'frase de contrasenya' (secret protection) is meant — violates rule.ca_ES-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a secret's passphrase). Sign-in, account, and reset contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    ca_ES:
+      noun:
+        target: contrasenya
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Introdueix la teva contrasenya per iniciar sessió."
+        verdict: good
+        note: "Informal imperative 'Introdueix' plus informal possessive 'la teva'; 'iniciar sessió' per the UI glossary."
+        rule_refs: [rule.register-lock]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Introdueixi la contrasenya de vostè per iniciar sessió."
+        verdict: bad
+        note: "Formal imperative 'Introdueixi' plus formal address 'de vostè' — the forbidden vostè register."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a secret before it is viewed. Verb 'destruir' for the action label; past participle 'destruït' for the resulting state."
+      key_patterns: ["*burn*", "*.destroy*"]
+    ca_ES:
+      verb:
+        target: destruir
+        rule_ref: rule.terminology-consistency
+      state:
+        target: destruït
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Burn this secret before it is read."
+        target: "Destruir aquest secret abans no es llegeixi."
+        verdict: good
+        note: "Infinitive 'Destruir' for the button label, per the guide's burn -> destruir choice; uses the noun 'secret'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.burn-bad#4228df6b
+        source: "Burn this secret before it is read."
+        target: "Cremar aquest secret abans no es llegeixi."
+        verdict: bad
+        note: "Uses 'Cremar' instead of the glossary term 'destruir' — terminology drift."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. Render as enllaç (note geminated/accented forms enllaços)."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    ca_ES:
+      noun:
+        target: enllaç
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Copy your secret link to share it."
+        target: "Copia el teu enllaç per compartir-lo."
+        verdict: good
+        note: "Informal imperative 'Copia' plus informal possessive 'el teu'; uses 'enllaç' per the glossary."
+        rule_refs: [rule.register-lock]
+      - id: ex.link-bad#748809c5
+        source: "Copy your secret link to share it."
+        target: "Copiï l'enllaç de vostè per compartir-lo."
+        verdict: bad
+        note: "Formal imperative 'Copiï' plus formal address 'de vostè' (vostè register) instead of informal 'Copia' + 'el teu' — the forbidden formal register."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'xifrar' (always with x, never 'cifrar'), past participle 'xifrat' for the encrypted state."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    ca_ES:
+      verb:
+        target: xifrar
+        rule_ref: rule.terminology-consistency
+      state:
+        target: xifrat
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "Aquest missatge està xifrat amb la teva frase de contrasenya."
+        verdict: good
+        note: "Verbatim from live content; state 'xifrat' (with x), informal possessive 'la teva'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "Aquest missatge està cifrat amb la frase de contrasenya de vostè."
+        verdict: bad
+        note: "Uses 'cifrat' (Spanish spelling) instead of the standard Catalan 'xifrat', plus formal address 'de vostè' (vostè register)."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Render as correu electrònic."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    ca_ES:
+      noun:
+        target: correu electrònic
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Enter your email address."
+        target: "Introdueix la teva adreça de correu electrònic."
+        verdict: good
+        note: "Grounded in live content; informal imperative 'Introdueix' plus informal possessive 'la teva'; uses 'correu electrònic'."
+        rule_refs: [rule.register-lock]
+      - id: ex.email-bad#5c29e476
+        source: "Enter your email address."
+        target: "Introdueixi l'adreça de correu electrònic de vostè."
+        verdict: bad
+        note: "Formal imperative 'Introdueixi' plus formal address 'de vostè' — the forbidden vostè register."

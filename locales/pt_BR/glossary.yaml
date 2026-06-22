@@ -1,0 +1,15 @@
+id: glossary.pt_BR
+source: onetimesecret/locales/guides/for-translators/pt_BR.md
+# Brazilian Portuguese glossary — intentionally empty (no regional term delta). The
+# resolver merges glossaries along the rules inheritance chain (ADR-001), keying by
+# term `key`, so an empty child inherits the full pt terminology unchanged:
+# secret_object (mensagem confidencial), passphrase (frase secreta), password
+# (senha), burn (queimar/queimado), email (e-mail), link (link), encrypt
+# (criptografar/criptografado) — 7 terms. The pt parent's defaults ARE the
+# Brazilian forms (glossary.pt was grounded against the live pt_BR content), so
+# unlike pt_PT there is NO override here. In particular password stays "senha"
+# (live pt_BR uses "senha" 78×, "palavra-passe" 0×) and encrypt stays
+# "criptografar" (live pt_BR uses "criptograf*" 9×, "encript*" 0×).
+# All inherited terms remain governed by rules.pt / register.pt.formality.
+# AGENT-AUTHORED; requires native-speaker (pt_BR) sign-off before merge — see PR label.
+terms: []

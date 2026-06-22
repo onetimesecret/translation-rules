@@ -1,0 +1,39 @@
+id: rules.nl
+source: onetimesecret/locales/guides/for-translators/nl.md
+inherits: base
+merge_strategy: append
+# Dutch locale layer. nl is a standalone language (no family parent), so it
+# inherits `base` directly — mirroring how locales/fr/rules.yaml inherits base.
+# Carries the Dutch conventions transcribed from
+# onetimesecret/locales/guides/for-translators/nl.md and grounded in the live
+# app content under onetimesecret/locales/content/nl/: the informal `je`
+# register, the secret->bericht (NOT geheim) noun choice, the wachtwoord /
+# wachtwoordzin distinction, and the active-imperative / passive-status voice
+# split. Each rule_ref points at an existing base rule id.
+#
+# AGENT-AUTHORED transcription; requires native-speaker (NL) sign-off before
+# merge — see PR label.
+rules:
+  - id: register.nl.formality
+    modality: MUST
+    statement: Dutch content uses the informal je register (je / jij / jouw) throughout product UI and email content; the formal u / uw forms are forbidden except in explicitly formal B2B/enterprise or legal contexts.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.nl-secret-noun
+    modality: MUST
+    statement: Translate the noun "secret" as bericht (or beveiligd bericht for emphasis), never geheim — geheim evokes criminal-underworld associations in Dutch and is unfit for a security product. Use beveiligd for the adjective sense.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.nl-passphrase-password
+    modality: MUST
+    statement: Keep wachtwoord (account authentication / login) distinct from wachtwoordzin (protection of an individual secret); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.nl-active-passive-voice
+    modality: SHOULD
+    statement: Use the active imperative for buttons and user actions (Opslaan, Verwijderen, Aanmaken) and the passive/declarative voice for status and informational messages (Opgeslagen, Verwijderd, Link aangemaakt).
+    severity: warning
+    rule_ref: rule.message-voice
+register_ref: register.nl
+glossary_ref: glossary.nl
+baseline_ref: baselines.nl

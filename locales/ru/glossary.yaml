@@ -1,0 +1,179 @@
+id: glossary.ru
+source: onetimesecret/locales/guides/for-translators/ru.md
+# Sense-split of the core domain terminology from the Russian translator guide's
+# terminology tables (Глоссарий: Основная терминология, Термины учётной записи)
+# and the Translation Notes (§1 Core Terms, §5 Gender Agreement), grounded
+# against the live app content in onetimesecret/locales/content/ru/*.json.
+# Targets and worked examples are AGENT-AUTHORED and require native-speaker (RU)
+# sign-off before merge — see PR label. Each `good` example uses the locked
+# FORMAL "вы" register and contains its term's sense target; each `bad` example
+# demonstrates a forbidden form — the informal "ты" register (твой / тебя / ты).
+#
+# Russian declines nouns across 6 cases and 3 genders and inflects verbs by
+# aspect, so each sense target uses a sensible citation stem chosen so the
+# word_prefix sense-target check (resolver/matching.py, default word_prefix)
+# matches the declined form actually used in the good example:
+#   секрет -> секрет/секрета;  кодов -> кодовая/кодовой (фраза);  пароль -> пароль;
+#   уничтож -> уничтожить/уничтожен;  ссылк -> ссылка/ссылку;  шифр -> шифрование,
+#   зашифрован -> зашифрован/зашифрована;  электронн -> электронная (почта).
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application (masculine gender → создан/удалён agreement). Use секрет (neutral, technical); never substitute тайна (personal/emotional) or сообщение (message) for this sense."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    ru:
+      noun:
+        target: секрет
+        rule_ref: rule.ru-secret-not-taina
+    rule_refs: [rule.ru-register-formal, rule.ru-secret-not-taina]
+    examples:
+      - id: ex.ru-secret-good#cfa43bd9
+        source: "Your secret has been created."
+        target: "Ваш секрет создан."
+        verdict: good
+        rule_refs: [rule.ru-register-formal]
+      - id: ex.ru-secret-bad#bd4ed190
+        source: "Your secret has been created."
+        target: "Твой секрет создан."
+        verdict: bad
+        note: "Informal possessive 'Твой' (informal 'your') — the forbidden informal register; formal would be 'Ваш'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (feminine compound: кодовая фраза), distinct from the account login пароль. Protect/compose/view-a-secret contexts signal this sense. Alternative фраза-пароль is allowed but кодовая фраза is preferred."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    ru:
+      noun:
+        target: кодов
+        rule_ref: rule.ru-passphrase-password
+    rule_refs: [rule.ru-register-formal, rule.ru-passphrase-password]
+    examples:
+      - id: ex.ru-passphrase-good#72bc3670
+        source: "Enter the passphrase to view this secret."
+        target: "Введите кодовую фразу, чтобы просмотреть этот секрет."
+        verdict: good
+        rule_refs: [rule.ru-register-formal]
+      - id: ex.ru-passphrase-bad#cbb5b0f4
+        source: "Enter the passphrase to view this secret."
+        target: "Введи твой пароль, чтобы просмотреть этот секрет."
+        verdict: bad
+        note: "Uses 'пароль' (account password) where 'кодовая фраза' is meant — violates rule.ru-passphrase-password; also informal imperative 'Введи' and possessive 'твой'."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (masculine: пароль), distinct from a secret's кодовая фраза. Sign-in, account, and reset-password contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    ru:
+      noun:
+        target: пароль
+        rule_ref: rule.ru-passphrase-password
+    rule_refs: [rule.ru-register-formal, rule.ru-passphrase-password]
+    examples:
+      - id: ex.ru-password-good#666f89a8
+        source: "Enter your password to sign in."
+        target: "Введите Ваш пароль, чтобы войти."
+        verdict: good
+        rule_refs: [rule.ru-register-formal]
+      - id: ex.ru-password-bad#f638c4fb
+        source: "Enter your password to sign in."
+        target: "Введи твой пароль, чтобы войти."
+        verdict: bad
+        note: "Informal imperative 'Введи' plus informal possessive 'твой' — the forbidden informal register; formal is 'Введите Ваш'."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of permanently destroying a secret before it is viewed. Verb form 'уничтожить' (perfective) for the action label; 'уничтожен' (masc. short-form participle) for the resulting state. Do not use a literal 'сжечь'."
+      key_patterns: ["*burn*", "*.destroy*"]
+    ru:
+      verb:
+        target: уничтож
+        rule_ref: rule.ru-burn-unichtozhit
+      state:
+        target: уничтожен
+        rule_ref: rule.ru-burn-unichtozhit
+    rule_refs: [rule.ru-register-formal, rule.ru-burn-unichtozhit]
+    examples:
+      - id: ex.ru-burn-good#5d56c53f
+        source: "Are you sure you want to burn this secret?"
+        target: "Вы уверены, что хотите уничтожить этот секрет?"
+        verdict: good
+        rule_refs: [rule.ru-register-formal]
+      - id: ex.ru-burn-bad#781d4f89
+        source: "Are you sure you want to burn this secret?"
+        target: "Ты уверен, что хочешь сжечь твой секрет?"
+        verdict: bad
+        note: "Informal 'Ты ... хочешь' and possessive 'твой' plus the literal 'сжечь' — violates the register lock and rule.ru-burn-unichtozhit; formal is 'Вы уверены, что хотите уничтожить'."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides one-time access to a secret (feminine: ссылка → создана/удалена agreement). Share/copy/reveal contexts signal this sense."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    ru:
+      noun:
+        target: ссылк
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.ru-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.ru-link-good#f5170486
+        source: "Copy the secret link to share it."
+        target: "Скопируйте секретную ссылку, чтобы поделиться ею."
+        verdict: good
+        rule_refs: [rule.ru-register-formal]
+      - id: ex.ru-link-bad#4cc26fc6
+        source: "Copy the secret link to share it."
+        target: "Скопируй твою секретную ссылку, чтобы поделиться ею."
+        verdict: bad
+        note: "Informal imperative 'Скопируй' plus informal possessive 'твою' — the forbidden informal register; formal is 'Скопируйте'."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data (шифрование, neuter). Verb 'шифровать'; participle 'зашифрован/зашифрована/зашифровано' with gender agreement for the encrypted state. Do not confuse with кодирование (encoding)."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    ru:
+      verb:
+        target: шифр
+        rule_ref: rule.terminology-consistency
+      state:
+        target: зашифрован
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.ru-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.ru-encrypt-good#218e9a77
+        source: "This message is encrypted with your passphrase."
+        target: "Это сообщение зашифровано Вашей кодовой фразой."
+        verdict: good
+        rule_refs: [rule.ru-register-formal]
+      - id: ex.ru-encrypt-bad#af1753f8
+        source: "This message is encrypted with your passphrase."
+        target: "Это сообщение зашифровано твоей кодовой фразой."
+        verdict: bad
+        note: "Informal possessive 'твоей' (informal 'your') — the forbidden informal register; formal would be 'Вашей'."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail (account identifier and notification contexts). Rendered as электронная почта; the borrowing 'email' is also seen in tech contexts but электронная почта is the guide's standard."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    ru:
+      noun:
+        target: электронн
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.ru-register-formal, rule.terminology-consistency]
+    examples:
+      - id: ex.ru-email-good#83ba8072
+        source: "Enter your email address."
+        target: "Введите Ваш адрес электронной почты."
+        verdict: good
+        rule_refs: [rule.ru-register-formal]
+      - id: ex.ru-email-bad#7231f692
+        source: "Enter your email address."
+        target: "Введи твой адрес электронной почты."
+        verdict: bad
+        note: "Informal imperative 'Введи' plus informal possessive 'твой' — the forbidden informal register; formal is 'Введите Ваш'."

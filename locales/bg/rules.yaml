@@ -1,0 +1,61 @@
+id: rules.bg
+source: onetimesecret/locales/guides/for-translators/bg.md
+inherits: base
+merge_strategy: append
+# Bulgarian locale layer. bg is a standalone shipping language (no family
+# parent), so it inherits `base` directly — mirroring locales/pl/rules.yaml and
+# locales/cs/rules.yaml (the Slavic pilots) but with the OPPOSITE register
+# decision: Bulgarian is locked to the FORMAL "Вие" register. That choice is
+# grounded in the live app content (onetimesecret/locales/content/bg/*.json),
+# which uses formal 2nd-person-plural address throughout — the ваш possessive
+# family (~82 occurrences), the ви/вие/вас pronoun (~106), and 2nd-plural verb
+# forms (можете/имате/изберете/въведете) — and contains ZERO informal твой
+# possessives and zero informal 2nd-singular verbs (можеш/имаш). See
+# register.bg for the full token-by-token evidence. The prose guide concurs
+# indirectly (§3 "prefer clarity over informal language"; §5 professional tone).
+#
+# The "парола" (account password) vs "ключова фраза" (secret passphrase)
+# distinction is the single most critical terminology rule in the guide
+# (Bulgarian Translation Notes §1; Summary "Terminology Distinction"). The guide
+# also fixes "тайна" over the loanword "секрет" for the core secret concept
+# (Special Considerations: The Term "Secret"; live content uses секрет 0×).
+#
+# Each rule below carries a `rule_ref` to the universal base rule it specialises;
+# no new base ids are introduced.
+#
+# AGENT-AUTHORED transcription of the prose guide, grounded in live content;
+# requires native-speaker (BG) sign-off before merge — see PR label.
+rules:
+  - id: rule.bg-register-formal
+    modality: MUST
+    statement: Bulgarian content uses the formal "Вие" register (Вие / Ви / Вас with the ваш / вашия / вашата possessive family) and 2nd-person-PLURAL verb forms (можете, имате, въведете, изберете) for direct address throughout product UI and email content; the informal "ти" register (твой possessives, теб/тебе, можеш/имаш) is forbidden.
+    severity: error
+    rule_ref: rule.register-lock
+  - id: rule.bg-passphrase-password
+    modality: MUST
+    statement: Keep парола (account login credential — sign-in, registration, account password operations) distinct from ключова фраза (the passphrase protecting an individual secret — secret creation/viewing, protection mechanism); never use one where the other is meant.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.bg-secret-tayna-not-sekret
+    modality: MUST
+    statement: Translate the core "secret" concept as тайна consistently; do not use the loanword секрет, and do not substitute съобщение (message) unless the source specifically refers to a message.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.bg-burn-deletion-clarity
+    modality: MUST
+    statement: Render burn / burned with the изтрий (verb) / изтрит-а-о (state) deletion family used in the live UI, and add перманентно (permanently) where the source stresses irreversibility; do not vary terminology for the same destructive action across strings.
+    severity: error
+    rule_ref: rule.terminology-consistency
+  - id: rule.bg-pluralization
+    modality: MUST
+    statement: Express countable strings (минута/минути, ден/дни, тайна/тайни) with vue-i18n pipe syntax so both Bulgarian number forms are expressible; never collapse to a single form.
+    severity: error
+    rule_ref: rule.pluralization-syntax
+  - id: rule.bg-imperative-buttons
+    modality: SHOULD
+    statement: Use the short singular imperative for button and action labels (Създай, Сподели, Изтрий, Копирай) — the standard Bulgarian UI convention even under the formal register — and passive/declarative voice for status and system messages (Тайната е създадена успешно).
+    severity: info
+    rule_ref: rule.message-voice
+register_ref: register.bg
+glossary_ref: glossary.bg
+baseline_ref: baselines.bg

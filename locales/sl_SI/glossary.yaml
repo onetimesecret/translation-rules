@@ -1,0 +1,174 @@
+id: glossary.sl_SI
+source: onetimesecret/locales/guides/for-translators/sl_SI.md
+# Sense-split of the core domain terminology from the Slovenian translator guide's
+# terminology tables (Osnovna terminologija, Core Terminology) and the live app
+# content in onetimesecret/locales/content/sl_SI/*.json. Targets and worked
+# examples are AGENT-AUTHORED and require native-speaker (SL) sign-off before
+# merge — see PR label. Each `good` example uses the locked FORMAL "vi" register
+# (vaš/vaša/vaše + vi-imperatives) and contains its term's sense target as a
+# word-prefix; each `bad` example demonstrates a forbidden form — the informal
+# "ti" register (tvoj* possessive / 2nd-singular). Slovenian nouns decline across
+# 6 cases and 3 genders; sense targets use a sensible citation form (nominative
+# singular noun / infinitive verb) and good examples keep that form so the
+# word_prefix sense-target check holds.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the application (skrivnost, feminine). Never substitute sporočilo (message) for this sense."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    sl_SI:
+      noun:
+        target: skrivnost
+        rule_ref: rule.sl_SI-secret-not-message
+    rule_refs: [register.sl_SI.formality, rule.sl_SI-secret-not-message]
+    examples:
+      - id: ex.secret-created-good#0492a4bc
+        source: "Your secret has been viewed."
+        target: "Vaša skrivnost je bila ogledana."
+        verdict: good
+        rule_refs: [register.sl_SI.formality]
+      - id: ex.secret-informal-bad#250567fe
+        source: "Your secret has been viewed."
+        target: "Tvoja skrivnost je bila ogledana."
+        verdict: bad
+        note: "Informal possessive 'Tvoja' (informal 'your') — the forbidden informal 'ti' register; formal would be 'Vaša'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual secret (distinct from the account login geslo). Compose/protect-a-secret contexts signal this sense."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    sl_SI:
+      noun:
+        target: pristopna fraza
+        rule_ref: rule.sl_SI-passphrase-password
+    rule_refs: [register.sl_SI.formality, rule.sl_SI-passphrase-password]
+    examples:
+      - id: ex.passphrase-good#c9b8d63f
+        source: "Your passphrase is required to view this secret."
+        target: "Vaša pristopna fraza je obvezna za ogled te skrivnosti."
+        verdict: good
+        rule_refs: [register.sl_SI.formality]
+      - id: ex.passphrase-bad#b2e929e0
+        source: "Your passphrase is required to view this secret."
+        target: "Tvoja pristopna fraza je obvezna za ogled te skrivnosti."
+        verdict: bad
+        note: "Informal possessive 'Tvoja' (informal 'your') — the forbidden informal 'ti' register; formal would be 'Vaša'."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account/login authentication credential (geslo, neuter — distinct from a secret's pristopna fraza). Sign-in, account, and reset-password contexts signal this sense."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    sl_SI:
+      noun:
+        target: geslo
+        rule_ref: rule.sl_SI-passphrase-password
+    rule_refs: [register.sl_SI.formality, rule.sl_SI-passphrase-password]
+    examples:
+      - id: ex.password-good#ed4d76e5
+        source: "Enter your password to sign in."
+        target: "Vnesite svoje geslo za prijavo."
+        verdict: good
+        rule_refs: [register.sl_SI.formality]
+      - id: ex.password-bad#83a8f72f
+        source: "Enter your password to sign in."
+        target: "Vnesi tvoje geslo za prijavo."
+        verdict: bad
+        note: "Informal 2nd-singular imperative 'Vnesi' plus informal possessive 'tvoje' — the forbidden informal 'ti' register; formal is the vi-imperative 'Vnesite ... svoje'."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of destroying a secret before it is viewed. The guide standardised on trajno izbrisati ('permanently delete') for the verb; trajno izbrisana/-o is the resulting state, gender-agreeing with the noun (skrivnost f. -> izbrisana)."
+      key_patterns: ["*burn*", "*.destroy*"]
+    sl_SI:
+      verb:
+        target: trajno izbrisati
+        rule_ref: rule.terminology-consistency
+      state:
+        target: trajno izbrisana
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.sl_SI.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.burn-good#4bf35a91
+        source: "Are you sure you want to burn this secret?"
+        target: "Ali ste prepričani, da želite trajno izbrisati to skrivnost?"
+        verdict: good
+        rule_refs: [register.sl_SI.formality]
+      - id: ex.burn-bad#4228df6b
+        source: "Are you sure you want to burn this secret?"
+        target: "Ali si prepričan, da želiš trajno izbrisati to skrivnost?"
+        verdict: bad
+        note: "Informal 2nd-singular verbs 'si'/'želiš' (and masc. 'prepričan') — the forbidden informal 'ti' register; formal is 'ste prepričani'/'želite'."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a secret. povezava (feminine) is the established Slovenian term throughout the content."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    sl_SI:
+      noun:
+        target: povezava
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.sl_SI.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.link-good#77be696f
+        source: "Your secure link is ready to share."
+        target: "Vaša varna povezava je pripravljena za deljenje."
+        verdict: good
+        rule_refs: [register.sl_SI.formality]
+      - id: ex.link-bad#748809c5
+        source: "Your secure link is ready to share."
+        target: "Tvoja varna povezava je pripravljena za deljenje."
+        verdict: bad
+        note: "Informal possessive 'Tvoja' (informal 'your') — the forbidden informal 'ti' register; formal would be 'Vaša'."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'šifrirati', past participle 'šifrirano' for the encrypted state (gender-agreeing with the noun). Diacritic š is essential — never 'sifrirano'."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    sl_SI:
+      verb:
+        target: šifrirati
+        rule_ref: rule.terminology-consistency
+      state:
+        target: šifrirano
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.sl_SI.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.encrypt-good#791f7805
+        source: "This message is encrypted with your passphrase."
+        target: "To sporočilo je šifrirano z vašo pristopno frazo."
+        verdict: good
+        rule_refs: [register.sl_SI.formality]
+      - id: ex.encrypt-bad#450020c5
+        source: "This message is encrypted with your passphrase."
+        target: "To sporočilo je šifrirano s tvojo pristopno frazo."
+        verdict: bad
+        note: "Informal possessive 'tvojo' (informal 'your') — the forbidden informal 'ti' register; formal would be 'vašo'."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Rendered hyphenated as 'e-pošta' (feminine) in Slovenian."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    sl_SI:
+      noun:
+        target: e-pošta
+        rule_ref: rule.terminology-consistency
+    rule_refs: [register.sl_SI.formality, rule.terminology-consistency]
+    examples:
+      - id: ex.email-good#9138348f
+        source: "Your email has been updated."
+        target: "Vaša e-pošta je bila uspešno posodobljena."
+        verdict: good
+        rule_refs: [register.sl_SI.formality]
+      - id: ex.email-bad#5c29e476
+        source: "Your email has been updated."
+        target: "Tvoja e-pošta je bila uspešno posodobljena."
+        verdict: bad
+        note: "Informal possessive 'Tvoja' (informal 'your') — the forbidden informal 'ti' register; formal would be 'Vaša'."

@@ -1,0 +1,251 @@
+id: glossary.da_DK
+source: onetimesecret/locales/guides/for-translators/da.md
+# Sense-split of the core domain terminology from the Danish translator guide's
+# terminology tables and critical-rules section
+# (onetimesecret/locales/guides/for-translators/da.md), grounded against the live
+# app content in onetimesecret/locales/content/da_DK/*.json. Targets and worked
+# examples are AGENT-AUTHORED and require native-speaker (DA) sign-off before
+# merge — see PR label. Each `good` example uses the informal du register and
+# contains its term's sense target (word_prefix); each `bad` example demonstrates
+# a forbidden form (wrong term, e.g. hemmelighed, or the wrong sense).
+#
+# The defining Danish decision is "secret -> besked, NEVER hemmelighed": the live
+# content uses besked/beskeden/beskeder 140+ times, and the 3 stray "hemmelighed"
+# occurrences are exactly the terminology drift rule.da-secret-besked forbids.
+terms:
+  - id: term.secret_object#c0902808
+    key: secret_object
+    en: secret
+    disambiguation:
+      heuristic: "The protected entity itself — created, shared, burned, viewed, or expired. The central concept of the app. Danish standardises on 'besked' (message), NOT 'hemmelighed', whose childish/personal connotations undermine the security context. Common gender: en besked."
+      key_patterns: ["*secret*", "*.burn*", "*.share*", "*.reveal*"]
+    da_DK:
+      noun:
+        target: besked
+        rule_ref: rule.da-secret-besked
+    rule_refs: [rule.register-lock, rule.da-secret-besked, rule.terminology-consistency]
+    examples:
+      - id: ex.da-secret-besked-good#c88621fd
+        source: "Your secret has been created."
+        target: "Din besked er blevet oprettet."
+        verdict: good
+        note: "Informal possessive 'Din' per the du register; passive/past-participle 'er blevet oprettet' for status. Uses the glossary noun 'besked', not 'hemmelighed'."
+        rule_refs: [rule.register-lock, rule.da-secret-besked]
+      - id: ex.da-secret-hemmelighed-bad#15bc854c
+        source: "Your secret has been created."
+        target: "Din hemmelighed er blevet oprettet."
+        verdict: bad
+        note: "Uses 'hemmelighed' (personal-secret/gossip connotation) where the product term 'besked' is required — violates rule.da-secret-besked. Mirrors the 3 stray 'hemmelighed' drifts in the live content."
+  - id: term.secret_adjective#a3a1d7c9
+    key: secret_adjective
+    en: secret
+    disambiguation:
+      heuristic: "The adjective sense ('secret'/'secure' qualifier on a link or content). Danish uses 'hemmelig' or, in marketing/security framing, 'sikker' (secure). Distinct from the product noun, which is always 'besked'."
+      key_patterns: ["*secret_link*", "*.secure*", "*hemmelig*"]
+    da_DK:
+      adjective:
+        target: hemmelig
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.da-secret-adj-good#adfffec4
+        source: "Copy your secret link."
+        target: "Kopier dit hemmelige link."
+        verdict: good
+        note: "Adjective 'hemmelige' qualifies 'link'; informal possessive 'dit'; imperative 'Kopier' for an action. The product noun stays 'besked' elsewhere — only the qualifier is 'hemmelig'."
+        rule_refs: [rule.register-lock]
+      - id: ex.da-secret-adj-bad#5cd4b493
+        source: "Copy your secret link."
+        target: "Kopier din hemmelighed link."
+        verdict: bad
+        note: "Collapses the adjective into the noun 'hemmelighed' (the forbidden product-noun rendering) and breaks agreement — should be the adjective 'hemmelige' modifying 'link'."
+  - id: term.passphrase#44591635
+    key: passphrase
+    en: passphrase
+    disambiguation:
+      heuristic: "The credential that protects an individual besked (distinct from the account login password). Compose/protect-a-secret contexts signal this sense. Danish compound: adgangssætning."
+      key_patterns: ["*passphrase*", "*.protect*"]
+    da_DK:
+      noun:
+        target: adgangssætning
+        rule_ref: rule.da-passphrase-password
+    rule_refs: [rule.register-lock, rule.da-passphrase-password]
+    examples:
+      - id: ex.da-passphrase-good#334a5d30
+        source: "Enter the passphrase to view this secret."
+        target: "Indtast adgangssætningen for at se denne besked."
+        verdict: good
+        note: "Imperative 'Indtast'; uses 'adgangssætning' (besked protection), not 'adgangskode'. Grounded in live phrasing ('Forkert adgangssætning', 'Dobbelttjek adgangssætningen')."
+        rule_refs: [rule.register-lock, rule.da-passphrase-password]
+      - id: ex.da-passphrase-bad#8fe56e31
+        source: "Enter the passphrase to view this secret."
+        target: "Indtast adgangskoden for at se denne besked."
+        verdict: bad
+        note: "Uses 'adgangskode' (account credential) where 'adgangssætning' (besked protection) is meant — violates rule.da-passphrase-password."
+  - id: term.password#3e4e76cc
+    key: password
+    en: password
+    disambiguation:
+      heuristic: "The account / login authentication credential (distinct from a besked's passphrase). Sign-in, account, and reset contexts signal this sense. Danish compound: adgangskode."
+      key_patterns: ["*password*", "*.login*", "*.signin*", "*.auth*"]
+    da_DK:
+      noun:
+        target: adgangskode
+        rule_ref: rule.da-passphrase-password
+    rule_refs: [rule.register-lock, rule.da-passphrase-password]
+    examples:
+      - id: ex.da-password-good#5e33fc2b
+        source: "Enter your password to sign in."
+        target: "Indtast din adgangskode for at logge ind."
+        verdict: good
+        note: "Informal possessive 'din' per the du register; 'logge ind' per the UI glossary; 'adgangskode' for the account credential. Grounded in live string 'Indtast din adgangskode'."
+        rule_refs: [rule.register-lock]
+      - id: ex.da-password-bad#79fc26f9
+        source: "Enter your password to sign in."
+        target: "Indtast din adgangssætning for at logge ind."
+        verdict: bad
+        note: "Uses 'adgangssætning' (besked protection) for the account login — the exact confusion rule.da-passphrase-password forbids (the guide flags this same wrong pairing)."
+  - id: term.burn#8a886c8d
+    key: burn
+    en: burn
+    disambiguation:
+      heuristic: "The action of deleting a besked before it is viewed. Danish standardises on 'ødelæg' (verb, imperative) and 'ødelagt' (state, past participle), conveying permanent irreversible deletion."
+      key_patterns: ["*burn*", "*.destroy*"]
+    da_DK:
+      verb:
+        target: ødelæg
+        rule_ref: rule.da-burn-oedelaeg
+      state:
+        target: ødelagt
+        rule_ref: rule.da-burn-oedelaeg
+    rule_refs: [rule.register-lock, rule.da-burn-oedelaeg]
+    examples:
+      - id: ex.da-burn-good#c7a6deb6
+        source: "Burn this secret before it is read."
+        target: "Ødelæg denne besked før den bliver læst."
+        verdict: good
+        note: "Imperative 'Ødelæg' for the action label per the guide's burn -> 'ødelæg' choice; product noun 'besked'. Grounded in live string 'Ødelæg denne besked'."
+        rule_refs: [rule.register-lock, rule.da-burn-oedelaeg]
+      - id: ex.da-burn-bad#58783aa9
+        source: "Burn this secret before it is read."
+        target: "Brænd denne hemmelighed før den bliver læst."
+        verdict: bad
+        note: "Uses literal 'Brænd' instead of the glossary verb 'ødelæg', AND 'hemmelighed' instead of 'besked' — double terminology drift."
+  - id: term.link#b48578dd
+    key: link
+    en: link
+    disambiguation:
+      heuristic: "The URL that provides access to a besked. Danish keeps the loanword 'link' (en link / et link; plural links)."
+      key_patterns: ["*link*", "*.url*", "*.share*"]
+    da_DK:
+      noun:
+        target: link
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.da-link-good#8b060627
+        source: "Copy the secret link to share it."
+        target: "Kopier dit hemmelige link for at dele det."
+        verdict: good
+        note: "Imperative 'Kopier' plus informal possessive 'dit'; uses the loanword 'link' per the glossary. Grounded in live phrasing ('Opret et beskedlink')."
+        rule_refs: [rule.register-lock]
+      - id: ex.da-link-bad#2406b826
+        source: "Copy the secret link to share it."
+        target: "Kopier hemmelighed link for at dele det."
+        verdict: bad
+        note: "Drops the informal possessive and uses 'hemmelighed' (forbidden product noun) as the qualifier; should keep informal 'dit' and the adjective 'hemmelige'."
+  - id: term.encrypt#a4d3564b
+    key: encrypt
+    en: encrypt
+    disambiguation:
+      heuristic: "The security method of encrypting data; verb 'krypter', past participle 'krypteret' for the encrypted state. A technical security term — prioritise accuracy."
+      key_patterns: ["*encrypt*", "*.cipher*"]
+    da_DK:
+      verb:
+        target: krypter
+        rule_ref: rule.terminology-consistency
+      state:
+        target: krypteret
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.da-encrypt-good#c301792d
+        source: "This message is encrypted with your passphrase."
+        target: "Denne besked er krypteret med din adgangssætning."
+        verdict: good
+        note: "Informal possessive 'din'; past participle 'krypteret' for the encrypted state; 'adgangssætning' for besked protection; product noun 'besked'. Grounded in live 'krypteret'."
+        rule_refs: [rule.register-lock, rule.terminology-consistency]
+      - id: ex.da-encrypt-bad#13a754db
+        source: "This message is encrypted with your passphrase."
+        target: "Denne hemmelighed er krypteret med din adgangskode."
+        verdict: bad
+        note: "Uses 'hemmelighed' (forbidden product noun) and 'adgangskode' (account credential) where 'besked' and 'adgangssætning' are required."
+  - id: term.email#8c4fb076
+    key: email
+    en: email
+    disambiguation:
+      heuristic: "The user's email address / electronic mail. Account identifier and notification contexts. Danish hyphenated loanword: e-mail."
+      key_patterns: ["*email*", "*.mail*", "*.notification*"]
+    da_DK:
+      noun:
+        target: e-mail
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.da-email-good#0172a3eb
+        source: "Enter your email address."
+        target: "Indtast din e-mailadresse."
+        verdict: good
+        note: "Informal possessive 'din' per the du register; hyphenated loanword 'e-mail' per the glossary. Grounded in live phrasing ('Tjek din e-mail')."
+        rule_refs: [rule.register-lock]
+      - id: ex.da-email-bad#77a68ca7
+        source: "Enter your email address."
+        target: "Indtast Deres e-mailadresse."
+        verdict: bad
+        note: "Formal possessive 'Deres' (the archaic De-register V-form) instead of informal 'din' — the forbidden formal register (rule.da-register-informal)."
+  - id: term.secure#952acf0e
+    key: secure
+    en: secure
+    disambiguation:
+      heuristic: "The protection-state adjective ('secure'/'safe'). Danish: sikker / sikre. A marketing and security-framing qualifier on links, content and connections."
+      key_patterns: ["*secure*", "*.safe*", "*.protected*"]
+    da_DK:
+      adjective:
+        target: sikker
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.da-secure-good#aae1ab1e
+        source: "Your message is secure."
+        target: "Din besked er sikker."
+        verdict: good
+        note: "Informal possessive 'Din'; predicative adjective 'sikker' (the base form, the glossary sense target); product noun 'besked'. The inflected attributive form appears in live phrasing ('Din sikre besked')."
+        rule_refs: [rule.register-lock]
+      - id: ex.da-secure-bad#e89c8df6
+        source: "Your message is secure."
+        target: "Deres hemmelighed er sikker."
+        verdict: bad
+        note: "Formal possessive 'Deres' (archaic V-form) and 'hemmelighed' (forbidden product noun) instead of informal 'Din' + 'besked'."
+  - id: term.account#3a541ed7
+    key: account
+    en: account
+    disambiguation:
+      heuristic: "The user's profile / account. Danish: konto (en konto). Sign-up, login and settings contexts."
+      key_patterns: ["*account*", "*.signup*", "*.profile*"]
+    da_DK:
+      noun:
+        target: konto
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.register-lock, rule.terminology-consistency]
+    examples:
+      - id: ex.da-account-good#62139390
+        source: "Sign in to your account."
+        target: "Log ind på din konto."
+        verdict: good
+        note: "Imperative 'Log ind' per the UI glossary; informal possessive 'din'; 'konto'. Grounded in live string 'Log ind på din konto'."
+        rule_refs: [rule.register-lock]
+      - id: ex.da-account-bad#ce635187
+        source: "Sign in to your account."
+        target: "Log ind på Deres konto."
+        verdict: bad
+        note: "Formal possessive 'Deres' (the archaic De-register V-form) instead of informal 'din' — the forbidden formal register (rule.da-register-informal)."

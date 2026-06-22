@@ -1,0 +1,42 @@
+id: register.it_IT
+source: onetimesecret/locales/guides/for-translators/it_IT.md
+# Italian is locked to the INFORMAL tu register. Grounded in the live app content
+# (onetimesecret/locales/content/it_IT/*.json): direct address consistently uses
+# the informal tu forms — informal possessives tuo/tua/tuoi/tue (131/57/17/16
+# occurrences; e.g. "Inserisci la tua password", "Il tuo segreto rimarrà
+# disponibile", "Inserisci il tuo feedback"), informal 2sg imperatives ending in
+# -i / -a-reflexive (Inserisci, Accedi, Crea, Conferma, Verifica, Assicurati),
+# the informal object pronoun ti ("ti invieremo un link"), and informal 2sg verbs
+# (Puoi 5x, Hai 47x, Sei 23x, Vuoi, Devi). ZERO formal-Lei markers appear anywhere
+# in the live content: no standalone "Lei"/"lei", no formal possessives
+# Suo/Sua/Suoi/Sue, no formal imperatives (Inserisca/Acceda/Può), and no formal
+# courtesy constructions (La preghiamo / Le invieremo). The prose guide agrees:
+# its worked Example 2 uses "Inserisci la tua password per accedere" and it warns
+# to "avoid overly formal language that creates distance". So the FORBIDDEN
+# register is the formal Lei register; the unambiguous forbidden token is the
+# formal address pronoun Lei.
+#
+# Deliberately NOT forbidden (ambiguity carve-outs, cf. the es agent leaving
+# su/sus unforbidden):
+#   * La / Le — in Italian these are the feminine definite articles ("la tua",
+#     "le tue") and unstressed object pronouns long before they are the formal
+#     courtesy object pronouns; they appear 33x / 17x as ordinary articles in the
+#     live content. Forbidding them as standalone words would flag valid prose.
+#   * Suo / Sua / Suoi / Sue — also the ordinary 3rd-person possessive ("his /
+#     her / its"); capitalised only as a formality convention. Forbidding them
+#     would flag legitimate 3rd-person references, so they are left out.
+#   * Può — formal 2sg "you can", but identical to the valid 3rd-person "he / she
+#     / it can"; ambiguous, so left out.
+# "Lei" has no such ambiguity in this product UI (lowercase "lei" = "she" never
+# appears, and the app never refers to a third-person "she"), so it is the one
+# forbidden standalone-word token.
+#
+# AGENT-AUTHORED; requires native-speaker (IT) sign-off — see PR label.
+form: informal
+pronoun: tu
+possessive: [tuo, tua, tuoi, tue]
+forbidden_tokens:
+  - { token: Lei, context: standalone_word, severity: error, note: "formal singular address pronoun (the V-form this locale forbids); lowercase 'lei' (=she) and any 3rd-person 'she' reference are absent from the live content, so capitalised Lei is unambiguous here" }
+exceptions: []
+rule_ref: rule.register-lock
+baseline_ref: baselines.it_IT
