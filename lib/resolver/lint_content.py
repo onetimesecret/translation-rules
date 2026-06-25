@@ -65,7 +65,7 @@ from typing import Any, Iterable, Iterator
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from resolver.matching import find_spans
+from resolver.matching import VALID_MODES, find_spans
 from resolver.lint import _exception_spans, _hit_allowed
 
 FATAL = {"error"}
@@ -272,6 +272,33 @@ class _Usage(Exception):
     """A usage/config error -> exit 2."""
 
 
+def _check_register_modes(register: dict[str, Any] | None) -> None:
+    """Fail as a config error (exit 2), not a traceback, when a forbidden token
+    carries an unknown `context`. find_spans would raise ValueError mid-scan on
+    a stale/hand-built .resolved file; surface it inside the documented contract
+    instead, before scanning."""
+    forbidden, _ = _normalize_register(register)
+    for ft in forbidden:
+        mode = ft.get("context", "any")
+        if mode not in VALID_MODES:
+            raise _Usage(
+                f"forbidden token {ft.get('token', '')!r} has unknown context "
+                f"{mode!r}; valid: {sorted(VALID_MODES)}"
+            )
+
+
+def _gh_escape_data(s: str) -> str:
+    """Escape a GitHub workflow-command message body (% and line breaks).
+    `%` must go first so the inserted escapes are not re-escaped."""
+    return s.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
+def _gh_escape_prop(s: str) -> str:
+    """Escape a GitHub workflow-command property value (e.g. `file=`); these
+    additionally reserve ':' and ','."""
+    return _gh_escape_data(s).replace(":", "%3A").replace(",", "%2C")
+
+
 def _expand_globs(root: Path, globs: list[str]) -> list[Path]:
     out: list[Path] = []
     for pattern in globs:
@@ -293,7 +320,10 @@ def _emit_text(result: ContentLintResult, github: bool) -> None:
             f"— {f.snippet}"
         )
         if github:
-            print(f"::error file={f.file}::{result.locale}: {line}")
+            print(
+                f"::error file={_gh_escape_prop(f.file)}::"
+                f"{_gh_escape_data(f'{result.locale}: {line}')}"
+            )
         else:
             print(line)
     status = "OK" if result.ok else "FAIL"
@@ -349,6 +379,7 @@ def main(argv: list[str]) -> int:
         resolved_path = Path(args.resolved)
         resolved = _load_resolved(resolved_path)
         register = register_from_resolved(resolved)
+        _check_register_modes(register)
         locale = (
             args.locale or resolved.get("_meta", {}).get("locale") or resolved_path.stem
         )

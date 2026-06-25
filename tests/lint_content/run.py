@@ -363,6 +363,82 @@ def case_cli_json_output():
     return True, "ok"
 
 
+def case_cli_bad_context_is_config_error():
+    # A stale/hand-built .resolved with an unknown forbidden_tokens[].context
+    # must exit 2 (config error) — not a ValueError traceback from find_spans.
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        resolved = root / "de_AT.json"
+        _write(
+            resolved,
+            {
+                "_meta": {"locale": "de_AT"},
+                "register": {
+                    "forbidden_tokens": [
+                        {"token": "du", "context": "bogus_mode", "severity": "error"}
+                    ]
+                },
+            },
+        )
+        _write(root / "c" / "x.json", {"k": {"text": "hast du"}})
+        err = io.StringIO()
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(err):
+            rc = lc.main(
+                ["--resolved", str(resolved), "--content-root", str(root), "c/*.json"]
+            )
+        if rc != 2:
+            return False, f"bad-context exit {rc}, expected 2"
+        if "unknown context" not in err.getvalue():
+            return False, f"missing diagnostic: {err.getvalue()!r}"
+    return True, "ok"
+
+
+def case_cli_github_annotation_escaping():
+    # GitHub workflow commands need % and line breaks escaped in the message,
+    # and ':'/',' escaped in the file= property — else annotations malform.
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        resolved = root / "de_AT.json"
+        _write(
+            resolved,
+            {
+                "_meta": {"locale": "de_AT"},
+                "register": {"forbidden_tokens": [_tok("du")]},
+            },
+        )
+        # '%' adjacent to the hit lands in the snippet; the file path carries ':'.
+        _write(root / "weird" / "a:b.json", {"k": {"text": "100% sure, hast du"}})
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+            rc = lc.main(
+                [
+                    "--resolved",
+                    str(resolved),
+                    "--content-root",
+                    str(root),
+                    "weird/*.json",
+                    "--format",
+                    "github",
+                ]
+            )
+        if rc != 1:
+            return False, f"escaping case exit {rc}, expected 1"
+        out = buf.getvalue()
+        annotation = next(
+            (ln for ln in out.splitlines() if ln.startswith("::error")), ""
+        )
+        if not annotation:
+            return False, f"no annotation emitted: {out!r}"
+        # message body: raw '%' escaped to %25 (so "100%25 sure" not "100% sure").
+        if "100%25 sure" not in annotation or "100% sure" in annotation:
+            return False, f"message '%' not escaped: {annotation!r}"
+        # file= property: ':' escaped to %3A, so no raw 'a:b.json' segment.
+        prop = annotation.split("::", 2)[1]  # "error file=..."
+        if "a%3Ab.json" not in prop or "a:b.json" in prop:
+            return False, f"file property ':' not escaped: {prop!r}"
+    return True, "ok"
+
+
 CASES = [
     ("clean-formal", case_clean_formal),
     ("real-hit", case_real_hit),
@@ -378,6 +454,8 @@ CASES = [
     ("iter-skips-and-register-helper", case_iter_skips_and_register_helper),
     ("cli-exit-codes", case_cli_exit_codes),
     ("cli-json-output", case_cli_json_output),
+    ("cli-bad-context-is-config-error", case_cli_bad_context_is_config_error),
+    ("cli-github-annotation-escaping", case_cli_github_annotation_escaping),
 ]
 
 
