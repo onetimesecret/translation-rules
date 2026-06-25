@@ -55,17 +55,30 @@ forbidden_tokens:
   - { token: だろ,     context: substring, severity: error, note: "casual conjecture/tag, shortened; — zero live hits" }
   - { token: かい,     context: substring, severity: error, note: "casual yes/no question particle; polite form is ですか — zero live hits" }
   - { token: じゃない, context: substring, severity: error, note: "casual negation; polite form is ではありません / ではない(です) — zero live hits" }
-  - { token: してくれ, context: substring, severity: error, note: "casual request (do ~ for me); polite してください has no れ. Polite 〜してくれました/ます/て excepted below; a bare casual してくれ still fails." }
+  - { token: してくれ, context: substring, severity: error, note: "casual request (do ~ for me); polite してください has no れ. Polite 〜してくれました/ます/て excepted below; a bare casual してくれ — and the plain-form してくれる (see allowlist note) — still fail." }
   - { token: ぞ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle; polite host どうぞ excepted below; a bare sentence-final ぞ (〜だぞ) still fails." }
-  - { token: ぜ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle; polite hosts なぜ/ぜひ excepted below; a bare sentence-final ぜ (〜だぜ) still fails." }
+  - { token: ぜ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle; polite hosts なぜ/ぜひ/ぜんぶ/ぜったい excepted below; a bare sentence-final ぜ (〜だぜ) still fails." }
 # POLITE-CONTEXT allowlist so してくれ, ぜ and ぞ stay ENFORCED as substring
-# tokens without false-positiving on the polite host words they sit inside
-# (du-in-Duden span containment). AGENT-DRAFTED from the live hits; the
-# polite-host set needs native (JA) completion before merge — e.g. してくれる, or
-# kana ぜんぶ/ぜったい should they ever ship — see PR label.
+# tokens without false-positiving on the polite/neutral host words they sit
+# inside (du-in-Duden span containment).
+#
+# `scope` is DOCUMENTARY ONLY — the engine matches on `token`, so every entry is
+# a global substring allow; `scope` records the host's surface/source for human
+# reviewers, it does NOT restrict where the exception applies.
+#
+# Native-reviewed (JA). ぜんぶ/ぜったい (全部・絶対, when written in kana) are
+# excepted as unambiguous neutral vocabulary: their ぜ is word-internal and can
+# never be the casual sentence-final particle, exactly like なぜ/ぜひ. してくれる
+# is DELIBERATELY NOT excepted — the conservative choice keeps the plain-form
+# benefactive flagged because it carries a casual sentence-final reading; a
+# legitimate occurrence (e.g. adnominal 〜してくれる + noun) is reviewed by a human
+# and gets a scoped exception only if confirmed. Contrast してくれて (te-form,
+# connective → excepted) vs してくれる (dictionary form, can be final → enforced).
 exceptions:
   - { token: なぜ,       reason: "polite/neutral 'why' — host of casual-emphatic ぜ; live FP (なぜシークレットの値は…)", scope: secret-manage }
   - { token: ぜひ,       reason: "polite adverb 'by all means' — host of casual-emphatic ぜ (preventive; no live hit yet)", scope: "(preventive)" }
+  - { token: ぜんぶ,     reason: "全部 'all/everything' (kana) — host of casual-emphatic ぜ; ぜ is word-internal, never the final particle. Native-reviewed (preventive; no live hit yet)", scope: "(preventive)" }
+  - { token: ぜったい,   reason: "絶対 'absolutely/definitely' (kana) — host of casual-emphatic ぜ; ぜ is word-internal, never the final particle. Native-reviewed (preventive; no live hit yet)", scope: "(preventive)" }
   - { token: どうぞ,     reason: "polite adverb 'please / go ahead' — host of casual-emphatic ぞ (preventive; no live hit yet)", scope: "(preventive)" }
   - { token: してくれま, reason: "teineigo 〜してくれました/ます/ません ('kindly did/does ~') — host of casual-request してくれ; live FP (寄付してくれました)", scope: feature-translations }
   - { token: してくれて, reason: "polite te-form 〜してくれて ('having done ~ for me, …') — host of casual-request してくれ (preventive)", scope: "(preventive)" }

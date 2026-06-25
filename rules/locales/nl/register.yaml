@@ -32,6 +32,8 @@ forbidden_tokens:
 # declared informal lock in the app instead (onetimesecret#3537) — so no carve-out
 # is encoded here. A real per-surface formal tone, if ever wanted, should return
 # via key-scoped exceptions (#42), as a deliberate feature, not a substring allowlist.
+# NOTE: `scope` below is DOCUMENTARY ONLY — the engine matches on `token`, so the
+# exception applies globally; `scope` just records the key it was observed on.
 exceptions:
   - { token: "{hours}u", reason: "FALSE POSITIVE: 'u' is the abbreviation for 'uur' (hours), not the formal pronoun — 'Nog {hours}u' = 'N more hours'", scope: "web.organizations.invitations.expires_in_hours" }
 rule_ref: rule.register-lock
