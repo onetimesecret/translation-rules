@@ -1,14 +1,11 @@
 ---
 id: 007
-status: proposed
+status: accepted
 title: ADR-007: Translator guides are derived on demand, not browsed from a hosted channel
 ---
 
 ## Status
-Proposed
-
-<!-- Decision approved by the maintainer (#37, 2026-06-25: "local / on-demand
-     only"). Left Proposed pending an explicit accept sign-off. -->
+Accepted
 
 ## Date
 2026-06-25
