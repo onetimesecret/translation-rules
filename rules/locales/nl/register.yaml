@@ -21,6 +21,26 @@ forbidden_tokens:
   - { token: uw,    context: standalone_word, severity: error, note: "formal possessive" }
   - { token: uwe,   context: standalone_word, severity: error, note: "formal possessive, inflected/archaic form" }
   - { token: uzelf, context: standalone_word, severity: error, note: "formal reflexive pronoun" }
-exceptions: []
+# B2B/marketing/legal formal-register carve-out (translation-rules#42,
+# onetimesecret#3530). Dutch is locked to informal `je`, but the prose guide and
+# this register's header document an INTENTIONAL formal-`u`/`uw` register on
+# enterprise/billing marketing, the legal/regulatory regions copy, and the
+# translation-contribution ask. These allowlist the exact formal phrases that
+# survived native review (onetimesecret@3a59fc2) as legitimate, so the gate
+# stops flagging them while still catching accidental formal leakage into
+# informal UI. Phrase-scoped on purpose: a reworded phrase re-flags for review.
+# `scope` is documentary (the engine matches on `token`); it records the surface.
+# AGENT-DRAFTED from the reviewed carve-out set; requires native-speaker (NL) sign-off.
+exceptions:
+  - { token: "uw merk",             reason: "marketing 'secure your brand' B2B copy (homepage + billing) — intentional formal register", scope: "secret-homepage, workspace-billing" }
+  - { token: "uw domein",           reason: "marketing 'from your domain' B2B copy (homepage + billing) — intentional formal register", scope: "secret-homepage, workspace-billing" }
+  - { token: "uw veilige",          reason: "marketing 'elevate your secure sharing' enterprise billing copy — intentional formal register", scope: "workspace-billing" }
+  - { token: "uw account",          reason: "legal/regulatory regions copy ('your account and data', 'applicable to your account') — intentional formal register", scope: "feature-regions" }
+  - { token: "uw toegangsdomein",   reason: "legal/regulatory regions copy ('determined by your access domain') — intentional formal register", scope: "feature-regions" }
+  - { token: "u accounts",          reason: "legal/regulatory regions copy ('although you can create accounts in multiple jurisdictions') — intentional formal register", scope: "feature-regions" }
+  - { token: "uw e-mail",           reason: "translation-contribution ask ('remember to include your email') — intentional formal register", scope: "feature-translations" }
+  - { token: "als u niet",          reason: "translation-contribution ask ('if you are not logged in') — intentional formal register", scope: "feature-translations" }
+  - { token: "uw taalvaardigheden", reason: "translation-contribution ask ('your language skills') — intentional formal register", scope: "feature-translations" }
+  - { token: "{hours}u",            reason: "FALSE POSITIVE: 'u' is the abbreviation for 'uur' (hours), not the formal pronoun — 'Nog {hours}u' = 'N more hours'", scope: "workspace-organizations" }
 rule_ref: rule.register-lock
 baseline_ref: baselines.nl

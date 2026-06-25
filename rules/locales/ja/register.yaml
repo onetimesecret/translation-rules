@@ -24,8 +24,20 @@ source: onetimesecret/locales/guides/for-translators/ja.md
 # NOT collide with polite text. Each token below was verified against the full
 # live ja content to have ZERO occurrences (no false positives):
 #   しろ / するな (casual imperative & prohibition), だろう / だろ (casual
-#   conjecture), かい (casual question particle), ぞ / ぜ (casual emphatics),
-#   じゃない (casual negation), してくれ (casual request).
+#   conjecture), かい (casual question particle), ぞ (casual emphatic),
+#   じゃない (casual negation).
+# REMOVED after the consumer-content gate (translation-rules#42 / onetimesecret
+# #3530) found them colliding with POLITE text — the pilot's premise ("zero
+# occurrences") held only against `good` examples, not real shipped content:
+#   - してくれ: a substring of the teineigo 〜してくれました (e.g. 寄付してくれ
+#     ました, "kindly donated") — the polite past, not a casual request.
+#   - ぜ: a substring of なぜ ("why") and ぜひ ("by all means") — not the casual
+#     emphatic particle.
+#   Both are now locked via `register_spec.forbidden_forms` (casual_request /
+#   casual_emphatic) + rule.ja-register-teineigo instead, the same spec-only
+#   treatment the plain copula だ/である already gets below. ぞ stays tokenized
+#   (zero live hits today) but carries the same latent risk via どうぞ ("please")
+#   — flagged for native review.
 # DELIBERATELY LEFT OUT (cannot be safely tokenized — would false-positive on
 # polite text): the plain copula だ — it is a substring of the very common polite
 # request form ください (100+ hits) plus いただく / 一度だけ / まだ; and である —
@@ -44,9 +56,7 @@ forbidden_tokens:
   - { token: だろ,     context: substring, severity: error, note: "casual conjecture/tag, shortened; — zero live hits" }
   - { token: かい,     context: substring, severity: error, note: "casual yes/no question particle; polite form is ですか — zero live hits" }
   - { token: じゃない, context: substring, severity: error, note: "casual negation; polite form is ではありません / ではない(です) — zero live hits" }
-  - { token: してくれ, context: substring, severity: error, note: "casual request (do ~ for me); polite form is してください — zero live hits" }
   - { token: ぞ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle — zero live hits" }
-  - { token: ぜ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle — zero live hits" }
 exceptions: []
 rule_ref: rule.ja-register-teineigo
 # register_spec — the FREE-FORM extension where the real keigo policy lives (the
@@ -68,7 +78,8 @@ register_spec:
     casual_conjecture: [だろう, だろ]      # also tokenized
     casual_question: [かい]               # also tokenized
     casual_negation: [じゃない]            # also tokenized
-    casual_emphatic: [ぞ, ぜ]             # also tokenized
+    casual_request: [してくれ]            # spec-only: substring of teineigo 〜してくれました — see header note, NOT tokenized
+    casual_emphatic: [ぞ, ぜ]             # ぞ tokenized; ぜ spec-only (substring of なぜ/ぜひ) — see header note
   voice_by_context:
     buttons_and_actions: "命令形 / imperative noun-form (例: 保存, 削除, 送信) — concise label form, not casual speech."
     status_and_notifications: "受動態/完了形 — passive/declarative polite (例: 保存されました, 削除済み)."
