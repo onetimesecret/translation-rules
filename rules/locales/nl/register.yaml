@@ -21,6 +21,20 @@ forbidden_tokens:
   - { token: uw,    context: standalone_word, severity: error, note: "formal possessive" }
   - { token: uwe,   context: standalone_word, severity: error, note: "formal possessive, inflected/archaic form" }
   - { token: uzelf, context: standalone_word, severity: error, note: "formal reflexive pronoun" }
-exceptions: []
+# `{hours}u` false-positive carve-out (translation-rules#42, onetimesecret#3530).
+# In the relative-time string "Nog {hours}u" the trailing `u` abbreviates `uur`
+# (hours), not the formal pronoun, so the standalone-word `u` lock false-positives
+# on it (the `u` token note above already flags this `u`/`uur` collision). This is
+# the ONLY nl exception. The formal-`u`/`uw` strings the gate also flagged are an
+# intentional B2B/legal/marketing register, but rather than globally allowlist the
+# forbidden token itself (a substring exception permits `uw merk` etc. ANYWHERE,
+# not just the blessed surface), those strings were brought to the locale's
+# declared informal lock in the app instead (onetimesecret#3537) — so no carve-out
+# is encoded here. A real per-surface formal tone, if ever wanted, should return
+# via key-scoped exceptions (#42), as a deliberate feature, not a substring allowlist.
+# NOTE: `scope` below is DOCUMENTARY ONLY — the engine matches on `token`, so the
+# exception applies globally; `scope` just records the key it was observed on.
+exceptions:
+  - { token: "{hours}u", reason: "FALSE POSITIVE: 'u' is the abbreviation for 'uur' (hours), not the formal pronoun — 'Nog {hours}u' = 'N more hours'", scope: "web.organizations.invitations.expires_in_hours" }
 rule_ref: rule.register-lock
 baseline_ref: baselines.nl
