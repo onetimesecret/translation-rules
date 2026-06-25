@@ -1,0 +1,166 @@
+# The single shared "derive step" every consumer calls (ADR-003, ADR-005,
+# ADR-006). translation-rules owns both the knowledge (rules/) and the
+# derivation (lib/resolver); consumers neither vendor the output nor copy the
+# toolchain — they pin this repo and call this action. One implementation here,
+# N callers.
+#
+# A consumer uses it read-only at its canonical pin:
+#
+#   - uses: onetimesecret/translation-rules/.github/actions/derive@<pin>
+#     with:
+#       ref: <pin>            # SAME commit as @<pin> above
+#       locales: de_AT fr_CA  # or "all"
+#       emit-dir: .derived    # gitignored — a cache, never committed (ADR-005)
+#
+# The output is byte-reproducible for a given pin: _meta.source_commit is the
+# pin and _meta.generated_at is the pin's committer date (UTC), so a freshness
+# gate can regenerate and diff (replaces the retired SPEC §2.4 byte-hash gate;
+# see ADR-005 and issue #36).
+
+name: 'Derive translation governance'
+description: >-
+  Read-only derive of resolved locale governance (.resolved JSON + translator
+  guides) from onetimesecret/translation-rules at a pinned commit.
+
+inputs:
+  ref:
+    description: >-
+      translation-rules commit SHA (or tag) to derive at — the consumer's
+      canonical pin. Use the SAME ref you pinned `uses: .../derive@<ref>` to,
+      so the action code and the governing data are one commit.
+    required: true
+  locales:
+    description: >-
+      Space- or comma-separated locale codes to derive (e.g. "de_AT fr_CA"),
+      or "all" for every governed locale.
+    required: false
+    default: 'all'
+  emit:
+    description: 'Comma-separated artifacts to write: md,json.'
+    required: false
+    default: 'md,json'
+  lint:
+    description: >-
+      Run the resolver step-6 lint and fail (non-zero) on error findings.
+    required: false
+    default: 'true'
+  emit-dir:
+    description: >-
+      Directory (relative to the caller workspace) to write derived output into:
+      <emit-dir>/.resolved/<locale>.json and
+      <emit-dir>/guides/for-translators/<locale>.md. A derive cache — gitignore
+      it; never commit it (ADR-005).
+    required: false
+    default: '.derived'
+  checkout-path:
+    description: 'Where to check out the authority (read-only).'
+    required: false
+    default: '.translation-rules'
+
+outputs:
+  emit-dir:
+    description: 'Absolute path of the directory containing the derived .resolved/ and guides/.'
+    value: ${{ steps.derive.outputs.emit-dir }}
+  source-commit:
+    description: 'The resolved translation-rules commit the output was derived at.'
+    value: ${{ steps.resolve-ref.outputs.sha }}
+  generated-at:
+    description: 'The deterministic _meta.generated_at stamped into the output (committer date of the pinned commit, UTC).'
+    value: ${{ steps.resolve-ref.outputs.generated-at }}
+
+runs:
+  using: composite
+  steps:
+    - name: Check out translation-rules (authority, read-only) at the pin
+      uses: actions/checkout@v4
+      with:
+        repository: onetimesecret/translation-rules
+        ref: ${{ inputs.ref }}
+        path: ${{ inputs.checkout-path }}
+        persist-credentials: false
+
+    - name: Resolve pin -> SHA + deterministic generated-at
+      id: resolve-ref
+      shell: bash
+      env:
+        # Pass caller input through env, never interpolated into the script body
+        # — avoids the ${{ }}-in-run: script-injection shape.
+        CHECKOUT_PATH: ${{ inputs.checkout-path }}
+      run: |
+        set -euo pipefail
+        rules="$CHECKOUT_PATH"
+        sha="$(git -C "$rules" rev-parse HEAD)"
+        # Deterministic stamp: the pinned commit's committer date in UTC.
+        # TZ=UTC + --date=format-local avoids %cI git-version skew, so the same
+        # pin always yields byte-identical output (freshness-gate friendly).
+        gen_at="$(TZ=UTC git -C "$rules" show -s \
+          --date=format-local:'%Y-%m-%dT%H:%M:%S+00:00' --format=%cd HEAD)"
+        echo "sha=${sha}" >> "$GITHUB_OUTPUT"
+        echo "generated-at=${gen_at}" >> "$GITHUB_OUTPUT"
+        echo "Derive @ ${sha} (generated_at=${gen_at})"
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install pinned resolver deps
+      shell: bash
+      run: |
+        set -euo pipefail
+        # In lockstep with the authority's schema-validation.yml and the
+        # resolver PEP-723 header (lib/resolver/resolve.py).
+        python -m pip install --upgrade pip
+        python -m pip install \
+          "jsonschema>=4.21,<5" \
+          "referencing>=0.32,<1" \
+          "pyyaml>=6,<7"
+
+    - name: Derive (.resolved + guides) at the pin
+      id: derive
+      shell: bash
+      env:
+        DERIVE_LOCALES: ${{ inputs.locales }}
+        DERIVE_EMIT: ${{ inputs.emit }}
+        DERIVE_LINT: ${{ inputs.lint }}
+        DERIVE_EMIT_DIR: ${{ inputs.emit-dir }}
+        DERIVE_SOURCE_COMMIT: ${{ steps.resolve-ref.outputs.sha }}
+        DERIVE_GENERATED_AT: ${{ steps.resolve-ref.outputs.generated-at }}
+        CHECKOUT_PATH: ${{ inputs.checkout-path }}
+      run: |
+        set -euo pipefail
+        rules="$CHECKOUT_PATH"
+        # Resolve emit-dir to an absolute path in the CALLER workspace, so the
+        # resolver (run from inside the authority checkout) writes back out to it.
+        emit_dir="$(mkdir -p "$DERIVE_EMIT_DIR" && cd "$DERIVE_EMIT_DIR" && pwd)"
+
+        lint_flag=()
+        [ "$DERIVE_LINT" = "true" ] && lint_flag=(--lint)
+
+        common=(
+          --emit="$DERIVE_EMIT"
+          --emit-dir "$emit_dir"
+          --source-commit "$DERIVE_SOURCE_COMMIT"
+          --generated-at "$DERIVE_GENERATED_AT"
+          "${lint_flag[@]}"
+        )
+
+        # The resolver resolves rules/ paths relative to its own CWD; its
+        # defaults already point at the rules-root layout (rules/locales,
+        # rules/base.yaml), so run it from inside the authority checkout.
+        if [ "${DERIVE_LOCALES,,}" = "all" ]; then
+          ( cd "$rules" && python lib/resolver/resolve.py --all "${common[@]}" )
+        else
+          # Accept comma OR space separated.
+          read -r -a locs <<< "${DERIVE_LOCALES//,/ }"
+          for loc in "${locs[@]}"; do
+            [ -n "$loc" ] || continue
+            # `--` ends option parsing so a locale starting with '-' can't be
+            # mistaken for a flag; the resolver takes one positional (locale).
+            ( cd "$rules" && python lib/resolver/resolve.py "${common[@]}" -- "$loc" )
+          done
+        fi
+
+        echo "emit-dir=${emit_dir}" >> "$GITHUB_OUTPUT"
+        echo "Derived into ${emit_dir}:"
+        ls -R "$emit_dir" || true
