@@ -63,7 +63,7 @@ forbidden_tokens:
 exceptions:
   - { token: なぜ,       reason: "polite/neutral 'why' — host of casual-emphatic ぜ; live FP (なぜシークレットの値は…)", scope: secret-manage }
   - { token: ぜひ,       reason: "polite adverb 'by all means' — host of casual-emphatic ぜ (preventive; no live hit yet)", scope: "(preventive)" }
-  - { token: してくれま, reason: "teineigo 〜してくれました/ます/ません ('kindly did/does ~') — host of casual-request してくれ; live FP (寄付してくれEXAMPLEPLACEHOLDER", scope: feature-translations }
+  - { token: してくれま, reason: "teineigo 〜してくれました/ます/ません ('kindly did/does ~') — host of casual-request してくれ; live FP (寄付してくれました)", scope: feature-translations }
   - { token: してくれて, reason: "polite te-form 〜してくれて ('having done ~ for me, …') — host of casual-request してくれ (preventive)", scope: "(preventive)" }
 rule_ref: rule.ja-register-teineigo
 # register_spec — the FREE-FORM extension where the real keigo policy lives (the
