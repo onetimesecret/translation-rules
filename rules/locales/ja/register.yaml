@@ -21,19 +21,22 @@ source: onetimesecret/locales/guides/for-translators/ja.md
 # (which key off alphanumeric chars) do NOT segment Japanese — every kana/kanji
 # is a "word char", so a casual marker mid-sentence has no left boundary. We
 # therefore use `substring` for the casual markers, but ONLY for ones that do
-# NOT collide with polite text. Seven were verified against the full live ja
+# NOT collide with polite text. Six were verified against the full live ja
 # content to have ZERO occurrences (no false positives):
 #   しろ / するな (casual imperative & prohibition), だろう / だろ (casual
-#   conjecture), かい (casual question particle), ぞ (casual emphatic),
-#   じゃない (casual negation).
-# Two DO collide with polite text as bare substrings, but are kept ENFORCED via
-# the `exceptions` allowlist (the same du-in-Duden span-containment mechanism)
-# rather than dropped — so a genuinely casual occurrence is still caught while
-# the polite host word is spared (translation-rules#42 / onetimesecret#3530):
+#   conjecture), かい (casual question particle), じゃない (casual negation).
+# Three collide (or can collide) with polite text as bare substrings, but are
+# kept ENFORCED via the `exceptions` allowlist (the same du-in-Duden
+# span-containment mechanism) rather than dropped — so a genuinely casual
+# occurrence is still caught while the polite host word is spared
+# (translation-rules#42 / onetimesecret#3530):
 #   - してくれ (casual request): a substring of teineigo 〜してくれました
 #     (e.g. 寄付してくれました, "kindly donated") — excepted via してくれま / してくれて.
 #   - ぜ (casual emphatic): a substring of なぜ ("why") and ぜひ ("by all means")
 #     — excepted via なぜ / ぜひ. A bare sentence-final ぜ (〜だぜ) still fails the gate.
+#   - ぞ (casual emphatic): a substring of the polite adverb どうぞ ("please / go
+#     ahead") — no live hit yet, excepted via どうぞ preventively (same latent
+#     collision as ぜ). A bare sentence-final ぞ (〜だぞ) still fails the gate.
 # DELIBERATELY LEFT OUT (cannot be safely tokenized — would false-positive on
 # polite text): the plain copula だ — it is a substring of the very common polite
 # request form ください (100+ hits) plus いただく / 一度だけ / まだ; and である —
@@ -53,16 +56,17 @@ forbidden_tokens:
   - { token: かい,     context: substring, severity: error, note: "casual yes/no question particle; polite form is ですか — zero live hits" }
   - { token: じゃない, context: substring, severity: error, note: "casual negation; polite form is ではありません / ではない(です) — zero live hits" }
   - { token: してくれ, context: substring, severity: error, note: "casual request (do ~ for me); polite してください has no れ. Polite 〜してくれました/ます/て excepted below; a bare casual してくれ still fails." }
-  - { token: ぞ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle — zero live hits" }
+  - { token: ぞ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle; polite host どうぞ excepted below; a bare sentence-final ぞ (〜だぞ) still fails." }
   - { token: ぜ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle; polite hosts なぜ/ぜひ excepted below; a bare sentence-final ぜ (〜だぜ) still fails." }
-# POLITE-CONTEXT allowlist so してくれ and ぜ stay ENFORCED as substring tokens
-# without false-positiving on the polite host words they sit inside (du-in-Duden
-# span containment). AGENT-DRAFTED from the live hits; the polite-host set needs
-# native (JA) completion before merge — e.g. してくれる, or kana ぜんぶ/ぜったい
-# should they ever ship — see PR label.
+# POLITE-CONTEXT allowlist so してくれ, ぜ and ぞ stay ENFORCED as substring
+# tokens without false-positiving on the polite host words they sit inside
+# (du-in-Duden span containment). AGENT-DRAFTED from the live hits; the
+# polite-host set needs native (JA) completion before merge — e.g. してくれる, or
+# kana ぜんぶ/ぜったい should they ever ship — see PR label.
 exceptions:
   - { token: なぜ,       reason: "polite/neutral 'why' — host of casual-emphatic ぜ; live FP (なぜシークレットの値は…)", scope: secret-manage }
   - { token: ぜひ,       reason: "polite adverb 'by all means' — host of casual-emphatic ぜ (preventive; no live hit yet)", scope: "(preventive)" }
+  - { token: どうぞ,     reason: "polite adverb 'please / go ahead' — host of casual-emphatic ぞ (preventive; no live hit yet)", scope: "(preventive)" }
   - { token: してくれま, reason: "teineigo 〜してくれました/ます/ません ('kindly did/does ~') — host of casual-request してくれ; live FP (寄付してくれました)", scope: feature-translations }
   - { token: してくれて, reason: "polite te-form 〜してくれて ('having done ~ for me, …') — host of casual-request してくれ (preventive)", scope: "(preventive)" }
 rule_ref: rule.ja-register-teineigo
@@ -85,7 +89,7 @@ register_spec:
     casual_conjecture: [だろう, だろ]      # also tokenized
     casual_question: [かい]               # also tokenized
     casual_negation: [じゃない]            # also tokenized
-    casual_emphatic: [ぞ, ぜ]             # also tokenized
+    casual_emphatic: [ぞ, ぜ]             # also tokenized; polite hosts どうぞ/なぜ/ぜひ excepted
   voice_by_context:
     buttons_and_actions: "命令形 / imperative noun-form (例: 保存, 削除, 送信) — concise label form, not casual speech."
     status_and_notifications: "受動態/完了形 — passive/declarative polite (例: 保存されました, 削除済み)."
