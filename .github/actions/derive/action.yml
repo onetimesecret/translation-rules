@@ -33,10 +33,11 @@ inputs:
   ref:
     description: >-
       translation-rules commit SHA (or tag) to derive at — the consumer's
-      canonical data pin. In steady state this is the same ref you pinned
-      `uses: .../derive@<ref>` to (action code and governing data at one
-      release); it MAY differ to dry-run a candidate translation-rules release
-      against the corpus before bumping the action SHA. See ADR-006.
+      canonical data pin. In steady state it resolves to the same commit you
+      pinned `uses: .../derive@<pin>` to (action code and governing data at one
+      release — `uses:` is typically a SHA, this `ref:` may be a tag); it MAY
+      differ to dry-run a candidate translation-rules release against the corpus
+      before bumping the action SHA. See ADR-006.
     required: true
   locales:
     description: >-

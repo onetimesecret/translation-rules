@@ -109,10 +109,11 @@ is. That Status line, not this README, is the source of truth for what is wired.
 `N` is the total commit count on `main` — a monotonic build number, not semver.
 The tag is a convenience pin only; the binding is always the commit SHA. Pin the
 submodule to a tag when you want a named, browsable release, or to a SHA
-otherwise. Tags are cut on merge to `main` and never moved — new governance
-content gets a new tag, because re-pointing an existing tag would silently change
-the derived governance for every consumer pinning it and break their
-reproducibility and freshness gates.
+otherwise. Tags are cut on merge to `main` and never re-pointed — neither moved
+with `git tag -f` nor deleted and recreated at a different commit. New governance
+content gets a new tag, because re-pointing an existing tag either way would
+silently change the derived governance for every consumer pinning it and break
+their reproducibility and freshness gates.
 
 ## Working in this repo
 

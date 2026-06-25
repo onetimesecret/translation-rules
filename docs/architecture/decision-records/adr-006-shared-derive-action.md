@@ -64,12 +64,13 @@ same rev-parse. Either way the SHA is derived post-checkout, so whatever `ref`
 names resolves correctly. Two conventions make that override safe:
 
 **Release tags are immutable.** `v0.0.N` tags (`.github/workflows/publish.yml`,
-cut on every merge to `main`) are never moved — no `git tag -f`, no re-point.
-New governance content means a new tag. Re-pointing a tag would silently change
-the derived governance for every consumer pinning that tag and break the
-per-pin byte-reproducibility this ADR relies on (`_meta.source_commit` /
-`_meta.generated_at`, ADR-005). So a `ref:` pinned by tag name is as stable as
-one pinned by SHA.
+cut on every merge to `main`) are never re-pointed — not by `git tag -f`, and
+not by deleting and recreating a tag at a different commit (which has the same
+effect for any consumer pinning by tag name). New governance content means a new
+tag. Moving a tag either way would silently change the derived governance for
+every consumer pinning that tag and break the per-pin byte-reproducibility this
+ADR relies on (`_meta.source_commit` / `_meta.generated_at`, ADR-005). So a
+`ref:` pinned by tag name is as stable as one pinned by SHA.
 
 **The consumer contract is back-compatible across releases.** Because a run may
 execute the action wrapper (`uses:`) and the resolver/data (`ref:`) at *different*
