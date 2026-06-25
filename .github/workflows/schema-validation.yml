@@ -45,6 +45,13 @@ jobs:
       - name: Run resolver emit + lint fixture suite
         run: python tests/resolver/run.py
 
+      - name: Run consumer-content lint suite (ADR-008)
+        # lint_content.py reuses the resolver matcher to scan shipped app
+        # content across every governed locale (translation-rules#42). The
+        # suite pins the false-positive avoidance (Hôte/te, bài/bà), CJK
+        # substring catch, exception span-containment, and exit-code contract.
+        run: python tests/lint_content/run.py
+
       - name: Run retro lifecycle test suite
         run: python tests/retro_lifecycle/run.py
 
