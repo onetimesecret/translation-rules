@@ -21,11 +21,20 @@ source: onetimesecret/locales/guides/for-translators/ja.md
 # (which key off alphanumeric chars) do NOT segment Japanese — every kana/kanji
 # is a "word char", so a casual marker mid-sentence has no left boundary. We
 # therefore use `substring` for the casual markers, but ONLY for ones that do
-# NOT collide with polite text. Each token below was verified against the full
-# live ja content to have ZERO occurrences (no false positives):
+# NOT collide with polite text. The tokens below were checked against live ja
+# content; the safe set (zero false positives on the current corpus):
 #   しろ / するな (casual imperative & prohibition), だろう / だろ (casual
-#   conjecture), かい (casual question particle), ぞ / ぜ (casual emphatics),
-#   じゃない (casual negation), してくれ (casual request).
+#   conjecture), かい (casual question particle), ぞ (casual emphatic),
+#   じゃない (casual negation).
+# REMOVED 2026-06-25 (onetimesecret#3530) — these two DID false-positive on
+# polite live content, so they are NOT safely substring-tokenizable; they are
+# now enforced via register_spec.forbidden_forms + the rule instead (joining
+# だ / である):
+#   ぜ      — matches なぜ ("why") and ぜひ ("by all means");
+#   してくれ — matches the polite benefactive してくれました / してくれます
+#             (the 〜ました / 〜ます ending is teineigo-compliant; only the bare
+#             casual request してくれ is a violation, which substring cannot
+#             isolate from the polite forms).
 # DELIBERATELY LEFT OUT (cannot be safely tokenized — would false-positive on
 # polite text): the plain copula だ — it is a substring of the very common polite
 # request form ください (100+ hits) plus いただく / 一度だけ / まだ; and である —
@@ -44,9 +53,7 @@ forbidden_tokens:
   - { token: だろ,     context: substring, severity: error, note: "casual conjecture/tag, shortened; — zero live hits" }
   - { token: かい,     context: substring, severity: error, note: "casual yes/no question particle; polite form is ですか — zero live hits" }
   - { token: じゃない, context: substring, severity: error, note: "casual negation; polite form is ではありません / ではない(です) — zero live hits" }
-  - { token: してくれ, context: substring, severity: error, note: "casual request (do ~ for me); polite form is してください — zero live hits" }
   - { token: ぞ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle — zero live hits" }
-  - { token: ぜ,       context: substring, severity: error, note: "casual masculine emphatic sentence-final particle — zero live hits" }
 exceptions: []
 rule_ref: rule.ja-register-teineigo
 # register_spec — the FREE-FORM extension where the real keigo policy lives (the
@@ -68,7 +75,8 @@ register_spec:
     casual_conjecture: [だろう, だろ]      # also tokenized
     casual_question: [かい]               # also tokenized
     casual_negation: [じゃない]            # also tokenized
-    casual_emphatic: [ぞ, ぜ]             # also tokenized
+    casual_emphatic: [ぞ, ぜ]             # ぞ tokenized; ぜ spec-only (FP on なぜ/ぜひ — onetimesecret#3530)
+    casual_request: [してくれ]            # spec-only (FP on polite してくれました/してくれます — onetimesecret#3530)
   voice_by_context:
     buttons_and_actions: "命令形 / imperative noun-form (例: 保存, 削除, 送信) — concise label form, not casual speech."
     status_and_notifications: "受動態/完了形 — passive/declarative polite (例: 保存されました, 削除済み)."
@@ -77,6 +85,9 @@ register_spec:
     The plain copula だ / である is the primary casual marker but is unsafe to
     substring-match against polite Japanese (だ is inside ください, である inside
     である必要があります). It is enforced via rule.ja-register-teineigo and this
-    spec rather than forbidden_tokens. Imperative noun-forms on buttons (保存,
+    spec rather than forbidden_tokens. As of onetimesecret#3530, ぜ and してくれ
+    join だ/である in the spec-only set: ぜ false-positives on なぜ/ぜひ and
+    してくれ on the polite benefactive してくれました/してくれます, so neither can
+    be safely substring-matched. Imperative noun-forms on buttons (保存,
     削除) are the prescribed UI voice, NOT a register violation.
 baseline_ref: baselines.ja

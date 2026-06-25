@@ -21,6 +21,14 @@ forbidden_tokens:
   - { token: uw,    context: standalone_word, severity: error, note: "formal possessive" }
   - { token: uwe,   context: standalone_word, severity: error, note: "formal possessive, inflected/archaic form" }
   - { token: uzelf, context: standalone_word, severity: error, note: "formal reflexive pronoun" }
-exceptions: []
+exceptions:
+  # 'u' in the relative-time string "Nog {hours}u" abbreviates 'uur' (hours),
+  # not the formal pronoun. The standalone-word 'u' lock false-positives on the
+  # trailing 'u' after the interpolation; allowlist that exact span. The
+  # register header already flags this collision ("'u' is also the abbreviation
+  # for 'uur'"). (onetimesecret#3530)
+  - token: "{hours}u"
+    reason: "'u' = 'uur' (hours) abbreviation in 'Nog {hours}u', not the formal pronoun"
+    scope: web.organizations.invitations.expires_in_hours
 rule_ref: rule.register-lock
 baseline_ref: baselines.nl
