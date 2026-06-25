@@ -27,9 +27,14 @@ source: onetimesecret/locales/guides/for-translators/ja.md
 #   conjecture), かい (casual question particle), ぞ (casual emphatic),
 #   じゃない (casual negation).
 # REMOVED 2026-06-25 (onetimesecret#3530) — these two DID false-positive on
-# polite live content, so they are NOT safely substring-tokenizable; they are
-# now enforced via register_spec.forbidden_forms + the rule instead (joining
-# だ / である):
+# polite live content, so they are NOT safely substring-tokenizable. They are
+# dropped from forbidden_tokens and recorded in register_spec.forbidden_forms +
+# rule.ja-register-teineigo instead (joining だ / である). IMPORTANT: register_spec
+# is documentation only — the resolver does not emit it into .resolved/ja.json and
+# neither lint_content nor the example lint scan it (both read only forbidden_tokens),
+# so these two forms are NO LONGER machine-detected; they now rely on native-speaker
+# review (the register-lock label). This is a deliberate trade: a substring token
+# here false-positives on polite text more often than it catches a real casual lapse.
 #   ぜ      — matches なぜ ("why") and ぜひ ("by all means");
 #   してくれ — matches the polite benefactive してくれました / してくれます
 #             (the 〜ました / 〜ます ending is teineigo-compliant; only the bare
@@ -39,9 +44,10 @@ source: onetimesecret/locales/guides/for-translators/ja.md
 # polite text): the plain copula だ — it is a substring of the very common polite
 # request form ください (100+ hits) plus いただく / 一度だけ / まだ; and である —
 # it appears mid-sentence in the polite construction である必要があります. Those
-# two plain forms are locked via `register_spec.forbidden_forms` + the rule
-# rule.ja-register-teineigo instead. SPEC §2.3 lint only scans `good` examples,
-# and all `good` examples here are verified clean against this token list.
+# two plain forms are recorded in `register_spec.forbidden_forms` + the rule
+# rule.ja-register-teineigo — as policy for native-speaker review, NOT as a machine
+# check (the linters scan only forbidden_tokens). SPEC §2.3 lint only scans `good`
+# examples, and all `good` examples here are verified clean against this token list.
 #
 # AGENT-AUTHORED; requires native-speaker (JA) sign-off — see PR label.
 form: other
@@ -70,13 +76,13 @@ register_spec:
     verb_endings: [ます, ません, ました, ましょう]
     negative_polite: [ません, ありません, ではありません]
   forbidden_forms:
-    plain_copula: [だ, である]            # plain/常体 copula — see note: NOT in forbidden_tokens (false-positives on ください/必要); locked here + by rule.
-    casual_imperative: [しろ, するな]      # also tokenized (zero false positives)
-    casual_conjecture: [だろう, だろ]      # also tokenized
-    casual_question: [かい]               # also tokenized
-    casual_negation: [じゃない]            # also tokenized
-    casual_emphatic: [ぞ, ぜ]             # ぞ tokenized; ぜ spec-only (FP on なぜ/ぜひ — onetimesecret#3530)
-    casual_request: [してくれ]            # spec-only (FP on polite してくれました/してくれます — onetimesecret#3530)
+    plain_copula: [だ, である]            # plain/常体 copula — NOT in forbidden_tokens (FP on ください/必要); doc-only, review-enforced, not machine-detected.
+    casual_imperative: [しろ, するな]      # also in forbidden_tokens — machine-detected (zero false positives)
+    casual_conjecture: [だろう, だろ]      # also in forbidden_tokens — machine-detected
+    casual_question: [かい]               # also in forbidden_tokens — machine-detected
+    casual_negation: [じゃない]            # also in forbidden_tokens — machine-detected
+    casual_emphatic: [ぞ, ぜ]             # ぞ in forbidden_tokens (machine-detected); ぜ doc-only, not machine-detected (FP on なぜ/ぜひ — onetimesecret#3530)
+    casual_request: [してくれ]            # doc-only, not machine-detected (FP on polite してくれました/してくれます — onetimesecret#3530)
   voice_by_context:
     buttons_and_actions: "命令形 / imperative noun-form (例: 保存, 削除, 送信) — concise label form, not casual speech."
     status_and_notifications: "受動態/完了形 — passive/declarative polite (例: 保存されました, 削除済み)."
@@ -84,10 +90,14 @@ register_spec:
   notes: >-
     The plain copula だ / である is the primary casual marker but is unsafe to
     substring-match against polite Japanese (だ is inside ください, である inside
-    である必要があります). It is enforced via rule.ja-register-teineigo and this
-    spec rather than forbidden_tokens. As of onetimesecret#3530, ぜ and してくれ
-    join だ/である in the spec-only set: ぜ false-positives on なぜ/ぜひ and
-    してくれ on the polite benefactive してくれました/してくれます, so neither can
-    be safely substring-matched. Imperative noun-forms on buttons (保存,
-    削除) are the prescribed UI voice, NOT a register violation.
+    である必要があります). It is therefore documented here and in
+    rule.ja-register-teineigo as policy for native-speaker review rather than
+    placed in forbidden_tokens — register_spec is NOT consumed by the resolver or
+    the content linter (which scan only forbidden_tokens), so it is not a machine
+    check. As of onetimesecret#3530, ぜ and してくれ join だ/である in this
+    review-only set: ぜ false-positives on なぜ/ぜひ and してくれ on the polite
+    benefactive してくれました/してくれます, so neither can be safely
+    substring-matched, and automated detection of them is intentionally dropped.
+    Imperative noun-forms on buttons (保存, 削除) are the prescribed UI voice,
+    NOT a register violation.
 baseline_ref: baselines.ja
