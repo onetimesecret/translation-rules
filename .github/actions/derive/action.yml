@@ -8,9 +8,16 @@
 #
 #   - uses: onetimesecret/translation-rules/.github/actions/derive@<pin>
 #     with:
-#       ref: <pin>            # SAME commit as @<pin> above
+#       ref: <pin>            # steady state = same release as @<pin>; MAY differ
 #       locales: de_AT fr_CA  # or "all"
 #       emit-dir: .derived    # gitignored — a cache, never committed (ADR-005)
+#
+# The two pins are independent: @<pin> selects the action CODE, `ref:` selects
+# the rules+resolver DATA it checks out. Steady state pins both to the same
+# release; the override path lets a maintainer point `ref:` at a candidate
+# translation-rules release (a different commit/tag) to dry-run it against the
+# corpus BEFORE bumping the action SHA. This stays safe because release tags are
+# immutable and the consumer contract is back-compatible — see ADR-006.
 #
 # The output is byte-reproducible for a given pin: _meta.source_commit is the
 # pin and _meta.generated_at is the pin's committer date (UTC), so a freshness
@@ -26,8 +33,11 @@ inputs:
   ref:
     description: >-
       translation-rules commit SHA (or tag) to derive at — the consumer's
-      canonical pin. Use the SAME ref you pinned `uses: .../derive@<ref>` to,
-      so the action code and the governing data are one commit.
+      canonical data pin. In steady state it resolves to the same commit you
+      pinned `uses: .../derive@<pin>` to (action code and governing data at one
+      release — `uses:` is typically a SHA, this `ref:` may be a tag); it MAY
+      differ to dry-run a candidate translation-rules release against the corpus
+      before bumping the action SHA. See ADR-006.
     required: true
   locales:
     description: >-
