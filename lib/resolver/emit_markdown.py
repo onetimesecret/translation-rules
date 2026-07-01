@@ -1,10 +1,12 @@
 """Emit `for-translators/<locale>.md`. SPEC.md §2.3 step 7a.
 
-A pure projection of the assembled model into human-readable reference. The
-file is hash-locked in the app repo (SPEC §2.4): the resolver's output must
-match byte-for-byte or CI rejects hand edits. The only variable is the
-`@<sha>` source-commit pin in the header (injected by the caller); there is no
-`generated_at`, so a pinned sha yields a fully reproducible file.
+A pure projection of the assembled model into human-readable reference. Under
+the no-vendor model (ADR-005/ADR-007) the guide is derived on demand and never
+committed; the byte-hash lock is retired, and its guarantee (no hand-edited
+governance) is preserved by regenerating from scratch at the pin in CI. The
+only variable is the `@<sha>` source-commit pin in the header (injected by the
+caller); there is no `generated_at`, so a pinned sha yields a fully
+reproducible file.
 
 The header is the SPEC §2.3 literal — do not paraphrase it; it is what marks
 the file as generated and uncitable as a rule source.

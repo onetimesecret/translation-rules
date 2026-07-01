@@ -36,7 +36,7 @@ CI gate that rejects translation PRs containing forbidden tokens.
     rules.yaml     ─┤─► resolver ──► for-translators/de_AT.md   (human guide)
     glossary.yaml  ─┘                .resolved/de_AT.json        (agent context)
   rules/locales/de/                         │
-    rules.yaml ────────────────────── submodule + CI gate
+    rules.yaml ────────────────────── pin + derive + CI gate
   rules/base.yaml                           │
                                             ▼
                                    PR touching de_AT strings?
@@ -72,44 +72,58 @@ Design notes (non-binding agent analysis, not part of the app-repo contract):
 
 ## Consuming this repo (the app-repo contract)
 
-The app repo vendors this repo as a git submodule and commits the resolver's
-output next to it (`SPEC.md` §2.3):
+A consumer **pins** this repo to a commit (ADR-004) and **derives on demand**.
+It does *not* vendor this repo as a submodule and does *not* commit the
+resolver's output (ADR-005). The derive is the single shared GitHub Action
+(ADR-006); output lands in a gitignored cache, regenerated each run and never
+committed:
 
-- `locales/guides/for-translators/<locale>.md` — human-readable guide.
-  Generated, headed `# GENERATED from translation-rules@<sha> — do not edit, do
-  not cite as source`.
-- `locales/.resolved/<locale>.json` — machine-readable model for translation
+- `<emit-dir>/.resolved/<locale>.json` — machine-readable model for translation
   agents.
+- `<emit-dir>/guides/for-translators/<locale>.md` — human-readable guide,
+  headed `# GENERATED from translation-rules@<sha> — do not edit, do not cite as
+  source`. Derived on demand only — no committed copy, no hosted browse channel
+  (ADR-007); read one by deriving it and opening it from the cache.
 
-`_meta.source_commit` in that JSON is **the translation-rules commit the
-artifacts were generated from** — the rules-repo `HEAD` at resolve time, or an
-explicit `--source-commit` override. It is *not* a copy of the app repo's
-submodule pointer (this repo cannot know its own future submodule SHA). The
-relationship runs the other way: the app-repo gate verifies
-`source_commit == submodule SHA`, which is what proves the committed artifacts
-were generated from the exact rules commit the submodule pins (`SPEC.md` §2.4).
+In the app, `<emit-dir>` is `generated/i18n/` (gitignored); see the app's
+`locales/scripts/derive-governance.sh` and its `resolved-derive-gate.yml` /
+`validate-register.yml` workflows.
+
+`_meta.source_commit` in the JSON is **the translation-rules commit the output
+was derived from** — the ref the consumer pinned, resolved to a concrete commit
+at derive time (the action's `git rev-parse HEAD`, or an explicit
+`--source-commit`). With `_meta.generated_at` — set to the pinned commit's
+committer date (UTC) by the ADR-006 derive action (or by passing `--generated-at`
+to `resolve.py` directly; the bare CLI otherwise stamps the current time) — the
+output is byte-reproducible for a given pin, which is what the regenerate-in-CI
+freshness gate relies on.
 
 ### What enforces the contract
 
-- **Live** — the register forbidden-token gate. App-repo CI
-  (`validate-register.yml`, onetimesecret/onetimesecret#3432) runs
-  `bin/lint-register` from a read-only pinned checkout of this repo against
-  `locales/content/<locale>/*.json` on every content PR. Zero tolerance.
-- **Planned** (`SPEC.md` §2.4) — submodule-pointer freshness, the
-  `source_commit == submodule SHA` check above, and a byte-for-byte hash lock on
-  the generated markdown so hand edits are rejected.
+Both gates derive from a read-only pinned checkout of this repo (the ADR-006
+action) and commit nothing:
 
-Treat the planned items as not-yet-enforced: do not assume drift between rules
-and committed artifacts is caught until the `SPEC.md` §2.4 Status line says it
-is. That Status line, not this README, is the source of truth for what is wired.
+- **Register forbidden-token gate** — the consumer's `validate-register.yml`
+  (onetimesecret/onetimesecret#3432) derives the resolved registers and lints
+  changed `locales/content/<locale>/*.json` on every content PR. Zero tolerance.
+- **Regenerate-in-CI freshness/integrity gate** — the consumer's
+  `resolved-derive-gate.yml` re-derives the full corpus at the pin and lints it,
+  so a consumer cannot pin to a commit whose governance does not lint clean.
+  This replaces the retired byte-hash gate (old `resolved-freshness.yml`): with
+  no committed corpus there is nothing to hash, so the "no hand-edited
+  governance" guarantee is preserved by deriving from scratch instead
+  (ADR-005; onetimesecret/onetimesecret#3510, #36).
+
+`SPEC.md` §2.4 carries the historical gate snapshot; the ADRs above are the
+current source of truth for the consumer model.
 
 ## Release tags
 
 `.github/workflows/publish.yml` tags every merge to `main` as `v0.0.N`, where
 `N` is the total commit count on `main` — a monotonic build number, not semver.
-The tag is a convenience pin only; the binding is always the commit SHA. Pin the
-submodule to a tag when you want a named, browsable release, or to a SHA
-otherwise. Tags are cut on merge to `main` and never re-pointed — neither moved
+The tag is a convenience pin only; the binding is always the commit SHA. Pin to
+a tag when you want a named, browsable release, or to a SHA otherwise. Tags are
+cut on merge to `main` and never re-pointed — neither moved
 with `git tag -f` nor deleted and recreated at a different commit. New governance
 content gets a new tag, because re-pointing an existing tag either way would
 silently change the derived governance for every consumer pinning it and break
