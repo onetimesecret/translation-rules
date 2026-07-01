@@ -201,9 +201,9 @@ Schemas forbid `null` where an empty list or explicit absence field is required.
 4. **Resolve IDs.** Build UUID→path→key index. Dangling refs fail here.
 5. **Attach retros.** Applied retrospectives fold metadata into referenced rules.
 6. **Lint.** Examples must pass their own register lint. Forbidden tokens must be absent from embedded docs. Every example's target must match its sense's target (substring/morphological).
-7. **Emit.** Two outputs:
-   - Markdown: `onetimesecret/locales/guides/for-translators/<locale>.md`, headed `# GENERATED from translation-rules@<sha> — do not edit, do not cite as source`
-   - JSON: `onetimesecret/locales/.resolved/<locale>.json` — stable key order, `_meta.source_commit` carries the pin
+7. **Emit.** Two outputs, written under the caller's `--emit-dir` (a gitignored cache; ADR-005):
+   - Markdown: `<emit-dir>/guides/for-translators/<locale>.md`, headed `# GENERATED from translation-rules@<sha> — do not edit, do not cite as source`
+   - JSON: `<emit-dir>/.resolved/<locale>.json` — stable key order, `_meta.source_commit` carries the pin
 
 **Resolved JSON shape is indexed for agent consumption** — partitioned by the decisions an agent makes at translation time, not by severity:
 
@@ -229,15 +229,15 @@ The `rules`/`context`/`rationale` partition is the surface-level cue that preven
 
 **Status (2026-06-12).** Implemented today in this repo: `schema-validation.yml` (schema, inheritance, resolver merge/lint/emit tests; retro lifecycle, review findings-manifest, and real-tree resolver lint gates), `lint-register.yml` (a `--dry-run` plumbing self-test plus `tests/lint-register.sh`), `python-qc.yml` (ruff lint/format, pyright), the §3 retrospective lifecycle gates (`lib/resolver/retro_lifecycle.py`: 7-day orphan timeout, applied-transition diff check), the §3 review findings-manifest check (`lib/resolver/review_manifest.py`; pre-existing reviews grandfathered — see `_references/reviews/README.md`), the forbidden-token lint over embedded examples and rationale docs (`lib/resolver/lint.py`, run against the repo tree by `schema-validation.yml`; backtick-quoted token mentions in docs are allowed, bare-prose uses fail), and the `rules/_archive/` firewall (`lib/resolver/archive_firewall.py` + `archive-firewall.yml`: moving or copying a file out of `rules/_archive/` or `rules/retrospectives/_archive/` — or deleting one — requires the `prescriptive-promotion` label).
 
-**App repo:** the `forbidden_tokens` grep against `locales/content/<locale>/*.json` is **live** (`validate-register.yml` via onetimesecret/onetimesecret#3432 — `bin/lint-register` from a read-only pinned checkout of this repo, every governed locale). Still planned: submodule pointer freshness on locale-content PRs; `.resolved/<locale>.json`'s `_meta.source_commit` equals submodule SHA; `for-translators/*.md` hash matches resolver output — hand edits rejected.
+**App repo:** the `forbidden_tokens` grep against `locales/content/<locale>/*.json` is **live** (`validate-register.yml` via onetimesecret/onetimesecret#3432 — `bin/lint-register` from a read-only pinned checkout of this repo, every governed locale). *(Originally planned here: submodule-pointer freshness; `.resolved` `_meta.source_commit` == submodule SHA; `for-translators/*.md` hash match — all **retired**, see the superseded note below.)*
 
-**Cross-repo pipeline gate (planned).** A locale content PR is blocked unless the submodule is current, resolved JSON was regenerated in the same PR, and lint passes. This is what mechanically prevents the next class of "bypass by direct edit."
+**Cross-repo pipeline gate (originally planned; retired — see note below).** A locale content PR is blocked unless the submodule is current, resolved JSON was regenerated in the same PR, and lint passes. This is what mechanically prevents the next class of "bypass by direct edit."
 
 > **Superseded by [ADR-005](docs/architecture/decision-records/adr-005-no-vendored-derived-output.md) / [ADR-006](docs/architecture/decision-records/adr-006-shared-derive-action.md).** The submodule-pointer and byte-hash gates above are retired together with the committed corpus (there is nothing to hash). The guarantee — no hand-edited governance reaches translation — is preserved by **regenerating from scratch at the pin in CI** and linting: the consumer's `resolved-derive-gate.yml` re-derives the full corpus via the shared derive action and fails if the pinned commit's governance does not lint clean, and `validate-register.yml` derives the registers read-only to lint changed content. Both commit nothing. There is no git submodule — the consumer pins a commit (ADR-004) and derives at it. See onetimesecret/onetimesecret#3510 and #36.
 
 **How the 2026-04 failure mode is mechanically prevented (by design — see Status above for what is wired today):**
 1. Change-log-style prose physically lives in `rules/_archive/` or `rules/retrospectives/` — neither is compiled into output.
-2. `for-translators/*.md` is generated and hash-locked. A report cannot be pasted in.
+2. `for-translators/*.md` is derived on demand (never committed) and regenerated from scratch at the pin in CI, then linted — a report cannot be pasted in (ADR-005 replaces the earlier byte-hash lock).
 3. Rules are YAML with schema. Prose cannot reach the `rules` partition without authoring a schema-valid file.
 
 ---

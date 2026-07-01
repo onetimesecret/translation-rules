@@ -6,9 +6,11 @@ greppable by human-readable name (SPEC §6.1). The only non-deterministic field,
 `_meta.generated_at`, is injected by the caller, so a fixed value yields a
 reproducible file for golden tests.
 
-Per Q3 (2026-05-29) the JSON is NOT content-hash-checked the way the markdown
-is — the app-repo CI gate checks `_meta.source_commit == submodule SHA` only
-(SPEC §2.4). Determinism here exists for the golden test, not a hash gate.
+Determinism matters beyond golden tests: under the no-vendor model (ADR-005)
+consumers derive this file on demand and CI regenerates it from scratch at the
+pin, so byte-stable output is what lets the regenerate-in-CI freshness gate
+pass. There is no committed copy and no content-hash / `source_commit ==
+submodule-SHA` gate — both retired with the vendored corpus (ADR-005).
 """
 
 from __future__ import annotations

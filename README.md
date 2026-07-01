@@ -92,9 +92,11 @@ In the app, `<emit-dir>` is `generated/i18n/` (gitignored); see the app's
 `_meta.source_commit` in the JSON is **the translation-rules commit the output
 was derived from** — the ref the consumer pinned, resolved to a concrete commit
 at derive time (the action's `git rev-parse HEAD`, or an explicit
-`--source-commit`). With the deterministic `_meta.generated_at` (the pinned
-commit's committer date, UTC) it makes the output byte-reproducible for a given
-pin — which is what the regenerate-in-CI freshness gate relies on.
+`--source-commit`). With `_meta.generated_at` — set to the pinned commit's
+committer date (UTC) by the ADR-006 derive action (or by passing `--generated-at`
+to `resolve.py` directly; the bare CLI otherwise stamps the current time) — the
+output is byte-reproducible for a given pin, which is what the regenerate-in-CI
+freshness gate relies on.
 
 ### What enforces the contract
 
