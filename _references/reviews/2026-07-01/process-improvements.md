@@ -25,3 +25,14 @@ Not all of the wave was noise. These required real decisions and should be the *
 - **Base-rule gap:** `rule.meta-keys-untranslated` (base.yaml:32–35) enumerates only three top-level `_`-prefixed keys, so flattened `web.auth.…_guidance.context` metadata leaked as translatable `{text:…}` units (28 of 29 locales; some, e.g. ru/de/ja/ko, even *translated* the pipeline note). Broadening the rule to any `_`-prefixed *segment* is a genuine rule change, plus a source-tool fix so nested metadata never flattens into translatable units.
 - **Terminology decisions:** de_AT's "Bereich" (72×) vs de's "Domain" for the custom-domains feature is a glossary call, not a lint — and PR #3580 pushed it the wrong way. pt_PT email register (informal "tu/teu/tua") is unenforced and needs a per-locale forbidden-token gate plus a reconciliation decision.
 - **Real source defects to fix upstream, not in locale PRs:** the `region domain` jargon (plus its tree-wide `source_hash` desync, `68ec20f8` vs phantom `b588f5b2`), the `%{status}` raw-English-enum leak (an app-layer defect — locales cannot fix it), and the EN `homepage`/`Homepage` casing split. Flagging these against locale PRs wastes effort; route them to source issues.
+## Findings manifest
+
+- Stale review base + expected-pipeline-state noise (%{date}, source_hash).
+  wont_fix: reviewer-workflow guidance for the next wave, not a rules-repo
+  change; this doc is the durable note.
+- Base-rule gap: rule.meta-keys-untranslated missed flattened `_`-segments.
+  wont_fix: fixed directly in this PR via base.yaml (meta-keys now covers
+  underscore segments).
+- Terminology decisions (de_AT Bereich vs de Domain; pt_PT register) and
+  upstream source defects. wont_fix: glossary calls and source-side items
+  routed to glossary sign-off and upstream-source-issue.md respectively.

@@ -43,3 +43,11 @@ log is secondhand evidence.
 3. One process note on the stale-base + source_s review harness diffs against HEAD.
 
 Want me to (a) verify A1–A3 against the live en worktree, (b) draft the retrospective for #6/#7, or both? I'd do both — (a) first so the  retro cites confirmed facts.
+
+## Findings manifest
+
+- Lock the two clean glossary decisions (#6 "Secret Support", #7 "Workspace").
+  retro: 2026-07-02-signature-brand-vs-translatable
+- Meta-lesson (29 agents re-derived shared facts) + stale-base review harness.
+  wont_fix: reviewer-workflow guidance captured in process-improvements.md;
+  no rule or retro change.

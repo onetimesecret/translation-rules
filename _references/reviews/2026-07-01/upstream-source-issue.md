@@ -169,3 +169,22 @@ Three such keys per locale: `web.auth.verify._guidance.context`, `web.auth.secur
 ## Suggested labels
 
 `i18n`, `source-locale`, `en`, `build-pipeline`, `tech-debt`, `bug`
+## Findings manifest
+
+- Broken JS ternary shipped as translatable text (admin-colonel.json).
+  wont_fix: en/ source defect, fixed once upstream — not in this rules repo.
+- SSO term rendered three ways (workspace-billing.json). wont_fix: en/ source
+  defect, fixed upstream.
+- `_guidance.*` metadata leaked as `{text}` units (export/flatten tool).
+  wont_fix: pipeline/source defect fixed upstream; locale-side leak also
+  guarded by this PR's base.yaml meta-keys broadening.
+- Phantom source_hash + "region domain" jargon (00-common.json). wont_fix:
+  en/ source defect, fixed upstream.
+- Hand-typed placeholder content_hashes (workspace-branding.json). wont_fix:
+  en/ source defect, fixed upstream.
+- Raw un-localized model enum in %{status} (api-invite-errors.json + app).
+  wont_fix: app-layer/source defect, locales cannot fix — fixed upstream.
+- Inconsistent "homepage" casing (secret-homepage.json). wont_fix: en/ source
+  defect, fixed upstream.
+- Founder's name "Delano" shipped as the vi support signature. wont_fix: vi
+  source-data defect, fixed upstream.

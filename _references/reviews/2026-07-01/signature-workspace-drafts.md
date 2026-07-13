@@ -109,3 +109,9 @@ Agent-authored first-pass targets from the 29-locale fan-out (`encode-signature-
 | uk | Служба підтримки Secret | Leaves the orphaned English word "Secret" dangling after a Ukrainian head noun — reads as a half-translated fragment, not a name. "Secret" alone is not the brand; the brand is "One |
 | vi | Hỗ trợ bí mật | Current value; a literal 'secret + support' calque that reads 'confidential support', misreads the brand word 'Secret' as the common noun 'bí mật', and drops 'team' — so it does no |
 | zh | Secret Support | Leaving "Secret Support" in English is an untranslated leak (defect). Also wrong: literal/transliterated 秘密支持 (uses the app-banned 秘密 term, rule.zh-secret-no-mimi) and the collapse |
+
+## Findings manifest
+
+- Draft per-locale targets for "Secret Support" / "Workspace" pending
+  native-speaker sign-off, per the 2026-07-02 ruling.
+  retro: 2026-07-02-signature-brand-vs-translatable

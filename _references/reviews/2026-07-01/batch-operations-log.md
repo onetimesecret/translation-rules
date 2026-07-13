@@ -610,3 +610,13 @@ for pr in $(seq 3574 3602); do gh pr view "$pr" --json number,state --jq '"\(.nu
 3600 MERGED
 3601 MERGED
 3602 MERGED
+
+## Findings manifest
+
+- Glossary decisions for "Secret Support" / "Workspace" surfaced by the wave.
+  retro: 2026-07-02-signature-brand-vs-translatable
+- Source-side en/ defects and pipeline issues captured here as raw evidence,
+  formalized in upstream-source-issue.md. wont_fix: source-repo defects fixed
+  upstream, not rules-repo actions.
+- rule.meta-keys-untranslated gap (flattened `_`-segment leak). wont_fix:
+  resolved in this PR via base.yaml (meta-keys covers underscore segments).
