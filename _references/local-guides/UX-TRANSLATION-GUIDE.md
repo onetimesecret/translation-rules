@@ -285,13 +285,22 @@ The following terms are brand names and MUST be kept in English across all local
 
 - **Onetime Secret** - Product name
 - **One-Time Secret** - Product name (alternate form)
-- **Secret Support** - Support team name (used in email signatures)
 - **Identity Plus** - Subscription tier name
 - **Starlight** - Feature/component name
 
 Brand names MUST NOT be transliterated, translated, or adapted. They appear as-is regardless of the target language's script or conventions.
 
 When a brand name appears in a sentence, surrounding grammar (articles, prepositions, case markers) should be adapted to the target language while the brand name itself remains unchanged.
+
+> **Not a brand name — translate by meaning:** "Secret Support" (the
+> email-signature support-team sign-off) was previously listed here as a brand
+> name. It is not one — it fails the cross-surface anchor test (see
+> [../../docs/terminology.md](../../docs/terminology.md)). Render its *meaning*
+> — the Onetime Secret product's support team — idiomatically per locale. Do
+> **not** keep the English word "Secret" (e.g. `Suporte Secret`) and do **not**
+> collapse it onto the generic "Support Team" rendering; the source keeps the
+> two distinct. See the `2026-07-02-signature-brand-vs-translatable`
+> retrospective.
 
 ## Resources
 
