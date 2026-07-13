@@ -1,7 +1,7 @@
 ---
 id: 2026-07-02-signature-brand-vs-translatable
 date: 2026-07-02
-status: pending
+status: applied
 triggered_by:
   commits: []
   incident: "email.*.signature support-team labels ('Secret Support' and the generic 'Support Team' family) were handled contradictorily across the 2026-07-01 parallel review wave — 11 locales kept English, 18 translated — because no glossary term or rule decided whether these labels are untranslatable brand names or translatable copy; 'Workspace' exhibits the same undecided class"
@@ -40,7 +40,7 @@ affected_locales:
 affected_rules: []
 examples_added: []
 baseline_pins: []
-resolved_in_commit: null
+resolved_in_commit: a8f1c88
 supersedes: []
 declined_reason: null
 would_change_decision_if: null
@@ -260,3 +260,42 @@ as separate source-issues:
   founder's name shipped as the support signature across `vi`'s non-feedback
   signatures (its `feedback_email.signature` is separately fine). Replace with a
   proper Vietnamese "Support Team" rendering.
+
+## Closure review (2026-07-13)
+
+All closure conditions verified met; status flipped to `applied`.
+
+- **The decision is encoded once, in machine-readable form.** PR #56
+  (merge commit `a8f1c88`) adds `term.secret_support#696316bd` and
+  `term.workspace#f6f7de51` across all 29 resolved locales, placed per
+  ADR-001 family inheritance (both in the `de` parent — `de_AT` inherits;
+  `workspace` in the `fr` parent with `secret_support` per fr leaf for
+  the soutien/assistance delta; both per pt leaf for the Equipe/Equipa
+  delta). Each term carries `key_patterns` disambiguation, per-locale
+  sense targets, and the `good`/`bad` examples this retro prescribed —
+  the `bad` examples are exactly the partial "keep-Secret" renders and
+  the collapse onto the generic "Support Team" rendering.
+  `rule.terminology-consistency` now has something to bite on.
+- **Guide edits landed with the ruling.** The brand-list entries were
+  removed from `UX-TRANSLATION-GUIDE.md` and `for-translators/eo.md` in
+  PR #53; the anchor-test principle is recorded in `docs/terminology.md`
+  and the fix-not-grandfather stance in `docs/scope-and-ownership.md`.
+- **Per-locale content corrections landed upstream.** onetimesecret
+  PR #3729 (merge commit `7004843cb5`) applies the 55 text edits: all 29
+  `email.feedback_email.signature` values to the signed-off targets, the
+  8 drifted workspace labels reconciled to the glossary form, and (spun
+  off but fixed in the same pass) vi's 18 remaining "Delano" generic
+  signatures → "Đội ngũ hỗ trợ". All 29 locales pass `lint_content`
+  against models derived from the updated rules tree.
+- **Sign-off substitution accepted.** The drafted targets could not get
+  native-speaker sign-off (the reviewer passed away); at the maintainer's
+  request a model review substituted (PR #55,
+  `_references/reviews/2026-07-12/signature-workspace-signoff-review.md`:
+  27 approve, bg amended, mi_NZ flagged). mi_NZ entries stay marked
+  CONFIDENCE: LOW pending external native validation — a follow-up
+  amendment, not a closure blocker.
+
+`resolved_in_commit: a8f1c88` is the glossary encoding (PR #56) — the
+"encoded once" artifact §"What must change" named. `affected_rules`
+stays `[]` as filed: Direction A was chosen, no base rule was edited
+(the apply-time caveat did not trigger).

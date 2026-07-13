@@ -62,14 +62,11 @@ jobs:
         run: python tests/review_manifest/run.py
 
       - name: Retrospective lifecycle gate (SPEC §3)
-        # Graced ids are structural retros whose closure is blocked on
-        # cross-repo work — see each retro's body.
-        # 2026-07-02: blocked on native-speaker sign-off of the drafted
-        # glossary targets (_references/reviews/2026-07-01/signature-workspace-
-        # drafts.md) plus per-locale content corrections in onetimesecret.
-        # The waiver is per-id: any new retro left pending >7 days fails CI.
+        # No graced ids: any retro left pending >7 days fails CI. Grace
+        # waivers are per-id (--grace <retro-id>) and reserved for
+        # structural retros whose closure is blocked on cross-repo work.
         run: |
-          ARGS=(--grace 2026-07-02-signature-brand-vs-translatable)
+          ARGS=()
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             ARGS+=(--diff-base "origin/${{ github.base_ref }}")
           fi
