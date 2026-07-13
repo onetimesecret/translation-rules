@@ -31,7 +31,7 @@ rules:
     severity: error
   - id: rule.meta-keys-untranslated
     modality: MUST_NOT
-    statement: Do not translate underscore-prefixed metadata keys (_README, _meta, _translation_guidelines); they are documentation and never user-facing.
+    statement: Do not translate underscore-prefixed metadata keys or key segments (_README, _meta, _translation_guidelines, _guidance) — including an underscore-prefixed segment anywhere in a flattened dotted key, e.g. web.auth.verify._guidance.context; they are documentation and never user-facing.
     severity: error
   - id: rule.terminology-consistency
     modality: MUST
