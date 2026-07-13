@@ -64,13 +64,12 @@ jobs:
       - name: Retrospective lifecycle gate (SPEC §3)
         # Graced ids are structural retros whose closure is blocked on
         # cross-repo work — see each retro's body.
-        # 2026-04-26: blocked on P1-4b/P1-5b (RECOVERY-PLAN.md).
-        # 2026-07-02: blocked on glossary-term encoding across 29 locales plus
-        # per-locale content corrections in onetimesecret (stacked PRs).
+        # 2026-07-02: blocked on native-speaker sign-off of the drafted
+        # glossary targets (_references/reviews/2026-07-01/signature-workspace-
+        # drafts.md) plus per-locale content corrections in onetimesecret.
         # The waiver is per-id: any new retro left pending >7 days fails CI.
         run: |
-          ARGS=(--grace 2026-04-26-start-translation-session-conventions-drift)
-          ARGS+=(--grace 2026-07-02-signature-brand-vs-translatable)
+          ARGS=(--grace 2026-07-02-signature-brand-vs-translatable)
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             ARGS+=(--diff-base "origin/${{ github.base_ref }}")
           fi
