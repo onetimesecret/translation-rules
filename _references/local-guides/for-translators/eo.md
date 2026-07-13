@@ -134,7 +134,7 @@ Before translating, review these cross-language guidelines that apply to all loc
 - **Identity Plus** - Keep in English
 - **Global Elite** - Keep in English
 - **Custom Install** - Keep in English
-- **Secret Support** - Keep in English (email signature, brand name)
+- **Secret Support** - Translate by *meaning* (the Onetime Secret product's support team), not literally — NOT a brand name, do not keep English. The Esperanto target must read as "support team", not keep the word "Secret". See ../../docs/terminology.md.
 
 ### Technical Terms
 
