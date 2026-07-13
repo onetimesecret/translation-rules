@@ -172,3 +172,51 @@ terms:
         target: "Tvoja e-pošta je bila uspešno posodobljena."
         verdict: bad
         note: "Informal possessive 'Tvoja' (informal 'your') — the forbidden informal 'ti' register; formal would be 'Vaša'."
+  - id: term.secret_support#696316bd
+    key: secret_support
+    en: "Secret Support"
+    disambiguation:
+      heuristic: "The product's support-team sign-off (email.feedback_email.signature) — the team behind Onetime Secret, NOT a secrets-support feature and NOT a brand. Sign-off contexts in email signatures signal this sense."
+      key_patterns: ["*.feedback_email.signature", "*.signature"]
+    sl_SI:
+      signoff:
+        target: "Ekipa za podporo Onetime Secret"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand: fails the cross-surface anchor test — 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Translate by meaning, anchored on the kept-English brand 'Onetime Secret'; the target must stay distinct from the generic 'Support Team' signature ('Ekipa za podporo'), which the en source separates by content_hash. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.secret-support-good#74395fb9
+        source: "Secret Support"
+        target: "Ekipa za podporo Onetime Secret"
+        verdict: good
+        note: "Brand anchor 'Onetime Secret' kept English; the support-team sense is translated by meaning — distinct from the generic 'Ekipa za podporo' signature. The brand anchor restores the distinction the collapse erased."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.secret-support-bad#960bd362
+        source: "Secret Support"
+        target: "Ekipa za podporo"
+        verdict: bad
+        note: "Byte-identical to the ~20 generic 'Support Team' signatures — the collapse erases the source's deliberate distinction."
+  - id: term.workspace#f6f7de51
+    key: workspace
+    en: "Workspace"
+    disambiguation:
+      heuristic: "The app's virtual workspace area (nav/footer label web.footer.workspace and prose). A common product noun, NOT a brand — translate by meaning."
+      key_patterns: ["*workspace*", "*.footer*"]
+    sl_SI:
+      noun:
+        target: "Delovni prostor"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand — translate by meaning per the 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Target is the canonical nav-label form (first-letter capital); prose contexts follow the locale's ordinary casing. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.workspace-good#f005e69b
+        source: "Workspace"
+        target: "Delovni prostor"
+        verdict: good
+        note: "Canonical nav-label form; translated by meaning per the 2026-07-02 ruling. Sentence-case locale: this is the nav-label form; prose contexts use lowercase 'delovni prostor' per ordinary casing."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.workspace-bad#6afd4393
+        source: "Workspace"
+        target: "Workspace"
+        verdict: bad
+        note: "Untranslated English leak — the nav/footer label must use the translated form (web.footer.workspace is still English in several locales; this entry is the reconciliation target)."

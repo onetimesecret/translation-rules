@@ -1,6 +1,6 @@
 id: glossary.pt_BR
 source: onetimesecret/locales/guides/for-translators/pt_BR.md
-# Brazilian Portuguese glossary — intentionally empty (no regional term delta). The
+# Brazilian Portuguese glossary — near-empty (regional deltas only). The
 # resolver merges glossaries along the rules inheritance chain (ADR-001), keying by
 # term `key`, so an empty child inherits the full pt terminology unchanged:
 # secret_object (mensagem confidencial), passphrase (frase secreta), password
@@ -11,5 +11,57 @@ source: onetimesecret/locales/guides/for-translators/pt_BR.md
 # (live pt_BR uses "senha" 78×, "palavra-passe" 0×) and encrypt stays
 # "criptografar" (live pt_BR uses "criptograf*" 9×, "encript*" 0×).
 # All inherited terms remain governed by rules.pt / register.pt.formality.
+# The local terms are secret_support and workspace: both differ from pt_PT
+# ("Equipe"/"Área de Trabalho" vs "Equipa"/"Espaço de trabalho"), so neither
+# can live in the pt parent. Per the 2026-07-02 ruling + 2026-07-12 sign-off
+# review (_references/reviews/2026-07-12/signature-workspace-signoff-review.md).
 # AGENT-AUTHORED; requires native-speaker (pt_BR) sign-off before merge — see PR label.
-terms: []
+terms:
+  - id: term.secret_support#696316bd
+    key: secret_support
+    en: "Secret Support"
+    disambiguation:
+      heuristic: "The product's support-team sign-off (email.feedback_email.signature) — the team behind Onetime Secret, NOT a secrets-support feature and NOT a brand. Sign-off contexts in email signatures signal this sense."
+      key_patterns: ["*.feedback_email.signature", "*.signature"]
+    pt_BR:
+      signoff:
+        target: "Equipe de Suporte do Onetime Secret"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand: fails the cross-surface anchor test — 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Translate by meaning, anchored on the kept-English brand 'Onetime Secret'; the target must stay distinct from the generic 'Support Team' signature ('Equipe de Suporte'), which the en source separates by content_hash. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.secret-support-good#74395fb9
+        source: "Secret Support"
+        target: "Equipe de Suporte do Onetime Secret"
+        verdict: good
+        note: "Brand anchor 'Onetime Secret' kept English; the support-team sense is translated by meaning — distinct from the generic 'Equipe de Suporte' signature. Masculine article 'do' for the brand."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.secret-support-bad#960bd362
+        source: "Secret Support"
+        target: "Suporte Secret"
+        verdict: bad
+        note: "Grafts the bare English 'Secret' onto Portuguese (a partial) — reads as a stray brand fragment. Also avoid the bare generic 'Equipe de Suporte' (a collapse)."
+  - id: term.workspace#f6f7de51
+    key: workspace
+    en: "Workspace"
+    disambiguation:
+      heuristic: "The app's virtual workspace area (nav/footer label web.footer.workspace and prose). A common product noun, NOT a brand — translate by meaning."
+      key_patterns: ["*workspace*", "*.footer*"]
+    pt_BR:
+      noun:
+        target: "Área de Trabalho"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand — translate by meaning per the 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Target is the canonical nav-label form (first-letter capital); prose contexts follow the locale's ordinary casing. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.workspace-good#f005e69b
+        source: "Workspace"
+        target: "Área de Trabalho"
+        verdict: good
+        note: "Canonical nav-label form; translated by meaning per the 2026-07-02 ruling. footer.workspace currently ships English — reconcile to this form."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.workspace-bad#6afd4393
+        source: "Workspace"
+        target: "Workspace"
+        verdict: bad
+        note: "Untranslated English leak — the nav/footer label must use the translated form (web.footer.workspace is still English in several locales; this entry is the reconciliation target)."
