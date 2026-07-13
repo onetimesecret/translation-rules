@@ -1,6 +1,6 @@
 id: glossary.fr_FR
 source: onetimesecret/locales/guides/for-translators/fr_FR.md
-# France French glossary — intentionally empty (no regional term delta). The
+# France French glossary — near-empty (regional deltas only). The
 # resolver merges glossaries along the rules inheritance chain (ADR-001), keying
 # by term `key`, so an empty child inherits the full fr terminology unchanged:
 # secret_object, passphrase (phrase secrète), password (mot de passe), burn
@@ -11,5 +11,33 @@ source: onetimesecret/locales/guides/for-translators/fr_FR.md
 # onetimesecret/locales/content/fr_FR/*.json uses "e-mail" 131 times and
 # "courriel" 0 times — so unlike fr_CA there is NO email override here.
 # All inherited terms remain governed by rules.fr / register.fr.formality.
+# The one local term is secret_support: fr_FR uses "assistance" where fr_CA
+# uses "soutien", so it cannot live in the fr parent (workspace has no regional
+# delta and DOES live there). Per the 2026-07-02 ruling + 2026-07-12 sign-off
+# review (_references/reviews/2026-07-12/signature-workspace-signoff-review.md).
 # AGENT-AUTHORED; requires native-speaker (FR) sign-off before merge — see PR label.
-terms: []
+terms:
+  - id: term.secret_support#696316bd
+    key: secret_support
+    en: "Secret Support"
+    disambiguation:
+      heuristic: "The product's support-team sign-off (email.feedback_email.signature) — the team behind Onetime Secret, NOT a secrets-support feature and NOT a brand. Sign-off contexts in email signatures signal this sense."
+      key_patterns: ["*.feedback_email.signature", "*.signature"]
+    fr_FR:
+      signoff:
+        target: "L'équipe d'assistance Onetime Secret"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand: fails the cross-surface anchor test — 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Translate by meaning, anchored on the kept-English brand 'Onetime Secret'; the target must stay distinct from the generic 'Support Team' signature ('L'équipe d'assistance'), which the en source separates by content_hash. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.secret-support-good#74395fb9
+        source: "Secret Support"
+        target: "L'équipe d'assistance Onetime Secret"
+        verdict: good
+        note: "Brand anchor 'Onetime Secret' kept English; the support-team sense is translated by meaning — distinct from the generic 'L'équipe d'assistance' signature. Brand apposition; 'd'Onetime Secret' is also acceptable."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.secret-support-bad#960bd362
+        source: "Secret Support"
+        target: "L'équipe d'assistance"
+        verdict: bad
+        note: "Collapses onto the generic 'Support Team' sign-off (fr_FR renders it identically in email.welcome / email.expiration_warning), erasing the distinction the en source keeps via a separate content_hash."

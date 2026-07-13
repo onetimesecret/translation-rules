@@ -165,3 +165,27 @@ terms:
         target: "Ce message est crypté avec ta phrase secrète."
         verdict: bad
         note: "Uses 'crypté' (deprecated/incorrect in security French) instead of 'chiffré', plus informal 'ta'."
+  - id: term.workspace#f6f7de51
+    key: workspace
+    en: "Workspace"
+    disambiguation:
+      heuristic: "The app's virtual workspace area (nav/footer label web.footer.workspace and prose). A common product noun, NOT a brand — translate by meaning."
+      key_patterns: ["*workspace*", "*.footer*"]
+    fr:
+      noun:
+        target: "Espace de travail"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand — translate by meaning per the 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Target is the canonical nav-label form (first-letter capital); prose contexts follow the locale's ordinary casing. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.workspace-good#f005e69b
+        source: "Workspace"
+        target: "Espace de travail"
+        verdict: good
+        note: "Canonical nav-label form; translated by meaning per the 2026-07-02 ruling. Shared by fr_CA and fr_FR (no regional delta) — defined once in the fr parent."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.workspace-bad#6afd4393
+        source: "Workspace"
+        target: "Workspace"
+        verdict: bad
+        note: "Untranslated English leak — the nav/footer label must use the translated form (web.footer.workspace is still English in several locales; this entry is the reconciliation target)."

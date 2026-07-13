@@ -207,3 +207,51 @@ terms:
         target: "メールアドレス書けよ。"
         verdict: bad
         note: "Casual imperative 書け plus casual particle よ — the forbidden casual 常体 register; should be polite 入力してください."
+  - id: term.secret_support#696316bd
+    key: secret_support
+    en: "Secret Support"
+    disambiguation:
+      heuristic: "The product's support-team sign-off (email.feedback_email.signature) — the team behind Onetime Secret, NOT a secrets-support feature and NOT a brand. Sign-off contexts in email signatures signal this sense."
+      key_patterns: ["*.feedback_email.signature", "*.signature"]
+    ja:
+      signoff:
+        target: "Onetime Secret サポートチーム"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand: fails the cross-surface anchor test — 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Translate by meaning, anchored on the kept-English brand 'Onetime Secret'; the target must stay distinct from the generic 'Support Team' signature ('サポートチーム'), which the en source separates by content_hash. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.secret-support-good#74395fb9
+        source: "Secret Support"
+        target: "Onetime Secret サポートチーム"
+        verdict: good
+        note: "Brand anchor 'Onetime Secret' kept English; the support-team sense is translated by meaning — distinct from the generic 'サポートチーム' signature. Replaces the transliteration; brand in head position keeps the word_prefix match clean."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.secret-support-bad#960bd362
+        source: "Secret Support"
+        target: "シークレットサポート"
+        verdict: bad
+        note: "Katakana transliteration — keeps 'Secret' phonetically as シークレット and reads as concealed/secret support rather than the product's support team."
+  - id: term.workspace#f6f7de51
+    key: workspace
+    en: "Workspace"
+    disambiguation:
+      heuristic: "The app's virtual workspace area (nav/footer label web.footer.workspace and prose). A common product noun, NOT a brand — translate by meaning."
+      key_patterns: ["*workspace*", "*.footer*"]
+    ja:
+      noun:
+        target: "ワークスペース"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand — translate by meaning per the 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Target is the canonical nav-label form (first-letter capital); prose contexts follow the locale's ordinary casing. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.workspace-good#f005e69b
+        source: "Workspace"
+        target: "ワークスペース"
+        verdict: good
+        note: "Canonical nav-label form; translated by meaning per the 2026-07-02 ruling. Deliberate loanword — the established Japanese term for a software workspace."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.workspace-bad#6afd4393
+        source: "Workspace"
+        target: "Workspace"
+        verdict: bad
+        note: "Latin-script leak; use the established katakana loanword ワークスペース."

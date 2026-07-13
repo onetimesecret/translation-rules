@@ -32,3 +32,27 @@ terms:
         target: "Saisissez votre adresse e-mail."
         verdict: bad
         note: "Uses the European 'e-mail' instead of the Canadian 'courriel' — violates rule.fr_CA-courriel."
+  - id: term.secret_support#696316bd
+    key: secret_support
+    en: "Secret Support"
+    disambiguation:
+      heuristic: "The product's support-team sign-off (email.feedback_email.signature) — the team behind Onetime Secret, NOT a secrets-support feature and NOT a brand. Sign-off contexts in email signatures signal this sense."
+      key_patterns: ["*.feedback_email.signature", "*.signature"]
+    fr_CA:
+      signoff:
+        target: "L'équipe de soutien d'Onetime Secret"
+        rule_ref: rule.terminology-consistency
+    rule_refs: [rule.terminology-consistency]
+    rationale: "Not a brand: fails the cross-surface anchor test — 2026-07-02 ruling (rules/retrospectives/2026-07-02-signature-brand-vs-translatable.md). Translate by meaning, anchored on the kept-English brand 'Onetime Secret'; the target must stay distinct from the generic 'Support Team' signature ('L'équipe de soutien'), which the en source separates by content_hash. Sign-off: _references/reviews/2026-07-12/signature-workspace-signoff-review.md."
+    examples:
+      - id: ex.secret-support-good#74395fb9
+        source: "Secret Support"
+        target: "L'équipe de soutien d'Onetime Secret"
+        verdict: good
+        note: "Brand anchor 'Onetime Secret' kept English; the support-team sense is translated by meaning — distinct from the generic 'L'équipe de soutien' signature. Keeps fr_CA's 'soutien' (vs fr_FR 'assistance')."
+        rule_refs: [rule.terminology-consistency]
+      - id: ex.secret-support-bad#960bd362
+        source: "Secret Support"
+        target: "Soutien aux secrets"
+        verdict: bad
+        note: "Reads as 'support for/about secrets' — a common-noun misparse that drops the 'team' sense. Also avoid collapsing onto the bare generic 'L'équipe de soutien'."

@@ -22,6 +22,13 @@
       "kind": "retrospective"
     },
     {
+      "file": "retrospectives/2026-07-02-signature-brand-vs-translatable.md",
+      "id": "2026-07-02-signature-brand-vs-translatable",
+      "json_pointer": "/id",
+      "key": "2026-07-02-signature-brand-vs-translatable",
+      "kind": "retrospective"
+    },
+    {
       "file": "base.yaml",
       "id": "anti.changelog-as-guidance",
       "json_pointer": "/anti_patterns/0/id",
@@ -1338,6 +1345,20 @@
       "kind": "ex"
     },
     {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.secret-support-bad#960bd362",
+      "json_pointer": "/terms/9/examples/1/id",
+      "key": "secret-support-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.secret-support-good#74395fb9",
+      "json_pointer": "/terms/9/examples/0/id",
+      "key": "secret-support-good",
+      "kind": "ex"
+    },
+    {
       "file": "locales/vi/glossary.yaml",
       "id": "ex.secure-bad#fc1e2db0",
       "json_pointer": "/terms/9/examples/1/id",
@@ -1559,6 +1580,20 @@
       "id": "ex.uk-secret-informal-bad#6c34a4bc",
       "json_pointer": "/terms/0/examples/1/id",
       "key": "uk-secret-informal-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.workspace-bad#6afd4393",
+      "json_pointer": "/terms/10/examples/1/id",
+      "key": "workspace-bad",
+      "kind": "ex"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "ex.workspace-good#f005e69b",
+      "json_pointer": "/terms/10/examples/0/id",
+      "key": "workspace-good",
       "kind": "ex"
     },
     {
@@ -3312,6 +3347,13 @@
       "kind": "term"
     },
     {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.secret_support#696316bd",
+      "json_pointer": "/terms/9/id",
+      "key": "secret_support",
+      "kind": "term"
+    },
+    {
       "file": "locales/vi/glossary.yaml",
       "id": "term.secure#952acf0e",
       "json_pointer": "/terms/9/id",
@@ -3330,6 +3372,13 @@
       "id": "term.view#7ef567df",
       "json_pointer": "/terms/7/id",
       "key": "view",
+      "kind": "term"
+    },
+    {
+      "file": "locales/zh/glossary.yaml",
+      "id": "term.workspace#f6f7de51",
+      "json_pointer": "/terms/10/id",
+      "key": "workspace",
       "kind": "term"
     }
   ],
