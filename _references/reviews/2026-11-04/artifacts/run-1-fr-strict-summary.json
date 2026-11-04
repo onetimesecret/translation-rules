@@ -1,0 +1,219 @@
+{
+  "stamp": "unstamped",
+  "registerPolicy": "strict",
+  "dryRun": false,
+  "governanceSource": "Derived (option c) from ../translation-rules via lib/resolver/resolve.py --all --emit=json --lint into tmp/i18n/governance/.resolved; _meta.source_commit 45773c7e130405e94d05672c60c1779aeaf99096. Option b (../onetimesecret/generated/i18n/.resolved) does not exist because ../onetimesecret is absent. Lint passed for fr, de and es with 0 findings.",
+  "routedLocales": [
+    "fr",
+    "de",
+    "es"
+  ],
+  "droppedUnroutedLocales": [
+    "bg",
+    "da_DK",
+    "de_AT",
+    "el_GR",
+    "fr_CA",
+    "fr_FR",
+    "it_IT",
+    "ja",
+    "ko",
+    "mi_NZ",
+    "nl",
+    "pl",
+    "pt_BR",
+    "sv_SE",
+    "tr",
+    "uk"
+  ],
+  "skippedLocales": [
+    {
+      "locale": "de",
+      "reason": "register conflict: files read as formal, governance says informal (de: formal 173 (ui 168, prose 5), informal 25 (ui 0, prose 25); declared informal. UI is entirely formal; about.md is informal (0 formal/25 informal); accessibility.md is formal (5/0); security.md has 0 hits.). Decide upstream, then rerun with registerPolicy \"rules\" or \"file\"."
+    },
+    {
+      "locale": "es",
+      "reason": "register conflict: files read as mixed, governance says informal (es: formal 60 (ui 50, prose 10), informal 22 (ui 12, prose 10), minority 26.8%; declared informal. Raw counts: 3 'ti' hits are the acronym TI and su/sus includes third-person uses. about.md 2/10; accessibility.md 8/0; security.md 0/0.). Decide upstream, then rerun with registerPolicy \"rules\" or \"file\"."
+    }
+  ],
+  "enMissingKeys": [
+    "ai-generated-testimonials",
+    "what-leading-ai-says-about-us",
+    "note",
+    "this-quote-was-generated-by",
+    "it-was-based-on-the-content-of-the-page-and-does",
+    "font-awesome-6",
+    "carbon",
+    "heroicons",
+    "material-design-icons",
+    "google-material",
+    "other",
+    "icon-library",
+    "email-address-copied-to-clipboard",
+    "HERO_HEADING_KEYS.line1"
+  ],
+  "scoutNotes": [
+    "REGISTER CONFLICT, needs a decision before translating: de and es both declare informal (rule.register-lock, MUST), but their UI is overwhelmingly formal (de 168 formal/0 informal; es 50/12). Translating only the pending keys will not fix this, and full compliance means rewriting existing strings well outside the pending list.",
+    "es observedForm 'mixed' is the literal count (60/22, minority 26.8%). Excluding the 3 'TI' (IT acronym) hits gives 60/19, minority 24.05%, which would label it 'formal'. su/sus also include third-person uses. conflict=true either way. Sample UI strings are formal address ('Pegue su secreto', 'Escriba su mensaje').",
+    "de has register.forbidden_tokens = [], so no token check catches Sie/Ihr. es forbids only usted/ustedes, so su/sus and formal imperatives also pass a token check.",
+    "Prose register varies by page: de and es about.md are informal, de and es accessibility.md are formal, and security.md has 0 hits in both. fr is consistently formal.",
+    "Uncommitted change: src/i18n/ui/fr.json is modified in the working tree (web.useCases.itdevops.title, web.footer.links.changelog). The scan read the working tree, so these two keys are not reported as identical for fr. Later steps must not overwrite this edit.",
+    "Deviation from step 4: excluded web.pricing.tiers.basic.badge and web.pricing.tiers.team.badge from 'empty' for all three locales. Their value is JSON null in en and in every locale, so there is nothing to translate; a literal report would hand translators the string 'null'.",
+    "UI stale = 0 for all targets. en.json and all three locale files share the same last commit (22680c0f), so the stale check compares en to itself. Any en change bundled into that commit is invisible to this check. No keys are missing, and no locale has extra keys (396 en keys).",
+    "All uiPending rows are 'identical', and most are brand names, cognates or technical terms (API, GitHub, Blog, Identity Plus). de web.secrets.passphraseInputLabel matches the glossary target 'Passphrase'. keepEnglish was empty, so they are reported as specified; expect few real changes.",
+    "security.md is the only prose pending, and it needs a full retranslation. fr, de and es are still the old <article> HTML format (118 lines, 0 markdown headings), while en was rewritten as markdown (48 lines, 6 headings). The en page also changed version numbers (0.22.x+/0.21.x/< 0.20.x replace 0.21.x+/0.20.x/< 0.19.x). enDiff is truncated at 6000 of 6796 chars, so translate from the en file, not the diff.",
+    "about.md and accessibility.md show no date staleness or drift in any target (same last commit as en; heading counts and link targets match).",
+    "src/scripts/generate-markdown-content.mjs (pnpm i18n:markdown) says it generates about.md and security.md from locale JSON. It was not run, and running it could overwrite translated prose.",
+    "Scan: 56 Missing Keys rows = 14 keys x 4 languages (en, fr, de, es), so all are source gaps and none are translation work. HERO_HEADING_KEYS.line1 looks like a variable reference, not a real key. pnpm run i18n:scan exited 0.",
+    "Side effect outside this repo: the derive command rewrote the tracked file ../translation-rules/lib/resolver/index.json (483 lines changed, paths gain a 'rules/' prefix). It is uncommitted and was left in place. Its state before the run was not checked. The derive ran twice, the second time to confirm lint results, so generated_at may differ from the first read. tmp/i18n/governance is git-ignored, and no tracked file in this repo was changed.",
+    "16 unrouted locale directories exist under src/content/pages and were dropped per the task. src/content/pages/privacy.md and terms.md are loose files and were excluded."
+  ],
+  "perLocale": [
+    {
+      "locale": "fr",
+      "approvedUiKeys": 17,
+      "approvedPages": [
+        "src/content/pages/fr/security.md"
+      ],
+      "rejected": [],
+      "keepEnglish": [
+        {
+          "key": "LABELS.blog",
+          "note": "Standard French word, same spelling."
+        },
+        {
+          "key": "LABELS.docs",
+          "note": "Same word in French."
+        },
+        {
+          "key": "navigation.docs",
+          "note": "Short header nav label; abbreviation is understood in French tech UI, and 'Documentation' would be 13 characters against 4. Full form stays at LABELS.docs."
+        },
+        {
+          "key": "onetime-secret-literal",
+          "note": "Brand name (rule.brand-names-untranslated)."
+        },
+        {
+          "key": "repository-facts.commits",
+          "note": "Git term used as a loanword in French; matches 'Dernier commit' and 'Aucun commit' in the same block."
+        },
+        {
+          "key": "web.footer.links.api",
+          "note": "Acronym is the same in French."
+        },
+        {
+          "key": "web.footer.links.contact",
+          "note": "Same word in French."
+        },
+        {
+          "key": "web.footer.links.dpa",
+          "note": "Acronym in common use in French B2B contracts; no established French acronym, and expanding it would not fit a footer label."
+        },
+        {
+          "key": "web.footer.links.github",
+          "note": "Third-party product name."
+        },
+        {
+          "key": "web.footer.links.guides",
+          "note": "Same word in French."
+        },
+        {
+          "key": "web.homepage.hero.compliance.openSource",
+          "note": "Standard term in French software usage."
+        },
+        {
+          "key": "web.homepage.infrastructure.regions.ca",
+          "note": "Place names are spelled the same in French."
+        },
+        {
+          "key": "web.pricing.tiers.identity.name",
+          "note": "Brand name (rule.brand-names-untranslated)."
+        },
+        {
+          "key": "web.pricing.tiers.team.name",
+          "note": "Plan name, kept in English to parallel Identity Plus."
+        },
+        {
+          "key": "web.secrets.europe",
+          "note": "Same word in French."
+        },
+        {
+          "key": "web.secrets.ttl.30minutes",
+          "note": "Same in French."
+        },
+        {
+          "key": "web.secrets.ttl.5minutes",
+          "note": "Same in French."
+        }
+      ],
+      "glossaryCandidates": [
+        {
+          "term": "commit",
+          "rendering": "commit",
+          "reason": "Recurs in repository-facts (Commits, Dernier commit, Aucun commit) and is not fixed by the bound glossary."
+        },
+        {
+          "term": "Team Plus",
+          "rendering": "Team Plus",
+          "reason": "Plan name kept in English like Identity Plus, but rule.brand-names-untranslated does not list it."
+        },
+        {
+          "term": "open source",
+          "rendering": "open source",
+          "reason": "Used in a homepage compliance badge and not fixed by the bound glossary; the alternative 'code source ouvert' is not used in fr.json."
+        },
+        {
+          "term": "acknowledgment",
+          "rendering": "accusé de réception",
+          "reason": "Security-report step label. The existing label \"Remerciements\" means \"thanks\", while the sentence under it already says \"accusé de réception\"."
+        },
+        {
+          "term": "vulnerability",
+          "rendering": "vulnérabilité",
+          "reason": "Used throughout the page, but one sentence in the existing translation uses \"faille de sécurité\" for \"security vulnerability\". No bound rendering exists."
+        }
+      ],
+      "questions": [
+        "Changes beyond the diff, made to meet binding rules: \"courriel\" became \"e-mail\" (bound glossary), and `&nbsp;` was added before `:` and `!` (rule.fr-punctuation-nbsp). The subject line's straight quotes also became « » to match src/content/pages/fr/about.md; no rule requires this.",
+        "Kept unchanged under the apply-only-the-diff instruction, but these look like translation errors. Approve the fixes? \"**Remerciements**\" for \"Acknowledgment\" -> \"**Accusé de réception**\"; \"**Vulnérabilités déclassées**\" for \"Declined Vulnerabilities\" -> \"**Vulnérabilités refusées**\"; \"### Comment rapporter\" for \"How to Report\" -> \"### Comment signaler\"; \"**Adresse e-mail**\" for \"Email\" -> \"**E-mail**\".",
+        "The mailto link's prefilled subject stays in English as required (`subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D`), while the visible text asks for « Rapport de vulnérabilité : [Brève description] ». French reporters who use the link get a subject that differs from the one the page gives. Is that acceptable for triage?",
+        "Outside this task: src/content/pages/fr/about.md uses \"phrase de passe\" (\"Si vous utilisez une phrase de passe (disponible sous « Options de confidentialité »)\"), which conflicts with the bound rendering passphrase -> \"phrase secrète\". Not changed here.",
+        "[warn governance] fr/security.md: The visible subject line was translated, but the mailto link still prefills the English subject (subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D). A reader who clicks the link gets a subject that differs from the one the text tells them to use. The de/es pages sampled keep the visible subject in English. -> Leave the URL unchanged and quote the literal subject so both match: avec pour objet «&nbsp;Vulnerability Report: [Brief Description]&nbsp;».",
+        "[warn governance] fr/security.md: The heading '## Signaler une vulnérabilité' uses an infinitive. rule.fr-infinitive-buttons reserves the infinitive for button and link labels and requires the noun form for titles and headings. '### Comment signaler une vulnérabilité' also avoids the noun form. -> Use '## Signalement d'une vulnérabilité' and '### Procédure de signalement'.",
+        "[warn governance] fr/security.md: The numbered steps 'Envoyer un e-mail à...' and 'Inclure autant d'informations...' use infinitives for instructions addressed to the reader. rule.fr-infinitive-buttons limits the infinitive to button and link labels, and the rest of the page addresses the reader as vous ('Vous recevrez', 'Vos coordonnées'). The glossary examples also use the vous imperative ('Saisissez', 'Copiez'). -> Use 'Envoyez un e-mail à...' and 'Incluez autant d'informations que possible sur la vulnérabilité&nbsp;:'.",
+        "[warn governance] fr/security.md: 'security vulnerability' is rendered as 'faille de sécurité' in one sentence, while every other instance of the concept on the page uses 'vulnérabilité', including the heading directly above it. This varies the term for one sense, against the intent of rule.terminology-consistency, although the term is not in the glossary. -> Use 'Si vous découvrez une vulnérabilité de sécurité dans ce projet, nous vous encourageons à la signaler dès que possible.'",
+        "[warn governance] fr/security.md: The label '**Adresse e-mail&nbsp;:**' translates 'Email:' as 'email address'. The label names the reporting channel, and the address itself follows in the sentence. -> Use '**E-mail&nbsp;:**', which also matches the bound glossary term e-mail.",
+        "[warn fidelity] fr/security.md: \"jours ouvrables\" (used for both the 5-day and 14-day commitments) does not match \"business days\" in France, where it legally includes Saturday. That shortens the stated deadlines. The equivalent there is \"jours ouvrés\" (Monday to Friday). -> \"dans les 5 jours ouvrés\" and \"dans un délai de 14 jours ouvrés\".",
+        "[warn fidelity] fr/security.md: The text gives the subject as \"Rapport de vulnérabilité : [Brève description]\", but the mailto link still pre-fills the English \"Vulnerability Report: [Brief Description]\". A French reader who clicks the link gets a subject different from the one the page tells them to use. -> Encode the French subject in the link: mailto:security@onetimesecret.com?subject=Rapport%20de%20vuln%C3%A9rabilit%C3%A9%C2%A0%3A%20%5BBr%C3%A8ve%20description%5D. If triage depends on the English subject, keep the link and quote the English subject in the text instead, so the two match.",
+        "[warn fidelity] fr/security.md: \"**Adresse e-mail :** Envoyer un e-mail à...\" mislabels the step. The source label \"Email\" names the action of sending an email, not an address, and \"Adresse\" is an addition that reads oddly in front of an instruction. -> \"**E-mail :** Envoyer un e-mail à...\", or \"**Par e-mail :** ...\".",
+        "[warn fidelity] fr/security.md: \"Vous recevrez des mises à jour sur l'état d'avancement\" is a calque of \"status updates\". It also reuses \"mises à jour\", which this page uses for software in \"mises à jour de sécurité\", so the label \"Mises à jour :\" could be misread as software updates. -> \"**Suivi :** Nous vous tiendrons informé de l'état d'avancement au moins une fois tous les 7 jours jusqu'à ce que le problème soit résolu ou qu'une décision soit prise.\""
+      ]
+    }
+  ],
+  "applied": [
+    {
+      "locale": "fr",
+      "filesWritten": [
+        "tmp/i18n/apply-fr.json",
+        "src/i18n/ui/fr.json"
+      ],
+      "uiKeysWritten": 17,
+      "parityOk": true,
+      "diffStat": " src/i18n/ui/fr.json | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)",
+      "problems": [
+        "src/content/pages/fr/security.md was NOT written; the file is unchanged and still has the old HTML version. Both Write attempts failed: a hook rewrote the input, adding invisible Unicode characters (variation selectors, bytes starting F3 A0) throughout the French text, and auto mode then gave no verdict.",
+        "The Write error said to reissue the call with the hook's altered input. I did not, because it comes from a tool result and would break the exact-content requirement by putting hidden characters in a public security page. I also did not write the file through Bash, which would have sidestepped the hook and the auto mode review.",
+        "Action needed: find and disable the hook or plugin that alters Write input, since this may be tampering, or switch out of auto mode. Then write the approved security.md content. Check any other files written in this session for hidden characters; a scan of fr.json, security.md and apply-fr.json found none.",
+        "The fr.json diff is only 1 line although 17 keys were written: 16 of the values already matched. All 17 were confirmed present in the file."
+      ]
+    }
+  ],
+  "gate": {
+    "scanMissingCount": 56,
+    "scanOk": true,
+    "testsRan": true,
+    "testsPassed": true,
+    "jsonParseOk": true,
+    "details": "All three gates pass.\n\nResults:\n1. Key parity: de, en, es and fr all parse and each has the same 396 flattened keys, with none missing or extra. Arrays were compared as single leaf values, so array contents were not checked.\n2. i18n:scan: 56 Missing Keys rows, equal to the baseline. That is the same count of 14 per locale across de, en, es and fr, in QuoteSection.vue, IconsInfo.vue, EmailObfuscator.vue and HeroTitle.vue. All 56 are call-site issues in components, not gaps in any locale file, and none come from fr.json. `HERO_HEADING_KEYS.line1` looks like a scanner false positive on a variable reference. The 56 baseline was taken from the task; I did not re-measure it against the pre-change tree.\n3. Unit tests: exit 0, 44 files and 1519 tests passed.\n\nFor the reviewer:\n- The only uncommitted change is one line in src/i18n/ui/fr.json (line 381, `web.homepage.hero.title.line1` by its position in the diff). It replaces the ` ` escape with a literal U+00A0 byte (c2 a0, confirmed with xxd). The parsed value is identical, so this has no effect on the UI. It looks like a re-serialization artifact, not a translation edit. It was already present at the start of this gate, so the gate did not cause it.\n- That literal U+00A0 is the only NBSP in fr.json, and it is invisible in most editors and diffs. Other French strings use a plain space before `?` and `:`, for example lines 110, 263 and 493. Either restoring the escape or dropping this line from the commit would keep the diff clean. A separate question is whether French punctuation should use NBSP throughout, because plain spaces can wrap the `?` onto its own line.\n- Committed on this branch (c5d6876f, not uncommitted): \"IT & DevOps\" became \"Informatique et DevOps\", and the nav label \"Changelog\" became \"Journal des modifications\". The nav label matches `changelog.label` on line 532. The longer string may need a visual check in the nav or footer layout, because the gate does not test rendering.\n- These gates do not assess translation quality. pnpm type-check, lint and check were not part of this gate and were not run.\n\nNo tracked files were modified by this gate. The helper script and logs are in <local scratch> (keys.cjs, scan.log, test.log)."
+  }
+}

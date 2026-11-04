@@ -1,0 +1,20 @@
+{
+ "LABELS.blog": "Blog",
+ "navigation.docs": "Dokumentation",
+ "onetime-secret-literal": "Onetime Secret",
+ "repository-facts.commits": "Commits",
+ "status": "Status",
+ "web.footer.links.api": "API",
+ "web.footer.links.changelog": "Änderungsprotokoll",
+ "web.footer.links.dpa": "AVV",
+ "web.footer.links.github": "GitHub",
+ "web.footer.links.selfHosting": "Self-Hosting",
+ "web.lookalike.headerLabel": "Onetime Secret?",
+ "web.pricing.comparison.status.beta": "Beta",
+ "web.pricing.region": "Region",
+ "web.pricing.tiers.identity.name": "Identity Plus",
+ "web.pricing.tiers.team.name": "Team Plus",
+ "web.secrets.passphraseInputLabel": "Passphrase",
+ "web.useCases.hr.title": "HR & People Ops",
+ "web.useCases.itdevops.title": "IT & DevOps"
+}

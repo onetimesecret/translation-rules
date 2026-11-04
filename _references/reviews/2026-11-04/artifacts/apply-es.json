@@ -1,0 +1,13 @@
+{
+ "LABELS.blog": "Blog",
+ "navigation.docs": "Documentación",
+ "onetime-secret-literal": "Onetime Secret",
+ "repository-facts.commits": "Commits",
+ "web.footer.links.api": "API",
+ "web.footer.links.changelog": "Registro de cambios",
+ "web.footer.links.dpa": "DPA",
+ "web.footer.links.github": "GitHub",
+ "web.pricing.comparison.status.beta": "Beta",
+ "web.pricing.tiers.identity.name": "Identity Plus",
+ "web.pricing.tiers.team.name": "Team Plus"
+}

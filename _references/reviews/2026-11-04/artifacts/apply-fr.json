@@ -1,0 +1,19 @@
+{
+ "LABELS.blog": "Blog",
+ "LABELS.docs": "Documentation",
+ "navigation.docs": "Docs",
+ "onetime-secret-literal": "Onetime Secret",
+ "repository-facts.commits": "Commits",
+ "web.footer.links.api": "API",
+ "web.footer.links.contact": "Contact",
+ "web.footer.links.dpa": "DPA",
+ "web.footer.links.github": "GitHub",
+ "web.footer.links.guides": "Guides",
+ "web.homepage.hero.compliance.openSource": "Open source",
+ "web.homepage.infrastructure.regions.ca": "Toronto, Canada",
+ "web.pricing.tiers.identity.name": "Identity Plus",
+ "web.pricing.tiers.team.name": "Team Plus",
+ "web.secrets.europe": "Europe",
+ "web.secrets.ttl.30minutes": "30 minutes",
+ "web.secrets.ttl.5minutes": "5 minutes"
+}
