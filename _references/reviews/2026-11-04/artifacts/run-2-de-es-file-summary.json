@@ -1,0 +1,296 @@
+{
+  "stamp": "2026-11-04-de-es",
+  "registerPolicy": "file",
+  "dryRun": false,
+  "governanceSource": "derived (c): ../translation-rules resolve.py --all --emit=json --lint -> tmp/i18n/governance/.resolved (_meta.source_commit 70c4f453a935e2a39e1c325f147f8b1c16f4c06b, generated_at 2026-11-04T22:19:25Z); source (b) ../onetimesecret/generated/i18n/.resolved does not exist",
+  "routedLocales": [
+    "fr",
+    "de",
+    "es"
+  ],
+  "droppedUnroutedLocales": [
+    "bg",
+    "da_DK",
+    "de_AT",
+    "el_GR",
+    "fr_CA",
+    "fr_FR",
+    "it_IT",
+    "ja",
+    "ko",
+    "mi_NZ",
+    "nl",
+    "pl",
+    "pt_BR",
+    "sv_SE",
+    "tr",
+    "uk"
+  ],
+  "skippedLocales": [],
+  "enMissingKeys": [
+    "ai-generated-testimonials",
+    "what-leading-ai-says-about-us",
+    "note",
+    "this-quote-was-generated-by",
+    "it-was-based-on-the-content-of-the-page-and-does",
+    "font-awesome-6",
+    "carbon",
+    "heroicons",
+    "material-design-icons",
+    "google-material",
+    "other",
+    "icon-library",
+    "email-address-copied-to-clipboard",
+    "HERO_HEADING_KEYS.line1"
+  ],
+  "scoutNotes": [
+    "REGISTER CONFLICT (blocking decision): governance (source_commit 70c4f453) sets register.form=informal for both de (du) and es (tú, usted/ustedes listed as forbidden tokens). The relayed user request says 'Keep the website formal'. The site is mostly formal today (de UI is 100% Sie; es leans usted/su). The user request should win over governance for this run. Translators must use Sie/usted and ignore de/es register.form, register.possessive and the es usted/ustedes forbidden tokens, or the lint/verify lenses will flag correct formal output.",
+    "de about.md is entirely informal (du/dir/dein, 24 hits) while de UI and accessibility.md are formal. Under the formal policy it needs a register rewrite even though it is not stale or drifted by date/structure. es UI already mixes tú imperatives (Contacta, Escribe, te envió) with usted/su, so a formal pass should normalize those keys even though they are not otherwise pending.",
+    "fr is routed (SUPPORTED_LANGUAGES = en, fr, de, es) but is not a target in this run. Both targets de and es are routed.",
+    "Governance source (b) ../onetimesecret/generated/i18n/.resolved is absent, so it was derived via (c). Lint passed for all locales. Side effect: the resolver rewrote ../translation-rules/lib/resolver/index.json in the sibling repo (git status there shows no tracked change; only a pre-existing untracked _references/reviews/2026-06-13/). tmp/i18n/governance is gitignored here.",
+    "UI: removed 2 'empty' hits per locale from uiPending (web.pricing.tiers.basic.badge and web.pricing.tiers.team.badge). Their en value is JSON null, and the locale mirrors that null, so there is nothing to translate.",
+    "UI: no missing or stale keys. All three locale JSONs have 396 keys matching en. The de/es ui files were last touched at 22680c0f (2026-10-22), and no en value has changed since then. All 'identical' hits are brand, product or loanword strings (Onetime Secret, Identity Plus, Team Plus, GitHub, API, DPA, Blog, Docs, Beta, Status, Region, Passphrase, Commits, Changelog). Most are probably keepEnglish candidates; the keepEnglish list passed in was empty. Glossary de passphrase=Passphrase, so web.secrets.passphraseInputLabel being identical is correct.",
+    "Prose: only security.md is pending, stale for both de and es. de/es were last touched at cbaf32d3 (2025-05-15) and en at 278dd510 (2025-05-21), which converted the page from an HTML <article> to Markdown and bumped supported versions to 0.22.x+/0.21.x/<0.20.x. The full diff is 6796 chars, so enDiff is truncated; the middle HTML-removal block is elided in the returned string. Translators should work from the current en page, not the diff. fr security.md was retranslated at eb07836b and can serve as a structural reference. about.md and accessibility.md show no drift (heading counts and link targets match en).",
+    "Scan: 56 Missing Keys rows = the same 14 keys x 4 languages (en, fr, es, de). All 14 are missing from en.json too, so they are source gaps in QuoteSection.vue, IconsInfo.vue, EmailObfuscator.vue and HeroTitle.vue (HERO_HEADING_KEYS.line1 is likely a dynamic-key false positive). They are not translation work.",
+    "Register counts: de 'Sie' is matched case-sensitively and includes some third-person sie/Sie at sentence start, so the formal count is approximate. es su/sus are ambiguous with third-person possessives."
+  ],
+  "perLocale": [
+    {
+      "locale": "de",
+      "approvedUiKeys": 18,
+      "approvedPages": [
+        "src/content/pages/de/security.md"
+      ],
+      "rejected": [],
+      "keepEnglish": [
+        {
+          "key": "LABELS.blog",
+          "note": "Established loanword in German; same word."
+        },
+        {
+          "key": "onetime-secret-literal",
+          "note": "Brand name."
+        },
+        {
+          "key": "repository-facts.commits",
+          "note": "Standard German developer term; matches existing repository-facts.latest-commit = Letzter Commit."
+        },
+        {
+          "key": "status",
+          "note": "Same word in German."
+        },
+        {
+          "key": "web.footer.links.api",
+          "note": "Technical acronym used unchanged in German."
+        },
+        {
+          "key": "web.footer.links.github",
+          "note": "Brand name."
+        },
+        {
+          "key": "web.footer.links.selfHosting",
+          "note": "Established loanword in German IT usage; short footer label."
+        },
+        {
+          "key": "web.lookalike.headerLabel",
+          "note": "Brand name with question mark; no surrounding text to adapt."
+        },
+        {
+          "key": "web.pricing.comparison.status.beta",
+          "note": "Same word in German."
+        },
+        {
+          "key": "web.pricing.region",
+          "note": "Same word in German."
+        },
+        {
+          "key": "web.pricing.tiers.identity.name",
+          "note": "Product tier name (brand)."
+        },
+        {
+          "key": "web.pricing.tiers.team.name",
+          "note": "Product tier name."
+        },
+        {
+          "key": "web.secrets.passphraseInputLabel",
+          "note": "Bound glossary rendering: passphrase -> Passphrase."
+        },
+        {
+          "key": "web.useCases.hr.title",
+          "note": "HR and People Ops are standard loan terms in German business usage; matches existing de descriptions using HR."
+        },
+        {
+          "key": "web.useCases.itdevops.title",
+          "note": "Technical terms used unchanged in German."
+        }
+      ],
+      "glossaryCandidates": [
+        {
+          "term": "DPA (Data Processing Agreement)",
+          "rendering": "AVV (Auftragsverarbeitungsvertrag)",
+          "reason": "Legal term likely to recur in footer, legal pages and pricing; the German GDPR equivalent is AVV, not the English acronym."
+        },
+        {
+          "term": "changelog",
+          "rendering": "Änderungsprotokoll",
+          "reason": "Used in changelog.label and now web.footer.links.changelog; should stay consistent."
+        },
+        {
+          "term": "docs (navigation label)",
+          "rendering": "Dokumentation",
+          "reason": "LABELS.docs and navigation.docs should share one rendering."
+        },
+        {
+          "term": "vulnerability",
+          "rendering": "Schwachstelle (Sicherheitslücke as a variant in running prose)",
+          "reason": "This is the central term on the security page and has no bound rendering. It should stay consistent if the other de website pages or the docs mention vulnerability reporting."
+        },
+        {
+          "term": "business days",
+          "rendering": "Arbeitstage",
+          "reason": "I chose this over 'Werktage', which in strict German usage includes Saturday and would change the response-time commitment. The French page made a matching choice: 'jours ouvrés'."
+        },
+        {
+          "term": "security updates",
+          "rendering": "Sicherheitsupdates",
+          "reason": "Loanword compound. It matches the existing de house style, where 'Upgrade' is also kept as a loanword."
+        },
+        {
+          "term": "fix (noun, security patch)",
+          "rendering": "Korrektur",
+          "reason": "Used in 'once the fix is deployed' and 'after a fix is in place'. No rendering exists in the governance artifact."
+        }
+      ],
+      "questions": [
+        "Most of the old de/security.md had never been translated: apart from the table header 'Unterstützt', it was English text inside the old HTML layout. Applying only the diff would have left the page in English. So I translated the whole page from the current English markdown source, the same way the French security page was redone in commit eb07836b. Please confirm that a full retranslation was acceptable here.",
+        "Register: I used formal Sie/Ihr/Ihnen throughout, following your instruction to keep the website formal and matching de/accessibility.md. This conflicts with rule.de-du in tmp/i18n/governance/.resolved/de.json. If the website's de pages are meant to stay formal, the governance artifact should record a website-surface exception so later rounds don't flag or 'fix' this page.",
+        "I left the email subject line 'Vulnerability Report: [Brief Description]' in English, inside German quotes „…“, so it matches the pre-filled mailto subject in the link URL. The French page does the same. Should both the visible text and the mailto subject be localized instead?",
+        "Heading 'Reporting a Vulnerability' is now 'Schwachstelle melden' (an infinitive, without the article), the usual style for German headings. Change it to 'Eine Schwachstelle melden' if you'd rather mirror the English article.",
+        "[warn fidelity] de/security.md: Closing line \"Onetime Secret sicher und hervorragend zu halten\" is a literal rendering of \"secure and excellent\". In German, \"hervorragend halten\" is not idiomatic and reads awkwardly. -> Vielen Dank, dass Sie uns helfen, Onetime Secret sicher und zuverlässig zu halten! (alternatively: \"... Onetime Secret sicher und auf hohem Niveau zu halten!\")"
+      ]
+    },
+    {
+      "locale": "es",
+      "approvedUiKeys": 11,
+      "approvedPages": [
+        "src/content/pages/es/security.md"
+      ],
+      "rejected": [],
+      "keepEnglish": [
+        {
+          "key": "LABELS.blog",
+          "note": "Blog is the standard Spanish loanword (RAE accepts it)."
+        },
+        {
+          "key": "onetime-secret-literal",
+          "note": "Brand name; never translated."
+        },
+        {
+          "key": "repository-facts.commits",
+          "note": "Standard developer loanword in Spanish; matches the existing repository-facts.latest-commit value «Último commit»."
+        },
+        {
+          "key": "web.footer.links.api",
+          "note": "Acronym used as-is in Spanish."
+        },
+        {
+          "key": "web.footer.links.dpa",
+          "note": "Short footer label for the Data Processing Agreement. The acronym DPA is widely used in Spanish GDPR contexts, and the full Spanish term is too long for a footer link."
+        },
+        {
+          "key": "web.footer.links.github",
+          "note": "Product name."
+        },
+        {
+          "key": "web.pricing.comparison.status.beta",
+          "note": "Same word in Spanish for a software release stage."
+        },
+        {
+          "key": "web.pricing.tiers.identity.name",
+          "note": "Brand/plan name; never translated (rule.brand-names-untranslated)."
+        },
+        {
+          "key": "web.pricing.tiers.team.name",
+          "note": "Plan name, kept in English to match Identity Plus."
+        }
+      ],
+      "glossaryCandidates": [
+        {
+          "term": "changelog (noun)",
+          "rendering": "Registro de cambios",
+          "reason": "Used in both changelog.label and web.footer.links.changelog; the glossary does not set a rendering."
+        },
+        {
+          "term": "docs (navigation label)",
+          "rendering": "Documentación",
+          "reason": "LABELS.docs and navigation.docs now share this value; the glossary does not set a rendering."
+        },
+        {
+          "term": "commit (noun)",
+          "rendering": "commit (loanword)",
+          "reason": "Kept in English in repository-facts.*; this should be recorded so no one translates it to «confirmación»."
+        },
+        {
+          "term": "supported (version)",
+          "rendering": "con soporte",
+          "reason": "The previous es page used the calque 'Soportado'. I used 'con soporte' / 'sin soporte' for the heading, the table column and the prose so the page says it one way throughout."
+        },
+        {
+          "term": "vulnerability report / report (noun)",
+          "rendering": "informe; informar de una vulnerabilidad",
+          "reason": "Security-policy wording that may recur on other website or docs pages."
+        },
+        {
+          "term": "fix (noun, security patch)",
+          "rendering": "corrección",
+          "reason": "Kept apart from 'actualización' (update) so the two terms don't drift across security pages."
+        }
+      ],
+      "questions": [
+        "The task's REGISTER OVERRIDE (formal usted, which the user's request asks for) conflicts with the governance file. That file sets rule.es-register-informal (tú) and lists usted/ustedes as forbidden tokens. None of these 11 rows uses a pronoun, so the conflict has no effect on this batch. The orchestrator should decide whether the governance file or the formal site-wide register (already in use, e.g. «Vuelva pronto», «Lea nuestra Política de Privacidad») is authoritative, so the forbidden-token gate does not fail on formal strings.",
+        "This page uses the formal register (Envíe, Incluya, su, le), as the user asked. Governance rule.es-register-informal requires tú for es. I avoided the literal forbidden tokens 'usted'/'ustedes', but a register lint may still flag the su/le forms. The other es website pages mix the two registers (7x su, 2x sus, 7x tu), so about.md and accessibility.md need a formal pass too if the website is to read consistently formal.",
+        "The existing es/security.md was almost all untranslated English inside the old HTML (only 'Versión', 'Soportado' and 'Detalles' were Spanish). Applying only the diff would have left an English page, so I translated the whole page into the new Markdown structure. I changed 'Soportado' to 'Con soporte'.",
+        "The email subject stays in English («Vulnerability Report: [Brief Description]») to match the pre-filled mailto subject, which is part of the URL and can't be changed. The fr page does the same. Should the visible subject be translated anyway?",
+        "[warn fidelity] es/security.md: \"Cualquier posible impacto.\" is a literal calque of \"Any potential impact.\" and reads awkwardly as a list item in Spanish. The bullet asks the reporter to describe the impact, but \"cualquier\" makes it sound like an open-ended disclaimer. -> Replace it with \"El posible impacto.\" (or \"El impacto potencial.\"). This matches the parallel article-plus-noun structure of the other bullets (\"Una descripción...\", \"Los pasos...\", \"Sus datos...\")."
+      ]
+    }
+  ],
+  "applied": [
+    {
+      "locale": "de",
+      "filesWritten": [
+        "tmp/i18n/apply-de.json",
+        "src/i18n/ui/de.json",
+        "src/content/pages/de/security.md"
+      ],
+      "uiKeysWritten": 18,
+      "parityOk": true,
+      "diffStat": " src/content/pages/de/security.md | 161 +++++++++++----------------------------\n src/i18n/ui/de.json              |   6 +-\n 2 files changed, 49 insertions(+), 118 deletions(-)",
+      "problems": [
+        "de.json diff shows only 6 changed lines: most of the 18 keys already had the same values (many are brand or loanword identities), so only a few lines actually changed."
+      ]
+    },
+    {
+      "locale": "es",
+      "filesWritten": [
+        "tmp/i18n/apply-es.json",
+        "src/i18n/ui/es.json",
+        "src/content/pages/es/security.md"
+      ],
+      "uiKeysWritten": 11,
+      "parityOk": true,
+      "diffStat": " src/content/pages/es/security.md | 161 +++++++++++----------------------------\n src/i18n/ui/es.json              |   4 +-\n 2 files changed, 48 insertions(+), 117 deletions(-)",
+      "problems": [
+        "es.json diff is only 2 lines: most of the 11 approved values were already present (identical to existing/English values), so only ~2 keys actually changed."
+      ]
+    }
+  ],
+  "gate": {
+    "scanMissingCount": 56,
+    "scanOk": true,
+    "testsRan": true,
+    "testsPassed": true,
+    "jsonParseOk": true,
+    "details": "All three gates pass. No tracked files were changed.\n\n1. JSON key parity: en.json, de.json, es.json and fr.json all parse. Each has 396 flattened keys, with 0 missing and 0 extra compared with en.json.\n2. `pnpm run i18n:scan` exits 0. The Missing Keys table has 56 rows (indices 0 to 55), which matches the baseline. These are the same 14 keys across 4 locales, from QuoteSection, IconsInfo, EmailObfuscator and HeroTitle (`HERO_HEADING_KEYS.line1`). None of them were introduced by this change. Output saved at <local scratch> `pnpm run test` (vitest) exits 0: 44 test files and 1519 tests passed.\n\nFor the reviewer:\n- UI string changes:\n  - de: nav.docs \"Docs\" -> \"Dokumentation\", changelog -> \"Änderungsprotokoll\", dpa \"DPA\" -> \"AVV\" (Auftragsverarbeitungsvertrag, the correct German term). Check that \"AVV\" is the abbreviation you want in the footer and that the DPA page it links to uses the same term.\n  - es: docs -> \"Documentación\", changelog -> \"Registro de cambios\". dpa stays \"DPA\" in Spanish. The German and Spanish handling of DPA now differs; that may be intended, but it is worth confirming.\n  - \"Self-Hosting\" is still English in de.\n- \"Dokumentation\" and \"Documentación\" are much longer than \"Docs\". Check that the nav and header don't wrap or overflow at narrow widths.\n- de/es security.md: both use the formal register (Sie / usted forms; a grep for du/dich/dein and tú/puedes/tienes found nothing). Headings, the version table rows (0.22.x+, 0.21.x) and the mailto link (including its English subject parameter) match en exactly.\n- Minor: de and es security.md end with an extra blank line (`\\n\\n`), while en and fr end with a single `\\n`. It does not affect rendering and only matters if lint or prettier checks it."
+  }
+}
