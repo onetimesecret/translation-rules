@@ -1,0 +1,448 @@
+{
+ "repoRoot": "~/Projects/ops/sites/onetimesecret.com",
+ "routedLocales": [
+  "fr",
+  "de",
+  "es"
+ ],
+ "droppedUnroutedLocales": [
+  "bg",
+  "da_DK",
+  "de_AT",
+  "el_GR",
+  "fr_CA",
+  "fr_FR",
+  "it_IT",
+  "ja",
+  "ko",
+  "mi_NZ",
+  "nl",
+  "pl",
+  "pt_BR",
+  "sv_SE",
+  "tr",
+  "uk"
+ ],
+ "scanMissingCount": 56,
+ "enMissingKeys": [
+  "ai-generated-testimonials",
+  "what-leading-ai-says-about-us",
+  "note",
+  "this-quote-was-generated-by",
+  "it-was-based-on-the-content-of-the-page-and-does",
+  "font-awesome-6",
+  "carbon",
+  "heroicons",
+  "material-design-icons",
+  "google-material",
+  "other",
+  "icon-library",
+  "email-address-copied-to-clipboard",
+  "HERO_HEADING_KEYS.line1"
+ ],
+ "governanceSource": "derived (c): ../translation-rules resolve.py --all --emit=json --lint -> tmp/i18n/governance/.resolved (_meta.source_commit 70c4f453a935e2a39e1c325f147f8b1c16f4c06b, generated_at 2026-11-04T22:19:25Z); source (b) ../onetimesecret/generated/i18n/.resolved does not exist",
+ "targets": [
+  {
+   "locale": "de",
+   "governancePath": "tmp/i18n/governance/.resolved/de.json",
+   "governed": true,
+   "register": {
+    "form": "informal",
+    "pronoun": "du",
+    "possessive": [
+     "dein",
+     "deine",
+     "deinen",
+     "deinem",
+     "deiner",
+     "deines"
+    ],
+    "forbiddenTokens": []
+   },
+   "glossary": [
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "state",
+     "target": "gelöscht"
+    },
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "verb",
+     "target": "löschen"
+    },
+    {
+     "key": "email",
+     "en": "email",
+     "sense": "noun",
+     "target": "E-Mail"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "state",
+     "target": "verschlüsselt"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "verb",
+     "target": "verschlüsseln"
+    },
+    {
+     "key": "link",
+     "en": "link",
+     "sense": "noun",
+     "target": "Link"
+    },
+    {
+     "key": "passphrase",
+     "en": "passphrase",
+     "sense": "noun",
+     "target": "Passphrase"
+    },
+    {
+     "key": "password",
+     "en": "password",
+     "sense": "noun",
+     "target": "Passwort"
+    },
+    {
+     "key": "secret_object",
+     "en": "secret",
+     "sense": "noun",
+     "target": "Geheimnis"
+    },
+    {
+     "key": "secret_payload",
+     "en": "secret message",
+     "sense": "noun",
+     "target": "Nachricht"
+    },
+    {
+     "key": "secret_support",
+     "en": "Secret Support",
+     "sense": "signoff",
+     "target": "Onetime Secret Support-Team"
+    },
+    {
+     "key": "workspace",
+     "en": "Workspace",
+     "sense": "noun",
+     "target": "Arbeitsbereich"
+    }
+   ],
+   "observedRegister": {
+    "observedForm": "formal",
+    "conflict": true,
+    "note": "formal 173 (UI 168: Sie 117, Ihre 21, Ihr 8, Ihrer 8, Ihnen 6, Ihren 4, Ihrem 4; prose 5, all in accessibility.md) vs informal 24 (UI 0; prose 24, all in about.md); minority 12%. Governance says informal/du; user request says keep formal. about.md is the only informal page.",
+    "uiFormalHits": 168,
+    "uiInformalHits": 0,
+    "proseFormalHits": 5,
+    "proseInformalHits": 24
+   },
+   "uiPending": [
+    {
+     "key": "onetime-secret-literal",
+     "reason": "identical",
+     "en": "Onetime Secret",
+     "current": "Onetime Secret"
+    },
+    {
+     "key": "status",
+     "reason": "identical",
+     "en": "Status",
+     "current": "Status"
+    },
+    {
+     "key": "repository-facts.commits",
+     "reason": "identical",
+     "en": "Commits",
+     "current": "Commits"
+    },
+    {
+     "key": "navigation.docs",
+     "reason": "identical",
+     "en": "Docs",
+     "current": "Docs"
+    },
+    {
+     "key": "LABELS.blog",
+     "reason": "identical",
+     "en": "Blog",
+     "current": "Blog"
+    },
+    {
+     "key": "web.pricing.region",
+     "reason": "identical",
+     "en": "Region",
+     "current": "Region"
+    },
+    {
+     "key": "web.pricing.tiers.identity.name",
+     "reason": "identical",
+     "en": "Identity Plus",
+     "current": "Identity Plus"
+    },
+    {
+     "key": "web.pricing.tiers.team.name",
+     "reason": "identical",
+     "en": "Team Plus",
+     "current": "Team Plus"
+    },
+    {
+     "key": "web.pricing.comparison.status.beta",
+     "reason": "identical",
+     "en": "Beta",
+     "current": "Beta"
+    },
+    {
+     "key": "web.secrets.passphraseInputLabel",
+     "reason": "identical",
+     "en": "Passphrase",
+     "current": "Passphrase"
+    },
+    {
+     "key": "web.useCases.itdevops.title",
+     "reason": "identical",
+     "en": "IT & DevOps",
+     "current": "IT & DevOps"
+    },
+    {
+     "key": "web.useCases.hr.title",
+     "reason": "identical",
+     "en": "HR & People Ops",
+     "current": "HR & People Ops"
+    },
+    {
+     "key": "web.footer.links.api",
+     "reason": "identical",
+     "en": "API",
+     "current": "API"
+    },
+    {
+     "key": "web.footer.links.changelog",
+     "reason": "identical",
+     "en": "Changelog",
+     "current": "Changelog"
+    },
+    {
+     "key": "web.footer.links.github",
+     "reason": "identical",
+     "en": "GitHub",
+     "current": "GitHub"
+    },
+    {
+     "key": "web.footer.links.dpa",
+     "reason": "identical",
+     "en": "DPA",
+     "current": "DPA"
+    },
+    {
+     "key": "web.footer.links.selfHosting",
+     "reason": "identical",
+     "en": "Self-Hosting",
+     "current": "Self-Hosting"
+    },
+    {
+     "key": "web.lookalike.headerLabel",
+     "reason": "identical",
+     "en": "Onetime Secret?",
+     "current": "Onetime Secret?"
+    }
+   ],
+   "prosePending": [
+    {
+     "page": "security.md",
+     "enPath": "src/content/pages/en/security.md",
+     "targetPath": "src/content/pages/de/security.md",
+     "reason": "stale",
+     "enDiff": "diff --git a/src/content/pages/en/security.md b/src/content/pages/en/security.md\nindex 95c85743..ff967408 100644\n--- a/src/content/pages/en/security.md\n+++ b/src/content/pages/en/security.md\n@@ -2,117 +2,47 @@\n title: Security Policy\n ---\n \n-<article class=\"prose dark:prose-invert\">\n-  <h2 class=\"mb-4 text-2xl font-bold dark:text-white\">\n-    Security Policy\n-  </h2>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n-  </p>\n-  <h3 class=\"mb-2 text-xl font-semibold dark:text-white\">\n-    Supported Versions\n-  </h3>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We provide security updates for the following versions of our project:\n-  </p>\n-  <table class=\"mb-4 w-full\">\n...(HTML table/list removal truncated here; full diff via git diff cbaf32d3 HEAD -- src/content/pages/en/security.md)...\n+\n+We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n+\n+## Supported Versions\n+\n+We provide security updates for the following versions of our project:\n+\n+| Version  | Supported |\n+|----------|-----------|\n+| 0.22.x+  | ✅        |\n+| 0.21.x   | ✅        |\n+| < 0.20.x | ❌        |\n+\n+If you are using an unsupported version, we strongly recommend upgrading to one of the supported versions to ensure you receive the latest security updates.\n+\n+## Reporting a Vulnerability\n+\n+If you discover a security vulnerability within this project, we encourage you to report it as soon as possible.\n+\n+### How to Report\n+\n+1. **Email:** Send an email to [security@onetimesecret.com](mailto:security@onetimesecret.com?subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D) with the subject line \"Vulnerability Report: [Brief Description]\".\n+2. **Details:** Include as much information as possible about the vulnerability:\n+   - A detailed description of the vulnerability.\n+   - Steps to reproduce the issue.\n+   - Any potential impact.\n+   - Your contact informatio"
+    }
+   ]
+  },
+  {
+   "locale": "es",
+   "governancePath": "tmp/i18n/governance/.resolved/es.json",
+   "governed": true,
+   "register": {
+    "form": "informal",
+    "pronoun": "tú",
+    "possessive": [
+     "tu",
+     "tus"
+    ],
+    "forbiddenTokens": [
+     "usted",
+     "ustedes"
+    ]
+   },
+   "glossary": [
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "state",
+     "target": "destruido"
+    },
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "verb",
+     "target": "destruir"
+    },
+    {
+     "key": "email",
+     "en": "email",
+     "sense": "noun",
+     "target": "correo electrónico"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "state",
+     "target": "cifrado"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "verb",
+     "target": "cifrar"
+    },
+    {
+     "key": "link",
+     "en": "link",
+     "sense": "noun",
+     "target": "enlace"
+    },
+    {
+     "key": "passphrase",
+     "en": "passphrase",
+     "sense": "noun",
+     "target": "frase de contraseña"
+    },
+    {
+     "key": "password",
+     "en": "password",
+     "sense": "noun",
+     "target": "contraseña"
+    },
+    {
+     "key": "secret_object",
+     "en": "secret",
+     "sense": "noun",
+     "target": "secreto"
+    },
+    {
+     "key": "secret_support",
+     "en": "Secret Support",
+     "sense": "signoff",
+     "target": "Equipo de soporte de Onetime Secret"
+    },
+    {
+     "key": "workspace",
+     "en": "Workspace",
+     "sense": "noun",
+     "target": "Espacio de trabajo"
+    }
+   ],
+   "observedRegister": {
+    "observedForm": "formal",
+    "conflict": true,
+    "note": "formal 60 (UI 50: su 35, sus 13, usted 2; prose 10: su 7, sus 2, ustedes 1) vs informal 19 (UI 9: tu 4, te 4, ti 1; prose 10: tu 7, te 2, tú 1); minority 24.1%, just under the 25% mixed threshold. 3 'TI' (IT acronym) hits removed from informal. su/sus are ambiguous (also 3rd person), so formal is likely overcounted; real state is close to mixed. UI already mixes tú imperatives (Contacta, Escribe) with usted (que usted elija). Governance says informal/tú and forbids usted; user request says keep formal.",
+    "uiFormalHits": 50,
+    "uiInformalHits": 9,
+    "proseFormalHits": 10,
+    "proseInformalHits": 10
+   },
+   "uiPending": [
+    {
+     "key": "onetime-secret-literal",
+     "reason": "identical",
+     "en": "Onetime Secret",
+     "current": "Onetime Secret"
+    },
+    {
+     "key": "repository-facts.commits",
+     "reason": "identical",
+     "en": "Commits",
+     "current": "Commits"
+    },
+    {
+     "key": "navigation.docs",
+     "reason": "identical",
+     "en": "Docs",
+     "current": "Docs"
+    },
+    {
+     "key": "LABELS.blog",
+     "reason": "identical",
+     "en": "Blog",
+     "current": "Blog"
+    },
+    {
+     "key": "web.pricing.tiers.identity.name",
+     "reason": "identical",
+     "en": "Identity Plus",
+     "current": "Identity Plus"
+    },
+    {
+     "key": "web.pricing.tiers.team.name",
+     "reason": "identical",
+     "en": "Team Plus",
+     "current": "Team Plus"
+    },
+    {
+     "key": "web.pricing.comparison.status.beta",
+     "reason": "identical",
+     "en": "Beta",
+     "current": "Beta"
+    },
+    {
+     "key": "web.footer.links.api",
+     "reason": "identical",
+     "en": "API",
+     "current": "API"
+    },
+    {
+     "key": "web.footer.links.changelog",
+     "reason": "identical",
+     "en": "Changelog",
+     "current": "Changelog"
+    },
+    {
+     "key": "web.footer.links.github",
+     "reason": "identical",
+     "en": "GitHub",
+     "current": "GitHub"
+    },
+    {
+     "key": "web.footer.links.dpa",
+     "reason": "identical",
+     "en": "DPA",
+     "current": "DPA"
+    }
+   ],
+   "prosePending": [
+    {
+     "page": "security.md",
+     "enPath": "src/content/pages/en/security.md",
+     "targetPath": "src/content/pages/es/security.md",
+     "reason": "stale",
+     "enDiff": "diff --git a/src/content/pages/en/security.md b/src/content/pages/en/security.md\nindex 95c85743..ff967408 100644\n--- a/src/content/pages/en/security.md\n+++ b/src/content/pages/en/security.md\n@@ -2,117 +2,47 @@\n title: Security Policy\n ---\n \n-<article class=\"prose dark:prose-invert\">\n-  <h2 class=\"mb-4 text-2xl font-bold dark:text-white\">\n-    Security Policy\n-  </h2>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n-  </p>\n-  <h3 class=\"mb-2 text-xl font-semibold dark:text-white\">\n-    Supported Versions\n-  </h3>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We provide security updates for the following versions of our project:\n-  </p>\n-  <table class=\"mb-4 w-full\">\n...(HTML table/list removal truncated here; full diff via git diff cbaf32d3 HEAD -- src/content/pages/en/security.md)...\n+\n+We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n+\n+## Supported Versions\n+\n+We provide security updates for the following versions of our project:\n+\n+| Version  | Supported |\n+|----------|-----------|\n+| 0.22.x+  | ✅        |\n+| 0.21.x   | ✅        |\n+| < 0.20.x | ❌        |\n+\n+If you are using an unsupported version, we strongly recommend upgrading to one of the supported versions to ensure you receive the latest security updates.\n+\n+## Reporting a Vulnerability\n+\n+If you discover a security vulnerability within this project, we encourage you to report it as soon as possible.\n+\n+### How to Report\n+\n+1. **Email:** Send an email to [security@onetimesecret.com](mailto:security@onetimesecret.com?subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D) with the subject line \"Vulnerability Report: [Brief Description]\".\n+2. **Details:** Include as much information as possible about the vulnerability:\n+   - A detailed description of the vulnerability.\n+   - Steps to reproduce the issue.\n+   - Any potential impact.\n+   - Your contact informatio"
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "REGISTER CONFLICT (blocking decision): governance (source_commit 70c4f453) sets register.form=informal for both de (du) and es (tú, usted/ustedes listed as forbidden tokens). The relayed user request says 'Keep the website formal'. The site is mostly formal today (de UI is 100% Sie; es leans usted/su). The user request should win over governance for this run. Translators must use Sie/usted and ignore de/es register.form, register.possessive and the es usted/ustedes forbidden tokens, or the lint/verify lenses will flag correct formal output.",
+  "de about.md is entirely informal (du/dir/dein, 24 hits) while de UI and accessibility.md are formal. Under the formal policy it needs a register rewrite even though it is not stale or drifted by date/structure. es UI already mixes tú imperatives (Contacta, Escribe, te envió) with usted/su, so a formal pass should normalize those keys even though they are not otherwise pending.",
+  "fr is routed (SUPPORTED_LANGUAGES = en, fr, de, es) but is not a target in this run. Both targets de and es are routed.",
+  "Governance source (b) ../onetimesecret/generated/i18n/.resolved is absent, so it was derived via (c). Lint passed for all locales. Side effect: the resolver rewrote ../translation-rules/lib/resolver/index.json in the sibling repo (git status there shows no tracked change; only a pre-existing untracked _references/reviews/2026-06-13/). tmp/i18n/governance is gitignored here.",
+  "UI: removed 2 'empty' hits per locale from uiPending (web.pricing.tiers.basic.badge and web.pricing.tiers.team.badge). Their en value is JSON null, and the locale mirrors that null, so there is nothing to translate.",
+  "UI: no missing or stale keys. All three locale JSONs have 396 keys matching en. The de/es ui files were last touched at 22680c0f (2026-10-22), and no en value has changed since then. All 'identical' hits are brand, product or loanword strings (Onetime Secret, Identity Plus, Team Plus, GitHub, API, DPA, Blog, Docs, Beta, Status, Region, Passphrase, Commits, Changelog). Most are probably keepEnglish candidates; the keepEnglish list passed in was empty. Glossary de passphrase=Passphrase, so web.secrets.passphraseInputLabel being identical is correct.",
+  "Prose: only security.md is pending, stale for both de and es. de/es were last touched at cbaf32d3 (2025-05-15) and en at 278dd510 (2025-05-21), which converted the page from an HTML <article> to Markdown and bumped supported versions to 0.22.x+/0.21.x/<0.20.x. The full diff is 6796 chars, so enDiff is truncated; the middle HTML-removal block is elided in the returned string. Translators should work from the current en page, not the diff. fr security.md was retranslated at eb07836b and can serve as a structural reference. about.md and accessibility.md show no drift (heading counts and link targets match en).",
+  "Scan: 56 Missing Keys rows = the same 14 keys x 4 languages (en, fr, es, de). All 14 are missing from en.json too, so they are source gaps in QuoteSection.vue, IconsInfo.vue, EmailObfuscator.vue and HeroTitle.vue (HERO_HEADING_KEYS.line1 is likely a dynamic-key false positive). They are not translation work.",
+  "Register counts: de 'Sie' is matched case-sensitively and includes some third-person sie/Sie at sentence start, so the formal count is approximate. es su/sus are ambiguous with third-person possessives."
+ ]
+}

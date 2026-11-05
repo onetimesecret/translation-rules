@@ -7,9 +7,12 @@ Two runs of the `translate-website-i18n` workflow over the website's routed loca
 | `website-translation-fr.md` | Run 1 (`registerPolicy: "strict"`): fr translated, de and es skipped for a register conflict. Assembled after the run because its report step could not write. |
 | `second-opinion-register-and-security-pages.md` | Independent review of the follow-up actions, with outcomes. |
 | `website-translation-de-es.md` | Run 2 (`registerPolicy: "file"`): de and es in formal register. The run's own report, with post-run changes appended. |
+| `audit-trail-run-1-fr.md`, `audit-trail-run-2-de-es.md` | Every agent step of each run in order: translator output, each verifier finding, each repair round's page text, apply and gate results. |
+| `hand-edits-after-approval.md` | Diff of the workflow-approved text against what was merged in onetimesecret.com (3d0dcb53). |
+| `artifacts/run-1-scout.json`, `artifacts/run-2-scout.json` | Full scout results: governance source, per-locale pending keys and pages, register counts, notes. |
 | `artifacts/apply-{fr,de,es}.json` | UI key values each run approved and wrote, before later hand edits (de/es `navigation.docs` was set back to `Docs`). |
 | `artifacts/run-1-fr-strict-summary.json`, `artifacts/run-2-de-es-file-summary.json` | Workflow result summaries: scout notes, per-locale approvals, keepEnglish and glossary candidates, translator questions, gate results. Local paths removed. |
 
-Not copied: the resolved governance artifacts (regenerated from this repo by `lib/resolver/resolve.py --all --emit=json`; run 1 used source commit 45773c7 and run 2 used 70c4f45) and the per-agent run journals (local session files).
+Not copied: the resolved governance artifacts (regenerated from this repo by `lib/resolver/resolve.py --all --emit=json`; run 1 used source commit 45773c7 and run 2 used 70c4f45). The per-agent run journals are rendered into the audit-trail files rather than copied raw.
 
 Key decision: the website keeps formal register for de (Sie) and es (usted), and governance keeps informal (c930872). Website runs use `registerPolicy: "file"`.

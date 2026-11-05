@@ -1,0 +1,655 @@
+{
+ "repoRoot": "~/Projects/ops/sites/onetimesecret.com",
+ "routedLocales": [
+  "fr",
+  "de",
+  "es"
+ ],
+ "droppedUnroutedLocales": [
+  "bg",
+  "da_DK",
+  "de_AT",
+  "el_GR",
+  "fr_CA",
+  "fr_FR",
+  "it_IT",
+  "ja",
+  "ko",
+  "mi_NZ",
+  "nl",
+  "pl",
+  "pt_BR",
+  "sv_SE",
+  "tr",
+  "uk"
+ ],
+ "scanMissingCount": 56,
+ "enMissingKeys": [
+  "ai-generated-testimonials",
+  "what-leading-ai-says-about-us",
+  "note",
+  "this-quote-was-generated-by",
+  "it-was-based-on-the-content-of-the-page-and-does",
+  "font-awesome-6",
+  "carbon",
+  "heroicons",
+  "material-design-icons",
+  "google-material",
+  "other",
+  "icon-library",
+  "email-address-copied-to-clipboard",
+  "HERO_HEADING_KEYS.line1"
+ ],
+ "governanceSource": "Derived (option c) from ../translation-rules via lib/resolver/resolve.py --all --emit=json --lint into tmp/i18n/governance/.resolved; _meta.source_commit 45773c7e130405e94d05672c60c1779aeaf99096. Option b (../onetimesecret/generated/i18n/.resolved) does not exist because ../onetimesecret is absent. Lint passed for fr, de and es with 0 findings.",
+ "targets": [
+  {
+   "locale": "fr",
+   "governancePath": "tmp/i18n/governance/.resolved/fr.json",
+   "governed": true,
+   "register": {
+    "form": "formal",
+    "pronoun": "vous",
+    "possessive": [
+     "votre",
+     "vos"
+    ],
+    "forbiddenTokens": [
+     "tu",
+     "ton",
+     "ta",
+     "tes",
+     "toi",
+     "te",
+     "toi-même",
+     "t'",
+     "t’"
+    ]
+   },
+   "glossary": [
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "verb",
+     "target": "brûler"
+    },
+    {
+     "key": "email",
+     "en": "email",
+     "sense": "noun",
+     "target": "e-mail"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "state",
+     "target": "chiffré"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "verb",
+     "target": "chiffrer"
+    },
+    {
+     "key": "link",
+     "en": "link",
+     "sense": "noun",
+     "target": "lien"
+    },
+    {
+     "key": "passphrase",
+     "en": "passphrase",
+     "sense": "noun",
+     "target": "phrase secrète"
+    },
+    {
+     "key": "password",
+     "en": "password",
+     "sense": "noun",
+     "target": "mot de passe"
+    },
+    {
+     "key": "secret_object",
+     "en": "secret",
+     "sense": "noun",
+     "target": "secret"
+    },
+    {
+     "key": "workspace",
+     "en": "Workspace",
+     "sense": "noun",
+     "target": "Espace de travail"
+    }
+   ],
+   "observedRegister": {
+    "observedForm": "formal",
+    "conflict": false,
+    "proseFormalHits": 45,
+    "proseInformalHits": 0,
+    "uiFormalHits": 83,
+    "uiInformalHits": 0,
+    "note": "fr: formal 128 (ui 83, prose 45), informal 0; declared formal. Forbidden te and t' also have 0 hits in UI and prose."
+   },
+   "uiPending": [
+    {
+     "key": "onetime-secret-literal",
+     "reason": "identical",
+     "en": "Onetime Secret",
+     "current": "Onetime Secret"
+    },
+    {
+     "key": "repository-facts.commits",
+     "reason": "identical",
+     "en": "Commits",
+     "current": "Commits"
+    },
+    {
+     "key": "navigation.docs",
+     "reason": "identical",
+     "en": "Docs",
+     "current": "Docs"
+    },
+    {
+     "key": "LABELS.blog",
+     "reason": "identical",
+     "en": "Blog",
+     "current": "Blog"
+    },
+    {
+     "key": "LABELS.docs",
+     "reason": "identical",
+     "en": "Documentation",
+     "current": "Documentation"
+    },
+    {
+     "key": "web.pricing.tiers.identity.name",
+     "reason": "identical",
+     "en": "Identity Plus",
+     "current": "Identity Plus"
+    },
+    {
+     "key": "web.pricing.tiers.team.name",
+     "reason": "identical",
+     "en": "Team Plus",
+     "current": "Team Plus"
+    },
+    {
+     "key": "web.secrets.europe",
+     "reason": "identical",
+     "en": "Europe",
+     "current": "Europe"
+    },
+    {
+     "key": "web.secrets.ttl.5minutes",
+     "reason": "identical",
+     "en": "5 minutes",
+     "current": "5 minutes"
+    },
+    {
+     "key": "web.secrets.ttl.30minutes",
+     "reason": "identical",
+     "en": "30 minutes",
+     "current": "30 minutes"
+    },
+    {
+     "key": "web.footer.links.api",
+     "reason": "identical",
+     "en": "API",
+     "current": "API"
+    },
+    {
+     "key": "web.footer.links.github",
+     "reason": "identical",
+     "en": "GitHub",
+     "current": "GitHub"
+    },
+    {
+     "key": "web.footer.links.contact",
+     "reason": "identical",
+     "en": "Contact",
+     "current": "Contact"
+    },
+    {
+     "key": "web.footer.links.dpa",
+     "reason": "identical",
+     "en": "DPA",
+     "current": "DPA"
+    },
+    {
+     "key": "web.footer.links.guides",
+     "reason": "identical",
+     "en": "Guides",
+     "current": "Guides"
+    },
+    {
+     "key": "web.homepage.hero.compliance.openSource",
+     "reason": "identical",
+     "en": "Open source",
+     "current": "Open source"
+    },
+    {
+     "key": "web.homepage.infrastructure.regions.ca",
+     "reason": "identical",
+     "en": "Toronto, Canada",
+     "current": "Toronto, Canada"
+    }
+   ],
+   "prosePending": [
+    {
+     "page": "security.md",
+     "enPath": "src/content/pages/en/security.md",
+     "targetPath": "src/content/pages/fr/security.md",
+     "reason": "stale",
+     "enDiff": "diff --git a/src/content/pages/en/security.md b/src/content/pages/en/security.md\nindex 95c85743..ff967408 100644\n--- a/src/content/pages/en/security.md\n+++ b/src/content/pages/en/security.md\n@@ -2,117 +2,47 @@\n title: Security Policy\n ---\n \n-<article class=\"prose dark:prose-invert\">\n-  <h2 class=\"mb-4 text-2xl font-bold dark:text-white\">\n-    Security Policy\n-  </h2>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n-  </p>\n-  <h3 class=\"mb-2 text-xl font-semibold dark:text-white\">\n-    Supported Versions\n-  </h3>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We provide security updates for the following versions of our project:\n-  </p>\n-  <table class=\"mb-4 w-full\">\n-    <thead>\n-      <tr class=\"bg-gray-100 dark:bg-gray-700\">\n-        <th class=\"p-2 text-left dark:text-white\">\n-          Version\n-        </th>\n-        <th class=\"p-2 text-left dark:text-white\">\n-          Supported\n-        </th>\n-      </tr>\n-    </thead>\n-    <tbody>\n-      <tr class=\"border-b dark:border-gray-600\">\n-        <td class=\"p-2 dark:text-gray-300\">\n-          0.21.x+\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ✅\n-        </td>\n-      </tr>\n-      <tr class=\"border-b dark:border-gray-600\">\n-        <td class=\"p-2 dark:text-gray-300\">\n-          0.20.x\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ✅\n-        </td>\n-      </tr>\n-      <tr>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          &lt; 0.19.x\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ❌\n-        </td>\n-      </tr>\n-    </tbody>\n-  </table>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    If you are using an unsupported version, we strongly recommend upgrading to one of the supported versions to ensure you receive the latest security updates.\n-  </p>\n-  <h3 class=\"mb-2 text-xl font-semibold dark:text-white\">\n-    Reporting a Vulnerability\n-  </h3>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    If you discover a security vulnerability within this project, we encourage you to report it as soon as possible. Here's how you can do it:\n-  </p>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    How to Report\n-  </h4>\n-  <ol class=\"mb-4 list-decimal pl-6 dark:text-gray-300\">\n-    <li class=\"mb-2\">\n-      <strong>Email</strong> : Send an email to\n-      <a href=\"mailto:security@onetimesecret.com?subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D\">security@onetimesecret.com</a>\n-      with the subject line \"Vulnerability Report: [Brief Description]\".\n-    </li>\n-    <li>\n-      <strong>Details</strong> : Include as much information as possible about the vulnerability. This should include:\n-      <ul class=\"mt-2 list-disc pl-6\">\n-        <li>A detailed description of the vulnerability.</li>\n-        <li>Steps to reproduce the issue.</li>\n-        <li>Any potential impact.</li>\n-        <li>Your contact information for follow-up questions.</li>\n-      </ul>\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    What to Expect\n-  </h4>\n-  <ol class=\"dark:text-gray-300\">\n-    <li>\n-      <strong>Acknowledgment</strong> : You will receive an acknowledgment of your report within 5 business days.\n-    </li>\n-    <li>\n-      <strong>Initial Assessment</strong> : We will conduct an initial assessment of the vulnerability within 14 business days.\n-    </li>\n-    <li>\n-      <strong>Updates</strong> : You can expect to receive updates on the status of your report at least once every 7 days until the issue is resolved or a decision is made.\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    Resolution Process\n-  </h4>\n-  <ol class=\"dark:text-gray-300\">\n-    <li>\n-      <strong>Accepted Vulnerabilities</strong> : If the vulnerability is accepted, we will work on a fix and aim to release it as soon as possible. You will be notified once the fix is deployed.\n-    </li>\n-    <li>\n-      <strong>Declined Vulnerabilities</strong> : If the vulnerability is declined, we will provide a detailed explanation as to why it was not accepted.\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    Confidentiality\n-  </h4>\n-  <p class=\"prose dark:text-gray-300\">\n-    We take your privacy seriously. All reports will be kept confidential, and we will work with you to ensure that any details of the vulnerability are not disclosed until a fix is in place.\n-  </p>\n-  <p class=\"prose dark:text-gray-300\">\n-    Thank you for helping us keep Onetime Secret secure and excellent!\n-  </p>\n-</article>\n+\n+We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n+\n+## Supported Versions\n+\n+We provide security updates for the following versions of our project:\n+\n+| Version  | Supported |\n+|----------|-----------|\n+| 0.22.x+  | ✅        |\n+| 0.21.x   | ✅        |\n+| < 0.20.x | ❌        |\n+\n+If you are using an unsupported version, we strongly recommend upgrading to one of the supported versions to ensure you receive the latest security updates.\n+\n+## Reporting a Vulnerability\n+\n+If you discover a security vulnerability within this project, we encourage you to report it as soon as possible.\n+\n+### How to Report\n+\n+1. **Email:** Send an email to [security@onetimesecret.com](mailto:security@onetimesecret.com?subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D) with the subject line \"Vulnerability Report: [Brief Description]\".\n+2. **Details:** Include as much information as possible about the vulnerability:\n+   - A detailed description of the vulnerability.\n+   - Steps to reproduce the issue.\n+   - Any potential impact.\n+   - Your contact informatio"
+    }
+   ]
+  },
+  {
+   "locale": "de",
+   "governancePath": "tmp/i18n/governance/.resolved/de.json",
+   "governed": true,
+   "register": {
+    "form": "informal",
+    "pronoun": "du",
+    "possessive": [
+     "dein",
+     "deine",
+     "deinen",
+     "deinem",
+     "deiner",
+     "deines"
+    ],
+    "forbiddenTokens": []
+   },
+   "glossary": [
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "state",
+     "target": "gelöscht"
+    },
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "verb",
+     "target": "löschen"
+    },
+    {
+     "key": "email",
+     "en": "email",
+     "sense": "noun",
+     "target": "E-Mail"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "state",
+     "target": "verschlüsselt"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "verb",
+     "target": "verschlüsseln"
+    },
+    {
+     "key": "link",
+     "en": "link",
+     "sense": "noun",
+     "target": "Link"
+    },
+    {
+     "key": "passphrase",
+     "en": "passphrase",
+     "sense": "noun",
+     "target": "Passphrase"
+    },
+    {
+     "key": "password",
+     "en": "password",
+     "sense": "noun",
+     "target": "Passwort"
+    },
+    {
+     "key": "secret_object",
+     "en": "secret",
+     "sense": "noun",
+     "target": "Geheimnis"
+    },
+    {
+     "key": "secret_payload",
+     "en": "secret message",
+     "sense": "noun",
+     "target": "Nachricht"
+    },
+    {
+     "key": "secret_support",
+     "en": "Secret Support",
+     "sense": "signoff",
+     "target": "Onetime Secret Support-Team"
+    },
+    {
+     "key": "workspace",
+     "en": "Workspace",
+     "sense": "noun",
+     "target": "Arbeitsbereich"
+    }
+   ],
+   "observedRegister": {
+    "observedForm": "formal",
+    "conflict": true,
+    "proseFormalHits": 5,
+    "proseInformalHits": 25,
+    "uiFormalHits": 168,
+    "uiInformalHits": 0,
+    "note": "de: formal 173 (ui 168, prose 5), informal 25 (ui 0, prose 25); declared informal. UI is entirely formal; about.md is informal (0 formal/25 informal); accessibility.md is formal (5/0); security.md has 0 hits."
+   },
+   "uiPending": [
+    {
+     "key": "onetime-secret-literal",
+     "reason": "identical",
+     "en": "Onetime Secret",
+     "current": "Onetime Secret"
+    },
+    {
+     "key": "status",
+     "reason": "identical",
+     "en": "Status",
+     "current": "Status"
+    },
+    {
+     "key": "repository-facts.commits",
+     "reason": "identical",
+     "en": "Commits",
+     "current": "Commits"
+    },
+    {
+     "key": "navigation.docs",
+     "reason": "identical",
+     "en": "Docs",
+     "current": "Docs"
+    },
+    {
+     "key": "LABELS.blog",
+     "reason": "identical",
+     "en": "Blog",
+     "current": "Blog"
+    },
+    {
+     "key": "web.pricing.region",
+     "reason": "identical",
+     "en": "Region",
+     "current": "Region"
+    },
+    {
+     "key": "web.pricing.tiers.identity.name",
+     "reason": "identical",
+     "en": "Identity Plus",
+     "current": "Identity Plus"
+    },
+    {
+     "key": "web.pricing.tiers.team.name",
+     "reason": "identical",
+     "en": "Team Plus",
+     "current": "Team Plus"
+    },
+    {
+     "key": "web.pricing.comparison.status.beta",
+     "reason": "identical",
+     "en": "Beta",
+     "current": "Beta"
+    },
+    {
+     "key": "web.secrets.passphraseInputLabel",
+     "reason": "identical",
+     "en": "Passphrase",
+     "current": "Passphrase"
+    },
+    {
+     "key": "web.useCases.itdevops.title",
+     "reason": "identical",
+     "en": "IT & DevOps",
+     "current": "IT & DevOps"
+    },
+    {
+     "key": "web.useCases.hr.title",
+     "reason": "identical",
+     "en": "HR & People Ops",
+     "current": "HR & People Ops"
+    },
+    {
+     "key": "web.footer.links.api",
+     "reason": "identical",
+     "en": "API",
+     "current": "API"
+    },
+    {
+     "key": "web.footer.links.changelog",
+     "reason": "identical",
+     "en": "Changelog",
+     "current": "Changelog"
+    },
+    {
+     "key": "web.footer.links.github",
+     "reason": "identical",
+     "en": "GitHub",
+     "current": "GitHub"
+    },
+    {
+     "key": "web.footer.links.dpa",
+     "reason": "identical",
+     "en": "DPA",
+     "current": "DPA"
+    },
+    {
+     "key": "web.footer.links.selfHosting",
+     "reason": "identical",
+     "en": "Self-Hosting",
+     "current": "Self-Hosting"
+    },
+    {
+     "key": "web.lookalike.headerLabel",
+     "reason": "identical",
+     "en": "Onetime Secret?",
+     "current": "Onetime Secret?"
+    }
+   ],
+   "prosePending": [
+    {
+     "page": "security.md",
+     "enPath": "src/content/pages/en/security.md",
+     "targetPath": "src/content/pages/de/security.md",
+     "reason": "stale",
+     "enDiff": "diff --git a/src/content/pages/en/security.md b/src/content/pages/en/security.md\nindex 95c85743..ff967408 100644\n--- a/src/content/pages/en/security.md\n+++ b/src/content/pages/en/security.md\n@@ -2,117 +2,47 @@\n title: Security Policy\n ---\n \n-<article class=\"prose dark:prose-invert\">\n-  <h2 class=\"mb-4 text-2xl font-bold dark:text-white\">\n-    Security Policy\n-  </h2>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n-  </p>\n-  <h3 class=\"mb-2 text-xl font-semibold dark:text-white\">\n-    Supported Versions\n-  </h3>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We provide security updates for the following versions of our project:\n-  </p>\n-  <table class=\"mb-4 w-full\">\n-    <thead>\n-      <tr class=\"bg-gray-100 dark:bg-gray-700\">\n-        <th class=\"p-2 text-left dark:text-white\">\n-          Version\n-        </th>\n-        <th class=\"p-2 text-left dark:text-white\">\n-          Supported\n-        </th>\n-      </tr>\n-    </thead>\n-    <tbody>\n-      <tr class=\"border-b dark:border-gray-600\">\n-        <td class=\"p-2 dark:text-gray-300\">\n-          0.21.x+\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ✅\n-        </td>\n-      </tr>\n-      <tr class=\"border-b dark:border-gray-600\">\n-        <td class=\"p-2 dark:text-gray-300\">\n-          0.20.x\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ✅\n-        </td>\n-      </tr>\n-      <tr>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          &lt; 0.19.x\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ❌\n-        </td>\n-      </tr>\n-    </tbody>\n-  </table>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    If you are using an unsupported version, we strongly recommend upgrading to one of the supported versions to ensure you receive the latest security updates.\n-  </p>\n-  <h3 class=\"mb-2 text-xl font-semibold dark:text-white\">\n-    Reporting a Vulnerability\n-  </h3>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    If you discover a security vulnerability within this project, we encourage you to report it as soon as possible. Here's how you can do it:\n-  </p>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    How to Report\n-  </h4>\n-  <ol class=\"mb-4 list-decimal pl-6 dark:text-gray-300\">\n-    <li class=\"mb-2\">\n-      <strong>Email</strong> : Send an email to\n-      <a href=\"mailto:security@onetimesecret.com?subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D\">security@onetimesecret.com</a>\n-      with the subject line \"Vulnerability Report: [Brief Description]\".\n-    </li>\n-    <li>\n-      <strong>Details</strong> : Include as much information as possible about the vulnerability. This should include:\n-      <ul class=\"mt-2 list-disc pl-6\">\n-        <li>A detailed description of the vulnerability.</li>\n-        <li>Steps to reproduce the issue.</li>\n-        <li>Any potential impact.</li>\n-        <li>Your contact information for follow-up questions.</li>\n-      </ul>\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    What to Expect\n-  </h4>\n-  <ol class=\"dark:text-gray-300\">\n-    <li>\n-      <strong>Acknowledgment</strong> : You will receive an acknowledgment of your report within 5 business days.\n-    </li>\n-    <li>\n-      <strong>Initial Assessment</strong> : We will conduct an initial assessment of the vulnerability within 14 business days.\n-    </li>\n-    <li>\n-      <strong>Updates</strong> : You can expect to receive updates on the status of your report at least once every 7 days until the issue is resolved or a decision is made.\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    Resolution Process\n-  </h4>\n-  <ol class=\"dark:text-gray-300\">\n-    <li>\n-      <strong>Accepted Vulnerabilities</strong> : If the vulnerability is accepted, we will work on a fix and aim to release it as soon as possible. You will be notified once the fix is deployed.\n-    </li>\n-    <li>\n-      <strong>Declined Vulnerabilities</strong> : If the vulnerability is declined, we will provide a detailed explanation as to why it was not accepted.\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    Confidentiality\n-  </h4>\n-  <p class=\"prose dark:text-gray-300\">\n-    We take your privacy seriously. All reports will be kept confidential, and we will work with you to ensure that any details of the vulnerability are not disclosed until a fix is in place.\n-  </p>\n-  <p class=\"prose dark:text-gray-300\">\n-    Thank you for helping us keep Onetime Secret secure and excellent!\n-  </p>\n-</article>\n+\n+We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n+\n+## Supported Versions\n+\n+We provide security updates for the following versions of our project:\n+\n+| Version  | Supported |\n+|----------|-----------|\n+| 0.22.x+  | ✅        |\n+| 0.21.x   | ✅        |\n+| < 0.20.x | ❌        |\n+\n+If you are using an unsupported version, we strongly recommend upgrading to one of the supported versions to ensure you receive the latest security updates.\n+\n+## Reporting a Vulnerability\n+\n+If you discover a security vulnerability within this project, we encourage you to report it as soon as possible.\n+\n+### How to Report\n+\n+1. **Email:** Send an email to [security@onetimesecret.com](mailto:security@onetimesecret.com?subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D) with the subject line \"Vulnerability Report: [Brief Description]\".\n+2. **Details:** Include as much information as possible about the vulnerability:\n+   - A detailed description of the vulnerability.\n+   - Steps to reproduce the issue.\n+   - Any potential impact.\n+   - Your contact informatio"
+    }
+   ]
+  },
+  {
+   "locale": "es",
+   "governancePath": "tmp/i18n/governance/.resolved/es.json",
+   "governed": true,
+   "register": {
+    "form": "informal",
+    "pronoun": "tú",
+    "possessive": [
+     "tu",
+     "tus"
+    ],
+    "forbiddenTokens": [
+     "usted",
+     "ustedes"
+    ]
+   },
+   "glossary": [
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "state",
+     "target": "destruido"
+    },
+    {
+     "key": "burn",
+     "en": "burn",
+     "sense": "verb",
+     "target": "destruir"
+    },
+    {
+     "key": "email",
+     "en": "email",
+     "sense": "noun",
+     "target": "correo electrónico"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "state",
+     "target": "cifrado"
+    },
+    {
+     "key": "encrypt",
+     "en": "encrypt",
+     "sense": "verb",
+     "target": "cifrar"
+    },
+    {
+     "key": "link",
+     "en": "link",
+     "sense": "noun",
+     "target": "enlace"
+    },
+    {
+     "key": "passphrase",
+     "en": "passphrase",
+     "sense": "noun",
+     "target": "frase de contraseña"
+    },
+    {
+     "key": "password",
+     "en": "password",
+     "sense": "noun",
+     "target": "contraseña"
+    },
+    {
+     "key": "secret_object",
+     "en": "secret",
+     "sense": "noun",
+     "target": "secreto"
+    },
+    {
+     "key": "secret_support",
+     "en": "Secret Support",
+     "sense": "signoff",
+     "target": "Equipo de soporte de Onetime Secret"
+    },
+    {
+     "key": "workspace",
+     "en": "Workspace",
+     "sense": "noun",
+     "target": "Espacio de trabajo"
+    }
+   ],
+   "observedRegister": {
+    "observedForm": "mixed",
+    "conflict": true,
+    "proseFormalHits": 10,
+    "proseInformalHits": 10,
+    "uiFormalHits": 50,
+    "uiInformalHits": 12,
+    "note": "es: formal 60 (ui 50, prose 10), informal 22 (ui 12, prose 10), minority 26.8%; declared informal. Raw counts: 3 'ti' hits are the acronym TI and su/sus includes third-person uses. about.md 2/10; accessibility.md 8/0; security.md 0/0."
+   },
+   "uiPending": [
+    {
+     "key": "onetime-secret-literal",
+     "reason": "identical",
+     "en": "Onetime Secret",
+     "current": "Onetime Secret"
+    },
+    {
+     "key": "repository-facts.commits",
+     "reason": "identical",
+     "en": "Commits",
+     "current": "Commits"
+    },
+    {
+     "key": "navigation.docs",
+     "reason": "identical",
+     "en": "Docs",
+     "current": "Docs"
+    },
+    {
+     "key": "LABELS.blog",
+     "reason": "identical",
+     "en": "Blog",
+     "current": "Blog"
+    },
+    {
+     "key": "web.pricing.tiers.identity.name",
+     "reason": "identical",
+     "en": "Identity Plus",
+     "current": "Identity Plus"
+    },
+    {
+     "key": "web.pricing.tiers.team.name",
+     "reason": "identical",
+     "en": "Team Plus",
+     "current": "Team Plus"
+    },
+    {
+     "key": "web.pricing.comparison.status.beta",
+     "reason": "identical",
+     "en": "Beta",
+     "current": "Beta"
+    },
+    {
+     "key": "web.footer.links.api",
+     "reason": "identical",
+     "en": "API",
+     "current": "API"
+    },
+    {
+     "key": "web.footer.links.changelog",
+     "reason": "identical",
+     "en": "Changelog",
+     "current": "Changelog"
+    },
+    {
+     "key": "web.footer.links.github",
+     "reason": "identical",
+     "en": "GitHub",
+     "current": "GitHub"
+    },
+    {
+     "key": "web.footer.links.dpa",
+     "reason": "identical",
+     "en": "DPA",
+     "current": "DPA"
+    }
+   ],
+   "prosePending": [
+    {
+     "page": "security.md",
+     "enPath": "src/content/pages/en/security.md",
+     "targetPath": "src/content/pages/es/security.md",
+     "reason": "stale",
+     "enDiff": "diff --git a/src/content/pages/en/security.md b/src/content/pages/en/security.md\nindex 95c85743..ff967408 100644\n--- a/src/content/pages/en/security.md\n+++ b/src/content/pages/en/security.md\n@@ -2,117 +2,47 @@\n title: Security Policy\n ---\n \n-<article class=\"prose dark:prose-invert\">\n-  <h2 class=\"mb-4 text-2xl font-bold dark:text-white\">\n-    Security Policy\n-  </h2>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n-  </p>\n-  <h3 class=\"mb-2 text-xl font-semibold dark:text-white\">\n-    Supported Versions\n-  </h3>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    We provide security updates for the following versions of our project:\n-  </p>\n-  <table class=\"mb-4 w-full\">\n-    <thead>\n-      <tr class=\"bg-gray-100 dark:bg-gray-700\">\n-        <th class=\"p-2 text-left dark:text-white\">\n-          Version\n-        </th>\n-        <th class=\"p-2 text-left dark:text-white\">\n-          Supported\n-        </th>\n-      </tr>\n-    </thead>\n-    <tbody>\n-      <tr class=\"border-b dark:border-gray-600\">\n-        <td class=\"p-2 dark:text-gray-300\">\n-          0.21.x+\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ✅\n-        </td>\n-      </tr>\n-      <tr class=\"border-b dark:border-gray-600\">\n-        <td class=\"p-2 dark:text-gray-300\">\n-          0.20.x\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ✅\n-        </td>\n-      </tr>\n-      <tr>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          &lt; 0.19.x\n-        </td>\n-        <td class=\"p-2 dark:text-gray-300\">\n-          ❌\n-        </td>\n-      </tr>\n-    </tbody>\n-  </table>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    If you are using an unsupported version, we strongly recommend upgrading to one of the supported versions to ensure you receive the latest security updates.\n-  </p>\n-  <h3 class=\"mb-2 text-xl font-semibold dark:text-white\">\n-    Reporting a Vulnerability\n-  </h3>\n-  <p class=\"mb-4 dark:text-gray-300\">\n-    If you discover a security vulnerability within this project, we encourage you to report it as soon as possible. Here's how you can do it:\n-  </p>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    How to Report\n-  </h4>\n-  <ol class=\"mb-4 list-decimal pl-6 dark:text-gray-300\">\n-    <li class=\"mb-2\">\n-      <strong>Email</strong> : Send an email to\n-      <a href=\"mailto:security@onetimesecret.com?subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D\">security@onetimesecret.com</a>\n-      with the subject line \"Vulnerability Report: [Brief Description]\".\n-    </li>\n-    <li>\n-      <strong>Details</strong> : Include as much information as possible about the vulnerability. This should include:\n-      <ul class=\"mt-2 list-disc pl-6\">\n-        <li>A detailed description of the vulnerability.</li>\n-        <li>Steps to reproduce the issue.</li>\n-        <li>Any potential impact.</li>\n-        <li>Your contact information for follow-up questions.</li>\n-      </ul>\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    What to Expect\n-  </h4>\n-  <ol class=\"dark:text-gray-300\">\n-    <li>\n-      <strong>Acknowledgment</strong> : You will receive an acknowledgment of your report within 5 business days.\n-    </li>\n-    <li>\n-      <strong>Initial Assessment</strong> : We will conduct an initial assessment of the vulnerability within 14 business days.\n-    </li>\n-    <li>\n-      <strong>Updates</strong> : You can expect to receive updates on the status of your report at least once every 7 days until the issue is resolved or a decision is made.\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    Resolution Process\n-  </h4>\n-  <ol class=\"dark:text-gray-300\">\n-    <li>\n-      <strong>Accepted Vulnerabilities</strong> : If the vulnerability is accepted, we will work on a fix and aim to release it as soon as possible. You will be notified once the fix is deployed.\n-    </li>\n-    <li>\n-      <strong>Declined Vulnerabilities</strong> : If the vulnerability is declined, we will provide a detailed explanation as to why it was not accepted.\n-    </li>\n-  </ol>\n-  <h4 class=\"mb-2 text-lg font-semibold dark:text-white\">\n-    Confidentiality\n-  </h4>\n-  <p class=\"prose dark:text-gray-300\">\n-    We take your privacy seriously. All reports will be kept confidential, and we will work with you to ensure that any details of the vulnerability are not disclosed until a fix is in place.\n-  </p>\n-  <p class=\"prose dark:text-gray-300\">\n-    Thank you for helping us keep Onetime Secret secure and excellent!\n-  </p>\n-</article>\n+\n+We take the security of this project seriously and appreciate your efforts to responsibly disclose vulnerabilities. This document outlines our security policy and provides guidelines on how to report vulnerabilities.\n+\n+## Supported Versions\n+\n+We provide security updates for the following versions of our project:\n+\n+| Version  | Supported |\n+|----------|-----------|\n+| 0.22.x+  | ✅        |\n+| 0.21.x   | ✅        |\n+| < 0.20.x | ❌        |\n+\n+If you are using an unsupported version, we strongly recommend upgrading to one of the supported versions to ensure you receive the latest security updates.\n+\n+## Reporting a Vulnerability\n+\n+If you discover a security vulnerability within this project, we encourage you to report it as soon as possible.\n+\n+### How to Report\n+\n+1. **Email:** Send an email to [security@onetimesecret.com](mailto:security@onetimesecret.com?subject=Vulnerability%20Report%3A%20%5BBrief%20Description%5D) with the subject line \"Vulnerability Report: [Brief Description]\".\n+2. **Details:** Include as much information as possible about the vulnerability:\n+   - A detailed description of the vulnerability.\n+   - Steps to reproduce the issue.\n+   - Any potential impact.\n+   - Your contact informatio"
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "REGISTER CONFLICT, needs a decision before translating: de and es both declare informal (rule.register-lock, MUST), but their UI is overwhelmingly formal (de 168 formal/0 informal; es 50/12). Translating only the pending keys will not fix this, and full compliance means rewriting existing strings well outside the pending list.",
+  "es observedForm 'mixed' is the literal count (60/22, minority 26.8%). Excluding the 3 'TI' (IT acronym) hits gives 60/19, minority 24.05%, which would label it 'formal'. su/sus also include third-person uses. conflict=true either way. Sample UI strings are formal address ('Pegue su secreto', 'Escriba su mensaje').",
+  "de has register.forbidden_tokens = [], so no token check catches Sie/Ihr. es forbids only usted/ustedes, so su/sus and formal imperatives also pass a token check.",
+  "Prose register varies by page: de and es about.md are informal, de and es accessibility.md are formal, and security.md has 0 hits in both. fr is consistently formal.",
+  "Uncommitted change: src/i18n/ui/fr.json is modified in the working tree (web.useCases.itdevops.title, web.footer.links.changelog). The scan read the working tree, so these two keys are not reported as identical for fr. Later steps must not overwrite this edit.",
+  "Deviation from step 4: excluded web.pricing.tiers.basic.badge and web.pricing.tiers.team.badge from 'empty' for all three locales. Their value is JSON null in en and in every locale, so there is nothing to translate; a literal report would hand translators the string 'null'.",
+  "UI stale = 0 for all targets. en.json and all three locale files share the same last commit (22680c0f), so the stale check compares en to itself. Any en change bundled into that commit is invisible to this check. No keys are missing, and no locale has extra keys (396 en keys).",
+  "All uiPending rows are 'identical', and most are brand names, cognates or technical terms (API, GitHub, Blog, Identity Plus). de web.secrets.passphraseInputLabel matches the glossary target 'Passphrase'. keepEnglish was empty, so they are reported as specified; expect few real changes.",
+  "security.md is the only prose pending, and it needs a full retranslation. fr, de and es are still the old <article> HTML format (118 lines, 0 markdown headings), while en was rewritten as markdown (48 lines, 6 headings). The en page also changed version numbers (0.22.x+/0.21.x/< 0.20.x replace 0.21.x+/0.20.x/< 0.19.x). enDiff is truncated at 6000 of 6796 chars, so translate from the en file, not the diff.",
+  "about.md and accessibility.md show no date staleness or drift in any target (same last commit as en; heading counts and link targets match).",
+  "src/scripts/generate-markdown-content.mjs (pnpm i18n:markdown) says it generates about.md and security.md from locale JSON. It was not run, and running it could overwrite translated prose.",
+  "Scan: 56 Missing Keys rows = 14 keys x 4 languages (en, fr, de, es), so all are source gaps and none are translation work. HERO_HEADING_KEYS.line1 looks like a variable reference, not a real key. pnpm run i18n:scan exited 0.",
+  "Side effect outside this repo: the derive command rewrote the tracked file ../translation-rules/lib/resolver/index.json (483 lines changed, paths gain a 'rules/' prefix). It is uncommitted and was left in place. Its state before the run was not checked. The derive ran twice, the second time to confirm lint results, so generated_at may differ from the first read. tmp/i18n/governance is git-ignored, and no tracked file in this repo was changed.",
+  "16 unrouted locale directories exist under src/content/pages and were dropped per the task. src/content/pages/privacy.md and terms.md are loose files and were excluded."
+ ]
+}
